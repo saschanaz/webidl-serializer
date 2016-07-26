@@ -18,7 +18,7 @@
         toString(): string;
     }
 
-    interface WebIDLStructure {
+    interface IDLTypeDescription {
         /** String indicating the generic type (e.g. "Promise", "sequence"). null otherwise. */
         generic: string | null;
         /** Boolean indicating whether this is nullable or not. */
@@ -32,7 +32,7 @@
         If the type is a union, then this contains an array of the types it unites.
         If it is a generic type, it contains the IDL type description for the type in the sequence,
         the eventual value of the promise, etc. */
-        idlType: string | WebIDLStructure | WebIDLStructure[];
+        idlType: string | IDLTypeDescription | IDLTypeDescription[];
     }
 
     interface InterfaceType {
@@ -54,7 +54,7 @@
         /** The name of the callback. */
         name: string;
         /** An IDL Type describing what the callback returns. */
-        idlType: WebIDLStructure;
+        idlType: IDLTypeDescription;
         /** A list of arguments, as in function paramters. */
         arguments: Arguments[];
         /** A list of extended attributes. */
@@ -99,7 +99,7 @@
         /** The name of the field. */
         name: string;
         /** An IDL Type describing what field's type. */
-        idlType: WebIDLStructure;
+        idlType: IDLTypeDescription;
         /** A list of extended attributes. */
         extAttrs: ExtendedAttributes[];
         /** A default value, absent if there is none. */
@@ -121,7 +121,7 @@
         /** The typedef's name. */
         name: string;
         /** An IDL Type describing what typedef's type. */
-        idlType: WebIDLStructure;
+        idlType: IDLTypeDescription;
         /** A list of extended attributes. */
         extAttrs: ExtendedAttributes[];
         /** A list of extended attributes that apply to the type rather than to the typedef as a whole. */
@@ -157,7 +157,7 @@
         /** True if a stringifier operation. */
         stringifier: boolean;
         /** An IDL Type of what the operation returns. If a stringifier, may be absent. */
-        idlType: WebIDLStructure | null;
+        idlType: IDLTypeDescription | null;
         /** The name of the operation. If a stringifier, may be null. */
         name: string | null;
         /** An array of arguments for the operation. */
@@ -179,7 +179,7 @@
         /** True if it's a read-only attribute. */
         readonly: boolean;
         /** An IDL Type for the attribute. */
-        idlType: WebIDLStructure;
+        idlType: IDLTypeDescription;
         /** A list of extended attributes. */
         extAttrs: ExtendedAttributes[];
     }
@@ -208,7 +208,7 @@
 
     interface SimpleSerializerMemberType extends SerializerMemberType {
         /** An IDL Type describing what the serializer returns. */
-        idlType: WebIDLStructure;
+        idlType: IDLTypeDescription;
         operation: SerializerOperation;
     }
 
@@ -234,7 +234,7 @@
     interface Arguments {
         optional: boolean;
         variadic: boolean;
-        idlType: WebIDLStructure;
+        idlType: IDLTypeDescription;
         name: string;
         extAttrs: ExtendedAttributes[];
     }
@@ -255,7 +255,7 @@
     interface DeclarationMemberType {
         type: "maplike" | "legacyiterable" | "iterable" | "setlike"
         /** An IDL Type (or an array of two types) representing the declared type arguments. */
-        idlType: WebIDLStructure | WebIDLStructure[];
+        idlType: IDLTypeDescription | IDLTypeDescription[];
         /** Whether the maplike or setlike is declared as read only. */
         readonly: boolean;
         /** A list of extended attributes. */
