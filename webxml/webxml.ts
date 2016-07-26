@@ -117,17 +117,93 @@ function insert(webidl: WebIDL2.IDLRootTypes, xmlDocument: Document) {
     // partial interfaces to <mixin-interfaces>
     // typedefs to <typedefs>
 
-    if (webidl.type === "dictionary") {
-        insertDictionary(webidl as WebIDL2.DictionaryType, xmlDocument);
+    if (webidl.type === "callback") {
+        insertCallbackFunction(webidl, xmlDocument);
     }
-
-    //const callbackFunctions = xmlDocument.getElementsByTagName("callback-functions")[0];
+    else if (webidl.type === "callback interface") {
+        insertInterface(webidl, xmlDocument);
+    }
     //const callbackInterfaces = xmlDocument.getElementsByTagName("callback-interfaces")[0];
-    //const dictionaries = xmlDocument.getElementsByTagName("dictionaries")[0];
+    else if (webidl.type === "dictionary") {
+        insertDictionary(webidl, xmlDocument);
+    }
     //const enums = xmlDocument.getElementsByTagName("enums")[0];
     //const interfaces = xmlDocument.getElementsByTagName("interfaces")[0];
     //const mixinInterfaces = xmlDocument.getElementsByTagName("mixin-interfaces")[0];
     //const typedefs = xmlDocument.getElementsByTagName("typedefs")[0];
+}
+
+function insertCallbackFunction(callbackType: WebIDL2.CallbackType, xmlDocument: Document) {
+    const callbackFunctions = xmlDocument.getElementsByTagName("callback-functions")[0];
+
+    const callbackFunction = xmlDocument.createElement("callback-function");
+    callbackFunction.setAttribute("name", callbackType.name);
+    callbackFunction.setAttribute("callback", "1");
+    callbackFunction.setAttribute("type", callbackType.idlType.origin.trim());
+
+    for (const argumentType of callbackType.arguments) {
+        const param = xmlDocument.createElement("param");
+        param.setAttribute("name", argumentType.name);
+        param.setAttribute("type", argumentType.idlType.origin.trim());
+        callbackFunction.appendChild(param);
+    }
+
+    callbackFunctions.appendChild(callbackFunction);
+}
+
+function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Document) {
+    const callbackInterfaces = xmlDocument.getElementsByTagName("callback-interfaces")[0];
+
+    const interfaceEl = xmlDocument.createElement("interface");
+    interfaceEl.setAttribute("name", callbackType.name);
+
+    const methods = xmlDocument.createElement("methods");
+    const anonymousMethods = xmlDocument.createElement("methods");
+
+    for (const memberType of callbackType.members) {
+        if (memberType.type === "operation") {
+            if (memberType.getter ||
+                memberType.setter ||
+                memberType.creator ||
+                memberType.deleter ||
+                memberType.legacycaller ||
+                memberType.static ||
+                memberType.stringifier) {
+
+                console.log(`(TODO) use member property fields`);
+            }
+
+            const method = xmlDocument.createElement("method");
+
+            for (const argumentType of memberType.arguments) {
+                const param = xmlDocument.createElement("param");
+                param.setAttribute("name", argumentType.name);
+                param.setAttribute("type", argumentType.idlType.origin.trim());
+                method.appendChild(param);
+            }
+            
+            if (memberType.name) {
+                method.setAttribute("name", memberType.name);
+                methods.appendChild(method);
+            }
+            else {
+                methods.appendChild(anonymousMethods);
+            }
+            method.setAttribute("type", memberType.idlType.origin.trim());
+        }
+        else {
+            console.log(`(TODO) skipped type ${memberType.type}`);
+            // TODO: other member types
+        }
+    }
+
+    if (methods.childNodes.length) {
+        interfaceEl.appendChild(methods);
+    }
+    if (anonymousMethods.childNodes.length) {
+        interfaceEl.appendChild(anonymousMethods);
+    }
+    callbackInterfaces.appendChild(interfaceEl);
 }
 
 function insertDictionary(dictionaryType: WebIDL2.DictionaryType, xmlDocument: Document) {
