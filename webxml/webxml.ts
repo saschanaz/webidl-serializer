@@ -34,11 +34,18 @@ async function run() {
     const doc = createWebIDLXMLDocument();
 
     console.log("Fetching from web...");
-    const results = await Promise.all(exportList.map(exportIDLs));
+    const results = await Promise.all(exportList.map(async (url) => {
+        const response = await fetch(url);
+        return {
+            url,
+            html: await response.text()
+        }
+    }));
     console.log("Fetch complete 100%");
 
     for (const result of results) {
-        for (const item of result.idls) {
+        const idls = await exportIDLs(result.html);
+        for (const item of idls) {
             try {
                 const parsed = WebIDL2.parse(item);
 
@@ -52,7 +59,7 @@ async function run() {
                     console.warn(`A syntax error has found in a WebIDL code line ${werr.line} from ${result.url}:\n${werr.input}\n`);
                 }
                 else {
-                    throw new Error(`An error occured while converting WebIDL from ${result.url}: ${err.message || err}`);;
+                    throw new Error(`An error occured while converting WebIDL from ${result.url}: ${err.message || err}`);
                 }
             }
         }
@@ -67,19 +74,8 @@ function isWebIDLParseError(err: any): err is WebIDL2.WebIDLParseError {
     return Array.isArray(err.tokens);
 }
 
-async function exportIDLs(url: string) {
-    const response = await fetch(url);
-    console.log(`Got response from ${url}, status ok: ${response.ok}`);
-    const text = await response.text();
-    console.log(`Fetching complete from ${url}`);
-
-    const doc = jsdom.jsdom(text);
-    const result = {
-        url,
-        idls: Array.from(doc.querySelectorAll("pre.idl")).map(element => element.textContent)
-    };
-    console.log(`Exported IDLs from ${url}`);
-    return result;
+async function exportIDLs(text: string) {
+    return Array.from(jsdom.jsdom(text).querySelectorAll("pre.idl")).map(element => element.textContent)
 }
 
 function insert(webidl: WebIDL2.IDLRootTypes, xmlDocument: Document) {
