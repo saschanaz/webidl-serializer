@@ -33,6 +33,9 @@
         If it is a generic type, it contains the IDL type description for the type in the sequence,
         the eventual value of the promise, etc. */
         idlType: string | IDLTypeDescription | IDLTypeDescription[];
+
+        /** (Only on the fork) Original string representation of the IDL type */
+        origin: string;
     }
 
     interface InterfaceType {
