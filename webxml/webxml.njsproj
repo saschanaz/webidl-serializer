@@ -39,7 +39,7 @@
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
-	<TypeScriptSkipLibCheck>True</TypeScriptSkipLibCheck>
+    <TypeScriptSkipLibCheck>True</TypeScriptSkipLibCheck>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,6 +52,7 @@
     <TypeScriptCompile Include="declarations\fetch.d.ts" />
     <TypeScriptCompile Include="declarations\jsdom.d.ts" />
     <TypeScriptCompile Include="declarations\node-fetch.d.ts" />
+    <TypeScriptCompile Include="declarations\prettifyxml.d.ts" />
     <TypeScriptCompile Include="declarations\webidl2.d.ts" />
     <TypeScriptCompile Include="declarations\xmldom.d.ts" />
     <TypeScriptCompile Include="webxml.ts" />
