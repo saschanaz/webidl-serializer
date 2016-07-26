@@ -10,7 +10,9 @@ const impl = new DOMImplementation();
 
 const exportList = [
     "https://html.spec.whatwg.org/",
-    "https://dom.spec.whatwg.org/"
+    "https://dom.spec.whatwg.org/",
+    "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom-view/Overview.bs",
+    "https://notifications.spec.whatwg.org/"
 ];
 
 //const result = WebIDL2.parse(`
@@ -30,11 +32,15 @@ const exportList = [
 
 run().catch(err => console.error(err));
 
+interface FetchResult {
+    url: string;
+    html: string;
+}
+
 async function run() {
-    const doc = createWebIDLXMLDocument();
 
     console.log("Fetching from web...");
-    const results = await Promise.all(exportList.map(async (url) => {
+    const results = await Promise.all(exportList.map(async (url): Promise<FetchResult> => {
         const response = await fetch(url);
         return {
             url,
@@ -43,39 +49,63 @@ async function run() {
     }));
     console.log("Fetch complete 100%");
 
-    for (const result of results) {
-        const idls = await exportIDLs(result.html);
-        for (const item of idls) {
-            try {
-                const parsed = WebIDL2.parse(item);
+    //const doc = convertAsSingleDocument(results);
+    //const serializer = new XMLSerializer();
+    //console.log(prettifyXml(serializer.serializeToString(doc)));
 
-                for (const rootItem of parsed) {
-                    insert(rootItem, doc);
-                }
-            }
-            catch (err) {
-                if (isWebIDLParseError(err)) {
-                    const werr = err as WebIDL2.WebIDLParseError; // type narrowing does not work :(
-                    console.warn(`A syntax error has found in a WebIDL code line ${werr.line} from ${result.url}:\n${werr.input}\n`);
-                }
-                else {
-                    throw new Error(`An error occured while converting WebIDL from ${result.url}: ${err.message || err}`);
-                }
-            }
-        }
-    }
-
+    const docs = convertAsMultipleDocument(results);
     const serializer = new XMLSerializer();
-    console.log(prettifyXml(serializer.serializeToString(doc)));
-    //console.log(serializer.serializeToString(doc));
+    for (const doc of docs) {
+        console.log(prettifyXml(serializer.serializeToString(doc)));
+    }
+}
+
+function convertAsSingleDocument(results: FetchResult[]) {
+    const doc = createWebIDLXMLDocument();
+    for (const result of results) {
+        insertFetchResult(result, doc);
+    }
+    return doc;
+}
+
+function convertAsMultipleDocument(results: FetchResult[]) {
+    const docs: Document[] = [];
+    for (const result of results) {
+        const doc = createWebIDLXMLDocument();
+        insertFetchResult(result, doc);
+        docs.push(doc);
+    }
+    return docs;
 }
 
 function isWebIDLParseError(err: any): err is WebIDL2.WebIDLParseError {
     return Array.isArray(err.tokens);
 }
 
-async function exportIDLs(text: string) {
+function exportIDLs(text: string) {
     return Array.from(jsdom.jsdom(text).querySelectorAll("pre.idl")).map(element => element.textContent)
+}
+
+function insertFetchResult(result: FetchResult, xmlDocument: Document) {
+    const idls = exportIDLs(result.html);
+    for (const item of idls) {
+        try {
+            const parsed = WebIDL2.parse(item);
+
+            for (const rootItem of parsed) {
+                insert(rootItem, xmlDocument);
+            }
+        }
+        catch (err) {
+            if (isWebIDLParseError(err)) {
+                const werr = err as WebIDL2.WebIDLParseError; // type narrowing does not work :(
+                console.warn(`A syntax error has found in a WebIDL code line ${werr.line} from ${result.url}:\n${werr.input}\n`);
+            }
+            else {
+                throw new Error(`An error occured while converting WebIDL from ${result.url}: ${err.message || err}`);
+            }
+        }
+    }
 }
 
 function insert(webidl: WebIDL2.IDLRootTypes, xmlDocument: Document) {
