@@ -189,6 +189,31 @@ function insertCallbackFunction(callbackType: WebIDL2.CallbackType, xmlDocument:
     callbackFunctions.appendChild(callbackFunction);
 }
 
+function insertDictionary(dictionaryType: WebIDL2.DictionaryType, xmlDocument: Document) {
+    const dictionaries = xmlDocument.getElementsByTagName("dictionaries")[0];
+
+    const dictionary = xmlDocument.createElement("dictionary");
+    dictionary.setAttribute("name", dictionaryType.name);
+    if (dictionaryType.inheritance) {
+        dictionary.setAttribute("extends", dictionaryType.inheritance);
+    }
+
+    const members = xmlDocument.createElement("members");
+
+    for (const memberType of dictionaryType.members) {
+        const member = xmlDocument.createElement("member");
+        member.setAttribute("name", memberType.name);
+        if (memberType.default) {
+            member.setAttribute("default", memberType.default.value);
+        }
+        member.setAttribute("type", memberType.idlType.origin.trim());
+        members.appendChild(member);
+    }
+
+    dictionary.appendChild(members);
+    dictionaries.appendChild(dictionary);
+}
+
 function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Document) {
     const callbackInterfaces = xmlDocument.getElementsByTagName("callback-interfaces")[0];
 
@@ -270,31 +295,6 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
         interfaceEl.appendChild(anonymousMethods);
     }
     callbackInterfaces.appendChild(interfaceEl);
-}
-
-function insertDictionary(dictionaryType: WebIDL2.DictionaryType, xmlDocument: Document) {
-    const dictionaries = xmlDocument.getElementsByTagName("dictionaries")[0];
-
-    const dictionary = xmlDocument.createElement("dictionary");
-    dictionary.setAttribute("name", dictionaryType.name);
-    if (dictionaryType.inheritance) {
-        dictionary.setAttribute("extends", dictionaryType.inheritance);
-    }
-
-    const members = xmlDocument.createElement("members");
-
-    for (const memberType of dictionaryType.members) {
-        const member = xmlDocument.createElement("member");
-        member.setAttribute("name", memberType.name);
-        if (memberType.default) {
-            member.setAttribute("default", memberType.default.value);
-        }
-        member.setAttribute("type", memberType.idlType.origin.trim());
-        members.appendChild(member);
-    }
-
-    dictionary.appendChild(members);
-    dictionaries.appendChild(dictionary);
 }
 
 function createWebIDLXMLDocument(title: string, originUrl: string) {
