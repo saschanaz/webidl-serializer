@@ -224,15 +224,15 @@ function insertDictionary(dictionaryType: WebIDL2.DictionaryType, xmlDocument: D
     dictionaries.appendChild(dictionary);
 }
 
-function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Document, parentName: string) {
+function insertInterface(interfaceType: WebIDL2.InterfaceType, xmlDocument: Document, parentName: string) {
     const callbackInterfaces = xmlDocument.getElementsByTagName(parentName)[0];
 
     const interfaceEl = xmlDocument.createElement("interface");
-    interfaceEl.setAttribute("name", callbackType.name);
-    if (callbackType.inheritance) {
-        interfaceEl.setAttribute("extends", callbackType.inheritance);
+    interfaceEl.setAttribute("name", interfaceType.name);
+    if (interfaceType.inheritance) {
+        interfaceEl.setAttribute("extends", interfaceType.inheritance);
     }
-    for (const extAttr of callbackType.extAttrs) {
+    for (const extAttr of interfaceType.extAttrs) {
         if (extAttr.name === "NoInterfaceObject") {
             interfaceEl.setAttribute("no-interface-object", "1");
         }
@@ -246,7 +246,7 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
     const methods = xmlDocument.createElement("methods");
     const properties = xmlDocument.createElement("properties");
 
-    for (const memberType of callbackType.members) {
+    for (const memberType of interfaceType.members) {
         if (memberType.type === "const") {
             const constant = xmlDocument.createElement("constant");
 
@@ -327,7 +327,7 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
             properties.appendChild(property);
         }
         else {
-            console.log(`(TODO) skipped type ${memberType.type}`);
+            console.log(`Skipped type ${memberType.type}`);
             // TODO: other member types
         }
     }

@@ -3,7 +3,7 @@
 
     type IDLRootTypes = InterfaceType | CallbackType | DictionaryType | ExceptionType | EnumType | TypedefType | ImplementsType;
 
-    type IDLMemberTypes = OperationMemberType | AttributeMemberType | ConstantMemberType | SerializerMemberType | IteratorMemberType;
+    type IDLMemberTypes = OperationMemberType | AttributeMemberType | ConstantMemberType | SerializerMemberType | IteratorMemberType | DeclarationMemberType;
 
     interface ParseOptions {
         allowNestedTypedefs?: boolean;
