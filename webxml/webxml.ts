@@ -8,6 +8,7 @@ import prettifyXml = require("prettify-xml");
 import * as fspromise from "./fspromise";
 
 const impl = new DOMImplementation();
+const unionLineBreakRegex = / or[\s]*/g;
 
 interface ExportRemoteDescription {
     url: string;
@@ -177,8 +178,12 @@ function insert(webidl: WebIDL2.IDLRootTypes, xmlDocument: Document) {
             insertInterface(webidl, xmlDocument, "interfaces");
         }
     }
-    //const mixinInterfaces = xmlDocument.getElementsByTagName("mixin-interfaces")[0];
-    //const typedefs = xmlDocument.getElementsByTagName("typedefs")[0];
+    else if (webidl.type === "typedef") {
+        insertTypedef(webidl, xmlDocument);
+    }
+    else {
+        console.log(`Skipped root IDL type ${webidl.type}`);
+    }
 }
 
 function insertCallbackFunction(callbackType: WebIDL2.CallbackType, xmlDocument: Document) {
@@ -235,6 +240,9 @@ function insertInterface(interfaceType: WebIDL2.InterfaceType, xmlDocument: Docu
     for (const extAttr of interfaceType.extAttrs) {
         if (extAttr.name === "NoInterfaceObject") {
             interfaceEl.setAttribute("no-interface-object", "1");
+        }
+        else if (extAttr.name === "HTMLConstructor") {
+            // empty constuctor, only callable when subclassed
         }
         else if (extAttr.name === "NamedConstructor") {
             const namedConstructor = xmlDocument.createElement("named-constructor");
@@ -374,6 +382,16 @@ function insertEnum(enumType: WebIDL2.EnumType, xmlDocument: Document) {
     }
 
     enums.appendChild(enumEl);
+}
+
+function insertTypedef(typedefType: WebIDL2.TypedefType, xmlDocument: Document) {
+    const typedefs = xmlDocument.getElementsByTagName("typedefs")[0];
+
+    const typedef = xmlDocument.createElement("typedef");
+    typedef.setAttribute("new-type", typedefType.idlType.origin.trim().replace(unionLineBreakRegex, " or "));
+    typedef.setAttribute("type", typedefType.name);
+
+    typedefs.appendChild(typedef);
 }
 
 function getParamList(argumentTypes: WebIDL2.Arguments[], xmlDocument: Document) {
