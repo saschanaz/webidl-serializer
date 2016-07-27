@@ -64,17 +64,15 @@ async function run() {
     console.log("Fetching from web...");
     const results = await Promise.all(exportList.map(async (description): Promise<FetchResult> => {
         const response = await fetch(description.url);
-        return {
+        const result: FetchResult = {
             description,
             html: await response.text()
         }
+        console.log(`Fetching finished from ${description.url}`);
+        return result;
     }));
-    console.log("Fetch complete 100%");
-
-    //const doc = convertAsSingleDocument(results);
-    //const serializer = new XMLSerializer();
-    //console.log(prettifyXml(serializer.serializeToString(doc)));
-
+    console.log("Fetching complete 100%");
+    
     const docs = convertAsMultipleDocument(results);
 
     if (!(await fspromise.exists("built"))) {
@@ -83,8 +81,11 @@ async function run() {
 
     const serializer = new XMLSerializer();
     for (const doc of docs) {
-        await fspromise.writeFile(`built/${doc.documentElement.getAttribute("name")}.webidl.xml`, prettifyXml(serializer.serializeToString(doc)));
+        const path = `built/${doc.documentElement.getAttribute("name")}.webidl.xml`;
+        await fspromise.writeFile(path, prettifyXml(serializer.serializeToString(doc)));
+        console.log(`Exporting as ${path}`);
     }
+    console.log("Finished 100%");
 }
 
 function convertAsSingleDocument(results: FetchResult[]) {
@@ -98,8 +99,10 @@ function convertAsSingleDocument(results: FetchResult[]) {
 function convertAsMultipleDocument(results: FetchResult[]) {
     const docs: Document[] = [];
     for (const result of results) {
+        console.log(`Conversion started for ${result.description.title}`);
         const doc = createWebIDLXMLDocument(result.description.title, result.description.url);
         insertFetchResult(result, doc);
+        console.log(`Conversion finished for ${result.description.title}`);
         docs.push(doc);
     }
     return docs;
@@ -159,7 +162,6 @@ function insert(webidl: WebIDL2.IDLRootTypes, xmlDocument: Document) {
     else if (webidl.type === "callback interface") {
         insertInterface(webidl, xmlDocument);
     }
-    //const callbackInterfaces = xmlDocument.getElementsByTagName("callback-interfaces")[0];
     else if (webidl.type === "dictionary") {
         insertDictionary(webidl, xmlDocument);
     }
@@ -193,11 +195,24 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
     const interfaceEl = xmlDocument.createElement("interface");
     interfaceEl.setAttribute("name", callbackType.name);
 
+    const constants = xmlDocument.createElement("constants");
     const methods = xmlDocument.createElement("methods");
     const anonymousMethods = xmlDocument.createElement("methods");
 
     for (const memberType of callbackType.members) {
-        if (memberType.type === "operation") {
+        if (memberType.type === "const") {
+            const constant = xmlDocument.createElement("constant");
+
+            constant.setAttribute("name", memberType.name);
+            if (memberType.nullable) {
+                constant.setAttribute("nullable", "1");
+            }
+            constant.setAttribute("type", memberType.idlType);
+            constant.setAttribute("type", memberType.value.value);
+
+            constants.appendChild(constant);
+        }
+        else if (memberType.type === "operation") {
             const method = xmlDocument.createElement("method");
 
             for (const argumentType of memberType.arguments) {
@@ -237,7 +252,7 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
                 method.setAttribute("stringifier", "1");
             }
 
-            method.setAttribute("type", memberType.idlType.origin.trim());
+            method.setAttribute("type", (memberType as WebIDL2.OperationMemberType /* TS2.0 bug */).idlType.origin.trim());
         }
         else {
             console.log(`(TODO) skipped type ${memberType.type}`);
@@ -245,6 +260,9 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
         }
     }
 
+    if (constants.childNodes.length) {
+        interfaceEl.appendChild(constants);
+    }
     if (methods.childNodes.length) {
         interfaceEl.appendChild(methods);
     }
