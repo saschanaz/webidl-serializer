@@ -236,6 +236,14 @@ function insertInterface(interfaceType: WebIDL2.InterfaceType, xmlDocument: Docu
         if (extAttr.name === "NoInterfaceObject") {
             interfaceEl.setAttribute("no-interface-object", "1");
         }
+        else if (extAttr.name === "NamedConstructor") {
+            const namedConstructor = xmlDocument.createElement("named-constructor");
+            namedConstructor.setAttribute("name", extAttr.rhs.value);
+            for (const param of getParamList(extAttr.arguments, xmlDocument)) {
+                namedConstructor.appendChild(param);
+            }
+            interfaceEl.appendChild(namedConstructor);
+        }
         else {
             console.log(`(TODO) Skipping extended attribute ${extAttr.name}`);
         }
@@ -263,10 +271,7 @@ function insertInterface(interfaceType: WebIDL2.InterfaceType, xmlDocument: Docu
             const method = xmlDocument.createElement("method");
 
             if (memberType.arguments) {
-                for (const argumentType of memberType.arguments) {
-                    const param = xmlDocument.createElement("param");
-                    param.setAttribute("name", argumentType.name);
-                    param.setAttribute("type", argumentType.idlType.origin.trim());
+                for (const param of getParamList(memberType.arguments, xmlDocument)) {
                     method.appendChild(param);
                 }
             }
@@ -323,7 +328,7 @@ function insertInterface(interfaceType: WebIDL2.InterfaceType, xmlDocument: Docu
             if (memberType.stringifier) {
                 property.setAttribute("stringifier", "1");
             }
-            property.setAttribute("type", (memberType as WebIDL2.AttributeMemberType /* TS2.0 bug */).idlType.origin);
+            property.setAttribute("type", (memberType as WebIDL2.AttributeMemberType /* TS2.0 bug */).idlType.origin.trim());
             properties.appendChild(property);
         }
         else {
@@ -360,6 +365,23 @@ function insertEnum(enumType: WebIDL2.EnumType, xmlDocument: Document) {
     }
 
     enums.appendChild(enumEl);
+}
+
+function getParamList(argumentTypes: WebIDL2.Arguments[], xmlDocument: Document) {
+    const paramList: Element[] = [];
+    for (const argumentType of argumentTypes) {
+        const param = xmlDocument.createElement("param");
+        param.setAttribute("name", argumentType.name);
+        if (argumentType.optional) {
+            param.setAttribute("optional", "1");
+        }
+        param.setAttribute("type", argumentType.idlType.origin.trim());
+        if (argumentType.variadic) {
+            param.setAttribute("variadic", "1");
+        }
+        paramList.push(param);
+    }
+    return paramList;
 }
 
 function createWebIDLXMLDocument(title: string, originUrl: string) {
