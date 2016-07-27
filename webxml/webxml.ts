@@ -8,11 +8,33 @@ import prettifyXml = require("prettify-xml");
 
 const impl = new DOMImplementation();
 
-const exportList = [
-    "https://html.spec.whatwg.org/",
-    "https://dom.spec.whatwg.org/",
-    "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom-view/Overview.bs",
-    "https://notifications.spec.whatwg.org/"
+interface ExportRemoteDescription {
+    url: string;
+    title: string;
+    hasIdlIndex: boolean;
+}
+
+const exportList: ExportRemoteDescription[] = [
+    {
+        url: "https://html.spec.whatwg.org/",
+        title: "HTML",
+        hasIdlIndex: false
+    },
+    {
+        url: "https://dom.spec.whatwg.org/",
+        title: "DOM",
+        hasIdlIndex: true
+    },
+    {
+        url: "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom-view/Overview.bs",
+        title: "CSSOM View Module",
+        hasIdlIndex: false
+    },
+    {
+        url: "https://notifications.spec.whatwg.org/",
+        title: "Notifications API",
+        hasIdlIndex: true
+    }
 ];
 
 //const result = WebIDL2.parse(`
@@ -33,17 +55,17 @@ const exportList = [
 run().catch(err => console.error(err));
 
 interface FetchResult {
-    url: string;
+    description: ExportRemoteDescription;
     html: string;
 }
 
 async function run() {
 
     console.log("Fetching from web...");
-    const results = await Promise.all(exportList.map(async (url): Promise<FetchResult> => {
-        const response = await fetch(url);
+    const results = await Promise.all(exportList.map(async (description): Promise<FetchResult> => {
+        const response = await fetch(description.url);
         return {
-            url,
+            description,
             html: await response.text()
         }
     }));
@@ -82,12 +104,21 @@ function isWebIDLParseError(err: any): err is WebIDL2.WebIDLParseError {
     return Array.isArray(err.tokens);
 }
 
-function exportIDLs(text: string) {
-    return Array.from(jsdom.jsdom(text).querySelectorAll("pre.idl")).map(element => element.textContent)
+function exportIDLs(result: FetchResult) {
+    const idlElements = Array.from(jsdom.jsdom(result.html).querySelectorAll("pre.idl"));
+    if (!idlElements.length) {
+        throw new Error(`No IDLs in ${result.description.url}`)
+    }
+    if (result.description.hasIdlIndex) {
+        return [idlElements[idlElements.length - 1].textContent];
+    }
+    else {
+        return Array.from(jsdom.jsdom(result.html).querySelectorAll("pre.idl")).map(element => element.textContent)
+    }
 }
 
 function insertFetchResult(result: FetchResult, xmlDocument: Document) {
-    const idls = exportIDLs(result.html);
+    const idls = exportIDLs(result);
     for (const item of idls) {
         try {
             const parsed = WebIDL2.parse(item);
@@ -99,10 +130,10 @@ function insertFetchResult(result: FetchResult, xmlDocument: Document) {
         catch (err) {
             if (isWebIDLParseError(err)) {
                 const werr = err as WebIDL2.WebIDLParseError; // type narrowing does not work :(
-                console.warn(`A syntax error has found in a WebIDL code line ${werr.line} from ${result.url}:\n${werr.input}\n`);
+                console.warn(`A syntax error has found in a WebIDL code line ${werr.line} from ${result.description.url}:\n${werr.input}\n`);
             }
             else {
-                throw new Error(`An error occured while converting WebIDL from ${result.url}: ${err.message || err}`);
+                throw new Error(`An error occured while converting WebIDL from ${result.description.url}: ${err.message || err}`);
             }
         }
     }
@@ -162,17 +193,6 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
 
     for (const memberType of callbackType.members) {
         if (memberType.type === "operation") {
-            if (memberType.getter ||
-                memberType.setter ||
-                memberType.creator ||
-                memberType.deleter ||
-                memberType.legacycaller ||
-                memberType.static ||
-                memberType.stringifier) {
-
-                console.log(`(TODO) use member property fields`);
-            }
-
             const method = xmlDocument.createElement("method");
 
             for (const argumentType of memberType.arguments) {
@@ -181,7 +201,7 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
                 param.setAttribute("type", argumentType.idlType.origin.trim());
                 method.appendChild(param);
             }
-            
+
             if (memberType.name) {
                 method.setAttribute("name", memberType.name);
                 methods.appendChild(method);
@@ -189,6 +209,29 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
             else {
                 methods.appendChild(anonymousMethods);
             }
+
+            if (memberType.getter) {
+                method.setAttribute("getter", "1");
+            }
+            if (memberType.setter) {
+                method.setAttribute("setter", "1");
+            }
+            if (memberType.creator) {
+                method.setAttribute("creator", "1");
+            }
+            if (memberType.deleter) {
+                method.setAttribute("deleter", "1");
+            }
+            if (memberType.legacycaller) {
+                method.setAttribute("legacy-caller", "1");
+            }
+            if (memberType.static) {
+                method.setAttribute("static", "1");
+            }
+            if (memberType.stringifier) {
+                method.setAttribute("stringifier", "1");
+            }
+
             method.setAttribute("type", memberType.idlType.origin.trim());
         }
         else {
