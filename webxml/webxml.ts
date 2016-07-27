@@ -72,7 +72,7 @@ async function run() {
         return result;
     }));
     console.log("Fetching complete 100%");
-    
+
     const docs = convertAsMultipleDocument(results);
 
     if (!(await fspromise.exists("built"))) {
@@ -244,11 +244,20 @@ function insertInterface(interfaceType: WebIDL2.InterfaceType, xmlDocument: Docu
             }
             interfaceEl.appendChild(namedConstructor);
         }
+        else if (extAttr.name === "Constructor") {
+            const constructor = xmlDocument.createElement("constructor");
+            if (extAttr.arguments) {
+                for (const param of getParamList(extAttr.arguments, xmlDocument)) {
+                    constructor.appendChild(param);
+                }
+            }
+            interfaceEl.appendChild(constructor);
+        }
         else {
             console.log(`(TODO) Skipping extended attribute ${extAttr.name}`);
         }
     }
-    
+
     const anonymousMethods = xmlDocument.createElement("anonymous-methods");
     const constants = xmlDocument.createElement("constants");
     const methods = xmlDocument.createElement("methods");
