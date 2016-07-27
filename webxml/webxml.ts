@@ -141,7 +141,8 @@ function insertFetchResult(result: FetchResult, xmlDocument: Document) {
                 console.warn(`A syntax error has found in a WebIDL code line ${werr.line} from ${result.description.url}:\n${werr.input}\n`);
             }
             else {
-                throw new Error(`An error occured while converting WebIDL from ${result.description.url}: ${err.message || err}`);
+                err.message = `An error occured while converting WebIDL from ${result.description.url}: ${err.message}`
+                throw err;
             }
         }
     }
@@ -160,10 +161,16 @@ function insert(webidl: WebIDL2.IDLRootTypes, xmlDocument: Document) {
         insertCallbackFunction(webidl, xmlDocument);
     }
     else if (webidl.type === "callback interface") {
-        insertInterface(webidl, xmlDocument);
+        insertInterface(webidl, xmlDocument, "callback-interfaces");
     }
     else if (webidl.type === "dictionary") {
         insertDictionary(webidl, xmlDocument);
+    }
+    else if (webidl.type === "enum") {
+        insertEnum(webidl, xmlDocument);
+    }
+    else if (webidl.type === "interface") {
+        insertInterface(webidl, xmlDocument, "interfaces");
     }
     //const enums = xmlDocument.getElementsByTagName("enums")[0];
     //const interfaces = xmlDocument.getElementsByTagName("interfaces")[0];
@@ -214,15 +221,15 @@ function insertDictionary(dictionaryType: WebIDL2.DictionaryType, xmlDocument: D
     dictionaries.appendChild(dictionary);
 }
 
-function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Document) {
-    const callbackInterfaces = xmlDocument.getElementsByTagName("callback-interfaces")[0];
+function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Document, parentName: string) {
+    const callbackInterfaces = xmlDocument.getElementsByTagName(parentName)[0];
 
     const interfaceEl = xmlDocument.createElement("interface");
     interfaceEl.setAttribute("name", callbackType.name);
 
     const constants = xmlDocument.createElement("constants");
     const methods = xmlDocument.createElement("methods");
-    const anonymousMethods = xmlDocument.createElement("methods");
+    const anonymousMethods = xmlDocument.createElement("anonymous-methods");
 
     for (const memberType of callbackType.members) {
         if (memberType.type === "const") {
@@ -240,11 +247,13 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
         else if (memberType.type === "operation") {
             const method = xmlDocument.createElement("method");
 
-            for (const argumentType of memberType.arguments) {
-                const param = xmlDocument.createElement("param");
-                param.setAttribute("name", argumentType.name);
-                param.setAttribute("type", argumentType.idlType.origin.trim());
-                method.appendChild(param);
+            if (memberType.arguments) {
+                for (const argumentType of memberType.arguments) {
+                    const param = xmlDocument.createElement("param");
+                    param.setAttribute("name", argumentType.name);
+                    param.setAttribute("type", argumentType.idlType.origin.trim());
+                    method.appendChild(param);
+                }
             }
 
             if (memberType.name) {
@@ -252,7 +261,7 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
                 methods.appendChild(method);
             }
             else {
-                methods.appendChild(anonymousMethods);
+                anonymousMethods.appendChild(method);
             }
 
             if (memberType.getter) {
@@ -277,7 +286,12 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
                 method.setAttribute("stringifier", "1");
             }
 
-            method.setAttribute("type", (memberType as WebIDL2.OperationMemberType /* TS2.0 bug */).idlType.origin.trim());
+            if (!memberType.idlType && memberType.stringifier) {
+                method.setAttribute("type", "DOMString");
+            }
+            else {
+                method.setAttribute("type", (memberType as WebIDL2.OperationMemberType /* TS2.0 bug */).idlType.origin.trim());
+            }
         }
         else {
             console.log(`(TODO) skipped type ${memberType.type}`);
@@ -285,16 +299,31 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
         }
     }
 
+    if (anonymousMethods.childNodes.length) {
+        interfaceEl.appendChild(anonymousMethods);
+    }
     if (constants.childNodes.length) {
         interfaceEl.appendChild(constants);
     }
     if (methods.childNodes.length) {
         interfaceEl.appendChild(methods);
     }
-    if (anonymousMethods.childNodes.length) {
-        interfaceEl.appendChild(anonymousMethods);
-    }
     callbackInterfaces.appendChild(interfaceEl);
+}
+
+function insertEnum(enumType: WebIDL2.EnumType, xmlDocument: Document) {
+    const enums = xmlDocument.getElementsByTagName("enums")[0];
+
+    const enumEl = xmlDocument.createElement("enum");
+    enumEl.setAttribute("name", enumType.name);
+
+    for (const valueStr of enumType.values) {
+        const value = xmlDocument.createElement("value");
+        value.textContent = valueStr;
+        enumEl.appendChild(value);
+    }
+
+    enums.appendChild(enumEl);
 }
 
 function createWebIDLXMLDocument(title: string, originUrl: string) {
