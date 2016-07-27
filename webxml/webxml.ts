@@ -5,6 +5,7 @@ import { XMLSerializer, DOMImplementation } from "xmldom";
 import * as jsdom from "jsdom";
 import fetch from "node-fetch";
 import prettifyXml = require("prettify-xml");
+import * as fspromise from "./fspromise";
 
 const impl = new DOMImplementation();
 
@@ -60,7 +61,6 @@ interface FetchResult {
 }
 
 async function run() {
-
     console.log("Fetching from web...");
     const results = await Promise.all(exportList.map(async (description): Promise<FetchResult> => {
         const response = await fetch(description.url);
@@ -76,14 +76,19 @@ async function run() {
     //console.log(prettifyXml(serializer.serializeToString(doc)));
 
     const docs = convertAsMultipleDocument(results);
+
+    if (!(await fspromise.exists("built"))) {
+        await fspromise.makeDirectory("built");
+    }
+
     const serializer = new XMLSerializer();
     for (const doc of docs) {
-        console.log(prettifyXml(serializer.serializeToString(doc)));
+        await fspromise.writeFile(`built/${doc.documentElement.getAttribute("name")}.webidl.xml`, prettifyXml(serializer.serializeToString(doc)));
     }
 }
 
 function convertAsSingleDocument(results: FetchResult[]) {
-    const doc = createWebIDLXMLDocument();
+    const doc = createWebIDLXMLDocument("WHATWG/W3C Web Platform", "null");
     for (const result of results) {
         insertFetchResult(result, doc);
     }
@@ -93,7 +98,7 @@ function convertAsSingleDocument(results: FetchResult[]) {
 function convertAsMultipleDocument(results: FetchResult[]) {
     const docs: Document[] = [];
     for (const result of results) {
-        const doc = createWebIDLXMLDocument();
+        const doc = createWebIDLXMLDocument(result.description.title, result.description.url);
         insertFetchResult(result, doc);
         docs.push(doc);
     }
@@ -274,13 +279,13 @@ function insertDictionary(dictionaryType: WebIDL2.DictionaryType, xmlDocument: D
     dictionaries.appendChild(dictionary);
 }
 
-function createWebIDLXMLDocument() {
+function createWebIDLXMLDocument(title: string, originUrl: string) {
     const xmlns = "http://schemas.microsoft.com/ie/webidl-xml"
     const xsi = "http://www.w3.org/2001/XMLSchema-instance";
 
     const doc = impl.createDocument(xmlns, "webidl-xml", null);
-    doc.documentElement.setAttribute("name", "WHATWG Web Platform");
-    doc.documentElement.setAttribute("original-file", "null");
+    doc.documentElement.setAttribute("name", title);
+    doc.documentElement.setAttribute("original-file", originUrl);
     doc.documentElement.setAttribute("xmlns", xmlns); // xmldom bug #97
     doc.documentElement.setAttributeNS(xmlns, "xmlns:xsi", xsi);
     doc.documentElement.setAttributeNS(xsi, "xsi:schemaLocation", "http://schemas.microsoft.com/ie/webidl-xml webidl-xml-schema.xsd");

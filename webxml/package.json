@@ -8,6 +8,8 @@
     "name": "saschanaz"
   },
   "dependencies": {
+    "@types/jsdom": "^2.0.28",
+    "@types/node": "^4.0.30",
     "jsdom": "^9.4.1",
     "node-fetch": "^1.5.3",
     "prettify-xml": "^1.0.0",

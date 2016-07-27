@@ -2,6 +2,6 @@
     interface prettifyXmlOptions {
         indent?: number;
     }
-    function prettifyXml(input: string, options?: prettifyXmlOptions): void
+    function prettifyXml(input: string, options?: prettifyXmlOptions): string
     export = prettifyXml;
 }

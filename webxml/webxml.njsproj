@@ -50,15 +50,23 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="declarations\fetch.d.ts" />
-    <TypeScriptCompile Include="declarations\jsdom.d.ts" />
     <TypeScriptCompile Include="declarations\node-fetch.d.ts" />
     <TypeScriptCompile Include="declarations\prettifyxml.d.ts" />
     <TypeScriptCompile Include="declarations\webidl2.d.ts" />
     <TypeScriptCompile Include="declarations\xmldom.d.ts" />
+    <TypeScriptCompile Include="fspromise.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\jquery\index.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\jsdom\index.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\index.d.ts" />
     <TypeScriptCompile Include="webxml.ts" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="declarations\" />
+    <Folder Include="node_modules\" />
+    <Folder Include="node_modules\%40types\" />
+    <Folder Include="node_modules\%40types\jquery\" />
+    <Folder Include="node_modules\%40types\jsdom\" />
+    <Folder Include="node_modules\%40types\node\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
