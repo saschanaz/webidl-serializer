@@ -226,10 +226,14 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
 
     const interfaceEl = xmlDocument.createElement("interface");
     interfaceEl.setAttribute("name", callbackType.name);
-
+    if (callbackType.inheritance) {
+        interfaceEl.setAttribute("extends", callbackType.inheritance);
+    }
+    
+    const anonymousMethods = xmlDocument.createElement("anonymous-methods");
     const constants = xmlDocument.createElement("constants");
     const methods = xmlDocument.createElement("methods");
-    const anonymousMethods = xmlDocument.createElement("anonymous-methods");
+    const properties = xmlDocument.createElement("properties");
 
     for (const memberType of callbackType.members) {
         if (memberType.type === "const") {
@@ -293,6 +297,24 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
                 method.setAttribute("type", (memberType as WebIDL2.OperationMemberType /* TS2.0 bug */).idlType.origin.trim());
             }
         }
+        else if (memberType.type === "attribute") {
+            const property = xmlDocument.createElement("property");
+            property.setAttribute("name", memberType.name);
+            if (memberType.readonly) {
+                property.setAttribute("read-only", "1");
+            }
+            if (memberType.static) {
+                property.setAttribute("static", "1");
+            }
+            if (memberType.inherit) {
+                console.log("(TODO) Met an inherited attribute. What should be done for it?");
+            }
+            if (memberType.stringifier) {
+                property.setAttribute("stringifier", "1");
+            }
+            property.setAttribute("type", (memberType as WebIDL2.AttributeMemberType /* TS2.0 bug */).idlType.origin);
+            properties.appendChild(property);
+        }
         else {
             console.log(`(TODO) skipped type ${memberType.type}`);
             // TODO: other member types
@@ -307,6 +329,9 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
     }
     if (methods.childNodes.length) {
         interfaceEl.appendChild(methods);
+    }
+    if (properties.childNodes.length) {
+        interfaceEl.appendChild(properties);
     }
     callbackInterfaces.appendChild(interfaceEl);
 }
