@@ -170,10 +170,13 @@ function insert(webidl: WebIDL2.IDLRootTypes, xmlDocument: Document) {
         insertEnum(webidl, xmlDocument);
     }
     else if (webidl.type === "interface") {
-        insertInterface(webidl, xmlDocument, "interfaces");
+        if (webidl.partial) {
+            insertInterface(webidl, xmlDocument, "mixin-interfaces");
+        }
+        else {
+            insertInterface(webidl, xmlDocument, "interfaces");
+        }
     }
-    //const enums = xmlDocument.getElementsByTagName("enums")[0];
-    //const interfaces = xmlDocument.getElementsByTagName("interfaces")[0];
     //const mixinInterfaces = xmlDocument.getElementsByTagName("mixin-interfaces")[0];
     //const typedefs = xmlDocument.getElementsByTagName("typedefs")[0];
 }
@@ -228,6 +231,14 @@ function insertInterface(callbackType: WebIDL2.InterfaceType, xmlDocument: Docum
     interfaceEl.setAttribute("name", callbackType.name);
     if (callbackType.inheritance) {
         interfaceEl.setAttribute("extends", callbackType.inheritance);
+    }
+    for (const extAttr of callbackType.extAttrs) {
+        if (extAttr.name === "NoInterfaceObject") {
+            interfaceEl.setAttribute("no-interface-object", "1");
+        }
+        else {
+            console.log(`(TODO) Skipping extended attribute ${extAttr.name}`);
+        }
     }
     
     const anonymousMethods = xmlDocument.createElement("anonymous-methods");
