@@ -192,12 +192,15 @@ function insertCallbackFunction(callbackType: WebIDL2.CallbackType, xmlDocument:
     const callbackFunction = xmlDocument.createElement("callback-function");
     callbackFunction.setAttribute("name", callbackType.name);
     callbackFunction.setAttribute("callback", "1");
-    callbackFunction.setAttribute("type", callbackType.idlType.origin.trim());
+    if (callbackType.idlType.nullable) {
+        callbackFunction.setAttribute("nullable", "1");
+        callbackFunction.setAttribute("type", callbackType.idlType.origin.trim().slice(0, -1));
+    }
+    else {
+        callbackFunction.setAttribute("type", callbackType.idlType.origin.trim());
+    }
 
-    for (const argumentType of callbackType.arguments) {
-        const param = xmlDocument.createElement("param");
-        param.setAttribute("name", argumentType.name);
-        param.setAttribute("type", argumentType.idlType.origin.trim());
+    for (const param of getParamList(callbackType.arguments, xmlDocument)) {
         callbackFunction.appendChild(param);
     }
 
@@ -261,6 +264,12 @@ function insertInterface(interfaceType: WebIDL2.InterfaceType, xmlDocument: Docu
             }
             interfaceEl.appendChild(constructor);
         }
+        else if (extAttr.name === "Global") {
+            interfaceEl.setAttribute("global", extAttr.rhs.value);
+        }
+        else if (extAttr.name === "PrimaryGlobal") {
+            interfaceEl.setAttribute("primary-global", "Window");
+        }
         else {
             console.log(`(TODO) Skipping extended attribute ${extAttr.name}`);
         }
@@ -278,9 +287,12 @@ function insertInterface(interfaceType: WebIDL2.InterfaceType, xmlDocument: Docu
             constant.setAttribute("name", memberType.name);
             if (memberType.nullable) {
                 constant.setAttribute("nullable", "1");
+                constant.setAttribute("type", memberType.idlType.trim().slice(0, -1));
             }
-            constant.setAttribute("type", memberType.idlType);
-            constant.setAttribute("type", memberType.value.value);
+            else {
+                constant.setAttribute("type", memberType.idlType.trim());
+            }
+            constant.setAttribute("value", memberType.value.value);
 
             constants.appendChild(constant);
         }
@@ -327,7 +339,13 @@ function insertInterface(interfaceType: WebIDL2.InterfaceType, xmlDocument: Docu
                 method.setAttribute("type", "DOMString");
             }
             else {
-                method.setAttribute("type", (memberType as WebIDL2.OperationMemberType /* TS2.0 bug */).idlType.origin.trim());
+                if ((memberType as WebIDL2.OperationMemberType /* TS2.0 bug */).idlType.nullable) {
+                    method.setAttribute("nullable", "1");
+                    method.setAttribute("type", (memberType as WebIDL2.OperationMemberType /* TS2.0 bug */).idlType.origin.trim().slice(0, -1));
+                }
+                else {
+                    method.setAttribute("type", (memberType as WebIDL2.OperationMemberType /* TS2.0 bug */).idlType.origin.trim());
+                }
             }
         }
         else if (memberType.type === "attribute") {
@@ -345,7 +363,13 @@ function insertInterface(interfaceType: WebIDL2.InterfaceType, xmlDocument: Docu
             if (memberType.stringifier) {
                 property.setAttribute("stringifier", "1");
             }
-            property.setAttribute("type", (memberType as WebIDL2.AttributeMemberType /* TS2.0 bug */).idlType.origin.trim());
+            if ((memberType as WebIDL2.AttributeMemberType /* TS2.0 bug */).idlType.nullable) {
+                property.setAttribute("nullable", "1");
+                property.setAttribute("type", (memberType as WebIDL2.AttributeMemberType /* TS2.0 bug */).idlType.origin.trim().slice(0, -1));
+            }
+            else {
+                property.setAttribute("type", (memberType as WebIDL2.AttributeMemberType /* TS2.0 bug */).idlType.origin.trim());
+            }
             properties.appendChild(property);
         }
         else {
@@ -402,7 +426,13 @@ function getParamList(argumentTypes: WebIDL2.Arguments[], xmlDocument: Document)
         if (argumentType.optional) {
             param.setAttribute("optional", "1");
         }
-        param.setAttribute("type", argumentType.idlType.origin.trim());
+        if (argumentType.idlType.nullable) {
+            param.setAttribute("nullable", "1");
+            param.setAttribute("type", argumentType.idlType.origin.trim().slice(0, -1));
+        }
+        else {
+            param.setAttribute("type", argumentType.idlType.origin.trim());
+        }
         if (argumentType.variadic) {
             param.setAttribute("variadic", "1");
         }
