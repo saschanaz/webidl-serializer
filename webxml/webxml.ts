@@ -291,7 +291,7 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
         }
         else if (extAttr.name === "NamedConstructor") {
             const namedConstructor = document.createElement("named-constructor");
-            namedConstructor.setAttribute("name", extAttr.rhs.value);
+            namedConstructor.setAttribute("name", extAttr.rhs.value as string);
             for (const param of getParamList(extAttr.arguments)) {
                 namedConstructor.appendChild(param);
             }
@@ -307,7 +307,7 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
             interfaceEl.appendChild(constructor);
         }
         else if (extAttr.name === "Global") {
-            interfaceEl.setAttribute("global", extAttr.rhs.value);
+            interfaceEl.setAttribute("global", extAttr.rhs.value.toString());
         }
         else if (extAttr.name === "PrimaryGlobal") {
             interfaceEl.setAttribute("primary-global", "Window");
@@ -450,8 +450,14 @@ function createEnum(enumType: WebIDL2.EnumType) {
 
 function createTypedef(typedefType: WebIDL2.TypedefType) {
     const typedef = document.createElement("typedef");
-    typedef.setAttribute("new-type", typedefType.idlType.origin.trim().replace(unionLineBreakRegex, " or "));
-    typedef.setAttribute("type", typedefType.name);
+    typedef.setAttribute("new-type", typedefType.name);
+    if (typedefType.idlType.nullable) {
+        typedef.setAttribute("nullable", "1");
+        typedef.setAttribute("type", typedefType.idlType.origin.trim().replace(unionLineBreakRegex, " or ").slice(0, -1));
+    }
+    else {
+        typedef.setAttribute("type", typedefType.idlType.origin.trim().replace(unionLineBreakRegex, " or "));
+    }
 
     return typedef;
 }

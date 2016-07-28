@@ -6,13 +6,18 @@
     type IDLMemberType = OperationMemberType | AttributeMemberType | ConstantMemberType | SerializerMemberType | IteratorMemberType | DeclarationMemberType;
 
     interface ParseOptions {
+        /** Boolean indicating whether the parser should accept typedefs as valid members of interfaces. */
         allowNestedTypedefs?: boolean;
     }
 
     interface WebIDLParseError {
+        /** the error message */
         message: string;
+        /** the line at which the error occurred. */
         line: number;
+        /** a short peek at the text at the point where the error happened */
         input: string;
+        /** the five tokens at the point of error, as understood by the tokeniser */
         tokens: ValueDescription[];
 
         toString(): string;
@@ -25,8 +30,9 @@
         nullable: boolean;
         /** Either false to indicate that it is not an array, or a number for the level of array nesting. */
         array: number | boolean;
-        /** Boolean indicating whether this is a union type or not. */
+        /**  It contains booleans that are true if the given array depth contains nullable elements, and false otherwise */
         nullableArray: boolean[] | null;
+        /** Boolean indicating whether this is a union type or not. */
         union: boolean;
         /** In most cases, this will just be a string with the type name.
         If the type is a union, then this contains an array of the types it unites.
@@ -236,22 +242,40 @@
 
     interface Arguments {
         default: ValueDescription;
+        /** True if the argument is optional. */
         optional: boolean;
+        /** True if the argument is variadic. */
         variadic: boolean;
+        /** An IDL Type describing the type of the argument. */
         idlType: IDLTypeDescription;
+        /** The argument's name. */
         name: string;
+        /** A list of extended attributes. */
         extAttrs: ExtendedAttributes[];
     }
 
     interface ExtendedAttributes {
+        /** The extended attribute's name. */
         name: string;
+        /** If the extended attribute takes arguments or if its right-hand side does they are listed here. */
         arguments: Arguments[];
-        rhs: Token;
+        /** If there is a right-hand side, this will capture its type ("identifier" or "identifier-list") and its value. */
+        rhs: ExtendedAttributeRightHandSideIdentifier | ExtendedAttributeRightHandSideIdentifierList;
     }
 
     interface Token {
         type: "float" | "integer" | "identifier" | "string" | "whitespace" | "other";
         value: string;
+    }
+
+    interface ExtendedAttributeRightHandSideIdentifier {
+        type: "identifier";
+        value: string;
+    }
+
+    interface ExtendedAttributeRightHandSideIdentifierList {
+        type: "identifier-list"
+        value: string[];
     }
 
     interface ValueDescription {
