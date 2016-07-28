@@ -325,6 +325,12 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
         else if (extAttr.name === "PrimaryGlobal") {
             interfaceEl.setAttribute("primary-global", "Window");
         }
+        else if (extAttr.name === "OverrideBuiltins") {
+            interfaceEl.setAttribute("override-builtins", "1");
+        }
+        else if (extAttr.name === "LegacyUnenumerableNamedProperties") {
+            // do nothing, just continue
+        }
         else if (extAttr.name === "Exposed") {
             interfaceEl.setAttribute("sn:exposed", extAttr.rhs.value.toString());
         }
