@@ -222,9 +222,15 @@ function insertDictionary(dictionaryType: WebIDL2.DictionaryType, xmlDocument: D
         const member = xmlDocument.createElement("member");
         member.setAttribute("name", memberType.name);
         if (memberType.default) {
-            member.setAttribute("default", memberType.default.value);
+            member.setAttribute("default", getValueString(memberType.default));
         }
-        member.setAttribute("type", memberType.idlType.origin.trim());
+        if (memberType.idlType.nullable) {
+            member.setAttribute("nullable", "1");
+            member.setAttribute("type", memberType.idlType.origin.trim().slice(0, -1));
+        }
+        else {
+            member.setAttribute("type", memberType.idlType.origin.trim());
+        }
         members.appendChild(member);
     }
 
@@ -292,7 +298,7 @@ function insertInterface(interfaceType: WebIDL2.InterfaceType, xmlDocument: Docu
             else {
                 constant.setAttribute("type", memberType.idlType.trim());
             }
-            constant.setAttribute("value", memberType.value.value);
+            constant.setAttribute("value", getValueString(memberType.value));
 
             constants.appendChild(constant);
         }
@@ -423,6 +429,9 @@ function getParamList(argumentTypes: WebIDL2.Arguments[], xmlDocument: Document)
     for (const argumentType of argumentTypes) {
         const param = xmlDocument.createElement("param");
         param.setAttribute("name", argumentType.name);
+        if (argumentType.default) {
+            param.setAttribute("default", getValueString(argumentType.default));
+        }
         if (argumentType.optional) {
             param.setAttribute("optional", "1");
         }
@@ -440,6 +449,24 @@ function getParamList(argumentTypes: WebIDL2.Arguments[], xmlDocument: Document)
     }
     return paramList;
 }
+
+function getValueString(typePair: WebIDL2.ValueDescription) {
+    if (typePair.type === "string") {
+        return `"${typePair.value}"`;
+    }
+    else if (typePair.type === "null") {
+        return "null";
+    }
+    else if (typePair.type === "number" || typePair.type === "boolean") {
+        return '' + typePair.type;
+    }
+    else if (typePair.type === "sequence") {
+        return "[]"; // always empty array
+    }
+    else {
+        throw new Error(`Unknown value string typed ${typePair.type}`);
+    }
+};
 
 function createWebIDLXMLDocument(title: string, originUrl: string) {
     const xmlns = "http://schemas.microsoft.com/ie/webidl-xml"

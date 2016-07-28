@@ -13,7 +13,7 @@
         message: string;
         line: number;
         input: string;
-        tokens: TypePair[];
+        tokens: ValueDescription[];
 
         toString(): string;
     }
@@ -82,7 +82,7 @@
         /** Boolean indicating whether this is a required field. */
         required: boolean;
         /** A default value, absent if there is none. */
-        default: TypePair | null;
+        default: ValueDescription | null;
     }
 
     interface ExceptionType {
@@ -106,7 +106,7 @@
         /** A list of extended attributes. */
         extAttrs: ExtendedAttributes[];
         /** A default value, absent if there is none. */
-        default: TypePair;
+        default: ValueDescription;
     }
 
     interface EnumType {
@@ -196,7 +196,7 @@
         /** The name of the constant. */
         name: string;
         /** The constant value */
-        value: TypePair;
+        value: ValueDescription;
         /** A list of extended attributes. */
         extAttrs: ExtendedAttributes[];
     }
@@ -235,6 +235,7 @@
     }
 
     interface Arguments {
+        default: ValueDescription;
         optional: boolean;
         variadic: boolean;
         idlType: IDLTypeDescription;
@@ -245,14 +246,18 @@
     interface ExtendedAttributes {
         name: string;
         arguments: Arguments[];
-        rhs: TypePair;
+        rhs: Token;
     }
 
-    interface TypePair {
-        type: "string" | "number" | "boolean" | "null" | "Infinity" | "NaN" | "sequence";
-        value: string | null;
-        negative: boolean | null;
+    interface Token {
+        type: "float" | "integer" | "identifier" | "string" | "whitespace" | "other";
+        value: string;
+    }
 
+    interface ValueDescription {
+        type: "string" | "number" | "boolean" | "null" | "Infinity" | "NaN" | "sequence";
+        value: string | any[] | null;
+        negative: boolean | null;
     }
 
     interface DeclarationMemberType {
