@@ -29,6 +29,11 @@ const exportList: ExportRemoteDescription[] = [
         hasIdlIndex: true
     },
     {
+        url: "https://cdn.rawgit.com/w3c/uievents/gh-pages/sections/event-types.txt",
+        title: "UI Events",
+        hasIdlIndex: false
+    },
+    {
         url: "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom-view/Overview.bs",
         title: "CSSOM View Module",
         hasIdlIndex: false
@@ -285,6 +290,8 @@ function createDictionary(dictionaryType: WebIDL2.DictionaryType) {
         }
         members.appendChild(member);
     }
+
+    dictionary.appendChild(members);
 
     return dictionary;
 }
