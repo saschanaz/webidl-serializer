@@ -134,30 +134,44 @@ function exportIDLSnippets(result: FetchResult) {
         try {
             const snippet = createIDLSnippetContentContainer();
             const parsed = WebIDL2.parse(item);
+            const implementsMap = new Map<string, Element[]>();
 
             for (const rootItem of parsed) {
-                /*
-                TODO: create a JS object that contains WebIDL-XML child element array so that they later can be merged to a single document
-                */
                 /*
                 implements: if the IDL snippet has target interface or partial interface, then insert <implements> into it
                 if not, create a new partial interface that contains <implements>
                 */
-                //if (rootItem.type === "implements") {
-                //    const implementEl = xmlDocument.createElement("implements");
-                //    implementEl.textContent = rootItem.implements;
-                //    if (!implementsMap.has(rootItem.target)) {
-                //        implementsMap.set(rootItem.target, [implementEl]);
-                //    }
-                //    else {
-                //        implementsMap.get(rootItem.target).push(implementEl);
-                //    }
-                //}
-                //else {
-                insert(rootItem, snippet);
-                //}
-                
+                if (rootItem.type === "implements") {
+                    const implementEl = document.createElement("implements");
+                    implementEl.textContent = rootItem.implements;
+                    if (!implementsMap.has(rootItem.target)) {
+                        implementsMap.set(rootItem.target, [implementEl]);
+                    }
+                    else {
+                        implementsMap.get(rootItem.target).push(implementEl);
+                    }
+                }
+                else {
+                    insert(rootItem, snippet);
+                }
             }
+
+            for (const entry of implementsMap.entries()) {
+                let interfaceEl = snippet.interfaces.filter(item => item.getAttribute("name") === entry[0])[0];
+                if (!interfaceEl) {
+                    interfaceEl = snippet.mixinInterfaces.filter(item => item.getAttribute("name") === entry[0])[0];
+                }
+                if (!interfaceEl) {
+                    interfaceEl = document.createElement("interface");
+                    interfaceEl.setAttribute("name", entry[0]);
+                    snippet.mixinInterfaces.push(interfaceEl);
+                }
+
+                for (const implementsEl of entry[1]) {
+                    interfaceEl.appendChild(implementsEl);
+                }
+            }
+
             snippets.push(snippet);
         }
         catch (err) {
