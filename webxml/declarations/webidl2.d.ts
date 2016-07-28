@@ -1,9 +1,9 @@
 ﻿declare module "webidl2" {
-    function parse(str: string, options?: ParseOptions): IDLRootTypes[];
+    function parse(str: string, options?: ParseOptions): IDLRootType[];
 
-    type IDLRootTypes = InterfaceType | CallbackType | DictionaryType | ExceptionType | EnumType | TypedefType | ImplementsType;
+    type IDLRootType = InterfaceType | CallbackType | DictionaryType | ExceptionType | EnumType | TypedefType | ImplementsType;
 
-    type IDLMemberTypes = OperationMemberType | AttributeMemberType | ConstantMemberType | SerializerMemberType | IteratorMemberType | DeclarationMemberType;
+    type IDLMemberType = OperationMemberType | AttributeMemberType | ConstantMemberType | SerializerMemberType | IteratorMemberType | DeclarationMemberType;
 
     interface ParseOptions {
         allowNestedTypedefs?: boolean;
@@ -45,7 +45,7 @@
         /** A boolean indicating whether it's a partial interface. */
         partial: boolean;
         /** An array of interface members (attributes, operations, etc.). Empty if there are none. */
-        members: IDLMemberTypes[];
+        members: IDLMemberType[];
         /** A string giving the name of an interface this one inherits from, null otherwise. */
         inheritance: string | null;
         /** A list of extended attributes. */
