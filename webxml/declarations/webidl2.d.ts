@@ -5,6 +5,8 @@
 
     type IDLMemberType = OperationMemberType | AttributeMemberType | ConstantMemberType | SerializerMemberType | IteratorMemberType | DeclarationMemberType;
 
+    type DeclarationMemberType = SingularDeclarationMemberType | MaplikeDeclarationMemberType;
+
     interface ParseOptions {
         /** Boolean indicating whether the parser should accept typedefs as valid members of interfaces. */
         allowNestedTypedefs?: boolean;
@@ -284,10 +286,19 @@
         negative: boolean | null;
     }
 
-    interface DeclarationMemberType {
-        type: "maplike" | "legacyiterable" | "iterable" | "setlike"
-        /** An IDL Type (or an array of two types) representing the declared type arguments. */
-        idlType: IDLTypeDescription | IDLTypeDescription[];
+    interface SingularDeclarationMemberType extends DeclarationMemberTypeBase {
+        type: "legacyiterable" | "iterable" | "setlike";
+        /** An IDL Type representing the declared type arguments. */
+        idlType: IDLTypeDescription;
+    }
+
+    interface MaplikeDeclarationMemberType extends DeclarationMemberTypeBase {
+        type: "maplike";
+        /** An array of two IDL Types representing the declared type arguments. */
+        idlType: IDLTypeDescription[];
+    }
+
+    interface DeclarationMemberTypeBase {
         /** Whether the maplike or setlike is declared as read only. */
         readonly: boolean;
         /** A list of extended attributes. */

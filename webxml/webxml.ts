@@ -9,7 +9,6 @@ import * as fspromise from "./fspromise";
 
 const impl = new DOMImplementation();
 const unionLineBreakRegex = / or[\s]*/g;
-const sn = "http://saschanaz.github.io/ts/webidl-xml-ext/";
 const document = impl.createDocument("http://example.com/", "global", null);
 
 interface ExportRemoteDescription {
@@ -312,6 +311,9 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
         else if (extAttr.name === "PrimaryGlobal") {
             interfaceEl.setAttribute("primary-global", "Window");
         }
+        else if (extAttr.name === "Exposed") {
+            interfaceEl.setAttribute("sn:exposed", extAttr.rhs.value.toString());
+        }
         else {
             console.log(`(TODO) Skipping extended attribute ${extAttr.name}`);
         }
@@ -321,7 +323,10 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
     const constants = document.createElement("constants");
     const methods = document.createElement("methods");
     const properties = document.createElement("properties");
+    const declarations = document.createElement("sn:declarations");
 
+    // TODO: separate member processor function
+    // TODO: process extAttr for members
     for (const memberType of interfaceType.members) {
         if (memberType.type === "const") {
             const constant = document.createElement("constant");
@@ -414,6 +419,9 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
             }
             properties.appendChild(property);
         }
+        else if (memberType.type === "iterable") {
+            declarations.appendChild(createIterableDeclarationMember(memberType));
+        }
         else {
             console.log(`Skipped type ${memberType.type}`);
             // TODO: other member types
@@ -432,7 +440,17 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
     if (properties.childNodes.length) {
         interfaceEl.appendChild(properties);
     }
+    if (declarations.childNodes.length) {
+        interfaceEl.appendChild(declarations);
+    }
     return interfaceEl;
+}
+
+function createIterableDeclarationMember(declarationMemberType: WebIDL2.SingularDeclarationMemberType) {
+    const iterable = document.createElement("sn:iterable");
+    iterable.setAttribute("type", declarationMemberType.idlType.origin.trim());
+    // TODO: extAttr
+    return iterable;
 }
 
 function createEnum(enumType: WebIDL2.EnumType) {
@@ -516,7 +534,7 @@ function createWebIDLXMLDocument(title: string, originUrl: string, snippetConten
     doc.documentElement.setAttribute("xmlns", xmlns); // xmldom bug #97
     doc.documentElement.setAttributeNS(xmlns, "xmlns:xsi", xsi);
     doc.documentElement.setAttributeNS(xsi, "xsi:schemaLocation", "http://schemas.microsoft.com/ie/webidl-xml webidl-xml-schema.xsd");
-    doc.documentElement.setAttributeNS(xmlns, "xmlns:sn", sn);
+    doc.documentElement.setAttributeNS(xmlns, "xmlns:sn", "http://saschanaz.github.io/ts/webidl-xml-ext/");
 
     appendChildrenAs(doc, "callback-functions", snippetContent.callbackFunctions);
     appendChildrenAs(doc, "callback-interfaces", snippetContent.callbackInterfaces);
