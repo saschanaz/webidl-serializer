@@ -30,7 +30,7 @@ const exportList: ExportRemoteDescription[] = [
     },
     {
         url: "https://cdn.rawgit.com/w3c/uievents/gh-pages/sections/event-types.txt",
-        title: "UI Events",
+        title: "UI Events Specification",
         hasIdlIndex: false
     },
     {
@@ -42,6 +42,16 @@ const exportList: ExportRemoteDescription[] = [
         url: "https://notifications.spec.whatwg.org/",
         title: "Notifications API",
         hasIdlIndex: true
+    },
+    {
+        url: "http://www.w3.org/TR/pointerevents/",
+        title: "Pointer Events",
+        hasIdlIndex: false
+    },
+    {
+        url: "https://cdn.rawgit.com/w3c/touch-events/gh-pages/index.html",
+        title: "Touch Events - Level 2",
+        hasIdlIndex: false
     }
 ];
 
