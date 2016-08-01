@@ -34,6 +34,11 @@ const exportList: ExportRemoteDescription[] = [
         hasIdlIndex: false
     },
     {
+        url: "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom/Overview.bs",
+        title: "CSS Object Model (CSSOM)",
+        hasIdlIndex: false
+    },
+    {
         url: "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom-view/Overview.bs",
         title: "CSSOM View Module",
         hasIdlIndex: false
@@ -85,6 +90,9 @@ async function run() {
     console.log("Fetching from web...");
     const results = await Promise.all(exportList.map(async (description): Promise<FetchResult> => {
         const response = await fetch(description.url);
+        if (!response.ok) {
+            throw new Error(`Fetching failed: HTTP ${response.status} ${response.statusText}`);
+        }
         const result: FetchResult = {
             description,
             html: await response.text()
@@ -355,7 +363,7 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
             // do nothing, just continue
         }
         else if (extAttr.name === "Exposed") {
-            interfaceEl.setAttribute("sn:exposed", extAttr.rhs.value.toString());
+            interfaceEl.setAttribute("tags", extAttr.rhs.value.toString());
         }
         else {
             console.log(`(TODO) Skipping extended attribute ${extAttr.name}`);
