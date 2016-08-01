@@ -551,7 +551,7 @@ function getValueString(typePair: WebIDL2.ValueDescription) {
         return "null";
     }
     else if (typePair.type === "number" || typePair.type === "boolean") {
-        return '' + typePair.type;
+        return '' + typePair.value;
     }
     else if (typePair.type === "sequence") {
         return "[]"; // always empty array
