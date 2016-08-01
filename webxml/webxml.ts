@@ -612,3 +612,16 @@ function createIDLSnippetContentContainer(): IDLSnippetContent {
         typedefs: []
     }
 }
+
+function jsdomEnv(html: string) {
+    return new Promise<Window>((resolve, reject) => {
+        jsdom.env(html, (error, window) => {
+            if (error) {
+                reject(error);
+            }
+            else {
+                resolve(window);
+            }
+        });
+    });
+}
