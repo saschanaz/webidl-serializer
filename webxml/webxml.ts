@@ -183,13 +183,13 @@ function exportIDLSnippets(idlTexts: string[], origin: FetchResult) {
             for (const entry of implementsMap.entries()) {
                 let interfaceEl = snippet.interfaces.filter(item => item.getAttribute("name") === entry[0])[0];
                 if (!interfaceEl) {
-                    interfaceEl = snippet.mixinInterfaces.filter(item => item.getAttribute("name") === entry[0])[0];
+                    interfaceEl = snippet.interfaces.filter(item => item.getAttribute("name") === entry[0])[0];
                 }
                 if (!interfaceEl) {
                     interfaceEl = document.createElement("interface");
                     interfaceEl.setAttribute("extends", "Object");
                     interfaceEl.setAttribute("name", entry[0]);
-                    snippet.mixinInterfaces.push(interfaceEl);
+                    snippet.interfaces.push(interfaceEl);
                 }
 
                 for (const implementsEl of entry[1]) {
