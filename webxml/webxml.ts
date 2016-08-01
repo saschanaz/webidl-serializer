@@ -187,6 +187,7 @@ function exportIDLSnippets(idlTexts: string[], origin: FetchResult) {
                 }
                 if (!interfaceEl) {
                     interfaceEl = document.createElement("interface");
+                    interfaceEl.setAttribute("extends", "Object");
                     interfaceEl.setAttribute("name", entry[0]);
                     snippet.mixinInterfaces.push(interfaceEl);
                 }
@@ -251,7 +252,7 @@ function insert(webidl: WebIDL2.IDLRootType, snippetContent: IDLSnippetContent) 
         snippetContent.enums.push(createEnum(webidl));
     }
     else if (webidl.type === "interface") {
-        if (webidl.partial) {
+        if (webidl.extAttrs.filter(extAttr => extAttr.name === "NoInterfaceObject").length) {
             snippetContent.mixinInterfaces.push(createInterface(webidl));
         }
         else {
@@ -288,9 +289,7 @@ function createCallbackFunction(callbackType: WebIDL2.CallbackType) {
 function createDictionary(dictionaryType: WebIDL2.DictionaryType) {
     const dictionary = document.createElement("dictionary");
     dictionary.setAttribute("name", dictionaryType.name);
-    if (dictionaryType.inheritance) {
-        dictionary.setAttribute("extends", dictionaryType.inheritance);
-    }
+    dictionary.setAttribute("extends", dictionaryType.inheritance || "Object");
 
     const members = document.createElement("members");
 
@@ -318,9 +317,7 @@ function createDictionary(dictionaryType: WebIDL2.DictionaryType) {
 function createInterface(interfaceType: WebIDL2.InterfaceType) {
     const interfaceEl = document.createElement("interface");
     interfaceEl.setAttribute("name", interfaceType.name);
-    if (interfaceType.inheritance) {
-        interfaceEl.setAttribute("extends", interfaceType.inheritance);
-    }
+    interfaceEl.setAttribute("extends", interfaceType.inheritance || "Object");
     for (const extAttr of interfaceType.extAttrs) {
         if (extAttr.name === "NoInterfaceObject") {
             interfaceEl.setAttribute("no-interface-object", "1");
