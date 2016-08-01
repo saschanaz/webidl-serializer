@@ -76,6 +76,10 @@ interface FetchResult {
     description: ExportRemoteDescription;
     html: string;
 }
+interface IDLExportResult {
+    snippets: IDLSnippetContent[];
+    origin: FetchResult;
+}
 
 async function run() {
     console.log("Fetching from web...");
@@ -89,36 +93,39 @@ async function run() {
         return result;
     }));
     console.log("Fetching complete 100%");
-
-    const docs = convertAsMultipleDocument(results);
-
+    
     if (!(await fspromise.exists("built"))) {
         await fspromise.makeDirectory("built");
     }
 
+    // Exporting IDL texts
+    const exports = await Promise.all(results.map(result => exportIDLs(result)));
+
     const serializer = new XMLSerializer();
-    for (const doc of docs) {
+    for (const doc of convertAsMultipleDocument(exports)) {
         const path = `built/${doc.documentElement.getAttribute("name")}.webidl.xml`;
         await fspromise.writeFile(path, prettifyXml(serializer.serializeToString(doc)));
-        console.log(`Exporting as ${path}`);
+        console.log(`Writing as ${path}`);
     }
+    console.log("Conversion as merged one as all.webidl.xml");
+    await fspromise.writeFile("built/all.webidl.xml", prettifyXml(serializer.serializeToString(convertAsSingleDocument(exports))));
     console.log("Finished 100%");
 }
 
-function convertAsSingleDocument(results: FetchResult[]) {
+function convertAsSingleDocument(exports: IDLExportResult[]) {
     const snippets: IDLSnippetContent[] = [];
-    for (const result of results) {
-        snippets.push(...exportIDLSnippets(result));
+    for (const item of exports) {
+        snippets.push(...item.snippets);
     }
     return createWebIDLXMLDocument("WHATWG/W3C Web Platform", "null", mergeIDLSnippets(snippets));
 }
 
-function convertAsMultipleDocument(results: FetchResult[]) {
+function convertAsMultipleDocument(exports: IDLExportResult[]) {
     const docs: Document[] = [];
-    for (const result of results) {
-        console.log(`Conversion started for ${result.description.title}`);
-        const doc = createWebIDLXMLDocument(result.description.title, result.description.url, mergeIDLSnippets(exportIDLSnippets(result)));
-        console.log(`Conversion finished for ${result.description.title}`);
+    for (const item of exports) {
+        console.log(`Conversion started for ${item.origin.description.title}`);
+        const doc = createWebIDLXMLDocument(item.origin.description.title, item.origin.description.url, mergeIDLSnippets(item.snippets));
+        console.log(`Conversion finished for ${item.origin.description.title}`);
         docs.push(doc);
     }
     return docs;
@@ -128,24 +135,26 @@ function isWebIDLParseError(err: any): err is WebIDL2.WebIDLParseError {
     return Array.isArray(err.tokens);
 }
 
-function exportIDLs(result: FetchResult) {
-    const idlElements = Array.from(jsdom.jsdom(result.html).querySelectorAll("pre.idl"));
+async function exportIDLs(result: FetchResult): Promise<IDLExportResult> {
+    const win = await jsdomEnv(result.html);
+    const idlElements = Array.from(win.document.querySelectorAll("pre.idl"));
     if (!idlElements.length) {
         throw new Error(`No IDLs in ${result.description.url}`)
     }
-    if (result.description.hasIdlIndex) {
-        return [idlElements[idlElements.length - 1].textContent];
-    }
-    else {
-        return Array.from(jsdom.jsdom(result.html).querySelectorAll("pre.idl")).map(element => element.textContent)
-    }
+    const idlTexts = 
+        result.description.hasIdlIndex ? [idlElements[idlElements.length - 1].textContent] :
+            idlElements.map(element => element.textContent);
+    
+    win.close();
+    return {
+        snippets: exportIDLSnippets(idlTexts, result), origin: result
+    };
 }
 
-function exportIDLSnippets(result: FetchResult) {
-    const idls = exportIDLs(result);
+function exportIDLSnippets(idlTexts: string[], origin: FetchResult) {
     const snippets: IDLSnippetContent[] = [];
 
-    for (const item of idls) {
+    for (const item of idlTexts) {
         try {
             const snippet = createIDLSnippetContentContainer();
             const parsed = WebIDL2.parse(item);
@@ -192,10 +201,10 @@ function exportIDLSnippets(result: FetchResult) {
         catch (err) {
             if (isWebIDLParseError(err)) {
                 const werr = err as WebIDL2.WebIDLParseError; // type narrowing does not work :(
-                console.warn(`A syntax error has found in a WebIDL code line ${werr.line} from ${result.description.url}:\n${werr.input}\n`);
+                console.warn(`A syntax error has found in a WebIDL code line ${werr.line} from ${origin.description.url}:\n${werr.input}\n`);
             }
             else {
-                err.message = `An error occured while converting WebIDL from ${result.description.url}: ${err.message}`
+                err.message = `An error occured while converting WebIDL from ${origin.description.url}: ${err.message}`
                 throw err;
             }
         }
