@@ -437,12 +437,12 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
                 method.setAttribute("type", "DOMString");
             }
             else {
-                if ((memberType as WebIDL2.OperationMemberType /* TS2.0 bug */).idlType.nullable) {
+                if (memberType.idlType.nullable) {
                     method.setAttribute("nullable", "1");
-                    method.setAttribute("type", (memberType as WebIDL2.OperationMemberType /* TS2.0 bug */).idlType.origin.trim().slice(0, -1));
+                    method.setAttribute("type", memberType.idlType.origin.trim().slice(0, -1));
                 }
                 else {
-                    method.setAttribute("type", (memberType as WebIDL2.OperationMemberType /* TS2.0 bug */).idlType.origin.trim());
+                    method.setAttribute("type", memberType.idlType.origin.trim());
                 }
             }
         }
@@ -461,12 +461,12 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
             if (memberType.stringifier) {
                 property.setAttribute("stringifier", "1");
             }
-            if ((memberType as WebIDL2.AttributeMemberType /* TS2.0 bug */).idlType.nullable) {
+            if (memberType.idlType.nullable) {
                 property.setAttribute("nullable", "1");
-                property.setAttribute("type", (memberType as WebIDL2.AttributeMemberType /* TS2.0 bug */).idlType.origin.trim().slice(0, -1));
+                property.setAttribute("type", memberType.idlType.origin.trim().slice(0, -1));
             }
             else {
-                property.setAttribute("type", (memberType as WebIDL2.AttributeMemberType /* TS2.0 bug */).idlType.origin.trim());
+                property.setAttribute("type", memberType.idlType.origin.trim());
             }
             properties.appendChild(property);
         }
