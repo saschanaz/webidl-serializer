@@ -28,12 +28,12 @@ export function readFile(path: string) {
 
 export function writeFile(path: string, content: string) {
     return new Promise<void>((resolve, reject) => {
-        fs.writeFile(path, content, (err, data) => {
+        fs.writeFile(path, content, err => {
             if (err) {
                 reject(err);
             }
             else {
-                resolve(data);
+                resolve();
             }
         });
     });
