@@ -41,7 +41,7 @@ export function writeFile(path: string, content: string) {
 
 export function makeDirectory(path: string) {
     return new Promise<void>((resolve, reject) => {
-        fs.mkdir(path, (err) => {
+        fs.mkdir(path, err => {
             if (err) {
                 reject(err);
             }
@@ -54,9 +54,7 @@ export function makeDirectory(path: string) {
 
 export function exists(path: string) {
     return new Promise<boolean>((resolve, reject) => {
-        fs.exists(path, (exists) => {
-            resolve(exists);
-        });
+        fs.exists(path, exists => resolve(exists));
     });
 }
 
