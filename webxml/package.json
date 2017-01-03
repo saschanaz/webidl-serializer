@@ -2,7 +2,7 @@
   "name": "webxml",
   "version": "0.0.0",
   "description": "webxml",
-  "main": "app.js",
+  "main": "webxml.js",
   "author": {
     "email": "saschanaz@outlook.com",
     "name": "saschanaz"
