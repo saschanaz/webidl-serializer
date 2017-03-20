@@ -326,6 +326,13 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
     const interfaceEl = document.createElement("interface");
     interfaceEl.setAttribute("name", interfaceType.name);
     interfaceEl.setAttribute("extends", interfaceType.inheritance || "Object");
+
+    let constructorList = interfaceEl;
+    if (interfaceType.extAttrs.filter(extAttr => extAttr.name === "Constructor").length > 1) {
+        constructorList = document.createElement("constructors");
+        interfaceEl.appendChild(constructorList);
+    }
+
     for (const extAttr of interfaceType.extAttrs) {
         if (extAttr.name === "NoInterfaceObject") {
             interfaceEl.setAttribute("no-interface-object", "1");
@@ -348,7 +355,7 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
                     constructor.appendChild(param);
                 }
             }
-            interfaceEl.appendChild(constructor);
+            constructorList.appendChild(constructor);
         }
         else if (extAttr.name === "Global") {
             interfaceEl.setAttribute("global", extAttr.rhs.value.toString());
