@@ -355,7 +355,7 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
             // do nothing, just continue
         }
         else if (extAttr.name === "Exposed") {
-            interfaceEl.setAttribute("tags", extAttr.rhs.value.toString());
+            interfaceEl.setAttribute("exposed", Array.isArray(extAttr.rhs.value) ? extAttr.rhs.value.join(' ') : extAttr.rhs.value);
         }
         else {
             console.log(`(TODO) Skipping extended attribute ${extAttr.name}`);
