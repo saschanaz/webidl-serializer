@@ -17,49 +17,6 @@ interface ExportRemoteDescription {
     hasIdlIndex: boolean;
 }
 
-const exportList: ExportRemoteDescription[] = [
-    {
-        url: "https://html.spec.whatwg.org/",
-        title: "HTML",
-        hasIdlIndex: false
-    },
-    {
-        url: "https://dom.spec.whatwg.org/",
-        title: "DOM",
-        hasIdlIndex: true
-    },
-    {
-        url: "https://cdn.rawgit.com/w3c/uievents/gh-pages/sections/event-types.txt",
-        title: "UI Events Specification",
-        hasIdlIndex: false
-    },
-    {
-        url: "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom/Overview.bs",
-        title: "CSS Object Model (CSSOM)",
-        hasIdlIndex: false
-    },
-    {
-        url: "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom-view/Overview.bs",
-        title: "CSSOM View Module",
-        hasIdlIndex: false
-    },
-    {
-        url: "https://notifications.spec.whatwg.org/",
-        title: "Notifications API",
-        hasIdlIndex: true
-    },
-    {
-        url: "http://www.w3.org/TR/pointerevents/",
-        title: "Pointer Events",
-        hasIdlIndex: false
-    },
-    {
-        url: "https://cdn.rawgit.com/w3c/touch-events/gh-pages/index.html",
-        title: "Touch Events - Level 2",
-        hasIdlIndex: false
-    }
-];
-
 run().catch(err => console.error(err));
 
 interface FetchResult {
@@ -72,6 +29,13 @@ interface IDLExportResult {
 }
 
 async function run() {
+    /*
+    TODO: load event information from browser.webidl.xml and create a dictionary
+    to apply it on all.webidl.xml
+    */
+    console.log("Loading spec list...");
+    const exportList: ExportRemoteDescription[] = JSON.parse(await fspromise.readFile("specs.json"));
+
     console.log("Fetching from web...");
     const results = await Promise.all(exportList.map(async (description): Promise<FetchResult> => {
         const response = await fetch(description.url);
@@ -197,7 +161,7 @@ function exportIDLSnippets(idlTexts: string[], origin: FetchResult) {
                 console.warn(`A syntax error has found in a WebIDL code line ${err.line} from ${origin.description.url}:\n${err.input}\n`);
             }
             else {
-                err.message = `An error occured while converting WebIDL from ${origin.description.url}: ${err.message}`
+                err.message = `An error occured while converting WebIDL from ${origin.description.url}: ${err.message}`;
                 throw err;
             }
         }

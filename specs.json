@@ -1,0 +1,42 @@
+[
+    {
+        "url": "https://html.spec.whatwg.org/",
+        "title": "HTML",
+        "hasIdlIndex": false
+    },
+    {
+        "url": "https://dom.spec.whatwg.org/",
+        "title": "DOM",
+        "hasIdlIndex": true
+    },
+    {
+        "url": "https://cdn.rawgit.com/w3c/uievents/gh-pages/sections/event-types.txt",
+        "title": "UI Events Specification",
+        "hasIdlIndex": false
+    },
+    {
+        "url": "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom/Overview.bs",
+        "title": "CSS Object Model (CSSOM)",
+        "hasIdlIndex": false
+    },
+    {
+        "url": "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom-view/Overview.bs",
+        "title": "CSSOM View Module",
+        "hasIdlIndex": false
+    },
+    {
+        "url": "https://notifications.spec.whatwg.org/",
+        "title": "Notifications API",
+        "hasIdlIndex": true
+    },
+    {
+        "url": "http://www.w3.org/TR/pointerevents/",
+        "title": "Pointer Events",
+        "hasIdlIndex": false
+    },
+    {
+        "url": "https://cdn.rawgit.com/w3c/touch-events/gh-pages/index.html",
+        "title": "Touch Events - Level 2",
+        "hasIdlIndex": false
+    }
+]
