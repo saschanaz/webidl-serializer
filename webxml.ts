@@ -343,7 +343,7 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
             constructorList.appendChild(constructor);
         }
         else if (extAttr.name === "Global") {
-            interfaceEl.setAttribute("global", extAttr.rhs.value.toString());
+            interfaceEl.setAttribute("global", Array.isArray(extAttr.rhs.value) ? extAttr.rhs.value.join(' ') : extAttr.rhs.value);
         }
         else if (extAttr.name === "PrimaryGlobal") {
             interfaceEl.setAttribute("primary-global", "Window");
