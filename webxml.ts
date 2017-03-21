@@ -194,8 +194,7 @@ function exportIDLSnippets(idlTexts: string[], origin: FetchResult) {
         }
         catch (err) {
             if (isWebIDLParseError(err)) {
-                const werr = err as WebIDL2.WebIDLParseError; // type narrowing does not work :(
-                console.warn(`A syntax error has found in a WebIDL code line ${werr.line} from ${origin.description.url}:\n${werr.input}\n`);
+                console.warn(`A syntax error has found in a WebIDL code line ${err.line} from ${origin.description.url}:\n${err.input}\n`);
             }
             else {
                 err.message = `An error occured while converting WebIDL from ${origin.description.url}: ${err.message}`
