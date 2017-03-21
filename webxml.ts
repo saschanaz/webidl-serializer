@@ -60,21 +60,6 @@ const exportList: ExportRemoteDescription[] = [
     }
 ];
 
-//const result = WebIDL2.parse(`
-//interface CustomElementsRegistry {
-//[CEReactions]
-//void          define(DOMString name,
-//                                        Function constructor,
-//                                        optional ElementDefinitionOptions options);
-//any           get(DOMString name);
-//Promise<void> whenDefined(DOMString name);
-//};
-
-//dictionary ElementDefinitionOptions {
-//DOMString extends;
-//};`);
-//console.log(convert(result));
-
 run().catch(err => console.error(err));
 
 interface FetchResult {
