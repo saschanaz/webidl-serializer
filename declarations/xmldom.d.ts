@@ -7,4 +7,8 @@
         prototype: XMLSerializer;
         new (): XMLSerializer;
     };
+    var DOMParser: {
+        prototype: DOMParser;
+        new (): DOMParser;
+    }
 }

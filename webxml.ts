@@ -1,7 +1,7 @@
 ﻿"use strict";
 
 import * as WebIDL2 from "webidl2";
-import { XMLSerializer, DOMImplementation } from "xmldom";
+import { XMLSerializer, DOMImplementation, DOMParser } from "xmldom";
 import * as jsdom from "jsdom";
 import fetch from "node-fetch";
 import prettifyXml = require("prettify-xml");
@@ -28,11 +28,35 @@ interface IDLExportResult {
     origin: FetchResult;
 }
 
+function getChildrenArray(element: Element) {
+    // xmldom does not support element.children
+    return Array.from(element.childNodes).filter(node => node.nodeType === 1) as Element[];
+}
+
+function getChild(element: Element, childTagName: string) {
+    // xmldom does not support getChildrenByTagName
+    return getChildrenArray(element).filter(element => element.tagName.toLowerCase() === childTagName.toLowerCase())[0];
+}
+
+function getChildWithProperty(element: Element, childTagName: string, property: string, value: string) {
+    // xmldom does not support querySelector
+    return getChildrenArray(element).filter(element => element.tagName.toLowerCase() === childTagName.toLowerCase() && element.getAttribute(property) === value)[0];
+}
+
+function cloneNode(node: Node) {
+    // xmldom does not support cloneNode
+    const newNode = document.createElement(node.nodeName);
+    for (const attribute of Array.from(node.attributes)) {
+        newNode.setAttribute(attribute.name, attribute.value);
+    }
+    return newNode;
+}
+
 async function run() {
     /*
-    TODO: load event information from browser.webidl.xml and create a dictionary
-    to apply it on all.webidl.xml
+    TODO: load event information from browser.webidl.xml and create interfaces for each event target
     */
+
     console.log("Loading spec list...");
     const exportList: ExportRemoteDescription[] = JSON.parse(await fspromise.readFile("specs.json"));
 
@@ -55,8 +79,14 @@ async function run() {
         await fspromise.makeDirectory("built");
     }
 
+    console.log("Exporting and parsing WebIDL...");
+
     // Exporting IDL texts
     const exports = await Promise.all(results.map(result => exportIDLs(result)));
+
+    console.log("Loading event information from MSEdge data...");
+    const msedgeEvents = filterEventInformation(new DOMParser().parseFromString(await fspromise.readFile("supplements/browser.webidl.xml"), "text/xml"));
+    transferEventInformation(exports, msedgeEvents);
 
     const serializer = new XMLSerializer();
     for (const doc of convertAsMultipleDocument(exports)) {
@@ -67,6 +97,73 @@ async function run() {
     console.log("Conversion as merged one as all.webidl.xml");
     await fspromise.writeFile("built/all.webidl.xml", prettifyXml(serializer.serializeToString(convertAsSingleDocument(exports))));
     console.log("Finished 100%");
+}
+
+function filterEventInformation(edgeIdl: Document) {
+    const eventMap = new Map<string, Element | string>();
+
+    const interfaceSets = [edgeIdl.getElementsByTagName("interfaces")[0], edgeIdl.getElementsByTagName("mixin-interfaces")[0]];
+    for (const interfaceSet of interfaceSets) {
+        for (const interfaceEl of Array.from(interfaceSet.getElementsByTagName("interface"))) {
+            const events = interfaceEl.getElementsByTagName("events")[0];
+
+            const properties = interfaceEl.getElementsByTagName("properties")[0];
+
+            if (properties) {
+                for (const property of getChildrenArray(properties)) {
+                    const handler = property.getAttribute("event-handler");
+                    if (!handler) {
+                        continue;
+                    }
+
+                    eventMap.set(`${interfaceEl.getAttribute("name")}:${property.getAttribute("name")}`, (events && getChildWithProperty(events, "event", "name", handler)) || handler);
+                }
+            }
+        }
+    }
+
+    return eventMap;
+}
+
+function transferEventInformation(exports: IDLExportResult[], eventMap: Map<string, Element>) {
+    for (const exportResult of exports) {
+        for (const snippet of exportResult.snippets) {
+            for (const interfaceEl of snippet.interfaces) {
+                const properties = getChild(interfaceEl, "properties");
+                if (!properties) {
+                    continue;
+                }
+
+                let events: Element;
+
+                for (const property of getChildrenArray(properties)) {
+                    if (property.getAttribute("type") === "EventHandler") {
+                        const key = `${interfaceEl.getAttribute("name")}:${property.getAttribute("name")}`;
+                        const event = eventMap.get(key);
+                        if (!event) {
+                            console.warn(`WARNING: no event data for ${key}`);
+                            continue;
+                        }
+                        
+                        if (typeof event !== "string") {
+                            property.setAttribute("event-handler", event.getAttribute("name"));
+                            if (!events) {
+                                events = document.createElement("events");
+                            }
+                            events.appendChild(cloneNode(event));
+                        }
+                        else {
+                            property.setAttribute("event-handler", event);
+                        }
+                    }
+                }
+
+                if (events) {
+                    interfaceEl.appendChild(events);
+                }
+            }
+        }
+    }
 }
 
 function convertAsSingleDocument(exports: IDLExportResult[]) {
