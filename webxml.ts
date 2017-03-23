@@ -125,7 +125,7 @@ function filterEventInformation(edgeIdl: Document) {
     return eventMap;
 }
 
-function transferEventInformation(exports: IDLExportResult[], eventMap: Map<string, Element>) {
+function transferEventInformation(exports: IDLExportResult[], eventMap: Map<string, string | Element>) {
     for (const exportResult of exports) {
         for (const snippet of exportResult.snippets) {
             for (const interfaceEl of snippet.interfaces) {
@@ -305,7 +305,7 @@ function insert(webidl: WebIDL2.IDLRootType, snippetContent: IDLSnippetContent) 
         snippetContent.enums.push(createEnum(webidl));
     }
     else if (webidl.type === "interface") {
-        if (webidl.extAttrs.filter(extAttr => extAttr.name === "NoInterfaceObject").length) {
+        if (webidl.partial || webidl.extAttrs.filter(extAttr => extAttr.name === "NoInterfaceObject").length) {
             snippetContent.mixinInterfaces.push(createInterface(webidl));
         }
         else {
@@ -376,6 +376,10 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
     if (interfaceType.extAttrs.filter(extAttr => extAttr.name === "Constructor").length > 1) {
         constructorList = document.createElement("constructors");
         interfaceEl.appendChild(constructorList);
+    }
+
+    if (interfaceType.partial) {
+        interfaceEl.setAttribute("no-interface-object", "1");
     }
 
     for (const extAttr of interfaceType.extAttrs) {
