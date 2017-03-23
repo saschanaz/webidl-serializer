@@ -241,8 +241,9 @@ function exportIDLSnippets(idlTexts: string[], origin: FetchResult) {
                 }
                 if (!interfaceEl) {
                     interfaceEl = document.createElement("interface");
-                    interfaceEl.setAttribute("extends", "Object");
                     interfaceEl.setAttribute("name", entry[0]);
+                    interfaceEl.setAttribute("extends", "Object");
+                    interfaceEl.setAttribute("no-interface-object", "1");
                     snippet.interfaces.push(interfaceEl);
                 }
 
