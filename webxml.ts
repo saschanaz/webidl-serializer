@@ -296,7 +296,7 @@ function mergePartialInterfaces(snippet: IDLSnippetContent) {
 
 /** Has side effect on its arguments */
 function mergeInterface(baseInterface: Element, partialInterface: Element) {
-    // TODO: merge constructors
+    // TODO: merge constructors, merge implements
 
     mergeInterfaceMemberSet(baseInterface, partialInterface, "anonymous-methods");
     mergeInterfaceMemberSet(baseInterface, partialInterface, "constants");
@@ -436,12 +436,6 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
     interfaceEl.setAttribute("name", interfaceType.name);
     interfaceEl.setAttribute("extends", interfaceType.inheritance || "Object");
 
-    let constructorList = interfaceEl;
-    if (interfaceType.extAttrs.filter(extAttr => extAttr.name === "Constructor").length > 1) {
-        constructorList = document.createElement("constructors");
-        interfaceEl.appendChild(constructorList);
-    }
-
     if (interfaceType.partial) {
         interfaceEl.setAttribute("no-interface-object", "1");
         interfaceEl.setAttribute("sn:partial", "1");
@@ -469,7 +463,7 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
                     constructor.appendChild(param);
                 }
             }
-            constructorList.appendChild(constructor);
+            interfaceEl.appendChild(constructor);
         }
         else if (extAttr.name === "Global") {
             interfaceEl.setAttribute("global", Array.isArray(extAttr.rhs.value) ? extAttr.rhs.value.join(' ') : extAttr.rhs.value);
