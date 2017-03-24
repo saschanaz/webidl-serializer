@@ -296,13 +296,22 @@ function mergePartialInterfaces(snippet: IDLSnippetContent) {
 
 /** Has side effect on its arguments */
 function mergeInterface(baseInterface: Element, partialInterface: Element) {
-    // TODO: merge constructors, merge implements
-
     mergeInterfaceMemberSet(baseInterface, partialInterface, "anonymous-methods");
     mergeInterfaceMemberSet(baseInterface, partialInterface, "constants");
     mergeInterfaceMemberSet(baseInterface, partialInterface, "methods");
     mergeInterfaceMemberSet(baseInterface, partialInterface, "properties");
+    mergeInterfaceMemberSet(baseInterface, partialInterface, "events");
     mergeInterfaceMemberSet(baseInterface, partialInterface, "sn:declarations");
+
+    const children = getChildrenArray(partialInterface);
+    for (const constructor of Array.from(children.filter(child => child.nodeName.toLowerCase() === "constructor"))) {
+        partialInterface.removeChild(constructor);
+        baseInterface.appendChild(constructor);
+    }
+    for (const implementsEl of Array.from(children.filter(child => child.nodeName.toLowerCase() === "implements"))) {
+        partialInterface.removeChild(implementsEl);
+        baseInterface.appendChild(implementsEl);
+    }
 }
 
 /** Has side effect on its arguments */
