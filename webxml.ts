@@ -237,13 +237,11 @@ function exportIDLSnippets(idlTexts: string[], origin: FetchResult) {
             for (const entry of implementsMap.entries()) {
                 let interfaceEl = snippet.interfaces.filter(item => item.getAttribute("name") === entry[0])[0];
                 if (!interfaceEl) {
-                    interfaceEl = snippet.interfaces.filter(item => item.getAttribute("name") === entry[0])[0];
-                }
-                if (!interfaceEl) {
                     interfaceEl = document.createElement("interface");
                     interfaceEl.setAttribute("name", entry[0]);
                     interfaceEl.setAttribute("extends", "Object");
                     interfaceEl.setAttribute("no-interface-object", "1");
+                    interfaceEl.setAttribute("sn:partial", "1");
                     snippet.interfaces.push(interfaceEl);
                 }
 
@@ -268,6 +266,69 @@ function exportIDLSnippets(idlTexts: string[], origin: FetchResult) {
     return snippets;
 }
 
+/** merge partial interfaces to create a unique name-object relation for TSJS-lib-generator */
+function mergePartialInterfaces(snippet: IDLSnippetContent) {
+    const interfaces = [...snippet.interfaces, ...snippet.mixinInterfaces];
+    const baseInterfaces = interfaces.filter(interfaceEl => !interfaceEl.getAttribute("sn:partial"));
+    const baseInterfaceMap = new Map(baseInterfaces.map<[string, Element]>(baseInterface => [baseInterface.getAttribute("name"), baseInterface]));
+
+    for (const interfaceEl of interfaces) {
+        if (!interfaceEl.getAttribute("sn:partial")) {
+            // Not a partial interface element
+            continue;
+        }
+
+        const name = interfaceEl.getAttribute("name");
+        const baseInterface = baseInterfaceMap.get(name);
+
+        if (!baseInterface) {
+            baseInterfaces.push(interfaceEl);
+            baseInterfaceMap.set(name, interfaceEl);
+            continue;
+        }
+
+        mergeInterface(baseInterface, interfaceEl);
+    }
+    
+    snippet.interfaces = baseInterfaces.filter(interfaceEl => !interfaceEl.getAttribute("no-interface-object"));
+    snippet.mixinInterfaces = baseInterfaces.filter(interfaceEl => interfaceEl.getAttribute("no-interface-object"));
+}
+
+/** Has side effect on its arguments */
+function mergeInterface(baseInterface: Element, partialInterface: Element) {
+    // TODO: merge constructors
+
+    mergeInterfaceMemberSet(baseInterface, partialInterface, "anonymous-methods");
+    mergeInterfaceMemberSet(baseInterface, partialInterface, "constants");
+    mergeInterfaceMemberSet(baseInterface, partialInterface, "methods");
+    mergeInterfaceMemberSet(baseInterface, partialInterface, "properties");
+    mergeInterfaceMemberSet(baseInterface, partialInterface, "sn:declarations");
+}
+
+/** Has side effect on its arguments */
+function mergeInterfaceMemberSet(baseInterface: Element, partialInterface: Element, setName: string) {
+    let baseSet = getChild(baseInterface, setName);
+    const partialSet = getChild(partialInterface, setName);
+
+    if (!partialSet) {
+        // no merge occurs
+        return;
+    }
+
+    if (!baseSet) {
+        baseSet = document.createElement(setName);
+    }
+
+    for (const member of getChildrenArray(partialSet)) {
+        partialSet.removeChild(member);
+        baseSet.appendChild(member);
+    }
+
+    if (!getChild(baseInterface, setName) /* no parentNode support on xmldom */) {
+        baseInterface.appendChild(baseSet);
+    }
+}
+
 function mergeIDLSnippets(snippets: IDLSnippetContent[]) {
     const merger = createIDLSnippetContentContainer();
 
@@ -280,6 +341,8 @@ function mergeIDLSnippets(snippets: IDLSnippetContent[]) {
         merger.mixinInterfaces.push(...snippet.mixinInterfaces);
         merger.typedefs.push(...snippet.typedefs);
     }
+
+    mergePartialInterfaces(merger);
 
     return merger;
 }
@@ -381,6 +444,7 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
 
     if (interfaceType.partial) {
         interfaceEl.setAttribute("no-interface-object", "1");
+        interfaceEl.setAttribute("sn:partial", "1");
     }
 
     for (const extAttr of interfaceType.extAttrs) {
