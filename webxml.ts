@@ -55,10 +55,7 @@ function cloneNode(node: Node) {
 function cloneNodeDeep(node: Node): Node {
     const newNode = cloneNode(node);
     for (const child of Array.from(node.childNodes)) {
-        if (child.nodeType === 3) {
-            newNode.appendChild(cloneNode(child));
-        }
-        else {
+        if (child.nodeType === 1) {
             newNode.appendChild(cloneNodeDeep(child));
         }
     }
@@ -180,7 +177,7 @@ function exportEventPropertyMap(edgeIdl: Document) {
 function transferEventInformation(exports: IDLExportResult[], eventMap: Map<string, string>) {
     for (const exportResult of exports) {
         for (const snippet of exportResult.snippets) {
-            for (const interfaceEl of snippet.interfaces) {
+            for (const interfaceEl of [...snippet.interfaces, ...snippet.mixinInterfaces]) {
                 const properties = getChild(interfaceEl, "properties");
                 if (!properties) {
                     continue;
