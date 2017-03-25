@@ -52,6 +52,19 @@ function cloneNode(node: Node) {
     return newNode;
 }
 
+function cloneNodeDeep(node: Node): Node {
+    const newNode = cloneNode(node);
+    for (const child of Array.from(node.childNodes)) {
+        if (child.nodeType === 3) {
+            newNode.appendChild(cloneNode(child));
+        }
+        else {
+            newNode.appendChild(cloneNodeDeep(child));
+        }
+    }
+    return newNode;
+}
+
 async function run() {
     /*
     TODO: load event information from browser.webidl.xml and create interfaces for each event target
@@ -85,8 +98,11 @@ async function run() {
     const exports = await Promise.all(results.map(result => exportIDLs(result)));
 
     console.log("Loading event information from MSEdge data...");
-    const msedgeEvents = filterEventInformation(new DOMParser().parseFromString(await fspromise.readFile("supplements/browser.webidl.xml"), "text/xml"));
-    transferEventInformation(exports, msedgeEvents);
+    const msedgeEventDocument = new DOMParser().parseFromString(await fspromise.readFile("supplements/browser.webidl.xml"), "text/xml");
+    const msedgeEventHandlers = exportEventHandlers(msedgeEventDocument);
+    const msedgeEventPropertyMap = exportEventPropertyMap(msedgeEventDocument);
+    transferEventInformation(exports, msedgeEventPropertyMap);
+    exports.push(msedgeEventHandlers);
 
     const serializer = new XMLSerializer();
     for (const doc of convertAsMultipleDocument(exports)) {
@@ -99,14 +115,50 @@ async function run() {
     console.log("Finished 100%");
 }
 
-function filterEventInformation(edgeIdl: Document) {
-    const eventMap = new Map<string, Element | string>();
+function exportEventHandlers(edgeIdl: Document): IDLExportResult {
+    const snippet = createIDLSnippetContentContainer();
 
     const interfaceSets = [edgeIdl.getElementsByTagName("interfaces")[0], edgeIdl.getElementsByTagName("mixin-interfaces")[0]];
     for (const interfaceSet of interfaceSets) {
         for (const interfaceEl of Array.from(interfaceSet.getElementsByTagName("interface"))) {
             const events = interfaceEl.getElementsByTagName("events")[0];
 
+            if (!events) {
+                continue;
+            }
+
+            const partialInterfaceEl = document.createElement("interface");
+            partialInterfaceEl.setAttribute("name", interfaceEl.getAttribute("name"));
+            partialInterfaceEl.setAttribute("no-interface-object", "1");
+            partialInterfaceEl.setAttribute("sn:partial", "1");
+            partialInterfaceEl.appendChild(cloneNodeDeep(events));
+            snippet.mixinInterfaces.push(partialInterfaceEl);
+        }
+    }
+
+    return {
+        origin: {
+            description: {
+                url: "",
+                title: "MSEdge Event Information",
+                hasIdlIndex: false,
+            },
+            html: ""
+        },
+        snippets: [snippet]
+    }
+    
+    // TODO: export each <events> object and create a separate IDLExportResult
+    // filterEventInformation map should now just contain handler names (so Map<string, string>)
+    // and transferEventInformation should not append <events> object to <interface>
+}
+
+function exportEventPropertyMap(edgeIdl: Document) {
+    const eventPropertyMap = new Map<string, string>();
+
+    const interfaceSets = [edgeIdl.getElementsByTagName("interfaces")[0], edgeIdl.getElementsByTagName("mixin-interfaces")[0]];
+    for (const interfaceSet of interfaceSets) {
+        for (const interfaceEl of Array.from(interfaceSet.getElementsByTagName("interface"))) {
             const properties = interfaceEl.getElementsByTagName("properties")[0];
 
             if (properties) {
@@ -116,16 +168,16 @@ function filterEventInformation(edgeIdl: Document) {
                         continue;
                     }
 
-                    eventMap.set(`${interfaceEl.getAttribute("name")}:${property.getAttribute("name")}`, (events && getChildWithProperty(events, "event", "name", handler)) || handler);
+                    eventPropertyMap.set(`${interfaceEl.getAttribute("name")}:${property.getAttribute("name")}`, handler);
                 }
             }
         }
     }
 
-    return eventMap;
+    return eventPropertyMap;
 }
 
-function transferEventInformation(exports: IDLExportResult[], eventMap: Map<string, string | Element>) {
+function transferEventInformation(exports: IDLExportResult[], eventMap: Map<string, string>) {
     for (const exportResult of exports) {
         for (const snippet of exportResult.snippets) {
             for (const interfaceEl of snippet.interfaces) {
@@ -133,8 +185,6 @@ function transferEventInformation(exports: IDLExportResult[], eventMap: Map<stri
                 if (!properties) {
                     continue;
                 }
-
-                let events: Element;
 
                 for (const property of getChildrenArray(properties)) {
                     if (property.getAttribute("type") === "EventHandler") {
@@ -145,21 +195,8 @@ function transferEventInformation(exports: IDLExportResult[], eventMap: Map<stri
                             continue;
                         }
                         
-                        if (typeof event !== "string") {
-                            property.setAttribute("event-handler", event.getAttribute("name"));
-                            if (!events) {
-                                events = document.createElement("events");
-                            }
-                            events.appendChild(cloneNode(event));
-                        }
-                        else {
-                            property.setAttribute("event-handler", event);
-                        }
+                        property.setAttribute("event-handler", event);
                     }
-                }
-
-                if (events) {
-                    interfaceEl.appendChild(events);
                 }
             }
         }
