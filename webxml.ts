@@ -288,7 +288,7 @@ function exportIDLSnippets(idlTexts: string[], origin: FetchResult) {
         }
         catch (err) {
             if (isWebIDLParseError(err)) {
-                console.warn(`A syntax error has found in a WebIDL code line ${err.line} from ${origin.description.url}:\n${err.input}\n`);
+                console.warn(`A syntax error has found in a WebIDL code line ${err.line} from ${origin.description.url}:\n${err.message}\n${err.input}\n`);
             }
             else {
                 err.message = `An error occured while converting WebIDL from ${origin.description.url}: ${err.message}`;
@@ -655,9 +655,18 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
     return interfaceEl;
 }
 
-function createIterableDeclarationMember(declarationMemberType: WebIDL2.SingularDeclarationMemberType) {
+function createIterableDeclarationMember(declarationMemberType: WebIDL2.IterableDeclarationMemberType) {
     const iterable = document.createElement("sn:iterable");
-    iterable.setAttribute("type", declarationMemberType.idlType.origin.trim());
+
+    if (Array.isArray(declarationMemberType.idlType)) {
+        // key, value
+        iterable.setAttribute("keytype", declarationMemberType.idlType[1].origin.trim());
+        iterable.setAttribute("type", declarationMemberType.idlType[1].origin.trim());
+    }
+    else {
+        // value only
+        iterable.setAttribute("type", declarationMemberType.idlType.origin.trim());   
+    }
     // TODO: extAttr
     return iterable;
 }

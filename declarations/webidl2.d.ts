@@ -5,7 +5,7 @@
 
     type IDLMemberType = OperationMemberType | AttributeMemberType | ConstantMemberType | SerializerMemberType | IteratorMemberType | DeclarationMemberType;
 
-    type DeclarationMemberType = SingularDeclarationMemberType | MaplikeDeclarationMemberType;
+    type DeclarationMemberType = SingularDeclarationMemberType | IterableDeclarationMemberType | MaplikeDeclarationMemberType;
 
     interface ParseOptions {
         /** Boolean indicating whether the parser should accept typedefs as valid members of interfaces. */
@@ -287,9 +287,14 @@
     }
 
     interface SingularDeclarationMemberType extends DeclarationMemberTypeBase {
-        type: "legacyiterable" | "iterable" | "setlike";
+        type: "legacyiterable" | "setlike";
         /** An IDL Type representing the declared type arguments. */
         idlType: IDLTypeDescription;
+    }
+
+    interface IterableDeclarationMemberType extends DeclarationMemberTypeBase {
+        type: "iterable";
+        idlType: IDLTypeDescription | IDLTypeDescription[];
     }
 
     interface MaplikeDeclarationMemberType extends DeclarationMemberTypeBase {
