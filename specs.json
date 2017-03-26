@@ -46,8 +46,20 @@
         "title": "DOM Parsing and Serialization"
     },
     {
+        "url": "http://www.w3.org/TR/encrypted-media/",
+        "title": "Encrypted Media Extensions"
+    },
+    {
         "url": "https://fetch.spec.whatwg.org/",
         "title": "Fetch"
+    },
+    {
+        "url": "http://www.w3.org/TR/FileAPI/",
+        "title": "File"
+    },
+    {
+        "url": "http://www.w3.org/TR/gamepad/",
+        "title": "Gamepad"
     },
     {
         "url": "http://www.w3.org/TR/geolocation-API/",
@@ -70,7 +82,11 @@
         "title": "Media Capture and Streams"
     },
     {
-        "url": "http://www.w3.org/TR/navigation-timing/",
+        "url": "http://www.w3.org/TR/media-source/",
+        "title": "Media Source Extensions"
+    },
+    {
+        "url": "http://www.w3.org/TR/navigation-timing-2/",
         "title": "Navigation Timing"
     },
     {
@@ -91,6 +107,19 @@
         "title": "Pointer Events"
     },
     {
+        "url": "http://www.w3.org/TR/push-api/",
+        "title": "Push"
+    },
+    {
+        "url": "http://www.w3.org/TR/selection-api/",
+        "title": "Selection"
+    },
+    {
+        "url": "https://w3c.github.io/ServiceWorker/",
+        "title": "Service Workers",
+        "comment": "2015 Working Draft has no class on <pre>"
+    },
+    {
         "url": "http://www.w3.org/TR/2016/CR-SVG2-20160915/idl.html",
         "title": "SVG 2",
         "hasIdlIndex": true,
@@ -103,6 +132,11 @@
     {
         "url": "https://cdn.rawgit.com/w3c/uievents/gh-pages/sections/event-types.txt",
         "title": "UI Events Specification"
+    },
+    {
+        "url": "https://url.spec.whatwg.org/",
+        "title": "URL",
+        "hasIdlIndex": true
     },
     {
         "url": "http://www.w3.org/TR/user-timing/",
