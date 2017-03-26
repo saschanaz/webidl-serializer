@@ -9,21 +9,20 @@
         "title": "Beacon"
     },
     {
-        "url": "https://html.spec.whatwg.org/",
-        "title": "HTML"
+        "url": "http://www.w3.org/TR/clipboard-apis/",
+        "title": "Clipboard"
     },
     {
-        "url": "https://dom.spec.whatwg.org/",
-        "title": "DOM",
-        "hasIdlIndex": true
+        "url": "https://drafts.csswg.org/css-animations/",
+        "title": "CSS Animations",
+        "hasIdlIndex": true,
+        "comment": "2013 Working Draft uses non-standard partial interface syntax."
     },
     {
-        "url": "http://www.w3.org/TR/orientation-event/",
-        "title": "Device Orientation"
-    },
-    {
-        "url": "https://cdn.rawgit.com/w3c/uievents/gh-pages/sections/event-types.txt",
-        "title": "UI Events Specification"
+        "url": "https://drafts.csswg.org/css-conditional-3/",
+        "title": "CSS Conditional Rules Module",
+        "hasIdlIndex": true,
+        "comment": "2013 Working Draft incorrectly omits semicolons after interfaces."
     },
     {
         "url": "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom/Overview.bs",
@@ -34,24 +33,45 @@
         "title": "CSSOM View Module"
     },
     {
-        "url": "https://drafts.csswg.org/css-conditional-3/",
-        "title": "CSS Conditional Rules Module",
-        "hasIdlIndex": true,
-        "comment": "2013 Working Draft incorrectly omits semicolons after interfaces."
+        "url": "http://www.w3.org/TR/orientation-event/",
+        "title": "Device Orientation"
     },
     {
-        "url": "https://drafts.csswg.org/css-animations/",
-        "title": "CSS Animations",
-        "hasIdlIndex": true,
-        "comment": "2013 Working Draft uses non-standard partial interface syntax."
+        "url": "https://dom.spec.whatwg.org/",
+        "title": "DOM",
+        "hasIdlIndex": true
     },
     {
-        "url": "http://www.w3.org/TR/clipboard-apis/",
-        "title": "Clipboard"
+        "url": "http://www.w3.org/TR/DOM-Parsing/",
+        "title": "DOM Parsing and Serialization"
+    },
+    {
+        "url": "https://fetch.spec.whatwg.org/",
+        "title": "Fetch"
+    },
+    {
+        "url": "http://www.w3.org/TR/geolocation-API/",
+        "title": "Geolocation"
+    },
+    {
+        "url": "http://www.w3.org/TR/hr-time-2/",
+        "title": "High Resolution Time"
+    },
+    {
+        "url": "https://html.spec.whatwg.org/",
+        "title": "HTML"
     },
     {
         "url": "http://www.w3.org/TR/IndexedDB/",
         "title": "Indexed Database"
+    },
+    {
+        "url": "http://www.w3.org/TR/mediacapture-streams/",
+        "title": "Media Capture and Streams"
+    },
+    {
+        "url": "http://www.w3.org/TR/navigation-timing/",
+        "title": "Navigation Timing"
     },
     {
         "url": "https://notifications.spec.whatwg.org/",
@@ -59,61 +79,38 @@
         "hasIdlIndex": true
     },
     {
-        "url": "http://www.w3.org/TR/mediacapture-streams/",
-        "title": "Media Capture and Streams"
-    },
-    {
-        "url": "http://www.w3.org/TR/pointerevents/",
-        "title": "Pointer Events"
-    },
-    {
-        "url": "http://www.w3.org/TR/touch-events/",
-        "title": "Touch Events"
-    },
-    {
-        "url": "http://www.w3.org/TR/DOM-Parsing/",
-        "title": "DOM Parsing and Serialization"
-    },
-    {
-        "url": "https://xhr.spec.whatwg.org/",
-        "title": "XMLHttpRequest",
-        "hasIdlIndex": true
-    },
-    {
-        "url": "https://fetch.spec.whatwg.org/",
-        "title": "Fetch"
-    },
-    {
-        "url": "http://www.w3.org/TR/webaudio/",
-        "title": "Web Audio"
-    },
-    {
-        "url": "http://www.w3.org/TR/webrtc/",
-        "title": "WebRTC 1.0"
-    },
-    {
         "url": "http://draft.ortc.org/",
         "title": "Object RTC"
-    },
-    {
-        "url": "http://www.w3.org/TR/hr-time-2/",
-        "title": "High Resolution Time"
-    },
-    {
-        "url": "http://www.w3.org/TR/user-timing/",
-        "title": "User Timing"
-    },
-    {
-        "url": "http://www.w3.org/TR/navigation-timing/",
-        "title": "Navigation Timing"
     },
     {
         "url": "http://www.w3.org/TR/performance-timeline-2/",
         "title": "Performance Timeline"
     },
     {
-        "url": "http://www.w3.org/TR/geolocation-API/",
-        "title": "Geolocation"
+        "url": "http://www.w3.org/TR/pointerevents/",
+        "title": "Pointer Events"
+    },
+    {
+        "url": "http://www.w3.org/TR/2016/CR-SVG2-20160915/idl.html",
+        "title": "SVG 2",
+        "hasIdlIndex": true,
+        "comment": "SVG 1 has deprecated 'module' syntax which is not supported by webidl2"
+    },
+    {
+        "url": "http://www.w3.org/TR/touch-events/",
+        "title": "Touch Events"
+    },
+    {
+        "url": "https://cdn.rawgit.com/w3c/uievents/gh-pages/sections/event-types.txt",
+        "title": "UI Events Specification"
+    },
+    {
+        "url": "http://www.w3.org/TR/user-timing/",
+        "title": "User Timing"
+    },
+    {
+        "url": "http://www.w3.org/TR/webaudio/",
+        "title": "Web Audio"
     },
     {
         "url": "http://www.w3.org/TR/webauthn/",
@@ -125,14 +122,17 @@
         "title": "Web Cryptography"
     },
     {
+        "url": "http://www.w3.org/TR/webrtc/",
+        "title": "WebRTC 1.0"
+    },
+    {
         "url": "https://www.khronos.org/registry/webgl/specs/latest/1.0/",
         "title": "WebGL 1.0 latest",
         "comment": "1.0.3 has incorrect WebIDL syntax (typedef cannot be in interface)"
     },
     {
-        "url": "http://www.w3.org/TR/2016/CR-SVG2-20160915/idl.html",
-        "title": "SVG 2",
-        "hasIdlIndex": true,
-        "comment": "SVG 1 has deprecated 'module' syntax which is not supported by webidl2"
+        "url": "https://xhr.spec.whatwg.org/",
+        "title": "XMLHttpRequest",
+        "hasIdlIndex": true
     }
 ]
