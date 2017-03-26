@@ -1,8 +1,7 @@
 [
     {
         "url": "https://html.spec.whatwg.org/",
-        "title": "HTML",
-        "hasIdlIndex": false
+        "title": "HTML"
     },
     {
         "url": "https://dom.spec.whatwg.org/",
@@ -11,18 +10,15 @@
     },
     {
         "url": "https://cdn.rawgit.com/w3c/uievents/gh-pages/sections/event-types.txt",
-        "title": "UI Events Specification",
-        "hasIdlIndex": false
+        "title": "UI Events Specification"
     },
     {
         "url": "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom/Overview.bs",
-        "title": "CSS Object Model (CSSOM)",
-        "hasIdlIndex": false
+        "title": "CSS Object Model (CSSOM)"
     },
     {
         "url": "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom-view/Overview.bs",
-        "title": "CSSOM View Module",
-        "hasIdlIndex": false
+        "title": "CSSOM View Module"
     },
     {
         "url": "https://notifications.spec.whatwg.org/",
@@ -31,18 +27,15 @@
     },
     {
         "url": "http://www.w3.org/TR/pointerevents/",
-        "title": "Pointer Events",
-        "hasIdlIndex": false
+        "title": "Pointer Events"
     },
     {
         "url": "http://www.w3.org/TR/touch-events/",
-        "title": "Touch Events",
-        "hasIdlIndex": false
+        "title": "Touch Events"
     },
     {
         "url": "http://www.w3.org/TR/DOM-Parsing/",
-        "title": "DOM Parsing and Serialization",
-        "hasIdlIndex": false
+        "title": "DOM Parsing and Serialization"
     },
     {
         "url": "https://xhr.spec.whatwg.org/",
@@ -51,28 +44,43 @@
     },
     {
         "url": "https://fetch.spec.whatwg.org/",
-        "title": "Fetch",
-        "hasIdlIndex": false
+        "title": "Fetch"
     },
     {
         "url": "http://www.w3.org/TR/webaudio/",
-        "title": "Web Audio",
-        "hasIdlIndex": false
+        "title": "Web Audio"
     },
     {
         "url": "http://www.w3.org/TR/webrtc/",
-        "title": "WebRTC 1.0",
-        "hasIdlIndex": false
+        "title": "WebRTC 1.0"
+    },
+    {
+        "url": "http://draft.ortc.org/",
+        "title": "Object RTC"
+    },
+    {
+        "url": "http://www.w3.org/TR/hr-time-2/",
+        "title": "High Resolution Time"
+    },
+    {
+        "url": "http://www.w3.org/TR/user-timing/",
+        "title": "User Timing"
+    },
+    {
+        "url": "http://www.w3.org/TR/navigation-timing/",
+        "title": "Navigation Timing"
+    },
+    {
+        "url": "http://www.w3.org/TR/performance-timeline-2/",
+        "title": "Performance Timeline"
     },
     {
         "url": "http://www.w3.org/TR/geolocation-API/",
-        "title": "Geolocation",
-        "hasIdlIndex": false
+        "title": "Geolocation"
     },
     {
         "url": "https://www.khronos.org/registry/webgl/specs/latest/1.0/",
         "title": "WebGL 1.0 latest",
-        "hasIdlIndex": false,
         "comment": "1.0.3 has incorrect WebIDL syntax (typedef cannot be in interface)"
     },
     {

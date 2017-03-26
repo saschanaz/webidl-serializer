@@ -14,7 +14,7 @@ const document = impl.createDocument("http://example.com/", "global", null);
 interface ExportRemoteDescription {
     url: string;
     title: string;
-    hasIdlIndex: boolean;
+    hasIdlIndex?: boolean;
 }
 
 run().catch(err => console.error(err));
@@ -137,8 +137,7 @@ function exportEventHandlers(edgeIdl: Document): IDLExportResult {
         origin: {
             description: {
                 url: "",
-                title: "MSEdge Event Information",
-                hasIdlIndex: false,
+                title: "MSEdge Event Information"
             },
             html: ""
         },
