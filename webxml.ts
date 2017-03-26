@@ -34,7 +34,7 @@ function getChildrenArray(element: Element) {
 }
 
 function getChild(element: Element, childTagName: string) {
-    // xmldom does not support getChildrenByTagName
+    // xmldom does not support getElementsByTagName on Element
     return getChildrenArray(element).filter(element => element.tagName.toLowerCase() === childTagName.toLowerCase())[0];
 }
 
