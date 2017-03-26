@@ -50,6 +50,16 @@
         "hasIdlIndex": true
     },
     {
+        "url": "https://fetch.spec.whatwg.org/",
+        "title": "Fetch",
+        "hasIdlIndex": false
+    },
+    {
+        "url": "http://www.w3.org/TR/webaudio/",
+        "title": "Web Audio",
+        "hasIdlIndex": false
+    },
+    {
         "url": "https://www.khronos.org/registry/webgl/specs/latest/1.0/",
         "title": "WebGL 1.0 latest",
         "hasIdlIndex": false,
