@@ -35,8 +35,30 @@
         "hasIdlIndex": false
     },
     {
-        "url": "https://cdn.rawgit.com/w3c/touch-events/gh-pages/index.html",
-        "title": "Touch Events - Level 2",
+        "url": "http://www.w3.org/TR/touch-events/",
+        "title": "Touch Events",
         "hasIdlIndex": false
+    },
+    {
+        "url": "http://www.w3.org/TR/DOM-Parsing/",
+        "title": "DOM Parsing and Serialization",
+        "hasIdlIndex": false
+    },
+    {
+        "url": "https://xhr.spec.whatwg.org/",
+        "title": "XMLHttpRequest",
+        "hasIdlIndex": true
+    },
+    {
+        "url": "https://www.khronos.org/registry/webgl/specs/latest/1.0/",
+        "title": "WebGL 1.0 latest",
+        "hasIdlIndex": false,
+        "comment": "1.0.3 has incorrect WebIDL syntax (typedef cannot be in interface)"
+    },
+    {
+        "url": "http://www.w3.org/TR/2016/CR-SVG2-20160915/idl.html",
+        "title": "SVG 2",
+        "hasIdlIndex": true,
+        "comment": "SVG 1 has deprecated 'module' syntax which is not supported by webidl2"
     }
 ]
