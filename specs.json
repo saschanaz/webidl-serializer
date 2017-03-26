@@ -1,5 +1,14 @@
 [
     {
+        "url": "http://www.w3.org/TR/ambient-light/",
+        "title": "Ambient Light Sensor",
+        "hasIdlIndex": true
+    },
+    {
+        "url": "http://www.w3.org/TR/beacon/",
+        "title": "Beacon"
+    },
+    {
         "url": "https://html.spec.whatwg.org/",
         "title": "HTML"
     },
@@ -7,6 +16,10 @@
         "url": "https://dom.spec.whatwg.org/",
         "title": "DOM",
         "hasIdlIndex": true
+    },
+    {
+        "url": "http://www.w3.org/TR/orientation-event/",
+        "title": "Device Orientation"
     },
     {
         "url": "https://cdn.rawgit.com/w3c/uievents/gh-pages/sections/event-types.txt",
@@ -37,9 +50,17 @@
         "title": "Clipboard"
     },
     {
+        "url": "http://www.w3.org/TR/IndexedDB/",
+        "title": "Indexed Database"
+    },
+    {
         "url": "https://notifications.spec.whatwg.org/",
         "title": "Notifications API",
         "hasIdlIndex": true
+    },
+    {
+        "url": "http://www.w3.org/TR/mediacapture-streams/",
+        "title": "Media Capture and Streams"
     },
     {
         "url": "http://www.w3.org/TR/pointerevents/",
