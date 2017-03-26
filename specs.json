@@ -29,6 +29,10 @@
         "title": "CSS Object Model (CSSOM)"
     },
     {
+        "url": "https://drafts.csswg.org/css-transitions/",
+        "title": "CSS Transitions"
+    },
+    {
         "url": "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom-view/Overview.bs",
         "title": "CSSOM View Module"
     },
@@ -82,6 +86,10 @@
         "title": "Media Capture and Streams"
     },
     {
+        "url": "https://wicg.github.io/media-playback-quality/",
+        "title": "Media Playback Quality"
+    },
+    {
         "url": "http://www.w3.org/TR/media-source/",
         "title": "Media Source Extensions"
     },
@@ -99,6 +107,10 @@
         "title": "Object RTC"
     },
     {
+        "url": "http://www.w3.org/TR/payment-request/",
+        "title": "Payment Request"
+    },
+    {
         "url": "http://www.w3.org/TR/performance-timeline-2/",
         "title": "Performance Timeline"
     },
@@ -109,6 +121,10 @@
     {
         "url": "http://www.w3.org/TR/push-api/",
         "title": "Push"
+    },
+    {
+        "url": "http://www.w3.org/TR/resource-timing-1/",
+        "title": "Resource Timing"
     },
     {
         "url": "http://www.w3.org/TR/selection-api/",
@@ -163,6 +179,42 @@
         "url": "https://www.khronos.org/registry/webgl/specs/latest/1.0/",
         "title": "WebGL 1.0 latest",
         "comment": "1.0.3 has incorrect WebIDL syntax (typedef cannot be in interface)"
+    },
+    {
+        "url": "https://www.khronos.org/registry/webgl/extensions/WEBGL_compressed_texture_s3tc/",
+        "title": "WebGL WEBGL_compressed_texture_s3tc Extension"
+    },
+    {
+        "url": "https://www.khronos.org/registry/webgl/extensions/WEBGL_debug_renderer_info/",
+        "title": "WebGL WEBGL_debug_renderer_info Extension"
+    },
+    {
+        "url": "https://www.khronos.org/registry/webgl/extensions/WEBGL_depth_texture/",
+        "title": "WebGL WEBGL_depth_texture Extension"
+    },
+    {
+        "url": "https://www.khronos.org/registry/webgl/extensions/OES_element_index_uint/",
+        "title": "WebGL OES_element_index_uint Extension"
+    },
+    {
+        "url": "https://www.khronos.org/registry/webgl/extensions/OES_standard_derivatives/",
+        "title": "WebGL OES_standard_derivatives Extension"
+    },
+    {
+        "url": "https://www.khronos.org/registry/webgl/extensions/OES_texture_float/",
+        "title": "WebGL OES_texture_float Extension"
+    },
+    {
+        "url": "https://www.khronos.org/registry/webgl/extensions/OES_texture_float_linear/",
+        "title": "WebGL OES_texture_float_linear Extension"
+    },
+    {
+        "url": "https://www.khronos.org/registry/webgl/extensions/OES_texture_half_float/",
+        "title": "WebGL OES_texture_half_float Extension"
+    },
+    {
+        "url": "https://www.khronos.org/registry/webgl/extensions/OES_texture_half_float_linear/",
+        "title": "WebGL OES_texture_half_float_linear Extension"
     },
     {
         "url": "https://xhr.spec.whatwg.org/",
