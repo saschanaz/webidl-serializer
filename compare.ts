@@ -21,10 +21,15 @@ function extractInterfaceNames(doc: Document) {
 
 function compareArray(base: string[], comparand: string[]) {
     // naive algorithm
+    let count = 0;
     for (const item of base) {
         if (comparand.indexOf(item) === -1) {
+            count++;
             console.warn(`${item} is not found in comparand.`)
         }
+    }
+    if (count !== 0) {
+        console.warn(`Total: ${count} unmatched.`)
     }
 }
 
