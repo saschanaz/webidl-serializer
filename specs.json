@@ -60,6 +60,16 @@
         "hasIdlIndex": false
     },
     {
+        "url": "http://www.w3.org/TR/webrtc/",
+        "title": "WebRTC 1.0",
+        "hasIdlIndex": false
+    },
+    {
+        "url": "http://www.w3.org/TR/geolocation-API/",
+        "title": "Geolocation",
+        "hasIdlIndex": false
+    },
+    {
         "url": "https://www.khronos.org/registry/webgl/specs/latest/1.0/",
         "title": "WebGL 1.0 latest",
         "hasIdlIndex": false,

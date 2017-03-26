@@ -509,10 +509,15 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
             interfaceEl.appendChild(constructor);
         }
         else if (extAttr.name === "Global") {
-            interfaceEl.setAttribute("global", Array.isArray(extAttr.rhs.value) ? extAttr.rhs.value.join(' ') : extAttr.rhs.value);
+            if (!extAttr.rhs) {
+                interfaceEl.setAttribute("global", interfaceType.name);
+            }
+            else {
+                interfaceEl.setAttribute("global", (extAttr.rhs.value as string[]).join(' '));
+            }
         }
         else if (extAttr.name === "PrimaryGlobal") {
-            interfaceEl.setAttribute("primary-global", "Window");
+            interfaceEl.setAttribute("primary-global", interfaceType.name);
         }
         else if (extAttr.name === "OverrideBuiltins") {
             interfaceEl.setAttribute("override-builtins", "1");
