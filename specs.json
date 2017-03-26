@@ -21,6 +21,22 @@
         "title": "CSSOM View Module"
     },
     {
+        "url": "https://drafts.csswg.org/css-conditional-3/",
+        "title": "CSS Conditional Rules Module",
+        "hasIdlIndex": true,
+        "comment": "2013 Working Draft incorrectly omits semicolons after interfaces."
+    },
+    {
+        "url": "https://drafts.csswg.org/css-animations/",
+        "title": "CSS Animations",
+        "hasIdlIndex": true,
+        "comment": "2013 Working Draft uses non-standard partial interface syntax."
+    },
+    {
+        "url": "http://www.w3.org/TR/clipboard-apis/",
+        "title": "Clipboard"
+    },
+    {
         "url": "https://notifications.spec.whatwg.org/",
         "title": "Notifications API",
         "hasIdlIndex": true
@@ -77,6 +93,15 @@
     {
         "url": "http://www.w3.org/TR/geolocation-API/",
         "title": "Geolocation"
+    },
+    {
+        "url": "http://www.w3.org/TR/webauthn/",
+        "title": "Web Authentication",
+        "hasIdlIndex": true
+    },
+    {
+        "url": "http://www.w3.org/TR/WebCryptoAPI/",
+        "title": "Web Cryptography"
     },
     {
         "url": "https://www.khronos.org/registry/webgl/specs/latest/1.0/",

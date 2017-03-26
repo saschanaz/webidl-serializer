@@ -224,7 +224,7 @@ function isWebIDLParseError(err: any): err is WebIDL2.WebIDLParseError {
 
 async function exportIDLs(result: FetchResult): Promise<IDLExportResult> {
     const win = await jsdomEnv(result.html);
-    const idlElements = Array.from(win.document.querySelectorAll("pre.idl"));
+    const idlElements = Array.from(win.document.querySelectorAll("pre.idl,code.idl-code"));
     if (!idlElements.length) {
         throw new Error(`No IDLs in ${result.description.url}`)
     }
