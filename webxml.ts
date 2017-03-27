@@ -465,6 +465,9 @@ function createDictionary(dictionaryType: WebIDL2.DictionaryType) {
         else {
             member.setAttribute("type", memberType.idlType.origin.trim());
         }
+        if (memberType.required) {
+            member.setAttribute("required", "1");
+        }
         members.appendChild(member);
     }
 
