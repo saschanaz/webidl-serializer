@@ -1,9 +1,11 @@
 ﻿declare module "webidl2" {
     function parse(str: string, options?: ParseOptions): IDLRootType[];
 
-    type IDLRootType = InterfaceType | CallbackType | DictionaryType | ExceptionType | EnumType | TypedefType | ImplementsType;
+    type IDLRootType = InterfaceType | CallbackType | DictionaryType | ExceptionType | EnumType | TypedefType | ImplementsType | NamespaceType;
 
-    type IDLMemberType = OperationMemberType | AttributeMemberType | ConstantMemberType | SerializerMemberType | IteratorMemberType | DeclarationMemberType;
+    type IDLInterfaceMemberType = OperationMemberType | AttributeMemberType | ConstantMemberType | SerializerMemberType | IteratorMemberType | DeclarationMemberType;
+
+    type IDLNamespaceMemberType = OperationMemberType | AttributeMemberType;
 
     type DeclarationMemberType = SingularDeclarationMemberType | IterableDeclarationMemberType | MaplikeDeclarationMemberType;
 
@@ -53,7 +55,7 @@
         /** A boolean indicating whether it's a partial interface. */
         partial: boolean;
         /** An array of interface members (attributes, operations, etc.). Empty if there are none. */
-        members: IDLMemberType[];
+        members: IDLInterfaceMemberType[];
         /** A string giving the name of an interface this one inherits from, null otherwise. */
         inheritance: string | null;
         /** A list of extended attributes. */
@@ -137,6 +139,18 @@
         extAttrs: ExtendedAttributes[];
         /** A list of extended attributes that apply to the type rather than to the typedef as a whole. */
         typeExtAttrs: ExtendedAttributes[];
+    }
+
+    interface NamespaceType {
+        type: "namespace";
+        /** A boolean indicating whether it's a partial namespace. */
+        partial: boolean;
+        /** The enum's name. */
+        name: string;
+        /** An array of namespace members (attributes, operations). Empty if there are none. */
+        members: IDLNamespaceMemberType[];
+        /** A list of extended attributes. */
+        extAttrs: ExtendedAttributes[];
     }
 
     interface ImplementsType {

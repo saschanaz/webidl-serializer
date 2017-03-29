@@ -14,7 +14,7 @@
     "jsdom": "^9.4.1",
     "node-fetch": "^1.5.3",
     "prettify-xml": "^1.0.0",
-    "webidl2": "git+https://github.com/SaschaNaz/webidl2.js.git#v0.2.0",
+    "webidl2": "git+https://github.com/SaschaNaz/webidl2.js.git#v0.2.1",
     "xmldom": "^0.1.22"
   }
 }

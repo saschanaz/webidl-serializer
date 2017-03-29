@@ -382,6 +382,7 @@ function mergeIDLSnippets(snippets: IDLSnippetContent[]) {
         merger.interfaces.push(...snippet.interfaces);
         merger.mixinInterfaces.push(...snippet.mixinInterfaces);
         merger.typedefs.push(...snippet.typedefs);
+        merger.namespaces.push(...snippet.namespaces);
     }
 
     mergePartialInterfaces(merger);
@@ -420,6 +421,9 @@ function insert(webidl: WebIDL2.IDLRootType, snippetContent: IDLSnippetContent) 
     }
     else if (webidl.type === "typedef") {
         snippetContent.typedefs.push(createTypedef(webidl));
+    }
+    else if (webidl.type === "namespace") {
+        snippetContent.namespaces.push(createNamespace(webidl));
     }
     else {
         console.log(`Skipped root IDL type ${webidl.type}`);
@@ -705,6 +709,76 @@ function createTypedef(typedefType: WebIDL2.TypedefType) {
     return typedef;
 }
 
+function createNamespace(namespaceType: WebIDL2.NamespaceType) {
+    const namespace = document.createElement("namespace");
+    namespace.setAttribute("name", namespaceType.name);
+
+    if (namespaceType.partial) {
+        namespace.setAttribute("no-interface-object", "1");
+        namespace.setAttribute("sn:partial", "1");
+    }
+
+    for (const extAttr of namespaceType.extAttrs) {
+        if (extAttr.name === "Exposed") {
+            namespace.setAttribute("exposed", Array.isArray(extAttr.rhs.value) ? extAttr.rhs.value.join(' ') : extAttr.rhs.value);
+        }
+        else {
+            console.log(`(TODO) Skipping extended attribute ${extAttr.name}`);
+        }
+    }
+
+    const methods = document.createElement("methods");
+    const properties = document.createElement("properties");
+
+    // TODO: separate member processor function
+    // TODO: process extAttr for members
+    for (const memberType of namespaceType.members) {
+        if (memberType.type === "operation") {
+            const method = document.createElement("method");
+
+            if (memberType.arguments) {
+                for (const param of getParamList(memberType.arguments)) {
+                    method.appendChild(param);
+                }
+            }
+
+            method.setAttribute("name", memberType.name);
+            methods.appendChild(method);
+
+            if (memberType.idlType.nullable) {
+                method.setAttribute("nullable", "1");
+                method.setAttribute("type", memberType.idlType.origin.trim().slice(0, -1));
+            }
+            else {
+                method.setAttribute("type", memberType.idlType.origin.trim());
+            }
+        }
+        else if (memberType.type === "attribute") {
+            const property = document.createElement("property");
+            property.setAttribute("name", memberType.name);
+            if (memberType.readonly) {
+                property.setAttribute("read-only", "1");
+            }
+            if (memberType.idlType.nullable) {
+                property.setAttribute("nullable", "1");
+                property.setAttribute("type", memberType.idlType.origin.trim().slice(0, -1));
+            }
+            else {
+                property.setAttribute("type", memberType.idlType.origin.trim());
+            }
+            properties.appendChild(property);
+        }
+    }
+
+    if (methods.childNodes.length) {
+        namespace.appendChild(methods);
+    }
+    if (properties.childNodes.length) {
+        namespace.appendChild(properties);
+    }
+    return namespace;
+}
+
 function getParamList(argumentTypes: WebIDL2.Arguments[]) {
     const paramList: Element[] = [];
     for (const argumentType of argumentTypes) {
@@ -768,6 +842,7 @@ function createWebIDLXMLDocument(title: string, originUrl: string, snippetConten
     appendChildrenAs(doc, "interfaces", snippetContent.interfaces);
     appendChildrenAs(doc, "mixin-interfaces", snippetContent.mixinInterfaces);
     appendChildrenAs(doc, "typedefs", snippetContent.typedefs);
+    appendChildrenAs(doc, "namespaces", snippetContent.namespaces);
 
     return doc;
 }
@@ -788,6 +863,7 @@ interface IDLSnippetContent {
     interfaces: Element[];
     mixinInterfaces: Element[];
     typedefs: Element[];
+    namespaces: Element[];
 }
 function createIDLSnippetContentContainer(): IDLSnippetContent {
     return {
@@ -797,7 +873,8 @@ function createIDLSnippetContentContainer(): IDLSnippetContent {
         enums: [],
         interfaces: [],
         mixinInterfaces: [],
-        typedefs: []
+        typedefs: [],
+        namespaces: []
     }
 }
 
