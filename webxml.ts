@@ -88,6 +88,9 @@ async function run() {
     if (!(await fspromise.exists("built"))) {
         await fspromise.makeDirectory("built");
     }
+    if (!(await fspromise.exists("built/partial"))) {
+        await fspromise.makeDirectory("built/partial");
+    }
 
     console.log("Exporting and parsing WebIDL...");
 
@@ -103,12 +106,12 @@ async function run() {
 
     const serializer = new XMLSerializer();
     for (const doc of convertAsMultipleDocument(exports)) {
-        const path = `built/${doc.documentElement.getAttribute("name")}.webidl.xml`;
+        const path = `built/partial/${doc.documentElement.getAttribute("name")}.webidl.xml`;
         await fspromise.writeFile(path, prettifyXml(serializer.serializeToString(doc)));
         console.log(`Writing as ${path}`);
     }
-    console.log("Conversion as merged one as all.webidl.xml");
-    await fspromise.writeFile("built/all.webidl.xml", prettifyXml(serializer.serializeToString(convertAsSingleDocument(exports))));
+    console.log("Conversion as merged one as browser.webidl.xml");
+    await fspromise.writeFile("built/browser.webidl.xml", prettifyXml(serializer.serializeToString(convertAsSingleDocument(exports))));
     console.log("Finished 100%");
 }
 
