@@ -29,12 +29,17 @@
         "comment": "2013 Working Draft incorrectly omits semicolons after interfaces."
     },
     {
+        "url": "http://www.w3.org/TR/css-masking-1/",
+        "title": "CSS Masking Module"
+    },
+    {
         "url": "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom/Overview.bs",
         "title": "CSS Object Model (CSSOM)"
     },
     {
         "url": "https://drafts.csswg.org/css-transitions/",
-        "title": "CSS Transitions"
+        "title": "CSS Transitions",
+        "hasIdlIndex": true
     },
     {
         "url": "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom-view/Overview.bs",
@@ -64,6 +69,11 @@
     {
         "url": "http://www.w3.org/TR/FileAPI/",
         "title": "File"
+    },
+    {
+        "url": "http://www.w3.org/TR/filter-effects/",
+        "title": "Filter Effects",
+        "hasIdlIndex": true
     },
     {
         "url": "http://www.w3.org/TR/gamepad/",
@@ -119,7 +129,8 @@
     },
     {
         "url": "http://www.w3.org/TR/payment-request/",
-        "title": "Payment Request"
+        "title": "Payment Request",
+        "hasIdlIndex": true
     },
     {
         "url": "http://www.w3.org/TR/performance-timeline-2/",
@@ -144,6 +155,7 @@
     {
         "url": "https://w3c.github.io/ServiceWorker/",
         "title": "Service Workers",
+        "hasIdlIndex": true,
         "comment": "2015 Working Draft has no class on <pre>"
     },
     {
@@ -170,6 +182,9 @@
         "title": "User Timing"
     },
     {
+        "url": "http://www.w3.org/TR/web-animations-1/",
+        "title": "Web Animation",
+        "hasIdlIndex": true
     },
     {
         "url": "http://www.w3.org/TR/webauthn/",
