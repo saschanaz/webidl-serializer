@@ -93,10 +93,6 @@
         "title": "HTML"
     },
     {
-        "url": "http://www.w3.org/TR/2dcontext/",
-        "title": "HTML Canvas 2D Context"
-    },
-    {
         "url": "http://www.w3.org/TR/IndexedDB/",
         "title": "Indexed Database"
     },
