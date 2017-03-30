@@ -1,8 +1,9 @@
 [
     {
-        "url": "http://www.w3.org/TR/ambient-light/",
+        "url": "https://w3c.github.io/ambient-light/",
         "title": "Ambient Light Sensor",
-        "hasIdlIndex": true
+        "hasIdlIndex": true,
+        "comment": "2016 Working Draft refers removed type SensorReading."
     },
     {
         "url": "http://www.w3.org/TR/beacon/",
@@ -101,6 +102,10 @@
     {
         "url": "https://html.spec.whatwg.org/",
         "title": "HTML"
+    },
+    {
+        "url": "https://www.w3.org/TR/webrtc-stats/",
+        "title": "Identifiers for WebRTC's Statistics API"
     },
     {
         "url": "http://www.w3.org/TR/IndexedDB/",
