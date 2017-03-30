@@ -118,10 +118,6 @@
         "hasIdlIndex": true
     },
     {
-        "url": "http://draft.ortc.org/",
-        "title": "Object RTC"
-    },
-    {
         "url": "http://www.w3.org/TR/payment-request/",
         "title": "Payment Request"
     },
@@ -174,8 +170,6 @@
         "title": "User Timing"
     },
     {
-        "url": "http://www.w3.org/TR/webaudio/",
-        "title": "Web Audio"
     },
     {
         "url": "http://www.w3.org/TR/webauthn/",
