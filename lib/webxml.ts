@@ -6,61 +6,15 @@ import * as jsdom from "jsdom";
 import fetch from "node-fetch";
 import prettifyXml = require("prettify-xml");
 import * as fspromise from "./fspromise";
+import { ExportRemoteDescription, IDLExportResult, IDLSnippetContent, FetchResult } from "./types"
+import * as xhelper from "./xmldom-helper";
+import * as supplements from "./supplements";
 
 const impl = new DOMImplementation();
 const unionLineBreakRegex = / or[\s]*/g;
 const document = impl.createDocument("http://example.com/", "global", null);
 
-interface ExportRemoteDescription {
-    url: string;
-    title: string;
-    hasIdlIndex?: boolean;
-}
-
 run().catch(err => console.error(err));
-
-interface FetchResult {
-    description: ExportRemoteDescription;
-    html: string;
-}
-interface IDLExportResult {
-    snippets: IDLSnippetContent[];
-    origin: FetchResult;
-}
-
-function getChildrenArray(element: Element) {
-    // xmldom does not support element.children
-    return Array.from(element.childNodes).filter(node => node.nodeType === 1) as Element[];
-}
-
-function getChild(element: Element, childTagName: string) {
-    // xmldom does not support getElementsByTagName on Element
-    return getChildrenArray(element).filter(element => element.tagName.toLowerCase() === childTagName.toLowerCase())[0];
-}
-
-function getChildWithProperty(element: Element, childTagName: string, property: string, value: string) {
-    // xmldom does not support querySelector
-    return getChildrenArray(element).filter(element => element.tagName.toLowerCase() === childTagName.toLowerCase() && element.getAttribute(property) === value)[0];
-}
-
-function cloneNode(node: Node) {
-    // xmldom does not support cloneNode
-    const newNode = document.createElement(node.nodeName);
-    for (const attribute of Array.from(node.attributes)) {
-        newNode.setAttribute(attribute.name, attribute.value);
-    }
-    return newNode;
-}
-
-function cloneNodeDeep(node: Node): Node {
-    const newNode = cloneNode(node);
-    for (const child of Array.from(node.childNodes)) {
-        if (child.nodeType === 1) {
-            newNode.appendChild(cloneNodeDeep(child));
-        }
-    }
-    return newNode;
-}
 
 async function run() {
     /*
@@ -104,6 +58,11 @@ async function run() {
     transferEventInformation(exports, msedgeEventPropertyMap);
     exports.push(msedgeEventHandlers);
 
+    console.log("Loading supplements...");
+    for (const exportResult of exports) {
+        supplements.apply(exportResult);
+    }
+
     const serializer = new XMLSerializer();
     for (const doc of convertAsMultipleDocument(exports)) {
         const path = `built/partial/${doc.documentElement.getAttribute("name")}.webidl.xml`;
@@ -115,6 +74,7 @@ async function run() {
     console.log("Finished 100%");
 }
 
+/** export each <events> object and create a separate IDLExportResult */
 function exportEventHandlers(edgeIdl: Document): IDLExportResult {
     const snippet = createIDLSnippetContentContainer();
 
@@ -131,7 +91,7 @@ function exportEventHandlers(edgeIdl: Document): IDLExportResult {
             partialInterfaceEl.setAttribute("name", interfaceEl.getAttribute("name"));
             partialInterfaceEl.setAttribute("no-interface-object", "1");
             partialInterfaceEl.setAttribute("sn:partial", "1");
-            partialInterfaceEl.appendChild(cloneNodeDeep(events));
+            partialInterfaceEl.appendChild(xhelper.cloneNodeDeep(events));
             snippet.mixinInterfaces.push(partialInterfaceEl);
         }
     }
@@ -145,11 +105,7 @@ function exportEventHandlers(edgeIdl: Document): IDLExportResult {
             html: ""
         },
         snippets: [snippet]
-    }
-    
-    // TODO: export each <events> object and create a separate IDLExportResult
-    // filterEventInformation map should now just contain handler names (so Map<string, string>)
-    // and transferEventInformation should not append <events> object to <interface>
+    };
 }
 
 function exportEventPropertyMap(edgeIdl: Document) {
@@ -161,7 +117,7 @@ function exportEventPropertyMap(edgeIdl: Document) {
             const properties = interfaceEl.getElementsByTagName("properties")[0];
 
             if (properties) {
-                for (const property of getChildrenArray(properties)) {
+                for (const property of xhelper.getChildrenArray(properties)) {
                     const handler = property.getAttribute("event-handler");
                     if (!handler) {
                         continue;
@@ -180,17 +136,17 @@ function transferEventInformation(exports: IDLExportResult[], eventMap: Map<stri
     for (const exportResult of exports) {
         for (const snippet of exportResult.snippets) {
             for (const interfaceEl of [...snippet.interfaces, ...snippet.mixinInterfaces]) {
-                const properties = getChild(interfaceEl, "properties");
+                const properties = xhelper.getChild(interfaceEl, "properties");
                 if (!properties) {
                     continue;
                 }
 
-                for (const property of getChildrenArray(properties)) {
+                for (const property of xhelper.getChildrenArray(properties)) {
                     if (property.getAttribute("type") === "EventHandler") {
                         const key = `${interfaceEl.getAttribute("name")}:${property.getAttribute("name")}`;
                         const event = eventMap.get(key);
                         if (!event) {
-                            console.warn(`WARNING: no event data for ${key}`);
+                            console.log(`no event data for ${key}, expecting supplement to have one`);
                             continue;
                         }
                         
@@ -339,7 +295,7 @@ function mergeInterface(baseInterface: Element, partialInterface: Element) {
     mergeInterfaceMemberSet(baseInterface, partialInterface, "events");
     mergeInterfaceMemberSet(baseInterface, partialInterface, "sn:declarations");
 
-    const children = getChildrenArray(partialInterface);
+    const children = xhelper.getChildrenArray(partialInterface);
     for (const constructor of Array.from(children.filter(child => child.nodeName.toLowerCase() === "constructor"))) {
         partialInterface.removeChild(constructor);
         baseInterface.appendChild(constructor);
@@ -352,8 +308,8 @@ function mergeInterface(baseInterface: Element, partialInterface: Element) {
 
 /** Has side effect on its arguments */
 function mergeInterfaceMemberSet(baseInterface: Element, partialInterface: Element, setName: string) {
-    let baseSet = getChild(baseInterface, setName);
-    const partialSet = getChild(partialInterface, setName);
+    let baseSet = xhelper.getChild(baseInterface, setName);
+    const partialSet = xhelper.getChild(partialInterface, setName);
 
     if (!partialSet) {
         // no merge occurs
@@ -364,12 +320,12 @@ function mergeInterfaceMemberSet(baseInterface: Element, partialInterface: Eleme
         baseSet = document.createElement(setName);
     }
 
-    for (const member of getChildrenArray(partialSet)) {
+    for (const member of xhelper.getChildrenArray(partialSet)) {
         partialSet.removeChild(member);
         baseSet.appendChild(member);
     }
 
-    if (!getChild(baseInterface, setName) /* no parentNode support on xmldom */) {
+    if (!xhelper.getChild(baseInterface, setName) /* no parentNode support on xmldom */) {
         baseInterface.appendChild(baseSet);
     }
 }
@@ -858,16 +814,6 @@ function appendChildrenAs(doc: Document, newParentName: string, children: Elemen
     doc.documentElement.appendChild(newParent);
 }
 
-interface IDLSnippetContent {
-    callbackFunctions: Element[];
-    callbackInterfaces: Element[];
-    dictionaries: Element[];
-    enums: Element[];
-    interfaces: Element[];
-    mixinInterfaces: Element[];
-    typedefs: Element[];
-    namespaces: Element[];
-}
 function createIDLSnippetContentContainer(): IDLSnippetContent {
     return {
         callbackFunctions: [],

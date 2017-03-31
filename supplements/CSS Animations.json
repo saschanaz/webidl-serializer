@@ -1,0 +1,27 @@
+{
+    "events": [
+        {
+            "target": "GlobalEventHandlers",
+            "properties": {
+                "onanimationstart": "animationstart",
+                "onanimationiteration": "animationiteration",
+                "onanimationend": "animationend",
+                "onanimationcancel": "animationcancel"
+            },
+            "types": {
+                "animationstart": {
+                    "interface": "AnimationEvent"
+                },
+                "animationiteration": {
+                    "interface": "AnimationEvent"
+                },
+                "animationend": {
+                    "interface": "AnimationEvent"
+                },
+                "animationcancel": {
+                    "interface": "AnimationEvent"
+                }
+            }
+        }
+    ]
+}

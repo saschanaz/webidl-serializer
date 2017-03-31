@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceRoot}\\webxml.js",
+            "program": "${workspaceRoot}\\lib\\webxml.js",
             "cwd": "${workspaceRoot}"
         },
         {
