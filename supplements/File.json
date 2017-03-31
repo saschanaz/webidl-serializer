@@ -1,0 +1,35 @@
+{
+    "events": [
+        {
+            "target": "FileReader",
+            "properties": {
+                "onloadstart": "loadstart",
+                "onprogress": "progress",
+                "onabort": "abort",
+                "onerror": "error",
+                "onload": "load",
+                "onloadend": "loadend"
+            },
+            "types": {
+                "loadstart": {
+                    "interface": "ProgressEvent"
+                },
+                "progress": {
+                    "interface": "ProgressEvent"
+                },
+                "abort": {
+                    "interface": "ProgressEvent"
+                },
+                "error": {
+                    "interface": "ProgressEvent"
+                },
+                "load": {
+                    "interface": "ProgressEvent"
+                },
+                "loadend": {
+                    "interface": "ProgressEvent"
+                }
+            }
+        }
+    ]
+}

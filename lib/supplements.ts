@@ -36,7 +36,7 @@ export async function apply(base: IDLExportResult) {
     // create an empty map when no supplement
     // to check every event handler property has its event type
     const propertyMap = exists ? createEventPropertyMap(supplement) : new Map<string, EventTypeInterfacePair>();
-    
+
     for (const snippet of base.snippets) {
         for (const interfaceEl of [...snippet.interfaces, ...snippet.mixinInterfaces]) {
             const properties = xhelper.getChild(interfaceEl, "properties");
@@ -89,7 +89,12 @@ function createEventPropertyMap(supplement: Supplement) {
     for (const event of supplement.events) {
         for (const property in event.properties) {
             const eventType = event.properties[property];
-            map.set(`${event.target}:${property}`, { eventType, eventInterface: event.types[eventType]["interface"] });
+            try {
+                map.set(`${event.target}:${property}`, { eventType, eventInterface: event.types[eventType]["interface"] });
+            }
+            catch (e) {
+                console.warn(`WARNING: failed to map ${event.target}:${property}\n${e.message}`);
+            }
         }
     }
     return map;

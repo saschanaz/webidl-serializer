@@ -1,0 +1,266 @@
+{
+    "events": [
+        {
+            "target": "TextTrackList",
+            "properties": {
+                "onchange": "change",
+                "onaddtrack": "addtrack",
+                "onremovetrack": "removetrack"
+            },
+            "types": {
+                "change": {},
+                "addtrack": {
+                    "interface": "TrackEvent"
+                },
+                "removetrack": {
+                    "interface": "TrackEvent"
+                }
+            }
+        },
+        {
+            "target": "GlobalEventHandlers",
+            "properties": {
+                "onabort": "abort",
+                "onauxclick": "auxclick",
+                "onblur": "blur",
+                "oncancel": "cancel",
+                "oncanplay": "canplay",
+                "oncanplaythrough": "canplaythrough",
+                "onchange": "change",
+                "onclick": "click",
+                "onclose": "close",
+                "oncontextmenu": "contextmenu",
+                "oncuechange": "cuechange",
+                "ondblclick": "dblclick",
+                "ondrag": "drag",
+                "ondragend": "dragend",
+                "ondragenter": "dragenter",
+                "ondragexit": "dragexit",
+                "ondragleave": "dragleave",
+                "ondragover": "dragover",
+                "ondragstart": "dragstart",
+                "ondrop": "drop",
+                "ondurationchange": "durationchange",
+                "onemptied": "emptied",
+                "onended": "ended",
+                "onfocus": "focus",
+                "oninput": "input",
+                "oninvalid": "invalid",
+                "onkeydown": "keydown",
+                "onkeypress": "keypress",
+                "onkeyup": "keyup",
+                "onload": "load",
+                "onloadeddata": "loadeddata",
+                "onloadedmetadata": "loadedmetadata",
+                "onloadend": "loadend",
+                "onloadstart": "loadstart",
+                "onmousedown": "mousedown",
+                "onmouseenter": "mouseenter",
+                "onmouseleave": "mouseleave",
+                "onmousemove": "mousemove",
+                "onmouseout": "mouseout",
+                "onmouseover": "mouseover",
+                "onmouseup": "mouseup",
+                "onwheel": "wheel",
+                "onpause": "pause",
+                "onplay": "play",
+                "onplaying": "playing",
+                "onprogress": "progress",
+                "onratechange": "ratechange",
+                "onreset": "reset",
+                "onresize": "resize",
+                "onscroll": "scroll",
+                "onseeked": "seeked",
+                "onseeking": "seeking",
+                "onselect": "select",
+                "onshow": "show",
+                "onstalled": "stalled",
+                "onsubmit": "submit",
+                "onsuspend": "suspend",
+                "ontimeupdate": "timeupdate",
+                "ontoggle": "toggle",
+                "onvolumechange": "volumechange",
+                "onwaiting": "waiting"
+            },
+            "types": {
+                "abort": {},
+                "auxclick": {
+                    "interface": "MouseEvent"
+                },
+                "blur": {},
+                "cancel": {},
+                "canplay": {},
+                "canplaythrough": {},
+                "change": {},
+                "click": {
+                    "interface": "MouseEvent"
+                },
+                "close": {},
+                "contextmenu": {
+                    "interface": "MouseEvent"
+                },
+                "cuechange": {},
+                "dblclick": {
+                    "interface": "MouseEvent"
+                },
+                "drag": {
+                    "interface": "DragEvent"
+                },
+                "dragend": {
+                    "interface": "DragEvent"
+                },
+                "dragenter": {
+                    "interface": "DragEvent"
+                },
+                "dragexit": {
+                    "interface": "DragEvent"
+                },
+                "dragleave": {
+                    "interface": "DragEvent"
+                },
+                "dragover": {
+                    "interface": "DragEvent"
+                },
+                "dragstart": {
+                    "interface": "DragEvent"
+                },
+                "drop": {
+                    "interface": "DragEvent"
+                },
+                "durationchange": {},
+                "emptied": {},
+                "ended": {},
+                "focus": {},
+                "input": {},
+                "invalid": {},
+                "keydown": {
+                    "interface": "KeyboardEvent"
+                },
+                "keypress": {
+                    "interface": "KeyboardEvent"
+                },
+                "keyup": {
+                    "interface": "KeyboardEvent"
+                },
+                "load": {},
+                "loadeddata": {},
+                "loadedmetadata": {},
+                "loadend": {},
+                "loadstart": {},
+                "mousedown": {
+                    "interface": "MouseEvent"
+                },
+                "mouseenter": {
+                    "interface": "MouseEvent"
+                },
+                "mouseleave": {
+                    "interface": "MouseEvent"
+                },
+                "mousemove": {
+                    "interface": "MouseEvent"
+                },
+                "mouseout": {
+                    "interface": "MouseEvent"
+                },
+                "mouseover": {
+                    "interface": "MouseEvent"
+                },
+                "mouseup": {
+                    "interface": "MouseEvent"
+                },
+                "wheel": {
+                    "interface": "WheelEvent"
+                },
+                "pause": {},
+                "play": {},
+                "playing": {},
+                "progress": {},
+                "ratechange": {},
+                "reset": {},
+                "resize": {},
+                "scroll": {},
+                "seeked": {},
+                "seeking": {},
+                "select": {},
+                "show": {
+                    "interface": "RelatedEvent"
+                },
+                "stalled": {},
+                "submit": {},
+                "suspend": {},
+                "timeupdate": {},
+                "toggle": {},
+                "volumechange": {},
+                "waiting": {}
+            }
+        },
+        {
+            "target": "WindowEventHandlers",
+            "properties": {
+                "onafterprint": "afterprint",
+                "onbeforeprint": "beforeprint",
+                "onbeforeunload": "beforeunload",
+                "onhashchange": "hashchange",
+                "onlanguagechange": "languagechange",
+                "onmessage": "message",
+                "onoffline": "offline",
+                "ononline": "online",
+                "onpagehide": "pagehide",
+                "onpageshow": "pageshow",
+                "onpopstate": "popstate",
+                "onrejectionhandled": "rejectionhandled",
+                "onstorage": "storage",
+                "onunhandledrejection": "unhandledrejection",
+                "onunload": "unload"
+            },
+            "types": {
+                "afterprint": {},
+                "beforeprint": {},
+                "beforeunload": {
+                    "interface": "BeforeUnloadEvent"
+                },
+                "hashchange": {
+                    "interface": "HashChangeEvent"
+                },
+                "languagechange": {},
+                "message": {
+                    "interface": "MessageEvent"
+                },
+                "offline": {},
+                "online": {},
+                "pagehide": {
+                    "interface": "PageTransitionEvent"
+                },
+                "pageshow": {
+                    "interface": "PageTransitionEvent"
+                },
+                "popstate": {
+                    "interface": "PopStateEvent"
+                },
+                "rejectionhandled": {
+                    "interface": "PromiseRejectionEvent"
+                },
+                "storage": {
+                    "interface": "StorageEvent"
+                },
+                "unhandledrejection": {
+                    "interface": "PromiseRejectionEvent"
+                },
+                "unload": {}
+            }
+        },
+        {
+            "target": "DocumentAndElementEventHandlers",
+            "properties": {
+                "oncopy": "copy",
+                "oncut": "cut",
+                "onpaste": "paste"
+            },
+            "types": {
+                "copy": {},
+                "cut": {},
+                "paste": {}
+            }
+        }
+    ]
+}

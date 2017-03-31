@@ -1,0 +1,27 @@
+{
+    "events": [
+        {
+            "target": "GlobalEventHandlers",
+            "properties": {
+                "ontransitionrun": "transitionrun",
+                "ontransitionstart": "transitionstart",
+                "ontransitionend": "transitionend",
+                "ontransitioncancel": "transitioncancel"
+            },
+            "types": {
+                "transitionrun": {
+                    "interface": "TransitionEvent"
+                },
+                "transitionstart": {
+                    "interface": "TransitionEvent"
+                },
+                "transitionend": {
+                    "interface": "TransitionEvent"
+                },
+                "transitioncancel": {
+                    "interface": "TransitionEvent"
+                }
+            }
+        }
+    ]
+}

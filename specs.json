@@ -21,8 +21,7 @@
         "url": "https://drafts.csswg.org/css-animations/",
         "title": "CSS Animations",
         "hasIdlIndex": true,
-        "comment": "2013 Working Draft uses non-standard partial interface syntax.",
-        "hasLocalSupplement": true
+        "comment": "2013 Working Draft uses non-standard partial interface syntax."
     },
     {
         "url": "https://drafts.csswg.org/css-conditional-3/",

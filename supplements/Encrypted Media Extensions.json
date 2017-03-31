@@ -1,0 +1,30 @@
+{
+    "events": [
+        {
+            "target": "MediaKeySession",
+            "properties": {
+                "onkeystatuseschange": "keystatuseschange",
+                "onmessage": "message"
+            },
+            "types": {
+                "keystatuseschange": {},
+                "message": {
+                    "interface": "MediaKeyMessageEvent"
+                }
+            }
+        },
+        {
+            "target": "HTMLMediaElement",
+            "properties": {
+                "onencrypted": "encrypted",
+                "onwaitingforkey": "waitingforkey"
+            },
+            "types": {
+                "encrypted": {
+                    "interface": "MediaEncryptedEvent"
+                },
+                "waitingforkey": {}
+            }
+        }
+    ]
+}
