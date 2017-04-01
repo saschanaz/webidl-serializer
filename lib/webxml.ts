@@ -9,6 +9,7 @@ import * as fspromise from "./fspromise";
 import { ExportRemoteDescription, IDLExportResult, IDLSnippetContent, FetchResult } from "./types"
 import * as xhelper from "./xmldom-helper";
 import * as supplements from "./supplements";
+import * as merger from "./partial-type-merger"
 
 const impl = new DOMImplementation();
 const unionLineBreakRegex = / or[\s]*/g;
@@ -231,7 +232,6 @@ function exportIDLSnippets(idlTexts: string[], origin: FetchResult) {
                 if (!interfaceEl) {
                     interfaceEl = document.createElement("interface");
                     interfaceEl.setAttribute("name", entry[0]);
-                    interfaceEl.setAttribute("extends", "Object");
                     interfaceEl.setAttribute("no-interface-object", "1");
                     interfaceEl.setAttribute("sn:partial", "1");
                     snippet.interfaces.push(interfaceEl);
@@ -258,95 +258,24 @@ function exportIDLSnippets(idlTexts: string[], origin: FetchResult) {
     return snippets;
 }
 
-/** merge partial interfaces to create a unique name-object relation for TSJS-lib-generator */
-function mergePartialInterfaces(snippet: IDLSnippetContent) {
-    const interfaces = [...snippet.interfaces, ...snippet.mixinInterfaces];
-    const baseInterfaces = interfaces.filter(interfaceEl => !interfaceEl.getAttribute("sn:partial"));
-    const baseInterfaceMap = new Map(baseInterfaces.map<[string, Element]>(baseInterface => [baseInterface.getAttribute("name"), baseInterface]));
-
-    for (const interfaceEl of interfaces) {
-        if (!interfaceEl.getAttribute("sn:partial")) {
-            // Not a partial interface element
-            continue;
-        }
-
-        const name = interfaceEl.getAttribute("name");
-        const baseInterface = baseInterfaceMap.get(name);
-
-        if (!baseInterface) {
-            baseInterfaces.push(interfaceEl);
-            baseInterfaceMap.set(name, interfaceEl);
-            continue;
-        }
-
-        mergeInterface(baseInterface, interfaceEl);
-    }
-    
-    snippet.interfaces = baseInterfaces.filter(interfaceEl => !interfaceEl.getAttribute("no-interface-object"));
-    snippet.mixinInterfaces = baseInterfaces.filter(interfaceEl => interfaceEl.getAttribute("no-interface-object"));
-}
-
-/** Has side effect on its arguments */
-function mergeInterface(baseInterface: Element, partialInterface: Element) {
-    mergeInterfaceMemberSet(baseInterface, partialInterface, "anonymous-methods");
-    mergeInterfaceMemberSet(baseInterface, partialInterface, "constants");
-    mergeInterfaceMemberSet(baseInterface, partialInterface, "methods");
-    mergeInterfaceMemberSet(baseInterface, partialInterface, "properties");
-    mergeInterfaceMemberSet(baseInterface, partialInterface, "events");
-    mergeInterfaceMemberSet(baseInterface, partialInterface, "sn:declarations");
-
-    const children = xhelper.getChildrenArray(partialInterface);
-    for (const constructor of Array.from(children.filter(child => child.nodeName.toLowerCase() === "constructor"))) {
-        partialInterface.removeChild(constructor);
-        baseInterface.appendChild(constructor);
-    }
-    for (const implementsEl of Array.from(children.filter(child => child.nodeName.toLowerCase() === "implements"))) {
-        partialInterface.removeChild(implementsEl);
-        baseInterface.appendChild(implementsEl);
-    }
-}
-
-/** Has side effect on its arguments */
-function mergeInterfaceMemberSet(baseInterface: Element, partialInterface: Element, setName: string) {
-    let baseSet = xhelper.getChild(baseInterface, setName);
-    const partialSet = xhelper.getChild(partialInterface, setName);
-
-    if (!partialSet) {
-        // no merge occurs
-        return;
-    }
-
-    if (!baseSet) {
-        baseSet = document.createElement(setName);
-    }
-
-    for (const member of xhelper.getChildrenArray(partialSet)) {
-        partialSet.removeChild(member);
-        baseSet.appendChild(member);
-    }
-
-    if (!xhelper.getChild(baseInterface, setName) /* no parentNode support on xmldom */) {
-        baseInterface.appendChild(baseSet);
-    }
-}
 
 function mergeIDLSnippets(snippets: IDLSnippetContent[]) {
-    const merger = createIDLSnippetContentContainer();
+    const result = createIDLSnippetContentContainer();
 
     for (const snippet of snippets) {
-        merger.callbackFunctions.push(...snippet.callbackFunctions);
-        merger.callbackInterfaces.push(...snippet.callbackInterfaces);
-        merger.dictionaries.push(...snippet.dictionaries);
-        merger.enums.push(...snippet.enums);
-        merger.interfaces.push(...snippet.interfaces);
-        merger.mixinInterfaces.push(...snippet.mixinInterfaces);
-        merger.typedefs.push(...snippet.typedefs);
-        merger.namespaces.push(...snippet.namespaces);
+        result.callbackFunctions.push(...snippet.callbackFunctions);
+        result.callbackInterfaces.push(...snippet.callbackInterfaces);
+        result.dictionaries.push(...snippet.dictionaries);
+        result.enums.push(...snippet.enums);
+        result.interfaces.push(...snippet.interfaces);
+        result.mixinInterfaces.push(...snippet.mixinInterfaces);
+        result.typedefs.push(...snippet.typedefs);
+        result.namespaces.push(...snippet.namespaces);
     }
 
-    mergePartialInterfaces(merger);
+    merger.mergePartialInterfaces(result);
 
-    return merger;
+    return result;
 }
 
 function insert(webidl: WebIDL2.IDLRootType, snippetContent: IDLSnippetContent) {
