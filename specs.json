@@ -45,7 +45,8 @@
     {
         "url": "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom-view/Overview.bs",
         "title": "CSSOM View Module",
-        "useLocalCopy": true
+        "useLocalCopy": true,
+        "comment": "The Editor's Draft has duplicated members in MouseEvent and MouseEventInit"
     },
     {
         "url": "http://www.w3.org/TR/orientation-event/",
@@ -113,7 +114,7 @@
         "title": "Indexed Database"
     },
     {
-        "url": "http://www.w3.org/TR/mediacapture-streams/",
+        "url": "https://w3c.github.io/mediacapture-main/",
         "title": "Media Capture and Streams"
     },
     {
@@ -162,7 +163,8 @@
         "url": "https://w3c.github.io/ServiceWorker/",
         "title": "Service Workers",
         "hasIdlIndex": true,
-        "comment": "2015 Working Draft has no class on <pre>"
+        "comment": "2015 Working Draft has no class on <pre>, and the Editor's Draft has redundant HTMLLinkElement partial interface.",
+        "useLocalCopy": true
     },
     {
         "url": "http://www.w3.org/TR/2016/CR-SVG2-20160915/idl.html",
