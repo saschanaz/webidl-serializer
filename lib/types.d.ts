@@ -2,11 +2,12 @@ export interface ExportRemoteDescription {
     url: string;
     title: string;
     hasIdlIndex?: boolean;
+    useLocalCopy?: boolean;
 }
 
 export interface FetchResult {
     description: ExportRemoteDescription;
-    html: string;
+    content: string;
 }
 
 export interface IDLExportResult {

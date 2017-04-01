@@ -44,7 +44,8 @@
     },
     {
         "url": "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom-view/Overview.bs",
-        "title": "CSSOM View Module"
+        "title": "CSSOM View Module",
+        "useLocalCopy": true
     },
     {
         "url": "http://www.w3.org/TR/orientation-event/",

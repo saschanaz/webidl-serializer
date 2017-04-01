@@ -27,13 +27,22 @@ async function run() {
 
     console.log("Fetching from web...");
     const results = await Promise.all(exportList.map(async (description): Promise<FetchResult> => {
+        if (description.useLocalCopy) {
+            const result: FetchResult = {
+                description,
+                content: await fspromise.readFile(`localcopies/${description.title}.widl`)
+            }
+            console.log(`Got a local copy for ${description.title}`);
+            return result;
+        }
+
         const response = await fetch(description.url);
         if (!response.ok) {
             throw new Error(`Fetching failed: HTTP ${response.status} ${response.statusText}`);
         }
         const result: FetchResult = {
             description,
-            html: await response.text()
+            content: await response.text()
         }
         console.log(`Fetching finished from ${description.url}`);
         return result;
@@ -103,7 +112,7 @@ function exportEventHandlers(edgeIdl: Document): IDLExportResult {
                 url: "",
                 title: "MSEdge Event Information"
             },
-            html: ""
+            content: ""
         },
         snippets: [snippet]
     };
@@ -183,7 +192,13 @@ function isWebIDLParseError(err: any): err is WebIDL2.WebIDLParseError {
 }
 
 async function exportIDLs(result: FetchResult): Promise<IDLExportResult> {
-    const win = await jsdomEnv(result.html);
+    if (result.description.useLocalCopy) {
+        return {
+            snippets: exportIDLSnippets([result.content], result), origin: result
+        }
+    }
+
+    const win = await jsdomEnv(result.content);
     const idlElements = Array.from(win.document.querySelectorAll("pre.idl,code.idl-code"));
     if (!idlElements.length) {
         throw new Error(`No IDLs in ${result.description.url}`)
