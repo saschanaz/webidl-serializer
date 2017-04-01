@@ -1,0 +1,45 @@
+{
+    "events": [
+        {
+            "target": "MediaSource",
+            "properties": {
+                "onsourceopen": "sourceopen",
+                "onsourceended": "sourceended",
+                "onsourceclose": "sourceclose"
+            },
+            "types": {
+                "sourceopen": {},
+                "sourceended": {},
+                "sourceclose": {}
+            }
+        },
+        {
+            "target": "SourceBuffer",
+            "properties": {
+                "onupdatestart": "updatestart",
+                "onupdate": "update",
+                "onupdateend": "updateend",
+                "onerror": "error",
+                "onabort": "abort"
+            },
+            "types": {
+                "updatestart": {},
+                "update": {},
+                "updateend": {},
+                "error": {},
+                "abort": {}
+            }
+        },
+        {
+            "target": "SourceBufferList",
+            "properties": {
+                "onaddsourcebuffer": "addsourcebuffer",
+                "onremovesourcebuffer": "removesourcebuffer"
+            },
+            "types": {
+                "addsourcebuffer": {},
+                "removesourcebuffer": {}
+            }
+        }
+    ]
+}

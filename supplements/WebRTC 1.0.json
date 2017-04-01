@@ -1,0 +1,102 @@
+{
+    "events": [
+        {
+            "target": "RTCPeerConnection",
+            "properties": {
+                "ontrack": "track",
+                "onnegotiationneeded": "negotiationneeded",
+                "onsignalingstatechange": "signalingstatechange",
+                "oniceconnectionstatechange": "iceconnectionstatechange",
+                "onicegatheringstatechange": "icegatheringstatechange",
+                "onicecandidate": "icecandidate",
+                "onconnectionstatechange": "connectionstatechange",
+                "onicecandidateerror": "icecandidateerror",
+                "ondatachannel": "datachannel",
+                "onfingerprintfailure": "fingerprintfailure"
+            },
+            "types": {
+                "track": {
+                    "interface": "RTCTrackEvent"
+                },
+                "negotiationneeded": {},
+                "signalingstatechange": {},
+                "iceconnectionstatechange": {},
+                "icegatheringstatechange": {},
+                "icecandidate": {
+                    "interface": "RTCPeerConnectionIceEvent"
+                },
+                "connectionstatechange": {},
+                "icecandidateerror": {
+                    "interface": "RTCPeerConnectionIceErrorEvent"
+                },
+                "datachannel": {
+                    "interface": "RTCDataChannelEvent"
+                },
+                "fingerprintfailure": {}
+            }
+        },
+        {
+            "target": "RTCDtlsTransport",
+            "properties": {
+                "onstatechange": "statechange"
+            },
+            "types": {
+                "statechange": {}
+            }
+        },
+        {
+            "target": "RTCIceTransport",
+            "properties": {
+                "onstatechange": "statechange",
+                "ongatheringstatechange": "gatheringstatechange",
+                "onselectedcandidatepairchange": "selectedcandidatepairchange"
+            },
+            "types": {
+                "statechange": {},
+                "gatheringstatechange": {},
+                "selectedcandidatepairchange": {}
+            }
+        },
+        {
+            "target": "RTCDataChannel",
+            "properties": {
+                "onopen": "open",
+                "onbufferedamountlow": "bufferedamountlow",
+                "onerror": "error",
+                "onclose": "close",
+                "onmessage": "message"
+            },
+            "types": {
+                "open": {},
+                "message": {
+                    "interface": "MessageEvent"
+                },
+                "bufferedamountlow": {},
+                "error": {
+                    "interface": "ErrorEvent"
+                },
+                "close": {}
+            }
+        },
+        {
+            "target": "RTCDTMFSender",
+            "properties": {
+                "ontonechange": "tonechange"
+            },
+            "types": {
+                "tonechange": {
+                    "interface": "RTCDTMFToneChangeEvent"
+                }
+            }
+        },
+        {
+            "target": "MediaStreamTrack",
+            "properties": {
+                "onisolationchange": "isolationchange"
+            },
+            "types": {
+                "isolationchange": {}
+            }
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "events": [
+        {
+            "target": "ServiceWorkerGlobalScope",
+            "properties": {
+                "onnotificationclick": "notificationclick",
+                "onnotificationclose": "notificationclose"
+            },
+            "types": {
+                "notificationclick": {
+                    "interface": "NotificationEvent"
+                },
+                "notificationclose": {
+                    "interface": "NotificationEvent"
+                }
+            }
+        }
+    ]
+}

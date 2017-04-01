@@ -1,0 +1,15 @@
+{
+    "events": [
+        {
+            "target": "GlobalEventHandlers",
+            "properties": {
+                "onselectstart": "selectstart",
+                "onselectionchange": "selectionchange"
+            },
+            "types": {
+                "selectstart": {},
+                "selectionchange": {}
+            }
+        }
+    ]
+}

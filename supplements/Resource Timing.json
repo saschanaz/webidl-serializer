@@ -1,0 +1,13 @@
+{
+    "events": [
+        {
+            "target": "Performance",
+            "properties": {
+                "onresourcetimingbufferfull": "resourcetimingbufferfull"
+            },
+            "types": {
+                "resourcetimingbufferfull": {}
+            }
+        }
+    ]
+}

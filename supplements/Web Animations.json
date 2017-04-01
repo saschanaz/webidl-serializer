@@ -1,0 +1,15 @@
+{
+    "events": [
+        {
+            "target": "Animation",
+            "properties": {
+                "onfinish": "finish",
+                "oncancel": "cancel"
+            },
+            "types": {
+                "finish": {},
+                "cancel": {}
+            }
+        }
+    ]
+}

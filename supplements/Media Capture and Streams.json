@@ -1,0 +1,15 @@
+{
+    "events": [
+        {
+            "target": "ConstrainablePattern",
+            "properties": {
+                "onoverconstrained": "overconstrained"
+            },
+            "types": {
+                "overconstrained": {
+                    "interface": "OverconstrainedErrorEvent"
+                }
+            }
+        }
+    ]
+}

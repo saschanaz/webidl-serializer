@@ -261,6 +261,75 @@
                 "cut": {},
                 "paste": {}
             }
+        },
+        {
+            "target": "EventSource",
+            "properties": {
+                "onopen": "open",
+                "onmessage": "message",
+                "onerror": "error"
+            },
+            "types": {
+                "open": {},
+                "message": {
+                    "interface": "MessageEvent"
+                },
+                "error": {}
+            }
+        },
+        {
+            "target": "BroadcastChannel",
+            "properties": {
+                "onmessage": "message"
+            },
+            "types": {
+                "message": {
+                    "interface": "MessageEvent"
+                }
+            }
+        },
+        {
+            "target": "WorkerGlobalScope",
+            "properties": {
+                "onlanguagechange": "languagechange",
+                "onoffline": "offline",
+                "ononline": "online",
+                "onrejectionhandled": "rejectionhandled",
+                "onunhandledrejection": "unhandledrejection"
+            },
+            "types": {
+                "languagechange": {},
+                "offline": {},
+                "online": {},
+                "rejectionhandled": {
+                    "interface": "PromiseRejectionEvent"
+                },
+                "unhandledrejection": {
+                    "interface": "PromiseRejectionEvent"
+                }
+            }
+        },
+        {
+            "target": "DedicatedWorkerGlobalScope",
+            "properties": {
+                "onmessage": "message"
+            },
+            "types": {
+                "message": {
+                    "interface": "MessageEvent"
+                }
+            }
+        },
+        {
+            "target": "SharedWorkerGlobalScope",
+            "properties": {
+                "onconnect": "connect"
+            },
+            "types": {
+                "connect": {
+                    "interface": "MessageEvent"
+                }
+            }
         }
     ]
 }

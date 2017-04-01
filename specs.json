@@ -129,7 +129,7 @@
     },
     {
         "url": "https://notifications.spec.whatwg.org/",
-        "title": "Notifications API",
+        "title": "Notifications",
         "hasIdlIndex": true
     },
     {
@@ -188,7 +188,7 @@
     },
     {
         "url": "http://www.w3.org/TR/web-animations-1/",
-        "title": "Web Animation",
+        "title": "Web Animations",
         "hasIdlIndex": true
     },
     {
