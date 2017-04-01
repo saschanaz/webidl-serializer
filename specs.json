@@ -195,6 +195,12 @@
         "hasIdlIndex": true
     },
     {
+        "url": "https://webaudio.github.io/web-audio-api/",
+        "title": "Web Audio",
+        "useLocalCopy": true,
+        "comment": "The spec source currently does not use contiguous IDL."
+    },
+    {
         "url": "http://www.w3.org/TR/webauthn/",
         "title": "Web Authentication",
         "hasIdlIndex": true
