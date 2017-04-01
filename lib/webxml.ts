@@ -247,6 +247,8 @@ function exportIDLSnippets(idlTexts: string[], origin: FetchResult) {
                 if (!interfaceEl) {
                     interfaceEl = document.createElement("interface");
                     interfaceEl.setAttribute("name", entry[0]);
+                    // temp: absence of 'extends' causes incorrect interface declaration on TSJS-lib-generator
+                    interfaceEl.setAttribute("extends", "Object");
                     interfaceEl.setAttribute("no-interface-object", "1");
                     interfaceEl.setAttribute("sn:partial", "1");
                     snippet.interfaces.push(interfaceEl);
