@@ -63,7 +63,8 @@ async function run() {
 
     console.log("Loading event information from MSEdge data...");
     const msedgeEventDocument = new DOMParser().parseFromString(await fspromise.readFile("supplements/browser.webidl.xml"), "text/xml");
-    const msedgeEventHandlers = exportEventHandlers(msedgeEventDocument);
+    const msedgeIgnore: string[] = JSON.parse(await fspromise.readFile("msedge-ignore.json"));
+    const msedgeEventHandlers = exportEventHandlers(msedgeEventDocument, msedgeIgnore);
     const msedgeEventPropertyMap = exportEventPropertyMap(msedgeEventDocument);
     transferEventInformation(exports, msedgeEventPropertyMap);
     exports.push(msedgeEventHandlers);
@@ -85,15 +86,20 @@ async function run() {
 }
 
 /** export each <events> object and create a separate IDLExportResult */
-function exportEventHandlers(edgeIdl: Document): IDLExportResult {
+function exportEventHandlers(edgeIdl: Document, ignore: string[]): IDLExportResult {
     const snippet = createIDLSnippetContentContainer();
 
     const interfaceSets = [edgeIdl.getElementsByTagName("interfaces")[0], edgeIdl.getElementsByTagName("mixin-interfaces")[0]];
     for (const interfaceSet of interfaceSets) {
         for (const interfaceEl of Array.from(interfaceSet.getElementsByTagName("interface"))) {
-            const events = interfaceEl.getElementsByTagName("events")[0];
+            if (ignore.indexOf(interfaceEl.getAttribute("name") !== -1) {
+                // ignore this interface
+                continue;
+            }
 
+            const events = interfaceEl.getElementsByTagName("events")[0];
             if (!events) {
+                // no events
                 continue;
             }
 
@@ -102,6 +108,15 @@ function exportEventHandlers(edgeIdl: Document): IDLExportResult {
             partialInterfaceEl.setAttribute("no-interface-object", "1");
             partialInterfaceEl.setAttribute("sn:partial", "1");
             partialInterfaceEl.appendChild(xhelper.cloneNodeDeep(events));
+
+            const newEvents = xhelper.getChild(partialInterfaceEl, "events");
+            for (const event of xhelper.getChildrenArray(newEvents)) {
+                if (ignore.indexOf(event.getAttribute("type")) !== -1) {
+                    // ignore this event
+                    newEvents.removeChild(event);
+                }
+            }
+
             snippet.mixinInterfaces.push(partialInterfaceEl);
         }
     }
