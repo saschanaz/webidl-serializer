@@ -750,10 +750,9 @@ function createWebIDLXMLDocument(title: string, originUrl: string, snippetConten
     const doc = impl.createDocument(xmlns, "webidl-xml", null);
     doc.documentElement.setAttribute("name", title);
     doc.documentElement.setAttribute("original-file", originUrl);
-    doc.documentElement.setAttribute("xmlns", xmlns); // xmldom bug #97
-    doc.documentElement.setAttributeNS(xmlns, "xmlns:xsi", xsi);
-    doc.documentElement.setAttributeNS(xsi, "xsi:schemaLocation", "http://schemas.microsoft.com/ie/webidl-xml webidl-xml-schema.xsd");
-    doc.documentElement.setAttributeNS(xmlns, "xmlns:sn", "http://saschanaz.github.io/ts/webidl-xml-ext/");
+    doc.documentElement.setAttribute("xmlns:xsi", xsi);
+    doc.documentElement.setAttribute("xsi:schemaLocation", "http://schemas.microsoft.com/ie/webidl-xml webidl-xml-schema.xsd");
+    doc.documentElement.setAttribute("xmlns:sn", "http://saschanaz.github.io/ts/webidl-xml-ext/");
 
     appendChildrenAs(doc, "callback-functions", snippetContent.callbackFunctions);
     appendChildrenAs(doc, "callback-interfaces", snippetContent.callbackInterfaces);
