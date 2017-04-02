@@ -8,7 +8,7 @@ run();
 async function run() {
     const msedgeDocument = new DOMParser().parseFromString(await fspromise.readFile("supplements/browser.webidl.xml"), "text/xml");
     const standardDocument = new DOMParser().parseFromString(await fspromise.readFile("built/browser.webidl.xml"), "text/xml");
-    const ignore = JSON.parse(await fspromise.readFile("specs-ignore.json"));
+    const ignore = JSON.parse(await fspromise.readFile("msedge-ignore.json"));
 
     compareArray(extractInterfaceNames(msedgeDocument), extractInterfaceNames(standardDocument), ignore);
 }
