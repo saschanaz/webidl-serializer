@@ -114,6 +114,12 @@
         "title": "Indexed Database"
     },
     {
+        "url": "https://wicg.github.io/IntersectionObserver/",
+        "title": "Intersection Observer",
+        "hasIdlIndex": true,
+        "useLocalCopy": true
+    },
+    {
         "url": "https://w3c.github.io/mediacapture-main/",
         "title": "Media Capture and Streams"
     },
