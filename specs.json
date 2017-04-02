@@ -170,7 +170,7 @@
         "url": "http://www.w3.org/TR/2016/CR-SVG2-20160915/idl.html",
         "title": "SVG 2",
         "hasIdlIndex": true,
-        "comment": "SVG 1 has deprecated 'module' syntax which is not supported by webidl2"
+        "comment": "SVG 1 uses OMG IDL instead of WebIDL."
     },
     {
         "url": "http://www.w3.org/TR/touch-events/",
