@@ -215,6 +215,12 @@
         "title": "Web Cryptography"
     },
     {
+        "url": "https://dvcs.w3.org/hg/speech-api/raw-file/tip/webspeechapi.html",
+        "title": "Web Speech",
+        "useLocalCopy": true,
+        "comment": "2014 Editor's Draft has invalid nested enum."
+    },
+    {
         "url": "http://www.w3.org/TR/webrtc/",
         "title": "WebRTC 1.0"
     },
