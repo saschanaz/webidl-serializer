@@ -1,0 +1,11 @@
+// Copied from Editor's Draft 2 April 2017
+// Removed examples
+// Removed duplicated console definition
+
+[Exposed=Worklet]
+interface WorkletGlobalScope {
+};
+
+interface Worklet {
+    [NewObject] Promise<void> import(USVString moduleURL);
+};

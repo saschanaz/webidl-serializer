@@ -283,6 +283,12 @@
         "hasIdlIndex": true
     },
     {
+        "url": "http://www.w3.org/TR/2016/WD-worklets-1-20160607/",
+        "title": "Worklets",
+        "hasIdlIndex": true,
+        "useLocalCopy": true
+    },
+    {
         "url": "https://xhr.spec.whatwg.org/",
         "title": "XMLHttpRequest",
         "hasIdlIndex": true
