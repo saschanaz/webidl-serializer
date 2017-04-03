@@ -2,11 +2,6 @@
     "events": [
         {
             "target": "Sensor",
-            "properties": {
-                "onchange": "change",
-                "onactivate": "activate",
-                "onerror": "error"
-            },
             "types": {
                 "change": {},
                 "activate": {},

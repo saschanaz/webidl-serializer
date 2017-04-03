@@ -8,9 +8,6 @@ interface Supplement {
 
 interface EventSupplement {
     target: string
-    properties: {
-        [key: string]: string;
-    },
     types: {
         [key: string]: EventType;
     }
@@ -18,6 +15,7 @@ interface EventSupplement {
 
 interface EventType {
     "interface": string;
+    property: string;
 }
 
 interface EventTypeInterfacePair {
@@ -87,10 +85,17 @@ export async function apply(base: IDLExportResult) {
 function createEventPropertyMap(supplement: Supplement) {
     const map = new Map<string, EventTypeInterfacePair>();
     for (const event of supplement.events) {
-        for (const property in event.properties) {
-            const eventType = event.properties[property];
+        for (const eventType in event.types) {
+            const eventTypeInfo = event.types[eventType];
+            // if property is defined then use it, otherwise autogenerate property name if type name is in lower case
+            // (uppercased event types frequently does not have properties e.g. DOMContentLoaded)
+            if (eventTypeInfo.property === null) {
+                // property is explicitly disabled
+                continue;
+            }
+            const property = eventTypeInfo.property || (eventType.toLowerCase() === eventType && `on${eventType}`);
             try {
-                map.set(`${event.target}:${property}`, { eventType, eventInterface: event.types[eventType]["interface"] });
+                map.set(`${event.target}:${property}`, { eventType, eventInterface: eventTypeInfo["interface"] || "Event" });
             }
             catch (e) {
                 console.warn(`WARNING: failed to map ${event.target}:${property}\n${e.message}`);

@@ -2,9 +2,6 @@
     "events": [
         {
             "target": "MediaQueryList",
-            "properties": {
-                "onchange": "change"
-            },
             "types": {
                 "change": {}
             }

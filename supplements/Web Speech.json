@@ -2,19 +2,6 @@
     "events": [
         {
             "target": "SpeechRecognition",
-            "properties": {
-                "onaudiostart": "audiostart",
-                "onsoundstart": "soundstart",
-                "onspeechstart": "speechstart",
-                "onspeechend": "speechend",
-                "onsoundend": "soundend",
-                "onaudioend": "audioend",
-                "onresult": "result",
-                "onnomatch": "nomatch",
-                "onerror": "error",
-                "onstart": "start",
-                "onend": "end"
-            },
             "types": {
                 "audiostart": {},
                 "soundstart": {},

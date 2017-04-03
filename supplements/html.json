@@ -2,11 +2,6 @@
     "events": [
         {
             "target": "TextTrackList",
-            "properties": {
-                "onchange": "change",
-                "onaddtrack": "addtrack",
-                "onremovetrack": "removetrack"
-            },
             "types": {
                 "change": {},
                 "addtrack": {
@@ -19,69 +14,6 @@
         },
         {
             "target": "GlobalEventHandlers",
-            "properties": {
-                "onabort": "abort",
-                "onauxclick": "auxclick",
-                "onblur": "blur",
-                "oncancel": "cancel",
-                "oncanplay": "canplay",
-                "oncanplaythrough": "canplaythrough",
-                "onchange": "change",
-                "onclick": "click",
-                "onclose": "close",
-                "oncontextmenu": "contextmenu",
-                "oncuechange": "cuechange",
-                "ondblclick": "dblclick",
-                "ondrag": "drag",
-                "ondragend": "dragend",
-                "ondragenter": "dragenter",
-                "ondragexit": "dragexit",
-                "ondragleave": "dragleave",
-                "ondragover": "dragover",
-                "ondragstart": "dragstart",
-                "ondrop": "drop",
-                "ondurationchange": "durationchange",
-                "onemptied": "emptied",
-                "onended": "ended",
-                "onfocus": "focus",
-                "oninput": "input",
-                "oninvalid": "invalid",
-                "onkeydown": "keydown",
-                "onkeypress": "keypress",
-                "onkeyup": "keyup",
-                "onload": "load",
-                "onloadeddata": "loadeddata",
-                "onloadedmetadata": "loadedmetadata",
-                "onloadend": "loadend",
-                "onloadstart": "loadstart",
-                "onmousedown": "mousedown",
-                "onmouseenter": "mouseenter",
-                "onmouseleave": "mouseleave",
-                "onmousemove": "mousemove",
-                "onmouseout": "mouseout",
-                "onmouseover": "mouseover",
-                "onmouseup": "mouseup",
-                "onwheel": "wheel",
-                "onpause": "pause",
-                "onplay": "play",
-                "onplaying": "playing",
-                "onprogress": "progress",
-                "onratechange": "ratechange",
-                "onreset": "reset",
-                "onresize": "resize",
-                "onscroll": "scroll",
-                "onseeked": "seeked",
-                "onseeking": "seeking",
-                "onselect": "select",
-                "onshow": "show",
-                "onstalled": "stalled",
-                "onsubmit": "submit",
-                "onsuspend": "suspend",
-                "ontimeupdate": "timeupdate",
-                "ontoggle": "toggle",
-                "onvolumechange": "volumechange",
-                "onwaiting": "waiting"
-            },
             "types": {
                 "abort": {},
                 "auxclick": {
@@ -196,23 +128,6 @@
         },
         {
             "target": "WindowEventHandlers",
-            "properties": {
-                "onafterprint": "afterprint",
-                "onbeforeprint": "beforeprint",
-                "onbeforeunload": "beforeunload",
-                "onhashchange": "hashchange",
-                "onlanguagechange": "languagechange",
-                "onmessage": "message",
-                "onoffline": "offline",
-                "ononline": "online",
-                "onpagehide": "pagehide",
-                "onpageshow": "pageshow",
-                "onpopstate": "popstate",
-                "onrejectionhandled": "rejectionhandled",
-                "onstorage": "storage",
-                "onunhandledrejection": "unhandledrejection",
-                "onunload": "unload"
-            },
             "types": {
                 "afterprint": {},
                 "beforeprint": {},
@@ -251,11 +166,6 @@
         },
         {
             "target": "DocumentAndElementEventHandlers",
-            "properties": {
-                "oncopy": "copy",
-                "oncut": "cut",
-                "onpaste": "paste"
-            },
             "types": {
                 "copy": {},
                 "cut": {},
@@ -264,11 +174,6 @@
         },
         {
             "target": "EventSource",
-            "properties": {
-                "onopen": "open",
-                "onmessage": "message",
-                "onerror": "error"
-            },
             "types": {
                 "open": {},
                 "message": {
@@ -279,9 +184,6 @@
         },
         {
             "target": "BroadcastChannel",
-            "properties": {
-                "onmessage": "message"
-            },
             "types": {
                 "message": {
                     "interface": "MessageEvent"
@@ -290,13 +192,6 @@
         },
         {
             "target": "WorkerGlobalScope",
-            "properties": {
-                "onlanguagechange": "languagechange",
-                "onoffline": "offline",
-                "ononline": "online",
-                "onrejectionhandled": "rejectionhandled",
-                "onunhandledrejection": "unhandledrejection"
-            },
             "types": {
                 "languagechange": {},
                 "offline": {},
@@ -311,9 +206,6 @@
         },
         {
             "target": "DedicatedWorkerGlobalScope",
-            "properties": {
-                "onmessage": "message"
-            },
             "types": {
                 "message": {
                     "interface": "MessageEvent"
@@ -322,9 +214,6 @@
         },
         {
             "target": "SharedWorkerGlobalScope",
-            "properties": {
-                "onconnect": "connect"
-            },
             "types": {
                 "connect": {
                     "interface": "MessageEvent"

@@ -2,13 +2,6 @@
     "events": [
         {
             "target": "ServiceWorkerGlobalScope",
-            "properties": {
-                "oninstall": "install",
-                "onactivate": "activate",
-                "onfetch": "fetch",
-                "onforeignfetch": "foreignfetch",
-                "onmessage": "message"
-            },
             "types": {
                 "install": {
                     "interface": "InstallEvent"

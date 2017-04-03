@@ -2,18 +2,6 @@
     "events": [
         {
             "target": "RTCPeerConnection",
-            "properties": {
-                "ontrack": "track",
-                "onnegotiationneeded": "negotiationneeded",
-                "onsignalingstatechange": "signalingstatechange",
-                "oniceconnectionstatechange": "iceconnectionstatechange",
-                "onicegatheringstatechange": "icegatheringstatechange",
-                "onicecandidate": "icecandidate",
-                "onconnectionstatechange": "connectionstatechange",
-                "onicecandidateerror": "icecandidateerror",
-                "ondatachannel": "datachannel",
-                "onfingerprintfailure": "fingerprintfailure"
-            },
             "types": {
                 "track": {
                     "interface": "RTCTrackEvent"

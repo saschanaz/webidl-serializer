@@ -2,11 +2,6 @@
     "events": [
         {
             "target": "IDBDatabase",
-            "properties": {
-                "onabort": "abort",
-                "onerror": "error",
-                "onversionchange": "versionchange"
-            },
             "types": {
                 "abort": {},
                 "error": {},

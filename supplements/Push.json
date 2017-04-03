@@ -2,10 +2,6 @@
     "events": [
         {
             "target": "ServiceWorkerGlobalScope",
-            "properties": {
-                "onpush": "push",
-                "onpushsubscriptionchange": "pushsubscriptionchange"
-            },
             "types": {
                 "push": {
                     "interface": "PushEvent"

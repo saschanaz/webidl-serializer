@@ -2,9 +2,6 @@
     "events": [
         {
             "target": "ServiceWorkerGlobalScope",
-            "properties": {
-                "onsync": "sync"
-            },
             "types": {
                 "sync": {
                     "interface": "SyncEvent"

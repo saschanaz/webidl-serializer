@@ -2,36 +2,24 @@
     "events": [
         {
             "target": "BaseAudioContext",
-            "properties": {
-                "onstatechange": "statechange"
-            },
             "types": {
                 "statechange": {}
             }
         },
         {
             "target": "AudioScheduledSourceNode",
-            "properties": {
-                "onended": "ended"
-            },
             "types": {
                 "ended": {}
             }
         },
         {
             "target": "AudioWorkletNode",
-            "properties": {
-                "ondata": "data"
-            },
             "types": {
                 "data": {}
             }
         },
         {
             "target": "AudioWorkletProcessor",
-            "properties": {
-                "ondata": "data"
-            },
             "types": {
                 "data": {}
             }

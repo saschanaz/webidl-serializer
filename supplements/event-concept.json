@@ -2,7 +2,6 @@
     "event": [
         {
             "target": "ApplicationCache",
-            "properties": {},
             "types": {
                 "checking": {
                     // if no interface field then implicitly "Event"

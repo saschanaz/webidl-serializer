@@ -2,11 +2,6 @@
     "events": [
         {
             "target": "MediaSource",
-            "properties": {
-                "onsourceopen": "sourceopen",
-                "onsourceended": "sourceended",
-                "onsourceclose": "sourceclose"
-            },
             "types": {
                 "sourceopen": {},
                 "sourceended": {},
@@ -15,13 +10,6 @@
         },
         {
             "target": "SourceBuffer",
-            "properties": {
-                "onupdatestart": "updatestart",
-                "onupdate": "update",
-                "onupdateend": "updateend",
-                "onerror": "error",
-                "onabort": "abort"
-            },
             "types": {
                 "updatestart": {},
                 "update": {},
