@@ -173,6 +173,12 @@
         "useLocalCopy": true
     },
     {
+        "url": "https://streams.spec.whatwg.org/",
+        "title": "Streams",
+        "useLocalCopy": true,
+        "comment": "The original spec does not provide WebIDL codes so the local copy is needed"
+    },
+    {
         "url": "http://www.w3.org/TR/2016/CR-SVG2-20160915/idl.html",
         "title": "SVG 2",
         "hasIdlIndex": true,
@@ -289,10 +295,10 @@
         "hasIdlIndex": true
     },
     {
-        "url": "http://www.w3.org/TR/2016/WD-worklets-1-20160607/",
+        "url": "https://drafts.css-houdini.org/worklets/",
         "title": "Worklets",
         "hasIdlIndex": true,
-        "useLocalCopy": true
+        "comment": "2016 WD has incorrect Console attribute"
     },
     {
         "url": "https://xhr.spec.whatwg.org/",

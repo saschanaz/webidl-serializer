@@ -1,0 +1,18 @@
+// This code is NOT copied from original specification
+// but is to replicate original lib.d.ts definitions
+// which contains only ReadableStream and ReadableStream(Default)Reader
+
+interface ReadableStream {
+    readonly attribute boolean locked;
+    Promise<void> cancel();
+    ReadableStreamDefaultReader getReader();
+};
+
+[Constructor(ReadableStream stream)]
+interface ReadableStreamDefaultReader {
+    readonly attribute boolean closed;
+
+    Promise<void> cancel();
+    Promise<any> read();
+    void releaseLock();
+};
