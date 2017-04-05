@@ -1,0 +1,21 @@
+{
+    "events": [
+        {
+            "target": "GlobalEventHandlers",
+            "types": {
+                "touchstart": {
+                    "interface": "TouchEvent"
+                },
+                "touchend": {
+                    "interface": "TouchEvent"
+                },
+                "touchmove": {
+                    "interface": "TouchEvent"
+                },
+                "touchcancel": {
+                    "interface": "TouchEvent"
+                }
+            }
+        }
+    ]
+}

@@ -176,7 +176,7 @@
         "url": "https://streams.spec.whatwg.org/",
         "title": "Streams",
         "useLocalCopy": true,
-        "comment": "The original spec does not provide WebIDL codes so the local copy is needed"
+        "comment": "The local copy is needed because the original spec does not provide WebIDL codes."
     },
     {
         "url": "http://www.w3.org/TR/2016/CR-SVG2-20160915/idl.html",
@@ -185,8 +185,9 @@
         "comment": "SVG 1 uses OMG IDL instead of WebIDL."
     },
     {
-        "url": "http://www.w3.org/TR/touch-events/",
-        "title": "Touch Events"
+        "url": "https://w3c.github.io/touch-events/",
+        "title": "Touch Events",
+        "comment": "The L1 Recommendation lacks TouchEvent constructor."
     },
     {
         "url": "https://cdn.rawgit.com/w3c/uievents/gh-pages/sections/event-types.txt",

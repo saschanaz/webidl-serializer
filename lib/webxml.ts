@@ -92,7 +92,7 @@ function exportEventHandlers(edgeIdl: Document, ignore: string[]): IDLExportResu
     const interfaceSets = [edgeIdl.getElementsByTagName("interfaces")[0], edgeIdl.getElementsByTagName("mixin-interfaces")[0]];
     for (const interfaceSet of interfaceSets) {
         for (const interfaceEl of Array.from(interfaceSet.getElementsByTagName("interface"))) {
-            if (ignore.indexOf(interfaceEl.getAttribute("name") !== -1) {
+            if (ignore.indexOf(interfaceEl.getAttribute("name")) !== -1) {
                 // ignore this interface
                 continue;
             }
