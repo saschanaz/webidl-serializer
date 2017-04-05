@@ -18,10 +18,6 @@ const document = impl.createDocument("http://example.com/", "global", null);
 run().catch(err => console.error(err));
 
 async function run() {
-    /*
-    TODO: load event information from browser.webidl.xml and create interfaces for each event target
-    */
-
     console.log("Loading spec list...");
     const exportList: ExportRemoteDescription[] = JSON.parse(await fspromise.readFile("specs.json"));
 
@@ -61,6 +57,7 @@ async function run() {
     // Exporting IDL texts
     const exports = await Promise.all(results.map(result => exportIDLs(result)));
 
+    // Loads event information from browser.webidl.xml and create interfaces for each event target
     console.log("Loading event information from MSEdge data...");
     const msedgeEventDocument = new DOMParser().parseFromString(await fspromise.readFile("supplements/browser.webidl.xml"), "text/xml");
     const msedgeIgnore: string[] = JSON.parse(await fspromise.readFile("msedge-ignore.json"));
@@ -133,6 +130,7 @@ function exportEventHandlers(edgeIdl: Document, ignore: string[]): IDLExportResu
     };
 }
 
+/** Creates (event handler property name):(event type name) map from Edge document to apply on converted XML */
 function exportEventPropertyMap(edgeIdl: Document) {
     const eventPropertyMap = new Map<string, string>();
 
@@ -157,6 +155,7 @@ function exportEventPropertyMap(edgeIdl: Document) {
     return eventPropertyMap;
 }
 
+/** Add `event-handler` attribute so that TSJS-lib-generator can detect each event type of the handlers */
 function transferEventInformation(exports: IDLExportResult[], eventMap: Map<string, string>) {
     for (const exportResult of exports) {
         for (const snippet of exportResult.snippets) {
