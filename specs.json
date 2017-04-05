@@ -179,10 +179,10 @@
         "comment": "The local copy is needed because the original spec does not provide WebIDL codes."
     },
     {
-        "url": "http://www.w3.org/TR/2016/CR-SVG2-20160915/idl.html",
+        "url": "https://svgwg.org/svg2-draft/single-page.html",
         "title": "SVG 2",
         "hasIdlIndex": true,
-        "comment": "SVG 1 uses OMG IDL instead of WebIDL."
+        "comment": "SVG 1 uses OMG IDL instead of WebIDL, and 2016 CR has error on SVGElementInstance interface."
     },
     {
         "url": "https://w3c.github.io/touch-events/",
