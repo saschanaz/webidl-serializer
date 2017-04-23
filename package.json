@@ -9,7 +9,7 @@
   },
   "scripts": {
     "pretest": "yarn global add typescript mocha",
-    "test": "tsc;tsc -p test-sources/;mocha"
+    "test": "tsc;node . local;tsc -p test-sources/;mocha"
   },
   "dependencies": {
     "@types/jsdom": "^2.0.28",
