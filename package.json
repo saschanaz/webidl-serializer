@@ -7,16 +7,24 @@
     "email": "saschanaz@outlook.com",
     "name": "saschanaz"
   },
+  "scripts": {
+    "pretest": "yarn global add typescript mocha",
+    "test": "tsc;tsc -p test-sources/;mocha"
+  },
   "dependencies": {
     "@types/jsdom": "^2.0.28",
     "@types/mz": "^0.0.31",
     "@types/node": "^4.0.30",
-    "@types/whatwg-fetch": "0.0.33",
     "jsdom": "^9.4.1",
     "mz": "^2.6.0",
     "node-fetch": "^1.5.3",
     "prettify-xml": "^1.0.0",
     "webidl2": "git+https://github.com/SaschaNaz/webidl2.js.git#v0.2.1",
     "xmldom": "git+https://github.com/Tweddle-SE-Team/xmldom.git#v0.1.28-0"
+  },
+  "devDependencies": {
+    "@types/chai": "^3.5.1",
+    "@types/mocha": "^2.2.41",
+    "chai": "^3.5.0"
   }
 }

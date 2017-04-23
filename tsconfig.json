@@ -4,5 +4,8 @@
         "noImplicitAny": true,
         "sourceMap": true,
         "module": "commonjs"
-    }
+    },
+    "exclude": [
+        "test-sources/"
+    ]
 }
