@@ -13,6 +13,7 @@ export interface FetchResult {
 export interface IDLExportResult {
     snippets: IDLSnippetContent[];
     origin: FetchResult;
+    idl: string;
 }
 
 export interface IDLSnippetContent {

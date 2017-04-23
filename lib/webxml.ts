@@ -56,6 +56,12 @@ async function run() {
 
     // Exporting IDL texts
     const exports = await Promise.all(results.map(result => exportIDLs(result)));
+    for (const exported of exports) {
+        if (exported.origin.description.useLocalCopy) {
+            continue;
+        }
+        await mz.writeFile(`localcopies/${exported.origin.description.title}.widl`, exported.idl);
+    }
 
     // Loads event information from browser.webidl.xml and create interfaces for each event target
     console.log("Loading event information from MSEdge data...");
@@ -126,7 +132,7 @@ function exportEventHandlers(edgeIdl: Document, ignore: string[]): IDLExportResu
             },
             content: ""
         },
-        snippets: [snippet]
+        snippets: [snippet], idl: ""
     };
 }
 
@@ -208,7 +214,7 @@ function isWebIDLParseError(err: any): err is WebIDL2.WebIDLParseError {
 async function exportIDLs(result: FetchResult): Promise<IDLExportResult> {
     if (result.description.useLocalCopy) {
         return {
-            snippets: exportIDLSnippets([result.content], result), origin: result
+            snippets: exportIDLSnippets([result.content], result), origin: result, idl: result.content
         }
     }
 
@@ -223,7 +229,7 @@ async function exportIDLs(result: FetchResult): Promise<IDLExportResult> {
     
     win.close();
     return {
-        snippets: exportIDLSnippets(idlTexts, result), origin: result
+        snippets: exportIDLSnippets(idlTexts, result), origin: result, idl: idlTexts.join('\n\n')
     };
 }
 

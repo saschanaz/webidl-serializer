@@ -1,0 +1,32 @@
+[SecureContext]
+interface Sensor : EventTarget {
+  readonly attribute SensorState state;
+  readonly attribute DOMHighResTimeStamp? timestamp;
+  void start();
+  void stop();
+  attribute EventHandler onchange;
+  attribute EventHandler onactivate;
+  attribute EventHandler onerror;
+};
+
+dictionary SensorOptions {
+  double? frequency;
+};
+
+enum SensorState {
+  "unconnected",
+  "activating",
+  "activated",
+  "idle",
+  "errored"
+};
+
+[SecureContext, Constructor(DOMString type, SensorErrorEventInit errorEventInitDict)]
+interface SensorErrorEvent : Event {
+  readonly attribute Error error;
+};
+
+dictionary SensorErrorEventInit : EventInit {
+  required Error error;
+};
+

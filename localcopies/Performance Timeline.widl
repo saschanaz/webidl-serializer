@@ -1,0 +1,39 @@
+[Exposed=(Window,Worker)]
+interface PerformanceEntry {
+    readonly attribute DOMString           name;
+    readonly attribute DOMString           entryType;
+    readonly attribute DOMHighResTimeStamp startTime;
+    readonly attribute DOMHighResTimeStamp duration;
+    serializer = {attribute};
+};
+
+partial interface Performance {
+    PerformanceEntryList getEntries();
+    PerformanceEntryList getEntriesByType(DOMString type);
+    PerformanceEntryList getEntriesByName(DOMString name,
+                                          optional DOMString type);
+};
+
+typedef sequence<PerformanceEntry> PerformanceEntryList;
+
+dictionary PerformanceObserverInit {
+    required sequence<DOMString> entryTypes;
+};
+
+[Exposed=(Window,Worker)]
+interface PerformanceObserverEntryList {
+    PerformanceEntryList getEntries();
+    PerformanceEntryList getEntriesByType(DOMString type);
+    PerformanceEntryList getEntriesByName(DOMString name,
+                                          optional DOMString type);
+};
+
+callback PerformanceObserverCallback = void (PerformanceObserverEntryList entries,
+                                             PerformanceObserver observer);
+
+[Constructor(PerformanceObserverCallback callback),
+ Exposed=(Window,Worker)]
+interface PerformanceObserver {
+    void observe(PerformanceObserverInit options);
+    void disconnect();
+};

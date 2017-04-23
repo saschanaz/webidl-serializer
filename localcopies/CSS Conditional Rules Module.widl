@@ -1,0 +1,26 @@
+partial interface CSSRule {
+    const unsigned short SUPPORTS_RULE = 12;
+};
+
+interface CSSGroupingRule : CSSRule {
+    readonly attribute CSSRuleList cssRules;
+    unsigned long insertRule (CSSOMString rule, unsigned long index);
+    void deleteRule (unsigned long index);
+};
+
+interface CSSConditionRule : CSSGroupingRule {
+    attribute CSSOMString conditionText;
+};
+
+interface CSSMediaRule : CSSConditionRule {
+    readonly attribute MediaList media;
+};
+
+interface CSSSupportsRule : CSSConditionRule {
+};
+
+partial interface CSS {
+  static boolean supports(CSSOMString property, CSSOMString value);
+  static boolean supports(CSSOMString conditionText);
+};
+

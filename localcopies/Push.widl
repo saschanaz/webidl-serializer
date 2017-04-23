@@ -1,0 +1,78 @@
+partial interface ServiceWorkerRegistration {
+    readonly attribute PushManager pushManager;
+};
+
+interface PushManager {
+    Promise<PushSubscription>    subscribe(optional PushSubscriptionOptionsInit options);
+    Promise<PushSubscription?>   getSubscription();
+    Promise<PushPermissionState> permissionState(optional PushSubscriptionOptionsInit options);
+};
+
+dictionary PushSubscriptionOptionsInit {
+    boolean                      userVisibleOnly = false;
+    (BufferSource or DOMString)? applicationServerKey = null;
+};
+
+interface PushSubscriptionOptions {
+    readonly attribute boolean      userVisibleOnly;
+    [SameObject]
+    readonly attribute ArrayBuffer? applicationServerKey;
+};
+
+interface PushSubscription {
+    readonly attribute USVString               endpoint;
+    readonly attribute DOMTimeStamp?           expirationTime;
+    [SameObject]
+    readonly attribute PushSubscriptionOptions options;
+    ArrayBuffer?     getKey(PushEncryptionKeyName name);
+    Promise<boolean> unsubscribe();
+    serializer;
+};
+
+enum PushEncryptionKeyName {
+    "p256dh",
+    "auth"
+};
+
+[Exposed=ServiceWorker]
+interface PushMessageData {
+    ArrayBuffer arrayBuffer();
+    Blob        blob();
+    any         json();
+    USVString   text();
+};
+
+partial interface ServiceWorkerGlobalScope {
+    attribute EventHandler onpush;
+    attribute EventHandler onpushsubscriptionchange;
+};
+
+typedef (BufferSource or USVString) PushMessageDataInit;
+
+dictionary PushEventInit : ExtendableEventInit {
+    PushMessageDataInit data;
+};
+
+[Constructor(DOMString type, optional PushEventInit eventInitDict),
+ Exposed=ServiceWorker]
+interface PushEvent : ExtendableEvent {
+    readonly attribute PushMessageData? data;
+};
+
+dictionary PushSubscriptionChangeInit : ExtendableEventInit {
+    PushSubscription newSubscription = null;
+    PushSubscription oldSubscription = null;
+};
+
+[Constructor(DOMString type, optional PushSubscriptionChangeInit eventInitDict),
+ Exposed=ServiceWorker]
+interface PushSubscriptionChangeEvent : ExtendableEvent {
+    readonly attribute PushSubscription? newSubscription;
+    readonly attribute PushSubscription? oldSubscription;
+};
+
+enum PushPermissionState {
+    "denied",
+    "granted",
+    "prompt",
+};
