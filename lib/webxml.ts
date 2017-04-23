@@ -20,6 +20,12 @@ run().catch(err => console.error(err));
 async function run() {
     console.log("Loading spec list...");
     const exportList: ExportRemoteDescription[] = JSON.parse(await mz.readFile("specs.json", "utf8"));
+    if (process.argv[2] === "local") {
+        for (const exportInfo of exportList) {
+            // use remote copy only when specified
+            exportInfo.useLocalCopy = true;
+        }
+    }
 
     console.log("Fetching from web...");
     const results = await Promise.all(exportList.map(async (description): Promise<FetchResult> => {
