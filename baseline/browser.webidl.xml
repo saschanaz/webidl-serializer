@@ -9399,8 +9399,8 @@
         <method name="createDynamicsCompressor" type="DynamicsCompressorNode"/>
         <method name="createOscillator" type="OscillatorNode"/>
         <method name="createPeriodicWave" type="PeriodicWave">
-          <param name="real" type="sequence&lt;float&gt;"/>
-          <param name="imag" type="sequence&lt;float&gt;"/>
+          <param name="real" type="Float32Array"/>
+          <param name="imag" type="Float32Array"/>
           <param name="constraints" optional="1" type="PeriodicWaveConstraints"/>
         </method>
       </methods>
@@ -9539,7 +9539,7 @@
           <param name="timeConstant" type="float"/>
         </method>
         <method name="setValueCurveAtTime" type="AudioParam">
-          <param name="values" type="sequence&lt;float&gt;"/>
+          <param name="values" type="Float32Array"/>
           <param name="startTime" type="double"/>
           <param name="duration" type="double"/>
         </method>
@@ -9628,9 +9628,6 @@
           <param name="offset" optional="1" type="double"/>
           <param name="duration" optional="1" type="double"/>
         </method>
-        <method name="stop" type="void">
-          <param name="when" default="0" optional="1" type="double"/>
-        </method>
       </methods>
       <properties>
         <property name="buffer" nullable="1" type="AudioBuffer"/>
@@ -9658,9 +9655,6 @@
         <param name="context" type="BaseAudioContext"/>
         <param name="options" type="MediaElementAudioSourceOptions"/>
       </constructor>
-      <properties>
-        <property name="mediaElement" read-only="1" type="HTMLMediaElement"/>
-      </properties>
     </interface>
     <interface name="AudioWorkletGlobalScope" extends="WorkletGlobalScope" global="Worklet AudioWorklet" exposed="AudioWorklet">
       <methods>
@@ -9930,9 +9924,6 @@
         <param name="context" type="BaseAudioContext"/>
         <param name="options" type="MediaStreamAudioSourceOptions"/>
       </constructor>
-      <properties>
-        <property name="mediaStream" read-only="1" type="MediaStream"/>
-      </properties>
     </interface>
     <interface name="MediaStreamTrackAudioSourceNode" extends="AudioNode">
       <constructor>

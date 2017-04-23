@@ -6,15 +6,9 @@ describe("Baseline comparison", () => {
         const output = (await mz.readFile("built/browser.webidl.xml", "utf8")).split('\n');
         const baseline = (await mz.readFile("baseline/browser.webidl.xml", "utf8")).split('\n');
         
-        chai.assert.strictEqual(output.length, baseline.length);
+        chai.assert.strictEqual(output.length, baseline.length, `Output length is different from baseline`);
         for (let i = 0; i < baseline.length; i++) {
-            try {
-                chai.assert.strictEqual(output[i], baseline[i]);
-            }
-            catch (e) {
-                e.message = `Diff found on line ${i}:`;
-                throw e;
-            }
+            chai.assert.strictEqual(output[i], baseline[i], `Diff found on line ${i}:`);
         }
     })
 })
