@@ -5,7 +5,7 @@ import { XMLSerializer, DOMImplementation, DOMParser } from "xmldom";
 import * as jsdom from "jsdom";
 import fetch from "node-fetch";
 import prettifyXml = require("prettify-xml");
-import * as fspromise from "./fspromise";
+import * as mz from "mz/fs";
 import { ExportRemoteDescription, IDLExportResult, IDLSnippetContent, FetchResult } from "./types"
 import * as xhelper from "./xmldom-helper";
 import * as supplements from "./supplements";
@@ -19,14 +19,14 @@ run().catch(err => console.error(err));
 
 async function run() {
     console.log("Loading spec list...");
-    const exportList: ExportRemoteDescription[] = JSON.parse(await fspromise.readFile("specs.json"));
+    const exportList: ExportRemoteDescription[] = JSON.parse(await mz.readFile("specs.json", "utf8"));
 
     console.log("Fetching from web...");
     const results = await Promise.all(exportList.map(async (description): Promise<FetchResult> => {
         if (description.useLocalCopy) {
             const result: FetchResult = {
                 description,
-                content: await fspromise.readFile(`localcopies/${description.title}.widl`)
+                content: await mz.readFile(`localcopies/${description.title}.widl`, "utf8")
             }
             console.log(`Got a local copy for ${description.title}`);
             return result;
@@ -45,11 +45,11 @@ async function run() {
     }));
     console.log("Fetching complete 100%");
     
-    if (!(await fspromise.exists("built"))) {
-        await fspromise.makeDirectory("built");
+    if (!(await mz.exists("built"))) {
+        await mz.mkdir("built");
     }
-    if (!(await fspromise.exists("built/partial"))) {
-        await fspromise.makeDirectory("built/partial");
+    if (!(await mz.exists("built/partial"))) {
+        await mz.mkdir("built/partial");
     }
 
     console.log("Exporting and parsing WebIDL...");
@@ -59,8 +59,8 @@ async function run() {
 
     // Loads event information from browser.webidl.xml and create interfaces for each event target
     console.log("Loading event information from MSEdge data...");
-    const msedgeEventDocument = new DOMParser().parseFromString(await fspromise.readFile("supplements/browser.webidl.xml"), "text/xml");
-    const msedgeIgnore: string[] = JSON.parse(await fspromise.readFile("msedge-ignore.json"));
+    const msedgeEventDocument = new DOMParser().parseFromString(await mz.readFile("supplements/browser.webidl.xml", "utf8"), "text/xml");
+    const msedgeIgnore: string[] = JSON.parse(await mz.readFile("msedge-ignore.json", "utf8"));
     const msedgeEventHandlers = exportEventHandlers(msedgeEventDocument, msedgeIgnore);
     const msedgeEventPropertyMap = exportEventPropertyMap(msedgeEventDocument);
     transferEventInformation(exports, msedgeEventPropertyMap);
@@ -74,11 +74,11 @@ async function run() {
     const serializer = new XMLSerializer();
     for (const doc of convertAsMultipleDocument(exports)) {
         const path = `built/partial/${doc.documentElement.getAttribute("name")}.webidl.xml`;
-        await fspromise.writeFile(path, prettifyXml(serializer.serializeToString(doc)));
+        await mz.writeFile(path, prettifyXml(serializer.serializeToString(doc)));
         console.log(`Writing as ${path}`);
     }
     console.log("Conversion as merged one as browser.webidl.xml");
-    await fspromise.writeFile("built/browser.webidl.xml", prettifyXml(serializer.serializeToString(convertAsSingleDocument(exports))));
+    await mz.writeFile("built/browser.webidl.xml", prettifyXml(serializer.serializeToString(convertAsSingleDocument(exports))));
     console.log("Finished 100%");
 }
 

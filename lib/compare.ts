@@ -1,14 +1,14 @@
 "use strict";
 
 import { XMLSerializer, DOMImplementation, DOMParser } from "xmldom";
-import * as fspromise from "./fspromise";
+import * as mz from "mz/fs";
 
 run();
 
 async function run() {
-    const msedgeDocument = new DOMParser().parseFromString(await fspromise.readFile("supplements/browser.webidl.xml"), "text/xml");
-    const standardDocument = new DOMParser().parseFromString(await fspromise.readFile("built/browser.webidl.xml"), "text/xml");
-    const ignore = JSON.parse(await fspromise.readFile("msedge-ignore.json"));
+    const msedgeDocument = new DOMParser().parseFromString(await mz.readFile("supplements/browser.webidl.xml", "utf8"), "text/xml");
+    const standardDocument = new DOMParser().parseFromString(await mz.readFile("built/browser.webidl.xml", "utf8"), "text/xml");
+    const ignore = JSON.parse(await mz.readFile("msedge-ignore.json", "utf8"));
 
     compareArray(extractInterfaceNames(msedgeDocument), extractInterfaceNames(standardDocument), ignore);
 }

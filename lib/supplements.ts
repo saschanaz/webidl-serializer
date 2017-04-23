@@ -1,5 +1,5 @@
 import { ExportRemoteDescription, IDLExportResult, IDLSnippetContent, FetchResult } from "./types";
-import * as fspromise from "./fspromise";
+import * as mz from "mz/fs";
 import * as xhelper from "./xmldom-helper";
 
 interface Supplement {
@@ -25,11 +25,11 @@ interface EventTypeInterfacePair {
 
 export async function apply(base: IDLExportResult) {
     const path = `supplements/${base.origin.description.title}.json`;
-    const exists = await fspromise.exists(path);
+    const exists = await mz.exists(path);
     if (exists) {
         console.log(`A supplement is detected for ${base.origin.description.title}`);
     }
-    const supplement: Supplement = exists && JSON.parse(await fspromise.readFile(path));
+    const supplement: Supplement = exists && JSON.parse(await mz.readFile(path, "utf8"));
 
     // create an empty map when no supplement
     // to check every event handler property has its event type
