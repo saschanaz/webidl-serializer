@@ -141,6 +141,9 @@
                 "message": {
                     "interface": "MessageEvent"
                 },
+                "messageerror": {
+                    "interface": "MessageEvent"
+                },
                 "offline": {},
                 "online": {},
                 "pagehide": {
@@ -187,6 +190,9 @@
             "types": {
                 "message": {
                     "interface": "MessageEvent"
+                },
+                "messageerror": {
+                    "interface": "MessageEvent"
                 }
             }
         },
@@ -209,6 +215,9 @@
             "types": {
                 "message": {
                     "interface": "MessageEvent"
+                },
+                "messageerror": {
+                    "interface": "MessageEvent"
                 }
             }
         },
@@ -216,6 +225,22 @@
             "target": "SharedWorkerGlobalScope",
             "types": {
                 "connect": {
+                    "interface": "MessageEvent"
+                }
+            }
+        },
+        {
+            "target": "MessagePort",
+            "types": {
+                "messageerror": {
+                    "interface": "MessageEvent"
+                }
+            }
+        },
+        {
+            "target": "Worker",
+            "types": {
+                "messageerror": {
                     "interface": "MessageEvent"
                 }
             }
