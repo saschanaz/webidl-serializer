@@ -226,7 +226,7 @@ async function exportIDLs(result: FetchResult): Promise<IDLExportResult> {
     }
 
     const win = await jsdomEnv(result.content);
-    const idlElements = Array.from(win.document.querySelectorAll("pre.idl,code.idl-code"));
+    const idlElements = Array.from(win.document.querySelectorAll("pre.idl:not(.extract),code.idl-code")); /* .extract is used on an example IDL on specs including HTML and CSSOM */
     if (!idlElements.length) {
         throw new Error(`No IDLs in ${result.description.url}`)
     }

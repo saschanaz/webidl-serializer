@@ -93,9 +93,7 @@ dictionary DOMQuadInit {
   DOMPointInit p4;
 };
 
-[Constructor,
- Constructor(DOMString transformList),
- Constructor(sequence<unrestricted double> numberSequence),
+[Constructor(optional (DOMString or sequence<unrestricted double>) init),
  Exposed=(Window,Worker)]
 interface DOMMatrixReadOnly {
     [NewObject] static DOMMatrixReadOnly fromMatrix(optional DOMMatrixInit other);
@@ -167,9 +165,7 @@ interface DOMMatrixReadOnly {
                         serializer = { attribute };
 };
 
-[Constructor,
- Constructor(DOMString transformList),
- Constructor(sequence<unrestricted double> numberSequence),
+[Constructor(optional (DOMString or sequence<unrestricted double>) init),
  Exposed=(Window,Worker)]
 interface DOMMatrix : DOMMatrixReadOnly {
     [NewObject] static DOMMatrix fromMatrix(optional DOMMatrixInit other);

@@ -1,7 +1,3 @@
-interface Example {
-  // this is an IDL definition
-};
-
 [LegacyUnenumerableNamedProperties]
 interface HTMLAllCollection {
   readonly attribute unsigned long length;

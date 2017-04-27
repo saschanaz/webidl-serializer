@@ -3405,7 +3405,7 @@
         </method>
         <method name="insertRule" type="unsigned long">
           <param name="rule" type="CSSOMString"/>
-          <param name="index" type="unsigned long"/>
+          <param name="index" default="0" optional="1" type="unsigned long"/>
         </method>
       </methods>
       <properties>
@@ -3419,7 +3419,7 @@
         </method>
         <method name="insertRule" type="unsigned long">
           <param name="rule" type="CSSOMString"/>
-          <param name="index" default="0" optional="1" type="unsigned long"/>
+          <param name="index" type="unsigned long"/>
         </method>
       </methods>
       <properties>
@@ -3462,12 +3462,12 @@
         <property name="style" read-only="1" type="CSSStyleDeclaration"/>
       </properties>
     </interface>
-    <interface name="CSSMediaRule" extends="CSSGroupingRule">
+    <interface name="CSSMediaRule" extends="CSSConditionRule">
       <properties>
         <property name="media" read-only="1" type="MediaList"/>
       </properties>
     </interface>
-    <interface name="CSSMediaRule" extends="CSSConditionRule">
+    <interface name="CSSMediaRule" extends="CSSGroupingRule">
       <properties>
         <property name="media" read-only="1" type="MediaList"/>
       </properties>
@@ -3548,8 +3548,6 @@
         <property name="cssText" type="CSSOMString"/>
         <property name="length" read-only="1" type="unsigned long"/>
         <property name="parentRule" read-only="1" nullable="1" type="CSSRule"/>
-        <property name="camel_cased_attribute" type="CSSOMString"/>
-        <property name="webkit_cased_attribute" type="CSSOMString"/>
         <property name="dashed_attribute" type="CSSOMString"/>
       </properties>
     </interface>
@@ -3959,12 +3957,8 @@
       </methods>
     </interface>
     <interface name="DOMMatrix" extends="DOMMatrixReadOnly" exposed="Window Worker">
-      <constructor/>
       <constructor>
-        <param name="transformList" type="DOMString"/>
-      </constructor>
-      <constructor>
-        <param name="numberSequence" type="sequence&lt;unrestricted double&gt;"/>
+        <param name="init" optional="1" type="(DOMString or sequence&lt;unrestricted double&gt;)"/>
       </constructor>
       <methods>
         <method name="fromFloat32Array" static="1" type="DOMMatrix">
@@ -4053,12 +4047,8 @@
       </properties>
     </interface>
     <interface name="DOMMatrixReadOnly" extends="Object" exposed="Window Worker">
-      <constructor/>
       <constructor>
-        <param name="transformList" type="DOMString"/>
-      </constructor>
-      <constructor>
-        <param name="numberSequence" type="sequence&lt;unrestricted double&gt;"/>
+        <param name="init" optional="1" type="(DOMString or sequence&lt;unrestricted double&gt;)"/>
       </constructor>
       <anonymous-methods>
         <method stringifier="1" type="DOMString"/>
@@ -4664,7 +4654,6 @@
         </method>
       </methods>
     </interface>
-    <interface name="Example" extends="Object"/>
     <interface name="ExtendableEvent" extends="Event" exposed="ServiceWorker">
       <constructor>
         <param name="type" type="DOMString"/>

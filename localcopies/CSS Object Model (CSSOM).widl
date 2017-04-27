@@ -132,16 +132,6 @@ interface CSSStyleDeclaration {
 
 
 partial interface CSSStyleDeclaration {
-  [CEReactions, TreatNullAs=EmptyString] attribute CSSOMString _camel_cased_attribute;
-};
-
-
-partial interface CSSStyleDeclaration {
-  [CEReactions, TreatNullAs=EmptyString] attribute CSSOMString _webkit_cased_attribute;
-};
-
-
-partial interface CSSStyleDeclaration {
   [CEReactions, TreatNullAs=EmptyString] attribute CSSOMString _dashed_attribute;
 };
 
