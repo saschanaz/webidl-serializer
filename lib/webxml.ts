@@ -50,7 +50,7 @@ async function run() {
         return result;
     }));
     console.log("Fetching complete 100%");
-    
+
     if (!(await mz.exists("built"))) {
         await mz.mkdir("built");
     }
@@ -185,7 +185,7 @@ function transferEventInformation(exports: IDLExportResult[], eventMap: Map<stri
                             console.log(`no event data for ${key}, expecting supplement to have one`);
                             continue;
                         }
-                        
+
                         property.setAttribute("event-handler", event);
                     }
                 }
@@ -229,10 +229,10 @@ async function exportIDLs(result: FetchResult): Promise<IDLExportResult> {
     if (!idlElements.length) {
         throw new Error(`No IDLs in ${result.description.url}`)
     }
-    const idlTexts = 
+    const idlTexts =
         result.description.hasIdlIndex ? [idlElements[idlElements.length - 1].textContent] :
             idlElements.map(element => element.textContent);
-    
+
     win.close();
     return {
         snippets: exportIDLSnippets(idlTexts, result), origin: result, idl: idlTexts.join('\n\n')
@@ -607,7 +607,7 @@ function createIterableDeclarationMember(declarationMemberType: WebIDL2.Iterable
     }
     else {
         // value only
-        iterable.setAttribute("type", declarationMemberType.idlType.origin.trim());   
+        iterable.setAttribute("type", declarationMemberType.idlType.origin.trim());
     }
     // TODO: extAttr
     return iterable;
