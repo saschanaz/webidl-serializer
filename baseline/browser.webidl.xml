@@ -731,17 +731,17 @@
     </dictionary>
     <dictionary name="MediaTrackCapabilities" extends="Object">
       <members>
-        <member name="width" type="LongRange"/>
-        <member name="height" type="LongRange"/>
-        <member name="aspectRatio" type="DoubleRange"/>
-        <member name="frameRate" type="DoubleRange"/>
+        <member name="width" type="(long or LongRange)"/>
+        <member name="height" type="(long or LongRange)"/>
+        <member name="aspectRatio" type="(double or DoubleRange)"/>
+        <member name="frameRate" type="(double or DoubleRange)"/>
         <member name="facingMode" type="sequence&lt;DOMString&gt;"/>
-        <member name="volume" type="DoubleRange"/>
-        <member name="sampleRate" type="LongRange"/>
-        <member name="sampleSize" type="LongRange"/>
+        <member name="volume" type="(double or DoubleRange)"/>
+        <member name="sampleRate" type="(long or LongRange)"/>
+        <member name="sampleSize" type="(long or LongRange)"/>
         <member name="echoCancellation" type="sequence&lt;boolean&gt;"/>
-        <member name="latency" type="DoubleRange"/>
-        <member name="channelCount" type="LongRange"/>
+        <member name="latency" type="(double or DoubleRange)"/>
+        <member name="channelCount" type="(long or LongRange)"/>
         <member name="deviceId" type="DOMString"/>
         <member name="groupId" type="DOMString"/>
       </members>
@@ -5138,6 +5138,7 @@
         <property name="longDesc" type="USVString"/>
         <property name="marginHeight" type="DOMString"/>
         <property name="marginWidth" type="DOMString"/>
+        <property name="allowUserMedia" type="boolean"/>
       </properties>
       <events>
         <event name="load" dispatch="async" skips-window="1" type="Event"/>
@@ -7470,7 +7471,7 @@
         <method name="enumerateDevices" type="Promise&lt;sequence&lt;MediaDeviceInfo&gt;&gt;"/>
         <method name="getSupportedConstraints" type="MediaTrackSupportedConstraints"/>
         <method name="getUserMedia" type="Promise&lt;MediaStream&gt;">
-          <param name="constraints" optional="1" type="MediaStreamConstraints"/>
+          <param name="constraints" type="MediaStreamConstraints"/>
         </method>
       </methods>
       <properties>
