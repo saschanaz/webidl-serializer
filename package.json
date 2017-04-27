@@ -9,17 +9,17 @@
   },
   "scripts": {
     "pretest": "yarn global add typescript mocha",
-    "test": "tsc;node . local;tsc -p test-sources/;mocha"
+    "test": "tsc && node . local && tsc -p test-sources/ && mocha"
   },
   "dependencies": {
     "@types/jsdom": "^2.0.28",
     "@types/mz": "^0.0.31",
-    "@types/node": "^4.0.30",
+    "@types/node": "^7.0.14",
     "jsdom": "^9.4.1",
     "mz": "^2.6.0",
     "node-fetch": "^1.5.3",
     "prettify-xml": "^1.0.0",
-    "webidl2": "git+https://github.com/SaschaNaz/webidl2.js.git#v0.2.1",
+    "webidl2": "git+https://github.com/SaschaNaz/webidl2.js.git#v0.2.4",
     "xmldom": "git+https://github.com/Tweddle-SE-Team/xmldom.git#v0.1.28-0"
   },
   "devDependencies": {

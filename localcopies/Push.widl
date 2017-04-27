@@ -3,6 +3,9 @@ partial interface ServiceWorkerRegistration {
 };
 
 interface PushManager {
+    [SameObject]
+    static readonly attribute FrozenArray<DOMString> supportedContentEncodings;
+
     Promise<PushSubscription>    subscribe(optional PushSubscriptionOptionsInit options);
     Promise<PushSubscription?>   getSubscription();
     Promise<PushPermissionState> permissionState(optional PushSubscriptionOptionsInit options);

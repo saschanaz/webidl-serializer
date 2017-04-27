@@ -731,17 +731,17 @@
     </dictionary>
     <dictionary name="MediaTrackCapabilities" extends="Object">
       <members>
-        <member name="width" type="LongRange"/>
-        <member name="height" type="LongRange"/>
-        <member name="aspectRatio" type="DoubleRange"/>
-        <member name="frameRate" type="DoubleRange"/>
+        <member name="width" type="(long or LongRange)"/>
+        <member name="height" type="(long or LongRange)"/>
+        <member name="aspectRatio" type="(double or DoubleRange)"/>
+        <member name="frameRate" type="(double or DoubleRange)"/>
         <member name="facingMode" type="sequence&lt;DOMString&gt;"/>
-        <member name="volume" type="DoubleRange"/>
-        <member name="sampleRate" type="LongRange"/>
-        <member name="sampleSize" type="LongRange"/>
+        <member name="volume" type="(double or DoubleRange)"/>
+        <member name="sampleRate" type="(long or LongRange)"/>
+        <member name="sampleSize" type="(long or LongRange)"/>
         <member name="echoCancellation" type="sequence&lt;boolean&gt;"/>
-        <member name="latency" type="DoubleRange"/>
-        <member name="channelCount" type="LongRange"/>
+        <member name="latency" type="(double or DoubleRange)"/>
+        <member name="channelCount" type="(long or LongRange)"/>
         <member name="deviceId" type="DOMString"/>
         <member name="groupId" type="DOMString"/>
       </members>
@@ -4912,7 +4912,7 @@
         <property name="href" type="USVString"/>
         <property name="crossOrigin" nullable="1" type="DOMString"/>
         <property name="rel" type="DOMString"/>
-        <property name="as" type="RequestDestination"/>
+        <property name="as" type="DOMString"/>
         <property name="relList" read-only="1" type="DOMTokenList"/>
         <property name="media" type="DOMString"/>
         <property name="nonce" type="DOMString"/>
@@ -5138,6 +5138,7 @@
         <property name="longDesc" type="USVString"/>
         <property name="marginHeight" type="DOMString"/>
         <property name="marginWidth" type="DOMString"/>
+        <property name="allowUserMedia" type="boolean"/>
       </properties>
       <events>
         <event name="load" dispatch="async" skips-window="1" type="Event"/>
@@ -6875,8 +6876,10 @@
       </methods>
       <properties>
         <property name="onmessage" type="EventHandler" event-handler="message"/>
+        <property name="onmessageerror" type="EventHandler" event-handler="messageerror"/>
       </properties>
       <events>
+        <event name="messageerror" type="MessageEvent"/>
         <event name="message" dispatch="async" skips-window="1" type="MessageEvent"/>
       </events>
     </interface>
@@ -6893,9 +6896,11 @@
       <properties>
         <property name="name" read-only="1" type="DOMString"/>
         <property name="onmessage" type="EventHandler" event-handler="message"/>
+        <property name="onmessageerror" type="EventHandler" event-handler="messageerror"/>
       </properties>
       <events>
         <event name="message" type="MessageEvent"/>
+        <event name="messageerror" type="MessageEvent"/>
       </events>
     </interface>
     <interface name="WorkerGlobalScope" extends="EventTarget" exposed="Worker">
@@ -6936,9 +6941,11 @@
       </methods>
       <properties>
         <property name="onmessage" type="EventHandler" event-handler="message"/>
+        <property name="onmessageerror" type="EventHandler" event-handler="messageerror"/>
       </properties>
       <events>
         <event name="message" type="MessageEvent"/>
+        <event name="messageerror" type="MessageEvent"/>
       </events>
     </interface>
     <interface name="SharedWorkerGlobalScope" extends="WorkerGlobalScope" global="Worker SharedWorker" exposed="SharedWorker">
@@ -6967,9 +6974,11 @@
       </methods>
       <properties>
         <property name="onmessage" type="EventHandler" event-handler="message"/>
+        <property name="onmessageerror" type="EventHandler" event-handler="messageerror"/>
       </properties>
       <implements>AbstractWorker</implements>
       <events>
+        <event name="messageerror" type="MessageEvent"/>
         <event name="error" dispatch="async" skips-window="1" type="ErrorEvent"/>
         <event name="message" dispatch="async" skips-window="1" type="MessageEvent"/>
       </events>
@@ -7470,7 +7479,7 @@
         <method name="enumerateDevices" type="Promise&lt;sequence&lt;MediaDeviceInfo&gt;&gt;"/>
         <method name="getSupportedConstraints" type="MediaTrackSupportedConstraints"/>
         <method name="getUserMedia" type="Promise&lt;MediaStream&gt;">
-          <param name="constraints" optional="1" type="MediaStreamConstraints"/>
+          <param name="constraints" type="MediaStreamConstraints"/>
         </method>
       </methods>
       <properties>
@@ -7823,6 +7832,9 @@
           <param name="options" optional="1" type="PushSubscriptionOptionsInit"/>
         </method>
       </methods>
+      <properties>
+        <property name="supportedContentEncodings" read-only="1" static="1" type="FrozenArray&lt;DOMString&gt;"/>
+      </properties>
     </interface>
     <interface name="PushSubscriptionOptions" extends="Object">
       <properties>
@@ -11573,6 +11585,7 @@
         <property name="onhashchange" type="EventHandler" event-handler="hashchange"/>
         <property name="onlanguagechange" type="EventHandler" event-handler="languagechange"/>
         <property name="onmessage" type="EventHandler" event-handler="message"/>
+        <property name="onmessageerror" type="EventHandler" event-handler="messageerror"/>
         <property name="onoffline" type="EventHandler" event-handler="offline"/>
         <property name="ononline" type="EventHandler" event-handler="online"/>
         <property name="onpagehide" type="EventHandler" event-handler="pagehide"/>
@@ -11589,6 +11602,7 @@
         <event name="hashchange" type="HashChangeEvent"/>
         <event name="languagechange" type="Event"/>
         <event name="message" type="MessageEvent"/>
+        <event name="messageerror" type="MessageEvent"/>
         <event name="offline" type="Event"/>
         <event name="online" type="Event"/>
         <event name="pagehide" type="PageTransitionEvent"/>

@@ -3,7 +3,12 @@
         "target": "es2017",
         "noImplicitAny": true,
         "sourceMap": true,
-        "module": "commonjs"
+        "module": "commonjs",
+        "lib": [
+            "es2017",
+            "dom",
+            "dom.iterable"
+        ]
     },
     "exclude": [
         "test-sources/"
