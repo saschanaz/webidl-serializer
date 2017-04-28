@@ -50,6 +50,7 @@ function mergeInterface(baseInterface: Element, partialInterface: Element) {
     mergeInterfaceMemberSet(baseInterface, partialInterface, "properties");
     mergeInterfaceMemberSet(baseInterface, partialInterface, "events");
     mergeInterfaceMemberSet(baseInterface, partialInterface, "sn:declarations");
+    mergeInterfaceSingleDeclaration(baseInterface, partialInterface, "element");
 
     const children = xhelper.getChildrenArray(partialInterface);
     for (const constructor of Array.from(children.filter(child => child.nodeName.toLowerCase() === "constructor"))) {
@@ -84,4 +85,21 @@ function mergeInterfaceMemberSet(baseInterface: Element, partialInterface: Eleme
     if (!xhelper.getChild(baseInterface, setName) /* no parentNode support on xmldom */) {
         baseInterface.appendChild(baseSet);
     }
+}
+
+function mergeInterfaceSingleDeclaration(baseInterface: Element, partialInterface: Element, declarationName: string) {
+    const baseDeclaration = xhelper.getChild(baseInterface, declarationName);
+    const partialDeclaration = xhelper.getChild(partialInterface, declarationName);
+    if (baseDeclaration && partialDeclaration) {
+        console.warn(`Duplicated declaration ${declarationName} for ${baseInterface.getAttribute("name")}`)
+        return;
+    }
+    
+    if (!partialDeclaration) {
+        // no merge occurs
+        return;
+    }
+
+    partialInterface.removeChild(partialDeclaration);
+    baseInterface.appendChild(partialDeclaration);
 }

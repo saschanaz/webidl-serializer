@@ -108,8 +108,9 @@ function exportEventHandlers(edgeIdl: Document, ignore: string[]): IDLExportResu
             }
 
             const events = interfaceEl.getElementsByTagName("events")[0];
-            if (!events) {
-                // no events
+            const element = interfaceEl.getElementsByTagName("element")[0];
+            if (!events && !element) {
+                // no events or element information
                 continue;
             }
 
@@ -117,14 +118,19 @@ function exportEventHandlers(edgeIdl: Document, ignore: string[]): IDLExportResu
             partialInterfaceEl.setAttribute("name", interfaceEl.getAttribute("name"));
             partialInterfaceEl.setAttribute("no-interface-object", "1");
             partialInterfaceEl.setAttribute("sn:partial", "1");
-            partialInterfaceEl.appendChild(xhelper.cloneNodeDeep(events));
+            if (events) {
+                const newEvents = xhelper.cloneNodeDeep(events);
 
-            const newEvents = xhelper.getChild(partialInterfaceEl, "events");
-            for (const event of xhelper.getChildrenArray(newEvents)) {
-                if (ignore.indexOf(event.getAttribute("type")) !== -1) {
-                    // ignore this event
-                    newEvents.removeChild(event);
+                for (const event of xhelper.getChildrenArray(newEvents)) {
+                    if (ignore.indexOf(event.getAttribute("type")) !== -1) {
+                        // ignore this event
+                        newEvents.removeChild(event);
+                    }
                 }
+                partialInterfaceEl.appendChild(newEvents);
+            }
+            if (element) {
+                partialInterfaceEl.appendChild(xhelper.cloneNode(element));
             }
 
             snippet.mixinInterfaces.push(partialInterfaceEl);
@@ -135,7 +141,7 @@ function exportEventHandlers(edgeIdl: Document, ignore: string[]): IDLExportResu
         origin: {
             description: {
                 url: "",
-                title: "MSEdge Event Information"
+                title: "MSEdge Event+ElementMap Information"
             },
             content: ""
         },

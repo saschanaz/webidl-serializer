@@ -4974,6 +4974,7 @@
         <property name="type" type="DOMString"/>
       </properties>
       <implements>HTMLHyperlinkElementUtils</implements>
+      <element name="a" namespace="HTML"/>
     </interface>
     <interface name="HTMLAppletElement" extends="HTMLElement">
       <properties>
@@ -4989,6 +4990,7 @@
         <property name="vspace" type="unsigned long"/>
         <property name="width" type="DOMString"/>
       </properties>
+      <element name="applet" namespace="HTML"/>
     </interface>
     <interface name="HTMLAreaElement" extends="HTMLElement">
       <properties>
@@ -5004,17 +5006,20 @@
         <property name="target" type="DOMString"/>
       </properties>
       <implements>HTMLHyperlinkElementUtils</implements>
+      <element name="area" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLAudioElement" extends="HTMLMediaElement">
       <named-constructor name="Audio">
         <param name="src" optional="1" type="DOMString"/>
       </named-constructor>
+      <element name="audio" namespace="HTML"/>
     </interface>
     <interface name="HTMLBaseElement" extends="HTMLElement">
       <properties>
         <property name="href" type="USVString"/>
         <property name="target" type="DOMString"/>
       </properties>
+      <element name="base" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLBodyElement" extends="HTMLElement">
       <implements>WindowEventHandlers</implements>
@@ -5030,11 +5035,13 @@
         <event name="offline" bubbles="1" dispatch="async" type="Event"/>
         <event name="online" bubbles="1" dispatch="async" type="Event"/>
       </events>
+      <element name="body" namespace="HTML"/>
     </interface>
     <interface name="HTMLBRElement" extends="HTMLElement">
       <properties>
         <property name="clear" type="DOMString"/>
       </properties>
+      <element name="br" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLButtonElement" extends="HTMLElement">
       <methods>
@@ -5061,6 +5068,7 @@
         <property name="value" type="DOMString"/>
         <property name="willValidate" read-only="1" type="boolean"/>
       </properties>
+      <element name="button" namespace="HTML"/>
     </interface>
     <interface name="HTMLCanvasElement" extends="HTMLElement">
       <methods>
@@ -5088,6 +5096,7 @@
         <event name="webglcontextrestored" dispatch="async" follows="webglcontextlost" type="WebGLContextEvent"/>
         <event name="webglcontextcreationerror" dispatch="async" type="WebGLContextEvent"/>
       </events>
+      <element name="canvas" namespace="HTML"/>
     </interface>
     <interface name="HTMLCollection" extends="Object" exposed="Window">
       <methods>
@@ -5106,11 +5115,13 @@
       <properties>
         <property name="value" type="DOMString"/>
       </properties>
+      <element name="data" namespace="HTML"/>
     </interface>
     <interface name="HTMLDataListElement" extends="HTMLElement">
       <properties>
         <property name="options" read-only="1" type="HTMLCollection"/>
       </properties>
+      <element name="datalist" namespace="HTML"/>
     </interface>
     <interface name="HTMLDetailsElement" extends="HTMLElement">
       <properties>
@@ -5134,16 +5145,19 @@
       <properties>
         <property name="compact" type="boolean"/>
       </properties>
+      <element name="dir" namespace="HTML"/>
     </interface>
     <interface name="HTMLDivElement" extends="HTMLElement">
       <properties>
         <property name="align" type="DOMString"/>
       </properties>
+      <element name="div" namespace="HTML"/>
     </interface>
     <interface name="HTMLDListElement" extends="HTMLElement">
       <properties>
         <property name="compact" type="boolean"/>
       </properties>
+      <element name="dl" namespace="HTML"/>
     </interface>
     <interface name="HTMLElement" extends="Element">
       <methods>
@@ -5176,6 +5190,7 @@
       <implements>DocumentAndElementEventHandlers</implements>
       <implements>ElementContentEditable</implements>
       <implements>ElementCSSInlineStyle</implements>
+      <element name="noframes" namespace="HTML"/>
     </interface>
     <interface name="HTMLEmbedElement" extends="HTMLElement">
       <methods>
@@ -5189,6 +5204,7 @@
         <property name="type" type="DOMString"/>
         <property name="width" type="DOMString"/>
       </properties>
+      <element name="embed" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLFieldSetElement" extends="HTMLElement">
       <methods>
@@ -5208,6 +5224,7 @@
         <property name="validity" read-only="1" type="ValidityState"/>
         <property name="willValidate" read-only="1" type="boolean"/>
       </properties>
+      <element name="fieldset" namespace="HTML"/>
     </interface>
     <interface name="HTMLFontElement" extends="HTMLElement">
       <properties>
@@ -5215,6 +5232,7 @@
         <property name="face" type="DOMString"/>
         <property name="size" type="DOMString"/>
       </properties>
+      <element name="font" namespace="HTML"/>
     </interface>
     <interface name="HTMLFormControlsCollection" extends="HTMLCollection">
       <methods>
@@ -5255,6 +5273,7 @@
         <event name="reset" bubbles="1" cancelable="1" dispatch="sync" type="Event"/>
         <event name="submit" bubbles="1" cancelable="1" dispatch="sync" type="Event"/>
       </events>
+      <element name="form" namespace="HTML"/>
     </interface>
     <interface name="HTMLFrameElement" extends="HTMLElement">
       <properties>
@@ -5272,6 +5291,7 @@
       <events>
         <event name="load" dispatch="async" skips-window="1" type="Event"/>
       </events>
+      <element name="frame" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLFrameSetElement" extends="HTMLElement">
       <properties>
@@ -5279,12 +5299,16 @@
         <property name="rows" type="DOMString"/>
       </properties>
       <implements>WindowEventHandlers</implements>
+      <element name="frameset" namespace="HTML"/>
     </interface>
-    <interface name="HTMLHeadElement" extends="HTMLElement"/>
+    <interface name="HTMLHeadElement" extends="HTMLElement">
+      <element name="head" namespace="HTML"/>
+    </interface>
     <interface name="HTMLHeadingElement" extends="HTMLElement">
       <properties>
         <property name="align" type="DOMString"/>
       </properties>
+      <element name="h1" namespace="HTML"/>
     </interface>
     <interface name="HTMLHRElement" extends="HTMLElement">
       <properties>
@@ -5294,11 +5318,13 @@
         <property name="size" type="DOMString"/>
         <property name="width" type="DOMString"/>
       </properties>
+      <element name="hr" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLHtmlElement" extends="HTMLElement">
       <properties>
         <property name="version" type="DOMString"/>
       </properties>
+      <element name="html" namespace="HTML"/>
     </interface>
     <interface name="HTMLIFrameElement" extends="HTMLElement">
       <methods>
@@ -5328,6 +5354,7 @@
       <events>
         <event name="load" dispatch="async" skips-window="1" type="Event"/>
       </events>
+      <element name="iframe" namespace="HTML"/>
     </interface>
     <interface name="HTMLImageElement" extends="HTMLElement">
       <named-constructor name="Image">
@@ -5362,6 +5389,7 @@
       <events>
         <event name="error" dispatch="sync" type="Event"/>
       </events>
+      <element name="img" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLInputElement" extends="HTMLElement">
       <methods>
@@ -5447,6 +5475,7 @@
         <event name="error" dispatch="sync" type="Event"/>
         <event name="invalid" cancelable="1" dispatch="sync" type="Event"/>
       </events>
+      <element name="input" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLLabelElement" extends="HTMLElement">
       <properties>
@@ -5454,18 +5483,21 @@
         <property name="form" read-only="1" nullable="1" type="HTMLFormElement"/>
         <property name="htmlFor" type="DOMString"/>
       </properties>
+      <element name="label" namespace="HTML"/>
     </interface>
     <interface name="HTMLLegendElement" extends="HTMLElement">
       <properties>
         <property name="align" type="DOMString"/>
         <property name="form" read-only="1" nullable="1" type="HTMLFormElement"/>
       </properties>
+      <element name="legend" namespace="HTML"/>
     </interface>
     <interface name="HTMLLIElement" extends="HTMLElement">
       <properties>
         <property name="type" type="DOMString"/>
         <property name="value" type="long"/>
       </properties>
+      <element name="li" namespace="HTML"/>
     </interface>
     <interface name="HTMLLinkElement" extends="HTMLElement">
       <properties>
@@ -5494,12 +5526,14 @@
         <event name="load" dispatch="async" follows="readystatechange" skips-window="1" type="Event"/>
         <event name="readystatechange" dispatch="async" precedes="load" tags="IEOnly" type="Event"/>
       </events>
+      <element name="link" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLMapElement" extends="HTMLElement">
       <properties>
         <property name="areas" read-only="1" type="HTMLCollection"/>
         <property name="name" type="DOMString"/>
       </properties>
+      <element name="map" namespace="HTML"/>
     </interface>
     <interface name="HTMLMarqueeElement" extends="HTMLElement">
       <methods>
@@ -5527,6 +5561,7 @@
         <event name="start" dispatch="sync" precedes="bounce finish" tags="IEOnly" type="Event"/>
         <event name="finish" dispatch="sync" follows="start bounce" tags="IEOnly" type="Event"/>
       </events>
+      <element name="marquee" namespace="HTML"/>
     </interface>
     <interface name="HTMLMediaElement" extends="HTMLElement">
       <constants>
@@ -5627,6 +5662,7 @@
         <property name="label" type="DOMString"/>
         <property name="type" type="DOMString"/>
       </properties>
+      <element name="menu" namespace="HTML"/>
     </interface>
     <interface name="HTMLMenuItemElement" extends="HTMLElement">
       <properties>
@@ -5646,6 +5682,7 @@
         <property name="name" type="DOMString"/>
         <property name="scheme" type="DOMString"/>
       </properties>
+      <element name="meta" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLMeterElement" extends="HTMLElement">
       <properties>
@@ -5657,12 +5694,14 @@
         <property name="optimum" type="double"/>
         <property name="value" type="double"/>
       </properties>
+      <element name="meter" namespace="HTML"/>
     </interface>
     <interface name="HTMLModElement" extends="HTMLElement">
       <properties>
         <property name="cite" type="USVString"/>
         <property name="dateTime" type="DOMString"/>
       </properties>
+      <element name="ins" namespace="HTML"/>
     </interface>
     <interface name="HTMLObjectElement" extends="HTMLElement">
       <methods>
@@ -5702,6 +5741,7 @@
         <event name="load" dispatch="async" skips-window="1" type="Event"/>
         <event name="abort" dispatch="sync" type="UIEvent"/>
       </events>
+      <element name="object" namespace="HTML"/>
     </interface>
     <interface name="HTMLOListElement" extends="HTMLElement">
       <properties>
@@ -5710,12 +5750,14 @@
         <property name="start" type="long"/>
         <property name="type" type="DOMString"/>
       </properties>
+      <element name="ol" namespace="HTML"/>
     </interface>
     <interface name="HTMLOptGroupElement" extends="HTMLElement">
       <properties>
         <property name="disabled" type="boolean"/>
         <property name="label" type="DOMString"/>
       </properties>
+      <element name="optgroup" namespace="HTML"/>
     </interface>
     <interface name="HTMLOptionElement" extends="HTMLElement">
       <named-constructor name="Option">
@@ -5734,6 +5776,7 @@
         <property name="text" type="DOMString"/>
         <property name="value" type="DOMString"/>
       </properties>
+      <element name="option" namespace="HTML"/>
     </interface>
     <interface name="HTMLOptionsCollection" extends="HTMLCollection">
       <anonymous-methods>
@@ -5776,11 +5819,13 @@
         <property name="value" type="DOMString"/>
         <property name="willValidate" read-only="1" type="boolean"/>
       </properties>
+      <element name="output" namespace="HTML"/>
     </interface>
     <interface name="HTMLParagraphElement" extends="HTMLElement">
       <properties>
         <property name="align" type="DOMString"/>
       </properties>
+      <element name="p" namespace="HTML"/>
     </interface>
     <interface name="HTMLParamElement" extends="HTMLElement">
       <properties>
@@ -5789,12 +5834,16 @@
         <property name="value" type="DOMString"/>
         <property name="valueType" type="DOMString"/>
       </properties>
+      <element name="param" html-self-closing="1" namespace="HTML"/>
     </interface>
-    <interface name="HTMLPictureElement" extends="HTMLElement"/>
+    <interface name="HTMLPictureElement" extends="HTMLElement">
+      <element name="picture" namespace="HTML"/>
+    </interface>
     <interface name="HTMLPreElement" extends="HTMLElement">
       <properties>
         <property name="width" type="long"/>
       </properties>
+      <element name="pre" namespace="HTML"/>
     </interface>
     <interface name="HTMLProgressElement" extends="HTMLElement">
       <properties>
@@ -5803,11 +5852,13 @@
         <property name="position" read-only="1" type="double"/>
         <property name="value" type="double"/>
       </properties>
+      <element name="progress" namespace="HTML"/>
     </interface>
     <interface name="HTMLQuoteElement" extends="HTMLElement">
       <properties>
         <property name="cite" type="USVString"/>
       </properties>
+      <element name="q" namespace="HTML"/>
     </interface>
     <interface name="HTMLScriptElement" extends="HTMLElement">
       <properties>
@@ -5828,6 +5879,7 @@
         <event name="error" dispatch="sync" type="Event"/>
         <event name="load" dispatch="async" skips-window="1" type="Event"/>
       </events>
+      <element name="script" namespace="HTML"/>
     </interface>
     <interface name="HTMLSelectElement" extends="HTMLElement">
       <anonymous-methods>
@@ -5881,6 +5933,7 @@
         <event name="change" bubbles="1" dispatch="sync" type="Event"/>
         <event name="invalid" cancelable="1" dispatch="sync" type="Event"/>
       </events>
+      <element name="select" namespace="HTML"/>
     </interface>
     <interface name="HTMLSlotElement" extends="HTMLElement">
       <methods>
@@ -5900,8 +5953,11 @@
         <property name="srcset" type="USVString"/>
         <property name="type" type="DOMString"/>
       </properties>
+      <element name="source" html-self-closing="1" namespace="HTML"/>
     </interface>
-    <interface name="HTMLSpanElement" extends="HTMLElement"/>
+    <interface name="HTMLSpanElement" extends="HTMLElement">
+      <element name="span" namespace="HTML"/>
+    </interface>
     <interface name="HTMLStyleElement" extends="HTMLElement">
       <properties>
         <property name="media" type="DOMString"/>
@@ -5914,11 +5970,13 @@
         <event name="load" dispatch="async" follows="readystatechange" skips-window="1" type="Event"/>
         <event name="readystatechange" dispatch="async" precedes="load" tags="IEOnly" type="Event"/>
       </events>
+      <element name="style" namespace="HTML"/>
     </interface>
     <interface name="HTMLTableCaptionElement" extends="HTMLElement">
       <properties>
         <property name="align" type="DOMString"/>
       </properties>
+      <element name="caption" namespace="HTML"/>
     </interface>
     <interface name="HTMLTableCellElement" extends="HTMLElement">
       <properties>
@@ -5948,6 +6006,7 @@
         <property name="vAlign" type="DOMString"/>
         <property name="width" type="DOMString"/>
       </properties>
+      <element name="col" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLTableElement" extends="HTMLElement">
       <methods>
@@ -5981,6 +6040,7 @@
         <property name="tHead" nullable="1" type="HTMLTableSectionElement"/>
         <property name="width" type="DOMString"/>
       </properties>
+      <element name="table" namespace="HTML"/>
     </interface>
     <interface name="HTMLTableRowElement" extends="HTMLElement">
       <methods>
@@ -6001,6 +6061,7 @@
         <property name="sectionRowIndex" read-only="1" type="long"/>
         <property name="vAlign" type="DOMString"/>
       </properties>
+      <element name="tr" namespace="HTML"/>
     </interface>
     <interface name="HTMLTableSectionElement" extends="HTMLElement">
       <methods>
@@ -6018,11 +6079,13 @@
         <property name="rows" read-only="1" type="HTMLCollection"/>
         <property name="vAlign" type="DOMString"/>
       </properties>
+      <element name="thead" namespace="HTML"/>
     </interface>
     <interface name="HTMLTemplateElement" extends="HTMLElement">
       <properties>
         <property name="content" read-only="1" type="DocumentFragment"/>
       </properties>
+      <element name="template" namespace="HTML"/>
     </interface>
     <interface name="HTMLTextAreaElement" extends="HTMLElement">
       <methods>
@@ -6080,16 +6143,19 @@
         <event name="input" bubbles="1" dispatch="async" type="Event"/>
         <event name="invalid" cancelable="1" dispatch="sync" type="Event"/>
       </events>
+      <element name="textarea" namespace="HTML"/>
     </interface>
     <interface name="HTMLTimeElement" extends="HTMLElement">
       <properties>
         <property name="dateTime" type="DOMString"/>
       </properties>
+      <element name="time" namespace="HTML"/>
     </interface>
     <interface name="HTMLTitleElement" extends="HTMLElement">
       <properties>
         <property name="text" type="DOMString"/>
       </properties>
+      <element name="title" namespace="HTML"/>
     </interface>
     <interface name="HTMLTrackElement" extends="HTMLElement">
       <constants>
@@ -6110,14 +6176,18 @@
       <events>
         <event name="cuechange" dispatch="sync" type="Event"/>
       </events>
+      <element name="track" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLUListElement" extends="HTMLElement">
       <properties>
         <property name="compact" type="boolean"/>
         <property name="type" type="DOMString"/>
       </properties>
+      <element name="ul" namespace="HTML"/>
     </interface>
-    <interface name="HTMLUnknownElement" extends="HTMLElement"/>
+    <interface name="HTMLUnknownElement" extends="HTMLElement">
+      <element name="isindex" namespace="HTML"/>
+    </interface>
     <interface name="HTMLVideoElement" extends="HTMLMediaElement">
       <properties>
         <property name="height" type="unsigned long"/>
@@ -6136,6 +6206,7 @@
         <event name="MSVideoOptimalLayoutChanged" dispatch="sync" tags="MSAppOnly" type="Event"/>
         <event name="resize" dispatch="async" type="Event"/>
       </events>
+      <element name="video" namespace="HTML"/>
     </interface>
     <interface name="IDBCursor" extends="Object">
       <methods>
@@ -8971,6 +9042,7 @@
       </properties>
       <implements>SVGURIReference</implements>
       <implements>HTMLHyperlinkElementUtils</implements>
+      <element name="a" namespace="SVG"/>
     </interface>
     <interface name="SVGAngle" extends="Object">
       <constants>
@@ -9074,6 +9146,7 @@
         <property name="cy" read-only="1" type="SVGAnimatedLength"/>
         <property name="r" read-only="1" type="SVGAnimatedLength"/>
       </properties>
+      <element name="circle" namespace="SVG"/>
     </interface>
     <interface name="SVGClipPathElement" extends="SVGElement">
       <properties>
@@ -9081,6 +9154,7 @@
         <property name="transform" read-only="1" type="SVGAnimatedTransformList"/>
       </properties>
       <implements>SVGUnitTypes</implements>
+      <element name="clipPath" namespace="SVG"/>
     </interface>
     <interface name="SVGComponentTransferFunctionElement" extends="SVGElement">
       <constants>
@@ -9108,8 +9182,12 @@
       </properties>
       <implements>SVGURIReference</implements>
     </interface>
-    <interface name="SVGDefsElement" extends="SVGGraphicsElement"/>
-    <interface name="SVGDescElement" extends="SVGElement"/>
+    <interface name="SVGDefsElement" extends="SVGGraphicsElement">
+      <element name="defs" namespace="SVG"/>
+    </interface>
+    <interface name="SVGDescElement" extends="SVGElement">
+      <element name="desc" namespace="SVG"/>
+    </interface>
     <interface name="SVGElement" extends="Element">
       <methods>
         <method name="blur" type="void"/>
@@ -9136,6 +9214,7 @@
         <property name="rx" read-only="1" type="SVGAnimatedLength"/>
         <property name="ry" read-only="1" type="SVGAnimatedLength"/>
       </properties>
+      <element name="ellipse" namespace="SVG"/>
     </interface>
     <interface name="SVGFEBlendElement" extends="SVGElement">
       <constants>
@@ -9152,6 +9231,7 @@
         <property name="mode" read-only="1" type="SVGAnimatedEnumeration"/>
       </properties>
       <implements>SVGFilterPrimitiveStandardAttributes</implements>
+      <element name="feBlend" namespace="SVG"/>
     </interface>
     <interface name="SVGFEColorMatrixElement" extends="SVGElement">
       <constants>
@@ -9167,12 +9247,14 @@
         <property name="values" read-only="1" type="SVGAnimatedNumberList"/>
       </properties>
       <implements>SVGFilterPrimitiveStandardAttributes</implements>
+      <element name="feColorMatrix" namespace="SVG"/>
     </interface>
     <interface name="SVGFEComponentTransferElement" extends="SVGElement">
       <properties>
         <property name="in1" read-only="1" type="SVGAnimatedString"/>
       </properties>
       <implements>SVGFilterPrimitiveStandardAttributes</implements>
+      <element name="feComponentTransfer" namespace="SVG"/>
     </interface>
     <interface name="SVGFECompositeElement" extends="SVGElement">
       <constants>
@@ -9194,6 +9276,7 @@
         <property name="operator" read-only="1" type="SVGAnimatedEnumeration"/>
       </properties>
       <implements>SVGFilterPrimitiveStandardAttributes</implements>
+      <element name="feComposite" namespace="SVG"/>
     </interface>
     <interface name="SVGFEConvolveMatrixElement" extends="SVGElement">
       <constants>
@@ -9216,6 +9299,7 @@
         <property name="targetY" read-only="1" type="SVGAnimatedInteger"/>
       </properties>
       <implements>SVGFilterPrimitiveStandardAttributes</implements>
+      <element name="feConvolveMatrix" namespace="SVG"/>
     </interface>
     <interface name="SVGFEDiffuseLightingElement" extends="SVGElement">
       <properties>
@@ -9226,6 +9310,7 @@
         <property name="surfaceScale" read-only="1" type="SVGAnimatedNumber"/>
       </properties>
       <implements>SVGFilterPrimitiveStandardAttributes</implements>
+      <element name="feDiffuseLighting" namespace="SVG"/>
     </interface>
     <interface name="SVGFEDisplacementMapElement" extends="SVGElement">
       <constants>
@@ -9243,12 +9328,14 @@
         <property name="yChannelSelector" read-only="1" type="SVGAnimatedEnumeration"/>
       </properties>
       <implements>SVGFilterPrimitiveStandardAttributes</implements>
+      <element name="feDisplacementMap" namespace="SVG"/>
     </interface>
     <interface name="SVGFEDistantLightElement" extends="SVGElement">
       <properties>
         <property name="azimuth" read-only="1" type="SVGAnimatedNumber"/>
         <property name="elevation" read-only="1" type="SVGAnimatedNumber"/>
       </properties>
+      <element name="feDistantLight" namespace="SVG"/>
     </interface>
     <interface name="SVGFEDropShadowElement" extends="SVGElement">
       <methods>
@@ -9268,11 +9355,20 @@
     </interface>
     <interface name="SVGFEFloodElement" extends="SVGElement">
       <implements>SVGFilterPrimitiveStandardAttributes</implements>
+      <element name="feFlood" namespace="SVG"/>
     </interface>
-    <interface name="SVGFEFuncAElement" extends="SVGComponentTransferFunctionElement"/>
-    <interface name="SVGFEFuncBElement" extends="SVGComponentTransferFunctionElement"/>
-    <interface name="SVGFEFuncGElement" extends="SVGComponentTransferFunctionElement"/>
-    <interface name="SVGFEFuncRElement" extends="SVGComponentTransferFunctionElement"/>
+    <interface name="SVGFEFuncAElement" extends="SVGComponentTransferFunctionElement">
+      <element name="feFuncA" namespace="SVG"/>
+    </interface>
+    <interface name="SVGFEFuncBElement" extends="SVGComponentTransferFunctionElement">
+      <element name="feFuncB" namespace="SVG"/>
+    </interface>
+    <interface name="SVGFEFuncGElement" extends="SVGComponentTransferFunctionElement">
+      <element name="feFuncG" namespace="SVG"/>
+    </interface>
+    <interface name="SVGFEFuncRElement" extends="SVGComponentTransferFunctionElement">
+      <element name="feFuncR" namespace="SVG"/>
+    </interface>
     <interface name="SVGFEGaussianBlurElement" extends="SVGElement">
       <constants>
         <constant name="SVG_EDGEMODE_DUPLICATE" type="unsigned short" value="1"/>
@@ -9293,6 +9389,7 @@
         <property name="stdDeviationY" read-only="1" type="SVGAnimatedNumber"/>
       </properties>
       <implements>SVGFilterPrimitiveStandardAttributes</implements>
+      <element name="feGaussianBlur" namespace="SVG"/>
     </interface>
     <interface name="SVGFEImageElement" extends="SVGElement">
       <properties>
@@ -9301,14 +9398,17 @@
       </properties>
       <implements>SVGFilterPrimitiveStandardAttributes</implements>
       <implements>SVGURIReference</implements>
+      <element name="feImage" namespace="SVG"/>
     </interface>
     <interface name="SVGFEMergeElement" extends="SVGElement">
       <implements>SVGFilterPrimitiveStandardAttributes</implements>
+      <element name="feMerge" namespace="SVG"/>
     </interface>
     <interface name="SVGFEMergeNodeElement" extends="SVGElement">
       <properties>
         <property name="in1" read-only="1" type="SVGAnimatedString"/>
       </properties>
+      <element name="feMergeNode" namespace="SVG"/>
     </interface>
     <interface name="SVGFEMorphologyElement" extends="SVGElement">
       <constants>
@@ -9323,6 +9423,7 @@
         <property name="radiusY" read-only="1" type="SVGAnimatedNumber"/>
       </properties>
       <implements>SVGFilterPrimitiveStandardAttributes</implements>
+      <element name="feMorphology" namespace="SVG"/>
     </interface>
     <interface name="SVGFEOffsetElement" extends="SVGElement">
       <properties>
@@ -9331,6 +9432,7 @@
         <property name="in1" read-only="1" type="SVGAnimatedString"/>
       </properties>
       <implements>SVGFilterPrimitiveStandardAttributes</implements>
+      <element name="feOffset" namespace="SVG"/>
     </interface>
     <interface name="SVGFEPointLightElement" extends="SVGElement">
       <properties>
@@ -9338,6 +9440,7 @@
         <property name="y" read-only="1" type="SVGAnimatedNumber"/>
         <property name="z" read-only="1" type="SVGAnimatedNumber"/>
       </properties>
+      <element name="fePointLight" namespace="SVG"/>
     </interface>
     <interface name="SVGFESpecularLightingElement" extends="SVGElement">
       <properties>
@@ -9349,6 +9452,7 @@
         <property name="surfaceScale" read-only="1" type="SVGAnimatedNumber"/>
       </properties>
       <implements>SVGFilterPrimitiveStandardAttributes</implements>
+      <element name="feSpecularLighting" namespace="SVG"/>
     </interface>
     <interface name="SVGFESpotLightElement" extends="SVGElement">
       <properties>
@@ -9361,12 +9465,14 @@
         <property name="y" read-only="1" type="SVGAnimatedNumber"/>
         <property name="z" read-only="1" type="SVGAnimatedNumber"/>
       </properties>
+      <element name="feSpotLight" namespace="SVG"/>
     </interface>
     <interface name="SVGFETileElement" extends="SVGElement">
       <properties>
         <property name="in1" read-only="1" type="SVGAnimatedString"/>
       </properties>
       <implements>SVGFilterPrimitiveStandardAttributes</implements>
+      <element name="feTile" namespace="SVG"/>
     </interface>
     <interface name="SVGFETurbulenceElement" extends="SVGElement">
       <constants>
@@ -9386,6 +9492,7 @@
         <property name="type" read-only="1" type="SVGAnimatedEnumeration"/>
       </properties>
       <implements>SVGFilterPrimitiveStandardAttributes</implements>
+      <element name="feTurbulence" namespace="SVG"/>
     </interface>
     <interface name="SVGFilterElement" extends="SVGElement">
       <properties>
@@ -9398,6 +9505,7 @@
       </properties>
       <implements>SVGURIReference</implements>
       <implements>SVGUnitTypes</implements>
+      <element name="filter" namespace="SVG"/>
     </interface>
     <interface name="SVGForeignObjectElement" extends="SVGGraphicsElement">
       <properties>
@@ -9406,8 +9514,11 @@
         <property name="x" read-only="1" type="SVGAnimatedLength"/>
         <property name="y" read-only="1" type="SVGAnimatedLength"/>
       </properties>
+      <element name="foreignObject" namespace="SVG"/>
     </interface>
-    <interface name="SVGGElement" extends="SVGGraphicsElement"/>
+    <interface name="SVGGElement" extends="SVGGraphicsElement">
+      <element name="g" namespace="SVG"/>
+    </interface>
     <interface name="SVGGeometryElement" extends="SVGGraphicsElement">
       <methods>
         <method name="getPointAtLength" type="DOMPoint">
@@ -9469,6 +9580,7 @@
         <event name="SVGError" bubbles="1" dispatch="sync" type="Event"/>
         <event name="error" bubbles="1" dispatch="async" tags="IEOnly" type="Event"/>
       </events>
+      <element name="image" namespace="SVG"/>
     </interface>
     <interface name="SVGLength" extends="Object">
       <constants>
@@ -9542,6 +9654,7 @@
         <property name="y1" read-only="1" type="SVGAnimatedLength"/>
         <property name="y2" read-only="1" type="SVGAnimatedLength"/>
       </properties>
+      <element name="linearGradient" namespace="SVG"/>
     </interface>
     <interface name="SVGLineElement" extends="SVGGeometryElement">
       <properties>
@@ -9550,6 +9663,7 @@
         <property name="y1" read-only="1" type="SVGAnimatedLength"/>
         <property name="y2" read-only="1" type="SVGAnimatedLength"/>
       </properties>
+      <element name="line" namespace="SVG"/>
     </interface>
     <interface name="SVGMarkerElement" extends="SVGElement">
       <constants>
@@ -9577,6 +9691,7 @@
         <property name="refY" read-only="1" type="SVGAnimatedLength"/>
       </properties>
       <implements>SVGFitToViewBox</implements>
+      <element name="marker" namespace="SVG"/>
     </interface>
     <interface name="SVGMaskElement" extends="SVGElement">
       <properties>
@@ -9588,6 +9703,7 @@
         <property name="y" read-only="1" type="SVGAnimatedLength"/>
       </properties>
       <implements>SVGUnitTypes</implements>
+      <element name="mask" namespace="SVG"/>
     </interface>
     <interface name="SVGMeshElement" extends="SVGGeometryElement">
       <implements>SVGURIReference</implements>
@@ -9595,7 +9711,9 @@
     <interface name="SVGMeshGradientElement" extends="SVGGradientElement"/>
     <interface name="SVGMeshpatchElement" extends="SVGElement"/>
     <interface name="SVGMeshrowElement" extends="SVGElement"/>
-    <interface name="SVGMetadataElement" extends="SVGElement"/>
+    <interface name="SVGMetadataElement" extends="SVGElement">
+      <element name="metadata" namespace="SVG"/>
+    </interface>
     <interface name="SVGNumber" extends="Object">
       <properties>
         <property name="value" type="float"/>
@@ -9636,7 +9754,9 @@
         <property name="numberOfItems" read-only="1" type="unsigned long"/>
       </properties>
     </interface>
-    <interface name="SVGPathElement" extends="SVGGeometryElement"/>
+    <interface name="SVGPathElement" extends="SVGGeometryElement">
+      <element name="path" namespace="SVG"/>
+    </interface>
     <interface name="SVGPatternElement" extends="SVGElement">
       <properties>
         <property name="height" read-only="1" type="SVGAnimatedLength"/>
@@ -9649,6 +9769,7 @@
       </properties>
       <implements>SVGFitToViewBox</implements>
       <implements>SVGURIReference</implements>
+      <element name="pattern" namespace="SVG"/>
     </interface>
     <interface name="SVGPointList" extends="Object">
       <anonymous-methods>
@@ -9687,9 +9808,11 @@
     </interface>
     <interface name="SVGPolygonElement" extends="SVGGeometryElement">
       <implements>SVGAnimatedPoints</implements>
+      <element name="polygon" namespace="SVG"/>
     </interface>
     <interface name="SVGPolylineElement" extends="SVGGeometryElement">
       <implements>SVGAnimatedPoints</implements>
+      <element name="polyline" namespace="SVG"/>
     </interface>
     <interface name="SVGPreserveAspectRatio" extends="Object">
       <constants>
@@ -9722,6 +9845,7 @@
         <property name="fy" read-only="1" type="SVGAnimatedLength"/>
         <property name="r" read-only="1" type="SVGAnimatedLength"/>
       </properties>
+      <element name="radialGradient" namespace="SVG"/>
     </interface>
     <interface name="SVGRectElement" extends="SVGGeometryElement">
       <properties>
@@ -9732,6 +9856,7 @@
         <property name="x" read-only="1" type="SVGAnimatedLength"/>
         <property name="y" read-only="1" type="SVGAnimatedLength"/>
       </properties>
+      <element name="rect" namespace="SVG"/>
     </interface>
     <interface name="SVGScriptElement" extends="SVGElement">
       <properties>
@@ -9739,12 +9864,14 @@
         <property name="type" type="DOMString"/>
       </properties>
       <implements>SVGURIReference</implements>
+      <element name="script" namespace="SVG"/>
     </interface>
     <interface name="SVGSolidcolorElement" extends="SVGElement"/>
     <interface name="SVGStopElement" extends="SVGElement">
       <properties>
         <property name="offset" read-only="1" type="SVGAnimatedNumber"/>
       </properties>
+      <element name="stop" namespace="SVG"/>
     </interface>
     <interface name="SVGStringList" extends="Object">
       <anonymous-methods>
@@ -9788,6 +9915,7 @@
         <property name="type" type="DOMString"/>
       </properties>
       <implements>LinkStyle</implements>
+      <element name="style" namespace="SVG"/>
     </interface>
     <interface name="SVGSVGElement" extends="SVGGraphicsElement">
       <methods>
@@ -9845,10 +9973,14 @@
         <event name="SVGScroll" bubbles="1" dispatch="sync-or-async" type="Event"/>
         <event name="SVGZoom" bubbles="1" dispatch="sync" type="SVGZoomEvent"/>
       </events>
+      <element name="svg" namespace="SVG"/>
     </interface>
-    <interface name="SVGSwitchElement" extends="SVGGraphicsElement"/>
+    <interface name="SVGSwitchElement" extends="SVGGraphicsElement">
+      <element name="switch" namespace="SVG"/>
+    </interface>
     <interface name="SVGSymbolElement" extends="SVGGraphicsElement">
       <implements>SVGFitToViewBox</implements>
+      <element name="symbol" namespace="SVG"/>
     </interface>
     <interface name="SVGTextContentElement" extends="SVGGraphicsElement">
       <constants>
@@ -9888,7 +10020,9 @@
         <property name="textLength" read-only="1" type="SVGAnimatedLength"/>
       </properties>
     </interface>
-    <interface name="SVGTextElement" extends="SVGTextPositioningElement"/>
+    <interface name="SVGTextElement" extends="SVGTextPositioningElement">
+      <element name="text" namespace="SVG"/>
+    </interface>
     <interface name="SVGTextPathElement" extends="SVGTextContentElement">
       <constants>
         <constant name="TEXTPATH_METHODTYPE_ALIGN" type="unsigned short" value="1"/>
@@ -9904,6 +10038,7 @@
         <property name="startOffset" read-only="1" type="SVGAnimatedLength"/>
       </properties>
       <implements>SVGURIReference</implements>
+      <element name="textPath" namespace="SVG"/>
     </interface>
     <interface name="SVGTextPositioningElement" extends="SVGTextContentElement">
       <properties>
@@ -9914,7 +10049,9 @@
         <property name="y" read-only="1" type="SVGAnimatedLengthList"/>
       </properties>
     </interface>
-    <interface name="SVGTitleElement" extends="SVGElement"/>
+    <interface name="SVGTitleElement" extends="SVGElement">
+      <element name="title" namespace="SVG"/>
+    </interface>
     <interface name="SVGTransform" extends="Object">
       <constants>
         <constant name="SVG_TRANSFORM_MATRIX" type="unsigned short" value="1"/>
@@ -9994,7 +10131,9 @@
         <property name="numberOfItems" read-only="1" type="unsigned long"/>
       </properties>
     </interface>
-    <interface name="SVGTSpanElement" extends="SVGTextPositioningElement"/>
+    <interface name="SVGTSpanElement" extends="SVGTextPositioningElement">
+      <element name="tspan" namespace="SVG"/>
+    </interface>
     <interface name="SVGUnitTypes" extends="Object">
       <constants>
         <constant name="SVG_UNIT_TYPE_OBJECTBOUNDINGBOX" type="unsigned short" value="2"/>
@@ -10013,11 +10152,13 @@
         <property name="y" read-only="1" type="SVGAnimatedLength"/>
       </properties>
       <implements>SVGURIReference</implements>
+      <element name="use" namespace="SVG"/>
     </interface>
     <interface name="SVGUseElementShadowRoot" extends="ShadowRoot"/>
     <interface name="SVGViewElement" extends="SVGElement">
       <implements>SVGFitToViewBox</implements>
       <implements>SVGZoomAndPan</implements>
+      <element name="view" namespace="SVG"/>
     </interface>
     <interface name="SyncEvent" extends="ExtendableEvent" exposed="ServiceWorker">
       <constructor>
@@ -11617,6 +11758,7 @@
         <event name="MSWebViewFrameDOMContentLoaded" dispatch="sync" follows="MSWebViewFrameContentLoading" precedes="MSWebViewFrameNavigationCompleted" tags="MSAppOnly" type="NavigationEvent"/>
         <event name="MSWebViewFrameContentLoading" dispatch="sync" follows="MSWebViewFrameNavigationStarting" precedes="MSWebViewFrameDOMContentLoaded" tags="MSAppOnly" type="NavigationEvent"/>
       </events>
+      <element name="x-ms-webview" namespace="HTML"/>
     </interface>
     <interface name="MSWebViewAsyncOperation" no-interface-object="1" sn:partial="1">
       <events>
