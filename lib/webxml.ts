@@ -7,14 +7,14 @@ import fetch from "node-fetch";
 import prettifyXml = require("prettify-xml");
 import * as mz from "mz/fs";
 import { ExportRemoteDescription, IDLExportResult, IDLSnippetContent, FetchResult } from "./types"
-import * as xhelper from "./xmldom-helper";
-import * as supplements from "./supplements";
-import * as merger from "./partial-type-merger"
+import * as xhelper from "./xmldom-helper.js";
+import * as supplements from "./supplements.js";
+import * as merger from "./partial-type-merger.js"
+import { sorter, xmlSort } from "./xmlsort.js"
 
 const impl = new DOMImplementation();
 const unionLineBreakRegex = / or[\s]*/g;
 const document = impl.createDocument("http://example.com/", "global", null);
-const sorter = (x: Element, y: Element) => x.getAttribute("name").localeCompare(y.getAttribute("name"));
 
 run().catch(err => console.error(err));
 
@@ -594,19 +594,15 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
         interfaceEl.appendChild(anonymousMethods);
     }
     if (constants.childNodes.length) {
-        xmlSort(constants);
         interfaceEl.appendChild(constants);
     }
     if (methods.childNodes.length) {
-        xmlSort(methods);
         interfaceEl.appendChild(methods);
     }
     if (properties.childNodes.length) {
-        xmlSort(properties);
         interfaceEl.appendChild(properties);
     }
     if (declarations.childNodes.length) {
-        xmlSort(declarations);
         interfaceEl.appendChild(declarations);
     }
     return interfaceEl;
@@ -826,15 +822,4 @@ function jsdomEnv(html: string) {
             }
         });
     });
-}
-
-function xmlSort(element: Element) {
-    const nodes = Array.from(element.childNodes).sort(sorter);
-    for (const node of nodes) {
-        element.removeChild(node);
-        (node as any).parentNode = null; // xmldom bug
-    }
-    for (const node of nodes) {
-        element.appendChild(node);
-    }
 }

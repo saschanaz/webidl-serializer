@@ -1,5 +1,6 @@
 import { ExportRemoteDescription, IDLExportResult, IDLSnippetContent, FetchResult } from "./types"
-import * as xhelper from "./xmldom-helper";
+import * as xhelper from "./xmldom-helper.js"
+import { xmlInterfaceSort } from "./xmlsort.js"
 
 /** 
  * merge partial interfaces to create a unique name-object relation for TSJS-lib-generator
@@ -29,8 +30,16 @@ export function mergePartialInterfaces(snippet: IDLSnippetContent) {
         mergeInterface(baseInterface, interfaceEl);
     }
     
+    xmlInterfaceBatchSort(baseInterfaces);
     snippet.interfaces = baseInterfaces.filter(interfaceEl => !interfaceEl.getAttribute("no-interface-object"));
     snippet.mixinInterfaces = baseInterfaces.filter(interfaceEl => interfaceEl.getAttribute("no-interface-object"));
+}
+
+function xmlInterfaceBatchSort(interfaces: Element[]) {
+    for (const interfaceEl of interfaces) {
+        xmlInterfaceSort(interfaceEl);
+    }
+    return interfaces;
 }
 
 /** Has side effect on its arguments */

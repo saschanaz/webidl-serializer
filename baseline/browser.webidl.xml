@@ -92,18 +92,18 @@
         <constant name="FILTER_REJECT" type="unsigned short" value="2"/>
         <constant name="FILTER_SKIP" type="unsigned short" value="3"/>
         <constant name="SHOW_ALL" type="unsigned long" value="4294967295"/>
+        <constant name="SHOW_ELEMENT" type="unsigned long" value="1"/>
         <constant name="SHOW_ATTRIBUTE" type="unsigned long" value="2"/>
+        <constant name="SHOW_TEXT" type="unsigned long" value="4"/>
         <constant name="SHOW_CDATA_SECTION" type="unsigned long" value="8"/>
+        <constant name="SHOW_ENTITY_REFERENCE" type="unsigned long" value="16"/>
+        <constant name="SHOW_ENTITY" type="unsigned long" value="32"/>
+        <constant name="SHOW_PROCESSING_INSTRUCTION" type="unsigned long" value="64"/>
         <constant name="SHOW_COMMENT" type="unsigned long" value="128"/>
         <constant name="SHOW_DOCUMENT" type="unsigned long" value="256"/>
-        <constant name="SHOW_DOCUMENT_FRAGMENT" type="unsigned long" value="1024"/>
         <constant name="SHOW_DOCUMENT_TYPE" type="unsigned long" value="512"/>
-        <constant name="SHOW_ELEMENT" type="unsigned long" value="1"/>
-        <constant name="SHOW_ENTITY" type="unsigned long" value="32"/>
-        <constant name="SHOW_ENTITY_REFERENCE" type="unsigned long" value="16"/>
+        <constant name="SHOW_DOCUMENT_FRAGMENT" type="unsigned long" value="1024"/>
         <constant name="SHOW_NOTATION" type="unsigned long" value="2048"/>
-        <constant name="SHOW_PROCESSING_INSTRUCTION" type="unsigned long" value="64"/>
-        <constant name="SHOW_TEXT" type="unsigned long" value="4"/>
       </constants>
       <methods>
         <method name="acceptNode" type="unsigned short">
@@ -3489,13 +3489,13 @@
         <constant name="CHARSET_RULE" type="unsigned short" value="2"/>
         <constant name="FONT_FACE_RULE" type="unsigned short" value="5"/>
         <constant name="IMPORT_RULE" type="unsigned short" value="3"/>
+        <constant name="KEYFRAME_RULE" type="unsigned short" value="8"/>
+        <constant name="KEYFRAMES_RULE" type="unsigned short" value="7"/>
         <constant name="MARGIN_RULE" type="unsigned short" value="9"/>
         <constant name="MEDIA_RULE" type="unsigned short" value="4"/>
         <constant name="NAMESPACE_RULE" type="unsigned short" value="10"/>
         <constant name="PAGE_RULE" type="unsigned short" value="6"/>
         <constant name="STYLE_RULE" type="unsigned short" value="1"/>
-        <constant name="KEYFRAME_RULE" type="unsigned short" value="8"/>
-        <constant name="KEYFRAMES_RULE" type="unsigned short" value="7"/>
         <constant name="SUPPORTS_RULE" type="unsigned short" value="12"/>
       </constants>
       <properties>
@@ -3546,9 +3546,9 @@
       <properties>
         <property name="cssFloat" type="CSSOMString"/>
         <property name="cssText" type="CSSOMString"/>
+        <property name="dashed_attribute" type="CSSOMString"/>
         <property name="length" read-only="1" type="unsigned long"/>
         <property name="parentRule" read-only="1" nullable="1" type="CSSRule"/>
-        <property name="dashed_attribute" type="CSSOMString"/>
       </properties>
     </interface>
     <interface name="CSSStyleRule" extends="CSSRule">
@@ -3723,6 +3723,13 @@
         <method name="adoptNode" type="Node">
           <param name="node" type="Node"/>
         </method>
+        <method name="captureEvents" type="void"/>
+        <method name="caretPositionFromPoint" nullable="1" type="CaretPosition">
+          <param name="x" type="double"/>
+          <param name="y" type="double"/>
+        </method>
+        <method name="clear" type="void"/>
+        <method name="close" type="void"/>
         <method name="createAttribute" type="Attr">
           <param name="localName" type="DOMString"/>
         </method>
@@ -3762,28 +3769,22 @@
         <method name="createTextNode" type="Text">
           <param name="data" type="DOMString"/>
         </method>
+        <method name="createTouch" type="Touch">
+          <param name="view" type="WindowProxy"/>
+          <param name="target" type="EventTarget"/>
+          <param name="identifier" type="long"/>
+          <param name="pageX" type="double"/>
+          <param name="pageY" type="double"/>
+          <param name="screenX" type="double"/>
+          <param name="screenY" type="double"/>
+        </method>
+        <method name="createTouchList" type="TouchList">
+          <param name="touches" type="Touch" variadic="1"/>
+        </method>
         <method name="createTreeWalker" type="TreeWalker">
           <param name="root" type="Node"/>
           <param name="whatToShow" default="4294967295" optional="1" type="unsigned long"/>
           <param name="filter" default="null" optional="1" nullable="1" type="NodeFilter"/>
-        </method>
-        <method name="getElementsByClassName" type="HTMLCollection">
-          <param name="classNames" type="DOMString"/>
-        </method>
-        <method name="getElementsByTagName" type="HTMLCollection">
-          <param name="qualifiedName" type="DOMString"/>
-        </method>
-        <method name="getElementsByTagNameNS" type="HTMLCollection">
-          <param name="namespace" nullable="1" type="DOMString"/>
-          <param name="localName" type="DOMString"/>
-        </method>
-        <method name="importNode" type="Node">
-          <param name="node" type="Node"/>
-          <param name="deep" default="false" optional="1" type="boolean"/>
-        </method>
-        <method name="caretPositionFromPoint" nullable="1" type="CaretPosition">
-          <param name="x" type="double"/>
-          <param name="y" type="double"/>
         </method>
         <method name="elementFromPoint" nullable="1" type="Element">
           <param name="x" type="double"/>
@@ -3793,16 +3794,31 @@
           <param name="x" type="double"/>
           <param name="y" type="double"/>
         </method>
-        <method name="close" type="void"/>
         <method name="execCommand" type="boolean">
           <param name="commandId" type="DOMString"/>
           <param name="showUI" default="false" optional="1" type="boolean"/>
           <param name="value" default="&quot;&quot;" optional="1" type="DOMString"/>
         </method>
+        <method name="getAnimations" type="sequence&lt;Animation&gt;"/>
+        <method name="getElementsByClassName" type="HTMLCollection">
+          <param name="classNames" type="DOMString"/>
+        </method>
         <method name="getElementsByName" type="NodeList">
           <param name="elementName" type="DOMString"/>
         </method>
+        <method name="getElementsByTagName" type="HTMLCollection">
+          <param name="qualifiedName" type="DOMString"/>
+        </method>
+        <method name="getElementsByTagNameNS" type="HTMLCollection">
+          <param name="namespace" nullable="1" type="DOMString"/>
+          <param name="localName" type="DOMString"/>
+        </method>
+        <method name="getSelection" nullable="1" type="Selection"/>
         <method name="hasFocus" type="boolean"/>
+        <method name="importNode" type="Node">
+          <param name="node" type="Node"/>
+          <param name="deep" default="false" optional="1" type="boolean"/>
+        </method>
         <method name="open" type="Document">
           <param name="type" default="&quot;text/html&quot;" optional="1" type="DOMString"/>
           <param name="replace" default="&quot;&quot;" optional="1" type="DOMString"/>
@@ -3827,75 +3843,59 @@
         <method name="queryCommandValue" type="DOMString">
           <param name="commandId" type="DOMString"/>
         </method>
+        <method name="releaseEvents" type="void"/>
         <method name="write" type="void">
           <param name="text" type="DOMString" variadic="1"/>
         </method>
         <method name="writeln" type="void">
           <param name="text" type="DOMString" variadic="1"/>
         </method>
-        <method name="captureEvents" type="void"/>
-        <method name="clear" type="void"/>
-        <method name="releaseEvents" type="void"/>
-        <method name="getSelection" nullable="1" type="Selection"/>
-        <method name="createTouch" type="Touch">
-          <param name="view" type="WindowProxy"/>
-          <param name="target" type="EventTarget"/>
-          <param name="identifier" type="long"/>
-          <param name="pageX" type="double"/>
-          <param name="pageY" type="double"/>
-          <param name="screenX" type="double"/>
-          <param name="screenY" type="double"/>
-        </method>
-        <method name="createTouchList" type="TouchList">
-          <param name="touches" type="Touch" variadic="1"/>
-        </method>
-        <method name="getAnimations" type="sequence&lt;Animation&gt;"/>
       </methods>
       <properties>
-        <property name="characterSet" read-only="1" type="DOMString"/>
-        <property name="charset" read-only="1" type="DOMString"/>
-        <property name="compatMode" read-only="1" type="DOMString"/>
-        <property name="contentType" read-only="1" type="DOMString"/>
-        <property name="doctype" read-only="1" nullable="1" type="DocumentType"/>
-        <property name="documentElement" read-only="1" nullable="1" type="Element"/>
-        <property name="documentURI" read-only="1" type="USVString"/>
-        <property name="implementation" read-only="1" type="DOMImplementation"/>
-        <property name="inputEncoding" read-only="1" type="DOMString"/>
-        <property name="origin" read-only="1" type="USVString"/>
-        <property name="URL" read-only="1" type="USVString"/>
-        <property name="scrollingElement" read-only="1" nullable="1" type="Element"/>
         <property name="activeElement" read-only="1" nullable="1" type="Element"/>
-        <property name="body" nullable="1" type="HTMLElement"/>
-        <property name="cookie" type="USVString"/>
-        <property name="currentScript" read-only="1" nullable="1" type="HTMLOrSVGScriptElement"/>
-        <property name="defaultView" read-only="1" nullable="1" type="WindowProxy"/>
-        <property name="designMode" type="DOMString"/>
-        <property name="dir" type="DOMString"/>
-        <property name="domain" type="USVString"/>
-        <property name="embeds" read-only="1" type="HTMLCollection"/>
-        <property name="forms" read-only="1" type="HTMLCollection"/>
-        <property name="head" read-only="1" nullable="1" type="HTMLHeadElement"/>
-        <property name="images" read-only="1" type="HTMLCollection"/>
-        <property name="lastModified" read-only="1" type="DOMString"/>
-        <property name="links" read-only="1" type="HTMLCollection"/>
-        <property name="location" read-only="1" nullable="1" type="Location"/>
-        <property name="onreadystatechange" type="EventHandler" event-handler="readystatechange"/>
-        <property name="plugins" read-only="1" type="HTMLCollection"/>
-        <property name="readyState" read-only="1" type="DocumentReadyState"/>
-        <property name="referrer" read-only="1" type="USVString"/>
-        <property name="scripts" read-only="1" type="HTMLCollection"/>
-        <property name="title" type="DOMString"/>
         <property name="alinkColor" type="DOMString"/>
         <property name="all" read-only="1" type="HTMLAllCollection"/>
         <property name="anchors" read-only="1" type="HTMLCollection"/>
         <property name="applets" read-only="1" type="HTMLCollection"/>
         <property name="bgColor" type="DOMString"/>
+        <property name="body" nullable="1" type="HTMLElement"/>
+        <property name="characterSet" read-only="1" type="DOMString"/>
+        <property name="charset" read-only="1" type="DOMString"/>
+        <property name="compatMode" read-only="1" type="DOMString"/>
+        <property name="contentType" read-only="1" type="DOMString"/>
+        <property name="cookie" type="USVString"/>
+        <property name="currentScript" read-only="1" nullable="1" type="HTMLOrSVGScriptElement"/>
+        <property name="defaultView" read-only="1" nullable="1" type="WindowProxy"/>
+        <property name="designMode" type="DOMString"/>
+        <property name="dir" type="DOMString"/>
+        <property name="doctype" read-only="1" nullable="1" type="DocumentType"/>
+        <property name="documentElement" read-only="1" nullable="1" type="Element"/>
+        <property name="documentURI" read-only="1" type="USVString"/>
+        <property name="domain" type="USVString"/>
+        <property name="embeds" read-only="1" type="HTMLCollection"/>
         <property name="fgColor" type="DOMString"/>
+        <property name="forms" read-only="1" type="HTMLCollection"/>
+        <property name="head" read-only="1" nullable="1" type="HTMLHeadElement"/>
+        <property name="images" read-only="1" type="HTMLCollection"/>
+        <property name="implementation" read-only="1" type="DOMImplementation"/>
+        <property name="inputEncoding" read-only="1" type="DOMString"/>
+        <property name="lastModified" read-only="1" type="DOMString"/>
         <property name="linkColor" type="DOMString"/>
-        <property name="vlinkColor" type="DOMString"/>
-        <property name="styleSheets" read-only="1" type="StyleSheetList"/>
+        <property name="links" read-only="1" type="HTMLCollection"/>
+        <property name="location" read-only="1" nullable="1" type="Location"/>
+        <property name="onreadystatechange" type="EventHandler" event-handler="readystatechange"/>
+        <property name="origin" read-only="1" type="USVString"/>
+        <property name="plugins" read-only="1" type="HTMLCollection"/>
+        <property name="readyState" read-only="1" type="DocumentReadyState"/>
+        <property name="referrer" read-only="1" type="USVString"/>
         <property name="rootElement" read-only="1" nullable="1" type="SVGSVGElement"/>
+        <property name="scripts" read-only="1" type="HTMLCollection"/>
+        <property name="scrollingElement" read-only="1" nullable="1" type="Element"/>
+        <property name="styleSheets" read-only="1" type="StyleSheetList"/>
         <property name="timeline" read-only="1" type="DocumentTimeline"/>
+        <property name="title" type="DOMString"/>
+        <property name="URL" read-only="1" type="USVString"/>
+        <property name="vlinkColor" type="DOMString"/>
       </properties>
       <implements>NonElementParentNode</implements>
       <implements>DocumentOrShadowRoot</implements>
@@ -4364,6 +4364,8 @@
           <param name="namespace" nullable="1" type="DOMString"/>
           <param name="localName" type="DOMString"/>
         </method>
+        <method name="getBoundingClientRect" type="DOMRect"/>
+        <method name="getClientRects" type="sequence&lt;DOMRect&gt;"/>
         <method name="getElementsByClassName" type="HTMLCollection">
           <param name="classNames" type="DOMString"/>
         </method>
@@ -4386,12 +4388,19 @@
           <param name="where" type="DOMString"/>
           <param name="element" type="Element"/>
         </method>
+        <method name="insertAdjacentHTML" type="void">
+          <param name="position" type="DOMString"/>
+          <param name="text" type="DOMString"/>
+        </method>
         <method name="insertAdjacentText" type="void">
           <param name="where" type="DOMString"/>
           <param name="data" type="DOMString"/>
         </method>
         <method name="matches" type="boolean">
           <param name="selectors" type="DOMString"/>
+        </method>
+        <method name="releasePointerCapture" type="void">
+          <param name="pointerId" type="long"/>
         </method>
         <method name="removeAttribute" type="void">
           <param name="qualifiedName" type="DOMString"/>
@@ -4403,26 +4412,6 @@
           <param name="namespace" nullable="1" type="DOMString"/>
           <param name="localName" type="DOMString"/>
         </method>
-        <method name="setAttribute" type="void">
-          <param name="qualifiedName" type="DOMString"/>
-          <param name="value" type="DOMString"/>
-        </method>
-        <method name="setAttributeNode" nullable="1" type="Attr">
-          <param name="attr" type="Attr"/>
-        </method>
-        <method name="setAttributeNodeNS" nullable="1" type="Attr">
-          <param name="attr" type="Attr"/>
-        </method>
-        <method name="setAttributeNS" type="void">
-          <param name="namespace" nullable="1" type="DOMString"/>
-          <param name="qualifiedName" type="DOMString"/>
-          <param name="value" type="DOMString"/>
-        </method>
-        <method name="webkitMatchesSelector" type="boolean">
-          <param name="selectors" type="DOMString"/>
-        </method>
-        <method name="getBoundingClientRect" type="DOMRect"/>
-        <method name="getClientRects" type="sequence&lt;DOMRect&gt;"/>
         <method name="scroll" type="void">
           <param name="options" optional="1" type="ScrollToOptions"/>
         </method>
@@ -4442,46 +4431,57 @@
           <param name="arg" type="(boolean or object)"/>
         </method>
         <method name="scrollTo" type="void">
-          <param name="options" optional="1" type="ScrollToOptions"/>
-        </method>
-        <method name="scrollTo" type="void">
           <param name="x" type="unrestricted double"/>
           <param name="y" type="unrestricted double"/>
         </method>
-        <method name="insertAdjacentHTML" type="void">
-          <param name="position" type="DOMString"/>
-          <param name="text" type="DOMString"/>
+        <method name="scrollTo" type="void">
+          <param name="options" optional="1" type="ScrollToOptions"/>
         </method>
-        <method name="releasePointerCapture" type="void">
-          <param name="pointerId" type="long"/>
+        <method name="setAttribute" type="void">
+          <param name="qualifiedName" type="DOMString"/>
+          <param name="value" type="DOMString"/>
+        </method>
+        <method name="setAttributeNode" nullable="1" type="Attr">
+          <param name="attr" type="Attr"/>
+        </method>
+        <method name="setAttributeNodeNS" nullable="1" type="Attr">
+          <param name="attr" type="Attr"/>
+        </method>
+        <method name="setAttributeNS" type="void">
+          <param name="namespace" nullable="1" type="DOMString"/>
+          <param name="qualifiedName" type="DOMString"/>
+          <param name="value" type="DOMString"/>
         </method>
         <method name="setPointerCapture" type="void">
           <param name="pointerId" type="long"/>
+        </method>
+        <method name="webkitMatchesSelector" type="boolean">
+          <param name="selectors" type="DOMString"/>
         </method>
       </methods>
       <properties>
         <property name="attributes" read-only="1" type="NamedNodeMap"/>
         <property name="classList" read-only="1" type="DOMTokenList"/>
         <property name="className" type="DOMString"/>
-        <property name="id" type="DOMString"/>
-        <property name="localName" read-only="1" type="DOMString"/>
-        <property name="namespaceURI" read-only="1" nullable="1" type="DOMString"/>
-        <property name="prefix" read-only="1" nullable="1" type="DOMString"/>
-        <property name="shadowRoot" read-only="1" nullable="1" type="ShadowRoot"/>
-        <property name="slot" type="DOMString"/>
-        <property name="tagName" read-only="1" type="DOMString"/>
         <property name="clientHeight" read-only="1" type="long"/>
         <property name="clientLeft" read-only="1" type="long"/>
         <property name="clientTop" read-only="1" type="long"/>
         <property name="clientWidth" read-only="1" type="long"/>
+        <property name="id" type="DOMString"/>
+        <property name="innerHTML" type="DOMString"/>
+        <property name="localName" read-only="1" type="DOMString"/>
+        <property name="namespaceURI" read-only="1" nullable="1" type="DOMString"/>
+        <property name="ongotpointercapture" type="EventHandler" event-handler="gotpointercapture"/>
+        <property name="onlostpointercapture" type="EventHandler" event-handler="lostpointercapture"/>
+        <property name="outerHTML" type="DOMString"/>
+        <property name="prefix" read-only="1" nullable="1" type="DOMString"/>
         <property name="scrollHeight" read-only="1" type="long"/>
         <property name="scrollLeft" type="unrestricted double"/>
         <property name="scrollTop" type="unrestricted double"/>
         <property name="scrollWidth" read-only="1" type="long"/>
-        <property name="innerHTML" type="DOMString"/>
-        <property name="outerHTML" type="DOMString"/>
-        <property name="ongotpointercapture" type="EventHandler" event-handler="gotpointercapture"/>
-        <property name="onlostpointercapture" type="EventHandler" event-handler="lostpointercapture"/>
+        <property name="shadowRoot" read-only="1" nullable="1" type="ShadowRoot"/>
+        <property name="slot" type="DOMString"/>
+        <property name="tagName" read-only="1" type="DOMString"/>
       </properties>
       <implements>ParentNode</implements>
       <implements>NonDocumentTypeChildNode</implements>
@@ -4958,20 +4958,20 @@
     </interface>
     <interface name="HTMLAnchorElement" extends="HTMLElement">
       <properties>
+        <property name="charset" type="DOMString"/>
+        <property name="coords" type="DOMString"/>
         <property name="download" type="DOMString"/>
         <property name="hreflang" type="DOMString"/>
+        <property name="name" type="DOMString"/>
         <property name="ping" type="USVString"/>
         <property name="referrerPolicy" type="DOMString"/>
         <property name="rel" type="DOMString"/>
         <property name="relList" read-only="1" type="DOMTokenList"/>
+        <property name="rev" type="DOMString"/>
+        <property name="shape" type="DOMString"/>
         <property name="target" type="DOMString"/>
         <property name="text" type="DOMString"/>
         <property name="type" type="DOMString"/>
-        <property name="charset" type="DOMString"/>
-        <property name="coords" type="DOMString"/>
-        <property name="name" type="DOMString"/>
-        <property name="rev" type="DOMString"/>
-        <property name="shape" type="DOMString"/>
       </properties>
       <implements>HTMLHyperlinkElementUtils</implements>
     </interface>
@@ -4995,13 +4995,13 @@
         <property name="alt" type="DOMString"/>
         <property name="coords" type="DOMString"/>
         <property name="download" type="DOMString"/>
+        <property name="noHref" type="boolean"/>
         <property name="ping" type="USVString"/>
         <property name="referrerPolicy" type="DOMString"/>
         <property name="rel" type="DOMString"/>
         <property name="relList" read-only="1" type="DOMTokenList"/>
         <property name="shape" type="DOMString"/>
         <property name="target" type="DOMString"/>
-        <property name="noHref" type="boolean"/>
       </properties>
       <implements>HTMLHyperlinkElementUtils</implements>
     </interface>
@@ -5162,15 +5162,15 @@
         <property name="hidden" type="boolean"/>
         <property name="innerText" type="DOMString"/>
         <property name="lang" type="DOMString"/>
-        <property name="spellcheck" type="boolean"/>
-        <property name="tabIndex" type="long"/>
-        <property name="title" type="DOMString"/>
-        <property name="translate" type="boolean"/>
         <property name="offsetHeight" read-only="1" type="long"/>
         <property name="offsetLeft" read-only="1" type="long"/>
         <property name="offsetParent" read-only="1" nullable="1" type="Element"/>
         <property name="offsetTop" read-only="1" type="long"/>
         <property name="offsetWidth" read-only="1" type="long"/>
+        <property name="spellcheck" type="boolean"/>
+        <property name="tabIndex" type="long"/>
+        <property name="title" type="DOMString"/>
+        <property name="translate" type="boolean"/>
       </properties>
       <implements>GlobalEventHandlers</implements>
       <implements>DocumentAndElementEventHandlers</implements>
@@ -5182,12 +5182,12 @@
         <method name="getSVGDocument" nullable="1" type="Document"/>
       </methods>
       <properties>
+        <property name="align" type="DOMString"/>
         <property name="height" type="DOMString"/>
+        <property name="name" type="DOMString"/>
         <property name="src" type="USVString"/>
         <property name="type" type="DOMString"/>
         <property name="width" type="DOMString"/>
-        <property name="align" type="DOMString"/>
-        <property name="name" type="DOMString"/>
       </properties>
     </interface>
     <interface name="HTMLFieldSetElement" extends="HTMLElement">
@@ -5305,25 +5305,25 @@
         <method name="getSVGDocument" nullable="1" type="Document"/>
       </methods>
       <properties>
+        <property name="align" type="DOMString"/>
         <property name="allowFullscreen" type="boolean"/>
         <property name="allowPaymentRequest" type="boolean"/>
         <property name="allowUserMedia" type="boolean"/>
+        <property name="allowUserMedia" type="boolean"/>
         <property name="contentDocument" read-only="1" nullable="1" type="Document"/>
         <property name="contentWindow" read-only="1" nullable="1" type="WindowProxy"/>
-        <property name="height" type="DOMString"/>
-        <property name="name" type="DOMString"/>
-        <property name="referrerPolicy" type="DOMString"/>
-        <property name="sandbox" read-only="1" type="DOMTokenList"/>
-        <property name="src" type="USVString"/>
-        <property name="srcdoc" type="DOMString"/>
-        <property name="width" type="DOMString"/>
-        <property name="align" type="DOMString"/>
         <property name="frameBorder" type="DOMString"/>
+        <property name="height" type="DOMString"/>
         <property name="longDesc" type="USVString"/>
         <property name="marginHeight" type="DOMString"/>
         <property name="marginWidth" type="DOMString"/>
+        <property name="name" type="DOMString"/>
+        <property name="referrerPolicy" type="DOMString"/>
+        <property name="sandbox" read-only="1" type="DOMTokenList"/>
         <property name="scrolling" type="DOMString"/>
-        <property name="allowUserMedia" type="boolean"/>
+        <property name="src" type="USVString"/>
+        <property name="srcdoc" type="DOMString"/>
+        <property name="width" type="DOMString"/>
       </properties>
       <events>
         <event name="load" dispatch="async" skips-window="1" type="Event"/>
@@ -5335,12 +5335,18 @@
         <param name="height" optional="1" type="unsigned long"/>
       </named-constructor>
       <properties>
+        <property name="align" type="DOMString"/>
         <property name="alt" type="DOMString"/>
+        <property name="border" type="DOMString"/>
         <property name="complete" read-only="1" type="boolean"/>
         <property name="crossOrigin" nullable="1" type="DOMString"/>
         <property name="currentSrc" read-only="1" type="USVString"/>
         <property name="height" type="unsigned long"/>
+        <property name="hspace" type="unsigned long"/>
         <property name="isMap" type="boolean"/>
+        <property name="longDesc" type="USVString"/>
+        <property name="lowsrc" type="USVString"/>
+        <property name="name" type="DOMString"/>
         <property name="naturalHeight" read-only="1" type="unsigned long"/>
         <property name="naturalWidth" read-only="1" type="unsigned long"/>
         <property name="referrerPolicy" type="DOMString"/>
@@ -5348,14 +5354,8 @@
         <property name="src" type="USVString"/>
         <property name="srcset" type="USVString"/>
         <property name="useMap" type="DOMString"/>
-        <property name="width" type="unsigned long"/>
-        <property name="align" type="DOMString"/>
-        <property name="border" type="DOMString"/>
-        <property name="hspace" type="unsigned long"/>
-        <property name="longDesc" type="USVString"/>
-        <property name="lowsrc" type="USVString"/>
-        <property name="name" type="DOMString"/>
         <property name="vspace" type="unsigned long"/>
+        <property name="width" type="unsigned long"/>
         <property name="x" read-only="1" type="long"/>
         <property name="y" read-only="1" type="long"/>
       </properties>
@@ -5394,6 +5394,7 @@
       </methods>
       <properties>
         <property name="accept" type="DOMString"/>
+        <property name="align" type="DOMString"/>
         <property name="alt" type="DOMString"/>
         <property name="autocomplete" type="DOMString"/>
         <property name="autofocus" type="boolean"/>
@@ -5431,6 +5432,7 @@
         <property name="src" type="USVString"/>
         <property name="step" type="DOMString"/>
         <property name="type" type="DOMString"/>
+        <property name="useMap" type="DOMString"/>
         <property name="validationMessage" read-only="1" type="DOMString"/>
         <property name="validity" read-only="1" type="ValidityState"/>
         <property name="value" type="DOMString"/>
@@ -5438,8 +5440,6 @@
         <property name="valueAsNumber" type="unrestricted double"/>
         <property name="width" type="unsigned long"/>
         <property name="willValidate" read-only="1" type="boolean"/>
-        <property name="align" type="DOMString"/>
-        <property name="useMap" type="DOMString"/>
       </properties>
       <events>
         <event name="change" bubbles="1" dispatch="sync" type="Event"/>
@@ -5457,19 +5457,20 @@
     </interface>
     <interface name="HTMLLegendElement" extends="HTMLElement">
       <properties>
-        <property name="form" read-only="1" nullable="1" type="HTMLFormElement"/>
         <property name="align" type="DOMString"/>
+        <property name="form" read-only="1" nullable="1" type="HTMLFormElement"/>
       </properties>
     </interface>
     <interface name="HTMLLIElement" extends="HTMLElement">
       <properties>
-        <property name="value" type="long"/>
         <property name="type" type="DOMString"/>
+        <property name="value" type="long"/>
       </properties>
     </interface>
     <interface name="HTMLLinkElement" extends="HTMLElement">
       <properties>
         <property name="as" type="DOMString"/>
+        <property name="charset" type="DOMString"/>
         <property name="crossOrigin" nullable="1" type="DOMString"/>
         <property name="href" type="USVString"/>
         <property name="hreflang" type="DOMString"/>
@@ -5479,14 +5480,13 @@
         <property name="referrerPolicy" type="DOMString"/>
         <property name="rel" type="DOMString"/>
         <property name="relList" read-only="1" type="DOMTokenList"/>
+        <property name="rev" type="DOMString"/>
         <property name="scope" type="USVString"/>
         <property name="sizes" read-only="1" type="DOMTokenList"/>
+        <property name="target" type="DOMString"/>
         <property name="type" type="DOMString"/>
         <property name="useCache" type="boolean"/>
         <property name="workerType" type="WorkerType"/>
-        <property name="charset" type="DOMString"/>
-        <property name="rev" type="DOMString"/>
-        <property name="target" type="DOMString"/>
       </properties>
       <implements>LinkStyle</implements>
       <events>
@@ -5574,8 +5574,11 @@
         <property name="ended" read-only="1" type="boolean"/>
         <property name="error" read-only="1" nullable="1" type="MediaError"/>
         <property name="loop" type="boolean"/>
+        <property name="mediaKeys" read-only="1" nullable="1" type="MediaKeys"/>
         <property name="muted" type="boolean"/>
         <property name="networkState" read-only="1" type="unsigned short"/>
+        <property name="onencrypted" type="EventHandler" event-handler="encrypted"/>
+        <property name="onwaitingforkey" type="EventHandler" event-handler="waitingforkey"/>
         <property name="paused" read-only="1" type="boolean"/>
         <property name="playbackRate" type="double"/>
         <property name="played" read-only="1" type="TimeRanges"/>
@@ -5588,9 +5591,6 @@
         <property name="textTracks" read-only="1" type="TextTrackList"/>
         <property name="videoTracks" read-only="1" type="VideoTrackList"/>
         <property name="volume" type="double"/>
-        <property name="mediaKeys" read-only="1" nullable="1" type="MediaKeys"/>
-        <property name="onencrypted" type="EventHandler" event-handler="encrypted"/>
-        <property name="onwaitingforkey" type="EventHandler" event-handler="waitingforkey"/>
       </properties>
       <events>
         <event name="encrypted" type="MediaEncryptedEvent"/>
@@ -5623,9 +5623,9 @@
     </interface>
     <interface name="HTMLMenuElement" extends="HTMLElement">
       <properties>
+        <property name="compact" type="boolean"/>
         <property name="label" type="DOMString"/>
         <property name="type" type="DOMString"/>
-        <property name="compact" type="boolean"/>
       </properties>
     </interface>
     <interface name="HTMLMenuItemElement" extends="HTMLElement">
@@ -5674,29 +5674,29 @@
         </method>
       </methods>
       <properties>
-        <property name="contentDocument" read-only="1" nullable="1" type="Document"/>
-        <property name="contentWindow" read-only="1" nullable="1" type="WindowProxy"/>
-        <property name="data" type="USVString"/>
-        <property name="form" read-only="1" nullable="1" type="HTMLFormElement"/>
-        <property name="height" type="DOMString"/>
-        <property name="name" type="DOMString"/>
-        <property name="type" type="DOMString"/>
-        <property name="typeMustMatch" type="boolean"/>
-        <property name="useMap" type="DOMString"/>
-        <property name="validationMessage" read-only="1" type="DOMString"/>
-        <property name="validity" read-only="1" type="ValidityState"/>
-        <property name="width" type="DOMString"/>
-        <property name="willValidate" read-only="1" type="boolean"/>
         <property name="align" type="DOMString"/>
         <property name="archive" type="DOMString"/>
         <property name="border" type="DOMString"/>
         <property name="code" type="DOMString"/>
         <property name="codeBase" type="DOMString"/>
         <property name="codeType" type="DOMString"/>
+        <property name="contentDocument" read-only="1" nullable="1" type="Document"/>
+        <property name="contentWindow" read-only="1" nullable="1" type="WindowProxy"/>
+        <property name="data" type="USVString"/>
         <property name="declare" type="boolean"/>
+        <property name="form" read-only="1" nullable="1" type="HTMLFormElement"/>
+        <property name="height" type="DOMString"/>
         <property name="hspace" type="unsigned long"/>
+        <property name="name" type="DOMString"/>
         <property name="standby" type="DOMString"/>
+        <property name="type" type="DOMString"/>
+        <property name="typeMustMatch" type="boolean"/>
+        <property name="useMap" type="DOMString"/>
+        <property name="validationMessage" read-only="1" type="DOMString"/>
+        <property name="validity" read-only="1" type="ValidityState"/>
         <property name="vspace" type="unsigned long"/>
+        <property name="width" type="DOMString"/>
+        <property name="willValidate" read-only="1" type="boolean"/>
       </properties>
       <events>
         <event name="load" dispatch="async" skips-window="1" type="Event"/>
@@ -5705,10 +5705,10 @@
     </interface>
     <interface name="HTMLOListElement" extends="HTMLElement">
       <properties>
+        <property name="compact" type="boolean"/>
         <property name="reversed" type="boolean"/>
         <property name="start" type="long"/>
         <property name="type" type="DOMString"/>
-        <property name="compact" type="boolean"/>
       </properties>
     </interface>
     <interface name="HTMLOptGroupElement" extends="HTMLElement">
@@ -5785,8 +5785,8 @@
     <interface name="HTMLParamElement" extends="HTMLElement">
       <properties>
         <property name="name" type="DOMString"/>
-        <property name="value" type="DOMString"/>
         <property name="type" type="DOMString"/>
+        <property name="value" type="DOMString"/>
         <property name="valueType" type="DOMString"/>
       </properties>
     </interface>
@@ -5815,14 +5815,14 @@
         <property name="charset" type="DOMString"/>
         <property name="crossOrigin" nullable="1" type="DOMString"/>
         <property name="defer" type="boolean"/>
+        <property name="event" type="DOMString"/>
+        <property name="htmlFor" type="DOMString"/>
         <property name="integrity" type="DOMString"/>
         <property name="noModule" type="boolean"/>
         <property name="nonce" type="DOMString"/>
         <property name="src" type="USVString"/>
         <property name="text" type="DOMString"/>
         <property name="type" type="DOMString"/>
-        <property name="event" type="DOMString"/>
-        <property name="htmlFor" type="DOMString"/>
       </properties>
       <events>
         <event name="error" dispatch="sync" type="Event"/>
@@ -5923,28 +5923,28 @@
     <interface name="HTMLTableCellElement" extends="HTMLElement">
       <properties>
         <property name="abbr" type="DOMString"/>
-        <property name="cellIndex" read-only="1" type="long"/>
-        <property name="colSpan" type="unsigned long"/>
-        <property name="headers" type="DOMString"/>
-        <property name="rowSpan" type="unsigned long"/>
-        <property name="scope" type="DOMString"/>
         <property name="align" type="DOMString"/>
         <property name="axis" type="DOMString"/>
         <property name="bgColor" type="DOMString"/>
+        <property name="cellIndex" read-only="1" type="long"/>
         <property name="ch" type="DOMString"/>
         <property name="chOff" type="DOMString"/>
+        <property name="colSpan" type="unsigned long"/>
+        <property name="headers" type="DOMString"/>
         <property name="height" type="DOMString"/>
         <property name="noWrap" type="boolean"/>
+        <property name="rowSpan" type="unsigned long"/>
+        <property name="scope" type="DOMString"/>
         <property name="vAlign" type="DOMString"/>
         <property name="width" type="DOMString"/>
       </properties>
     </interface>
     <interface name="HTMLTableColElement" extends="HTMLElement">
       <properties>
-        <property name="span" type="unsigned long"/>
         <property name="align" type="DOMString"/>
         <property name="ch" type="DOMString"/>
         <property name="chOff" type="DOMString"/>
+        <property name="span" type="unsigned long"/>
         <property name="vAlign" type="DOMString"/>
         <property name="width" type="DOMString"/>
       </properties>
@@ -5966,19 +5966,19 @@
         </method>
       </methods>
       <properties>
-        <property name="caption" nullable="1" type="HTMLTableCaptionElement"/>
-        <property name="rows" read-only="1" type="HTMLCollection"/>
-        <property name="tBodies" read-only="1" type="HTMLCollection"/>
-        <property name="tFoot" nullable="1" type="HTMLTableSectionElement"/>
-        <property name="tHead" nullable="1" type="HTMLTableSectionElement"/>
         <property name="align" type="DOMString"/>
         <property name="bgColor" type="DOMString"/>
         <property name="border" type="DOMString"/>
+        <property name="caption" nullable="1" type="HTMLTableCaptionElement"/>
         <property name="cellPadding" type="DOMString"/>
         <property name="cellSpacing" type="DOMString"/>
         <property name="frame" type="DOMString"/>
+        <property name="rows" read-only="1" type="HTMLCollection"/>
         <property name="rules" type="DOMString"/>
         <property name="summary" type="DOMString"/>
+        <property name="tBodies" read-only="1" type="HTMLCollection"/>
+        <property name="tFoot" nullable="1" type="HTMLTableSectionElement"/>
+        <property name="tHead" nullable="1" type="HTMLTableSectionElement"/>
         <property name="width" type="DOMString"/>
       </properties>
     </interface>
@@ -5992,13 +5992,13 @@
         </method>
       </methods>
       <properties>
-        <property name="cells" read-only="1" type="HTMLCollection"/>
-        <property name="rowIndex" read-only="1" type="long"/>
-        <property name="sectionRowIndex" read-only="1" type="long"/>
         <property name="align" type="DOMString"/>
         <property name="bgColor" type="DOMString"/>
+        <property name="cells" read-only="1" type="HTMLCollection"/>
         <property name="ch" type="DOMString"/>
         <property name="chOff" type="DOMString"/>
+        <property name="rowIndex" read-only="1" type="long"/>
+        <property name="sectionRowIndex" read-only="1" type="long"/>
         <property name="vAlign" type="DOMString"/>
       </properties>
     </interface>
@@ -6012,10 +6012,10 @@
         </method>
       </methods>
       <properties>
-        <property name="rows" read-only="1" type="HTMLCollection"/>
         <property name="align" type="DOMString"/>
         <property name="ch" type="DOMString"/>
         <property name="chOff" type="DOMString"/>
+        <property name="rows" read-only="1" type="HTMLCollection"/>
         <property name="vAlign" type="DOMString"/>
       </properties>
     </interface>
@@ -6838,16 +6838,16 @@
       <properties>
         <property name="enabled" type="boolean"/>
         <property name="id" read-only="1" type="DOMString"/>
+        <property name="isolated" read-only="1" type="boolean"/>
         <property name="kind" read-only="1" type="DOMString"/>
         <property name="label" read-only="1" type="DOMString"/>
         <property name="muted" read-only="1" type="boolean"/>
         <property name="onended" type="EventHandler" event-handler="ended"/>
+        <property name="onisolationchange" type="EventHandler" event-handler="isolationchange"/>
         <property name="onmute" type="EventHandler" event-handler="mute"/>
         <property name="onoverconstrained" type="EventHandler" event-handler="overconstrained"/>
         <property name="onunmute" type="EventHandler" event-handler="unmute"/>
         <property name="readyState" read-only="1" type="MediaStreamTrackState"/>
-        <property name="isolated" read-only="1" type="boolean"/>
-        <property name="onisolationchange" type="EventHandler" event-handler="isolationchange"/>
       </properties>
       <events>
         <event name="isolationchange" type="Event"/>
@@ -6959,14 +6959,14 @@
         <property name="clientY" read-only="1" type="long"/>
         <property name="ctrlKey" read-only="1" type="boolean"/>
         <property name="metaKey" read-only="1" type="boolean"/>
-        <property name="relatedTarget" read-only="1" nullable="1" type="EventTarget"/>
-        <property name="screenX" read-only="1" type="long"/>
-        <property name="screenY" read-only="1" type="long"/>
-        <property name="shiftKey" read-only="1" type="boolean"/>
         <property name="offsetX" read-only="1" type="double"/>
         <property name="offsetY" read-only="1" type="double"/>
         <property name="pageX" read-only="1" type="double"/>
         <property name="pageY" read-only="1" type="double"/>
+        <property name="relatedTarget" read-only="1" nullable="1" type="EventTarget"/>
+        <property name="screenX" read-only="1" type="long"/>
+        <property name="screenY" read-only="1" type="long"/>
+        <property name="shiftKey" read-only="1" type="boolean"/>
         <property name="x" read-only="1" type="double"/>
         <property name="y" read-only="1" type="double"/>
       </properties>
@@ -7047,21 +7047,21 @@
       <implements>NavigatorConcurrentHardware</implements>
       <implements>NavigatorUserMedia</implements>
       <methods>
-        <method name="sendBeacon" type="boolean">
-          <param name="url" type="USVString"/>
-          <param name="data" default="null" optional="1" nullable="1" type="BodyInit"/>
-        </method>
+        <method name="getGamepads" type="sequence&lt;Gamepad?&gt;"/>
         <method name="requestMediaKeySystemAccess" type="Promise&lt;MediaKeySystemAccess&gt;">
           <param name="keySystem" type="DOMString"/>
           <param name="supportedConfigurations" type="sequence&lt;MediaKeySystemConfiguration&gt;"/>
         </method>
-        <method name="getGamepads" type="sequence&lt;Gamepad?&gt;"/>
+        <method name="sendBeacon" type="boolean">
+          <param name="url" type="USVString"/>
+          <param name="data" default="null" optional="1" nullable="1" type="BodyInit"/>
+        </method>
       </methods>
       <properties>
+        <property name="authentication" read-only="1" type="WebAuthentication"/>
         <property name="geolocation" read-only="1" type="Geolocation"/>
         <property name="maxTouchPoints" read-only="1" type="long"/>
         <property name="serviceWorker" read-only="1" type="ServiceWorkerContainer"/>
-        <property name="authentication" read-only="1" type="WebAuthentication"/>
       </properties>
     </interface>
     <interface name="Node" extends="EventTarget" exposed="Window">
@@ -7454,7 +7454,13 @@
     </interface>
     <interface name="Performance" extends="EventTarget" exposed="Window Worker">
       <methods>
-        <method name="now" type="DOMHighResTimeStamp"/>
+        <method name="clearMarks" type="void">
+          <param name="markName" optional="1" type="DOMString"/>
+        </method>
+        <method name="clearMeasures" type="void">
+          <param name="measureName" optional="1" type="DOMString"/>
+        </method>
+        <method name="clearResourceTimings" type="void"/>
         <method name="getEntries" type="PerformanceEntryList"/>
         <method name="getEntriesByName" type="PerformanceEntryList">
           <param name="name" type="DOMString"/>
@@ -7462,16 +7468,6 @@
         </method>
         <method name="getEntriesByType" type="PerformanceEntryList">
           <param name="type" type="DOMString"/>
-        </method>
-        <method name="clearResourceTimings" type="void"/>
-        <method name="setResourceTimingBufferSize" type="void">
-          <param name="maxSize" type="unsigned long"/>
-        </method>
-        <method name="clearMarks" type="void">
-          <param name="markName" optional="1" type="DOMString"/>
-        </method>
-        <method name="clearMeasures" type="void">
-          <param name="measureName" optional="1" type="DOMString"/>
         </method>
         <method name="mark" type="void">
           <param name="markName" type="DOMString"/>
@@ -7481,11 +7477,15 @@
           <param name="startMark" optional="1" type="DOMString"/>
           <param name="endMark" optional="1" type="DOMString"/>
         </method>
+        <method name="now" type="DOMHighResTimeStamp"/>
+        <method name="setResourceTimingBufferSize" type="void">
+          <param name="maxSize" type="unsigned long"/>
+        </method>
       </methods>
       <properties>
         <property name="navigation" read-only="1" type="PerformanceNavigation"/>
-        <property name="timing" read-only="1" type="PerformanceTiming"/>
         <property name="onresourcetimingbufferfull" type="EventHandler" event-handler="resourcetimingbufferfull"/>
+        <property name="timing" read-only="1" type="PerformanceTiming"/>
       </properties>
       <events>
         <event name="resourcetimingbufferfull" type="Event"/>
@@ -7772,9 +7772,14 @@
           <param name="node" type="Node"/>
           <param name="offset" type="unsigned long"/>
         </method>
+        <method name="createContextualFragment" type="DocumentFragment">
+          <param name="fragment" type="DOMString"/>
+        </method>
         <method name="deleteContents" type="void"/>
         <method name="detach" type="void"/>
         <method name="extractContents" type="DocumentFragment"/>
+        <method name="getBoundingClientRect" type="DOMRect"/>
+        <method name="getClientRects" type="sequence&lt;DOMRect&gt;"/>
         <method name="insertNode" type="void">
           <param name="node" type="Node"/>
         </method>
@@ -7813,11 +7818,6 @@
         </method>
         <method name="surroundContents" type="void">
           <param name="newParent" type="Node"/>
-        </method>
-        <method name="getBoundingClientRect" type="DOMRect"/>
-        <method name="getClientRects" type="sequence&lt;DOMRect&gt;"/>
-        <method name="createContextualFragment" type="DocumentFragment">
-          <param name="fragment" type="DOMString"/>
         </method>
       </methods>
       <properties>
@@ -8092,50 +8092,11 @@
       <methods>
         <method name="addIceCandidate" type="Promise&lt;void&gt;">
           <param name="candidate" type="(RTCIceCandidateInit or RTCIceCandidate)"/>
-        </method>
-        <method name="close" type="void"/>
-        <method name="createAnswer" type="Promise&lt;RTCSessionDescriptionInit&gt;">
-          <param name="options" optional="1" type="RTCAnswerOptions"/>
-        </method>
-        <method name="createOffer" type="Promise&lt;RTCSessionDescriptionInit&gt;">
-          <param name="options" optional="1" type="RTCOfferOptions"/>
-        </method>
-        <method name="getConfiguration" type="RTCConfiguration"/>
-        <method name="setConfiguration" type="void">
-          <param name="configuration" type="RTCConfiguration"/>
-        </method>
-        <method name="setLocalDescription" type="Promise&lt;void&gt;">
-          <param name="description" type="RTCSessionDescriptionInit"/>
-        </method>
-        <method name="setRemoteDescription" type="Promise&lt;void&gt;">
-          <param name="description" type="RTCSessionDescriptionInit"/>
+          <param name="successCallback" type="VoidFunction"/>
+          <param name="failureCallback" type="RTCPeerConnectionErrorCallback"/>
         </method>
         <method name="addIceCandidate" type="Promise&lt;void&gt;">
           <param name="candidate" type="(RTCIceCandidateInit or RTCIceCandidate)"/>
-          <param name="successCallback" type="VoidFunction"/>
-          <param name="failureCallback" type="RTCPeerConnectionErrorCallback"/>
-        </method>
-        <method name="createAnswer" type="Promise&lt;void&gt;">
-          <param name="successCallback" type="RTCSessionDescriptionCallback"/>
-          <param name="failureCallback" type="RTCPeerConnectionErrorCallback"/>
-        </method>
-        <method name="createOffer" type="Promise&lt;void&gt;">
-          <param name="successCallback" type="RTCSessionDescriptionCallback"/>
-          <param name="failureCallback" type="RTCPeerConnectionErrorCallback"/>
-          <param name="options" optional="1" type="RTCOfferOptions"/>
-        </method>
-        <method name="setLocalDescription" type="Promise&lt;void&gt;">
-          <param name="description" type="RTCSessionDescriptionInit"/>
-          <param name="successCallback" type="VoidFunction"/>
-          <param name="failureCallback" type="RTCPeerConnectionErrorCallback"/>
-        </method>
-        <method name="setRemoteDescription" type="Promise&lt;void&gt;">
-          <param name="description" type="RTCSessionDescriptionInit"/>
-          <param name="successCallback" type="VoidFunction"/>
-          <param name="failureCallback" type="RTCPeerConnectionErrorCallback"/>
-        </method>
-        <method name="generateCertificate" static="1" type="Promise&lt;RTCCertificate&gt;">
-          <param name="keygenAlgorithm" type="AlgorithmIdentifier"/>
         </method>
         <method name="addTrack" type="RTCRtpSender">
           <param name="track" type="MediaStreamTrack"/>
@@ -8145,23 +8106,62 @@
           <param name="trackOrKind" type="(MediaStreamTrack or DOMString)"/>
           <param name="init" optional="1" type="RTCRtpTransceiverInit"/>
         </method>
-        <method name="getReceivers" type="sequence&lt;RTCRtpReceiver&gt;"/>
-        <method name="getSenders" type="sequence&lt;RTCRtpSender&gt;"/>
-        <method name="getTransceivers" type="sequence&lt;RTCRtpTransceiver&gt;"/>
-        <method name="removeTrack" type="void">
-          <param name="sender" type="RTCRtpSender"/>
+        <method name="close" type="void"/>
+        <method name="createAnswer" type="Promise&lt;RTCSessionDescriptionInit&gt;">
+          <param name="options" optional="1" type="RTCAnswerOptions"/>
+        </method>
+        <method name="createAnswer" type="Promise&lt;void&gt;">
+          <param name="successCallback" type="RTCSessionDescriptionCallback"/>
+          <param name="failureCallback" type="RTCPeerConnectionErrorCallback"/>
         </method>
         <method name="createDataChannel" type="RTCDataChannel">
           <param name="label" type="USVString"/>
           <param name="dataChannelDict" optional="1" type="RTCDataChannelInit"/>
         </method>
+        <method name="createOffer" type="Promise&lt;void&gt;">
+          <param name="successCallback" type="RTCSessionDescriptionCallback"/>
+          <param name="failureCallback" type="RTCPeerConnectionErrorCallback"/>
+          <param name="options" optional="1" type="RTCOfferOptions"/>
+        </method>
+        <method name="createOffer" type="Promise&lt;RTCSessionDescriptionInit&gt;">
+          <param name="options" optional="1" type="RTCOfferOptions"/>
+        </method>
+        <method name="generateCertificate" static="1" type="Promise&lt;RTCCertificate&gt;">
+          <param name="keygenAlgorithm" type="AlgorithmIdentifier"/>
+        </method>
+        <method name="getConfiguration" type="RTCConfiguration"/>
+        <method name="getIdentityAssertion" type="Promise&lt;DOMString&gt;"/>
+        <method name="getReceivers" type="sequence&lt;RTCRtpReceiver&gt;"/>
+        <method name="getSenders" type="sequence&lt;RTCRtpSender&gt;"/>
         <method name="getStats" type="Promise&lt;RTCStatsReport&gt;">
           <param name="selector" default="null" optional="1" nullable="1" type="MediaStreamTrack"/>
         </method>
-        <method name="getIdentityAssertion" type="Promise&lt;DOMString&gt;"/>
+        <method name="getTransceivers" type="sequence&lt;RTCRtpTransceiver&gt;"/>
+        <method name="removeTrack" type="void">
+          <param name="sender" type="RTCRtpSender"/>
+        </method>
+        <method name="setConfiguration" type="void">
+          <param name="configuration" type="RTCConfiguration"/>
+        </method>
         <method name="setIdentityProvider" type="void">
           <param name="provider" type="DOMString"/>
           <param name="options" optional="1" type="RTCIdentityProviderOptions"/>
+        </method>
+        <method name="setLocalDescription" type="Promise&lt;void&gt;">
+          <param name="description" type="RTCSessionDescriptionInit"/>
+        </method>
+        <method name="setLocalDescription" type="Promise&lt;void&gt;">
+          <param name="description" type="RTCSessionDescriptionInit"/>
+          <param name="successCallback" type="VoidFunction"/>
+          <param name="failureCallback" type="RTCPeerConnectionErrorCallback"/>
+        </method>
+        <method name="setRemoteDescription" type="Promise&lt;void&gt;">
+          <param name="description" type="RTCSessionDescriptionInit"/>
+        </method>
+        <method name="setRemoteDescription" type="Promise&lt;void&gt;">
+          <param name="description" type="RTCSessionDescriptionInit"/>
+          <param name="successCallback" type="VoidFunction"/>
+          <param name="failureCallback" type="RTCPeerConnectionErrorCallback"/>
         </method>
       </methods>
       <properties>
@@ -8172,8 +8172,11 @@
         <property name="defaultIceServers" read-only="1" static="1" type="FrozenArray&lt;RTCIceServer&gt;"/>
         <property name="iceConnectionState" read-only="1" type="RTCIceConnectionState"/>
         <property name="iceGatheringState" read-only="1" type="RTCIceGatheringState"/>
+        <property name="idpErrorInfo" read-only="1" nullable="1" type="DOMString"/>
+        <property name="idpLoginUrl" read-only="1" nullable="1" type="DOMString"/>
         <property name="localDescription" read-only="1" nullable="1" type="RTCSessionDescription"/>
         <property name="onconnectionstatechange" type="EventHandler" event-handler="connectionstatechange"/>
+        <property name="ondatachannel" type="EventHandler" event-handler="datachannel"/>
         <property name="onfingerprintfailure" type="EventHandler" event-handler="fingerprintfailure"/>
         <property name="onicecandidate" type="EventHandler" event-handler="icecandidate"/>
         <property name="onicecandidateerror" type="EventHandler" event-handler="icecandidateerror"/>
@@ -8181,19 +8184,17 @@
         <property name="onicegatheringstatechange" type="EventHandler" event-handler="icegatheringstatechange"/>
         <property name="onnegotiationneeded" type="EventHandler" event-handler="negotiationneeded"/>
         <property name="onsignalingstatechange" type="EventHandler" event-handler="signalingstatechange"/>
+        <property name="ontrack" type="EventHandler" event-handler="track"/>
+        <property name="peerIdentity" read-only="1" type="Promise&lt;RTCIdentityAssertion&gt;"/>
         <property name="pendingLocalDescription" read-only="1" nullable="1" type="RTCSessionDescription"/>
         <property name="pendingRemoteDescription" read-only="1" nullable="1" type="RTCSessionDescription"/>
         <property name="remoteDescription" read-only="1" nullable="1" type="RTCSessionDescription"/>
-        <property name="signalingState" read-only="1" type="RTCSignalingState"/>
-        <property name="ontrack" type="EventHandler" event-handler="track"/>
-        <property name="ondatachannel" type="EventHandler" event-handler="datachannel"/>
         <property name="sctp" read-only="1" nullable="1" type="RTCSctpTransport"/>
-        <property name="idpErrorInfo" read-only="1" nullable="1" type="DOMString"/>
-        <property name="idpLoginUrl" read-only="1" nullable="1" type="DOMString"/>
-        <property name="peerIdentity" read-only="1" type="Promise&lt;RTCIdentityAssertion&gt;"/>
+        <property name="signalingState" read-only="1" type="RTCSignalingState"/>
       </properties>
       <events>
         <event name="connectionstatechange" type="Event"/>
+        <event name="datachannel" type="RTCDataChannelEvent"/>
         <event name="fingerprintfailure" type="Event"/>
         <event name="icecandidate" type="RTCPeerConnectionIceEvent"/>
         <event name="icecandidateerror" type="RTCPeerConnectionIceErrorEvent"/>
@@ -8202,7 +8203,6 @@
         <event name="negotiationneeded" type="Event"/>
         <event name="signalingstatechange" type="Event"/>
         <event name="track" type="RTCTrackEvent"/>
-        <event name="datachannel" type="RTCDataChannelEvent"/>
         <event name="negotiationneeded" dispatch="sync" skips-window="1" type="Event"/>
         <event name="icecandidate" dispatch="sync" skips-window="1" type="RTCPeerConnectionIceEvent"/>
         <event name="signalingstatechange" dispatch="sync" skips-window="1" type="Event"/>
@@ -8271,10 +8271,10 @@
         </method>
       </methods>
       <properties>
+        <property name="dtmf" read-only="1" nullable="1" type="RTCDTMFSender"/>
         <property name="rtcpTransport" read-only="1" nullable="1" type="RTCDtlsTransport"/>
         <property name="track" read-only="1" nullable="1" type="MediaStreamTrack"/>
         <property name="transport" read-only="1" nullable="1" type="RTCDtlsTransport"/>
-        <property name="dtmf" read-only="1" nullable="1" type="RTCDTMFSender"/>
       </properties>
       <events>
         <event name="error" dispatch="sync" skips-window="1" type="Event"/>
@@ -8496,12 +8496,12 @@
         <property name="onforeignfetch" type="EventHandler" event-handler="foreignfetch"/>
         <property name="oninstall" type="EventHandler" event-handler="install"/>
         <property name="onmessage" type="EventHandler" event-handler="message"/>
-        <property name="registration" read-only="1" type="ServiceWorkerRegistration"/>
         <property name="onnotificationclick" type="EventHandler" event-handler="notificationclick"/>
         <property name="onnotificationclose" type="EventHandler" event-handler="notificationclose"/>
         <property name="onpush" type="EventHandler" event-handler="push"/>
         <property name="onpushsubscriptionchange" type="EventHandler" event-handler="pushsubscriptionchange"/>
         <property name="onsync" type="EventHandler" event-handler="sync"/>
+        <property name="registration" read-only="1" type="ServiceWorkerRegistration"/>
       </properties>
       <events>
         <event name="activate" type="ExtendableEvent"/>
@@ -8518,8 +8518,6 @@
     </interface>
     <interface name="ServiceWorkerRegistration" extends="EventTarget" exposed="Window Worker">
       <methods>
-        <method name="unregister" type="Promise&lt;boolean&gt;"/>
-        <method name="update" type="Promise&lt;void&gt;"/>
         <method name="getNotifications" type="Promise&lt;sequence&lt;Notification&gt;&gt;">
           <param name="filter" optional="1" type="GetNotificationOptions"/>
         </method>
@@ -8527,17 +8525,19 @@
           <param name="title" type="DOMString"/>
           <param name="options" optional="1" type="NotificationOptions"/>
         </method>
+        <method name="unregister" type="Promise&lt;boolean&gt;"/>
+        <method name="update" type="Promise&lt;void&gt;"/>
       </methods>
       <properties>
         <property name="active" read-only="1" nullable="1" type="ServiceWorker"/>
         <property name="installing" read-only="1" nullable="1" type="ServiceWorker"/>
         <property name="navigationPreload" read-only="1" type="NavigationPreloadManager"/>
         <property name="onupdatefound" type="EventHandler" event-handler="updatefound"/>
+        <property name="pushManager" read-only="1" type="PushManager"/>
         <property name="scope" read-only="1" type="USVString"/>
+        <property name="sync" read-only="1" type="SyncManager"/>
         <property name="useCache" read-only="1" type="boolean"/>
         <property name="waiting" read-only="1" nullable="1" type="ServiceWorker"/>
-        <property name="pushManager" read-only="1" type="PushManager"/>
-        <property name="sync" read-only="1" type="SyncManager"/>
       </properties>
       <events>
         <event name="updatefound" dispatch="async" skips-window="1" type="Event"/>
@@ -10264,19 +10264,19 @@
         <param name="base" optional="1" type="USVString"/>
       </constructor>
       <methods>
-        <method name="toJSON" type="USVString"/>
         <method name="createFor" static="1" type="DOMString">
           <param name="blob" type="Blob"/>
         </method>
         <method name="createObjectURL" static="1" type="DOMString">
           <param name="blob" type="Blob"/>
         </method>
-        <method name="revokeObjectURL" static="1" type="void">
-          <param name="url" type="DOMString"/>
-        </method>
         <method name="createObjectURL" static="1" type="DOMString">
           <param name="mediaSource" type="MediaSource"/>
         </method>
+        <method name="revokeObjectURL" static="1" type="void">
+          <param name="url" type="DOMString"/>
+        </method>
+        <method name="toJSON" type="USVString"/>
       </methods>
       <properties>
         <property name="hash" type="USVString"/>
@@ -10514,19 +10514,36 @@
         </method>
       </anonymous-methods>
       <methods>
+        <method name="alert" type="void"/>
         <method name="alert" type="void">
           <param name="message" type="DOMString"/>
         </method>
-        <method name="alert" type="void"/>
         <method name="blur" type="void"/>
         <method name="cancelAnimationFrame" type="void">
           <param name="handle" type="unsigned long"/>
         </method>
+        <method name="captureEvents" type="void"/>
         <method name="close" type="void"/>
         <method name="confirm" type="boolean">
           <param name="message" default="&quot;&quot;" optional="1" type="DOMString"/>
         </method>
         <method name="focus" type="void"/>
+        <method name="getComputedStyle" type="CSSStyleDeclaration">
+          <param name="elt" type="Element"/>
+          <param name="pseudoElt" optional="1" nullable="1" type="CSSOMString"/>
+        </method>
+        <method name="getSelection" nullable="1" type="Selection"/>
+        <method name="matchMedia" type="MediaQueryList">
+          <param name="query" type="DOMString"/>
+        </method>
+        <method name="moveBy" type="void">
+          <param name="x" type="long"/>
+          <param name="y" type="long"/>
+        </method>
+        <method name="moveTo" type="void">
+          <param name="x" type="long"/>
+          <param name="y" type="long"/>
+        </method>
         <method name="open" nullable="1" type="WindowProxy">
           <param name="url" default="&quot;about:blank&quot;" optional="1" type="USVString"/>
           <param name="target" default="&quot;_blank&quot;" optional="1" type="DOMString"/>
@@ -10542,26 +10559,9 @@
           <param name="message" default="&quot;&quot;" optional="1" type="DOMString"/>
           <param name="default" default="&quot;&quot;" optional="1" type="DOMString"/>
         </method>
+        <method name="releaseEvents" type="void"/>
         <method name="requestAnimationFrame" type="unsigned long">
           <param name="callback" type="FrameRequestCallback"/>
-        </method>
-        <method name="stop" type="void"/>
-        <method name="captureEvents" type="void"/>
-        <method name="releaseEvents" type="void"/>
-        <method name="getComputedStyle" type="CSSStyleDeclaration">
-          <param name="elt" type="Element"/>
-          <param name="pseudoElt" optional="1" nullable="1" type="CSSOMString"/>
-        </method>
-        <method name="matchMedia" type="MediaQueryList">
-          <param name="query" type="DOMString"/>
-        </method>
-        <method name="moveBy" type="void">
-          <param name="x" type="long"/>
-          <param name="y" type="long"/>
-        </method>
-        <method name="moveTo" type="void">
-          <param name="x" type="long"/>
-          <param name="y" type="long"/>
         </method>
         <method name="resizeBy" type="void">
           <param name="x" type="long"/>
@@ -10592,48 +10592,48 @@
           <param name="x" type="unrestricted double"/>
           <param name="y" type="unrestricted double"/>
         </method>
-        <method name="getSelection" nullable="1" type="Selection"/>
+        <method name="stop" type="void"/>
       </methods>
       <properties>
         <property name="applicationCache" read-only="1" type="ApplicationCache"/>
+        <property name="audioWorklet" read-only="1" type="Worklet"/>
         <property name="closed" read-only="1" type="boolean"/>
         <property name="customElements" read-only="1" type="CustomElementRegistry"/>
+        <property name="devicePixelRatio" read-only="1" type="double"/>
         <property name="document" read-only="1" type="Document"/>
+        <property name="external" read-only="1" type="External"/>
         <property name="frameElement" read-only="1" nullable="1" type="Element"/>
         <property name="frames" read-only="1" type="WindowProxy"/>
         <property name="history" read-only="1" type="History"/>
+        <property name="innerHeight" read-only="1" type="long"/>
+        <property name="innerWidth" read-only="1" type="long"/>
         <property name="length" read-only="1" type="unsigned long"/>
         <property name="location" read-only="1" type="Location"/>
         <property name="locationbar" read-only="1" type="BarProp"/>
         <property name="menubar" read-only="1" type="BarProp"/>
         <property name="name" type="DOMString"/>
         <property name="navigator" read-only="1" type="Navigator"/>
+        <property name="ondevicemotion" type="EventHandler" event-handler="devicemotion"/>
+        <property name="ondeviceorientation" type="EventHandler" event-handler="deviceorientation"/>
         <property name="opener" type="any"/>
+        <property name="outerHeight" read-only="1" type="long"/>
+        <property name="outerWidth" read-only="1" type="long"/>
+        <property name="pageXOffset" read-only="1" type="double"/>
+        <property name="pageYOffset" read-only="1" type="double"/>
         <property name="parent" read-only="1" nullable="1" type="WindowProxy"/>
         <property name="personalbar" read-only="1" type="BarProp"/>
+        <property name="screen" read-only="1" type="Screen"/>
+        <property name="screenX" read-only="1" type="long"/>
+        <property name="screenY" read-only="1" type="long"/>
         <property name="scrollbars" read-only="1" type="BarProp"/>
+        <property name="scrollX" read-only="1" type="double"/>
+        <property name="scrollY" read-only="1" type="double"/>
         <property name="self" read-only="1" type="WindowProxy"/>
         <property name="status" type="DOMString"/>
         <property name="statusbar" read-only="1" type="BarProp"/>
         <property name="toolbar" read-only="1" type="BarProp"/>
         <property name="top" read-only="1" nullable="1" type="WindowProxy"/>
         <property name="window" read-only="1" type="WindowProxy"/>
-        <property name="external" read-only="1" type="External"/>
-        <property name="devicePixelRatio" read-only="1" type="double"/>
-        <property name="innerHeight" read-only="1" type="long"/>
-        <property name="innerWidth" read-only="1" type="long"/>
-        <property name="outerHeight" read-only="1" type="long"/>
-        <property name="outerWidth" read-only="1" type="long"/>
-        <property name="pageXOffset" read-only="1" type="double"/>
-        <property name="pageYOffset" read-only="1" type="double"/>
-        <property name="screen" read-only="1" type="Screen"/>
-        <property name="screenX" read-only="1" type="long"/>
-        <property name="screenY" read-only="1" type="long"/>
-        <property name="scrollX" read-only="1" type="double"/>
-        <property name="scrollY" read-only="1" type="double"/>
-        <property name="ondeviceorientation" type="EventHandler" event-handler="deviceorientation"/>
-        <property name="ondevicemotion" type="EventHandler" event-handler="devicemotion"/>
-        <property name="audioWorklet" read-only="1" type="Worklet"/>
       </properties>
       <implements>GlobalEventHandlers</implements>
       <implements>WindowEventHandlers</implements>
@@ -10949,10 +10949,10 @@
       <methods>
         <method name="beginPath" type="void"/>
         <method name="clip" type="void">
-          <param name="path" type="Path2D"/>
           <param name="fillRule" default="&quot;nonzero&quot;" optional="1" type="CanvasFillRule"/>
         </method>
         <method name="clip" type="void">
+          <param name="path" type="Path2D"/>
           <param name="fillRule" default="&quot;nonzero&quot;" optional="1" type="CanvasFillRule"/>
         </method>
         <method name="fill" type="void">
@@ -11401,6 +11401,10 @@
     <interface name="GlobalEventHandlers" extends="Object" no-interface-object="1">
       <properties>
         <property name="onabort" type="EventHandler" event-handler="abort"/>
+        <property name="onanimationcancel" type="EventHandler" event-handler="animationcancel"/>
+        <property name="onanimationend" type="EventHandler" event-handler="animationend"/>
+        <property name="onanimationiteration" type="EventHandler" event-handler="animationiteration"/>
+        <property name="onanimationstart" type="EventHandler" event-handler="animationstart"/>
         <property name="onauxclick" type="EventHandler" event-handler="auxclick"/>
         <property name="onblur" type="EventHandler" event-handler="blur"/>
         <property name="oncancel" type="EventHandler" event-handler="cancel"/>
@@ -11445,31 +11449,6 @@
         <property name="onpause" type="EventHandler" event-handler="pause"/>
         <property name="onplay" type="EventHandler" event-handler="play"/>
         <property name="onplaying" type="EventHandler" event-handler="playing"/>
-        <property name="onprogress" type="EventHandler" event-handler="progress"/>
-        <property name="onratechange" type="EventHandler" event-handler="ratechange"/>
-        <property name="onreset" type="EventHandler" event-handler="reset"/>
-        <property name="onresize" type="EventHandler" event-handler="resize"/>
-        <property name="onscroll" type="EventHandler" event-handler="scroll"/>
-        <property name="onseeked" type="EventHandler" event-handler="seeked"/>
-        <property name="onseeking" type="EventHandler" event-handler="seeking"/>
-        <property name="onselect" type="EventHandler" event-handler="select"/>
-        <property name="onshow" type="EventHandler" event-handler="show"/>
-        <property name="onstalled" type="EventHandler" event-handler="stalled"/>
-        <property name="onsubmit" type="EventHandler" event-handler="submit"/>
-        <property name="onsuspend" type="EventHandler" event-handler="suspend"/>
-        <property name="ontimeupdate" type="EventHandler" event-handler="timeupdate"/>
-        <property name="ontoggle" type="EventHandler" event-handler="toggle"/>
-        <property name="onvolumechange" type="EventHandler" event-handler="volumechange"/>
-        <property name="onwaiting" type="EventHandler" event-handler="waiting"/>
-        <property name="onwheel" type="EventHandler" event-handler="wheel"/>
-        <property name="onanimationcancel" type="EventHandler" event-handler="animationcancel"/>
-        <property name="onanimationend" type="EventHandler" event-handler="animationend"/>
-        <property name="onanimationiteration" type="EventHandler" event-handler="animationiteration"/>
-        <property name="onanimationstart" type="EventHandler" event-handler="animationstart"/>
-        <property name="ontransitioncancel" type="EventHandler" event-handler="transitioncancel"/>
-        <property name="ontransitionend" type="EventHandler" event-handler="transitionend"/>
-        <property name="ontransitionrun" type="EventHandler" event-handler="transitionrun"/>
-        <property name="ontransitionstart" type="EventHandler" event-handler="transitionstart"/>
         <property name="onpointercancel" type="EventHandler" event-handler="pointercancel"/>
         <property name="onpointerdown" type="EventHandler" event-handler="pointerdown"/>
         <property name="onpointerenter" type="EventHandler" event-handler="pointerenter"/>
@@ -11478,12 +11457,33 @@
         <property name="onpointerout" type="EventHandler" event-handler="pointerout"/>
         <property name="onpointerover" type="EventHandler" event-handler="pointerover"/>
         <property name="onpointerup" type="EventHandler" event-handler="pointerup"/>
+        <property name="onprogress" type="EventHandler" event-handler="progress"/>
+        <property name="onratechange" type="EventHandler" event-handler="ratechange"/>
+        <property name="onreset" type="EventHandler" event-handler="reset"/>
+        <property name="onresize" type="EventHandler" event-handler="resize"/>
+        <property name="onscroll" type="EventHandler" event-handler="scroll"/>
+        <property name="onseeked" type="EventHandler" event-handler="seeked"/>
+        <property name="onseeking" type="EventHandler" event-handler="seeking"/>
+        <property name="onselect" type="EventHandler" event-handler="select"/>
         <property name="onselectionchange" type="EventHandler" event-handler="selectionchange"/>
         <property name="onselectstart" type="EventHandler" event-handler="selectstart"/>
+        <property name="onshow" type="EventHandler" event-handler="show"/>
+        <property name="onstalled" type="EventHandler" event-handler="stalled"/>
+        <property name="onsubmit" type="EventHandler" event-handler="submit"/>
+        <property name="onsuspend" type="EventHandler" event-handler="suspend"/>
+        <property name="ontimeupdate" type="EventHandler" event-handler="timeupdate"/>
+        <property name="ontoggle" type="EventHandler" event-handler="toggle"/>
         <property name="ontouchcancel" type="EventHandler" event-handler="touchcancel"/>
         <property name="ontouchend" type="EventHandler" event-handler="touchend"/>
         <property name="ontouchmove" type="EventHandler" event-handler="touchmove"/>
         <property name="ontouchstart" type="EventHandler" event-handler="touchstart"/>
+        <property name="ontransitioncancel" type="EventHandler" event-handler="transitioncancel"/>
+        <property name="ontransitionend" type="EventHandler" event-handler="transitionend"/>
+        <property name="ontransitionrun" type="EventHandler" event-handler="transitionrun"/>
+        <property name="ontransitionstart" type="EventHandler" event-handler="transitionstart"/>
+        <property name="onvolumechange" type="EventHandler" event-handler="volumechange"/>
+        <property name="onwaiting" type="EventHandler" event-handler="waiting"/>
+        <property name="onwheel" type="EventHandler" event-handler="wheel"/>
       </properties>
       <events>
         <event name="abort" type="Event"/>
@@ -11669,13 +11669,13 @@
         <property name="appCodeName" read-only="1" type="DOMString"/>
         <property name="appName" read-only="1" type="DOMString"/>
         <property name="appVersion" read-only="1" type="DOMString"/>
+        <property name="oscpu" read-only="1" type="DOMString"/>
         <property name="platform" read-only="1" type="DOMString"/>
         <property name="product" read-only="1" type="DOMString"/>
         <property name="productSub" read-only="1" type="DOMString"/>
         <property name="userAgent" read-only="1" type="DOMString"/>
         <property name="vendor" read-only="1" type="DOMString"/>
         <property name="vendorSub" read-only="1" type="DOMString"/>
-        <property name="oscpu" read-only="1" type="DOMString"/>
       </properties>
       <methods>
         <method name="taintEnabled" type="boolean"/>
@@ -12226,17 +12226,17 @@
         </method>
         <method name="bufferData" type="void">
           <param name="target" type="GLenum"/>
-          <param name="size" type="GLsizeiptr"/>
-          <param name="usage" type="GLenum"/>
-        </method>
-        <method name="bufferData" type="void">
-          <param name="target" type="GLenum"/>
           <param name="data" nullable="1" type="ArrayBuffer"/>
           <param name="usage" type="GLenum"/>
         </method>
         <method name="bufferData" type="void">
           <param name="target" type="GLenum"/>
           <param name="data" type="ArrayBufferView"/>
+          <param name="usage" type="GLenum"/>
+        </method>
+        <method name="bufferData" type="void">
+          <param name="target" type="GLenum"/>
+          <param name="size" type="GLsizeiptr"/>
           <param name="usage" type="GLenum"/>
         </method>
         <method name="bufferSubData" type="void">
@@ -12846,6 +12846,10 @@
           <param name="sh" type="long"/>
           <param name="options" optional="1" type="ImageBitmapOptions"/>
         </method>
+        <method name="fetch" type="Promise&lt;Response&gt;">
+          <param name="input" type="RequestInfo"/>
+          <param name="init" optional="1" type="RequestInit"/>
+        </method>
         <method name="setInterval" type="long">
           <param name="handler" type="TimerHandler"/>
           <param name="timeout" default="0" optional="1" type="long"/>
@@ -12856,14 +12860,10 @@
           <param name="timeout" default="0" optional="1" type="long"/>
           <param name="arguments" type="any" variadic="1"/>
         </method>
-        <method name="fetch" type="Promise&lt;Response&gt;">
-          <param name="input" type="RequestInfo"/>
-          <param name="init" optional="1" type="RequestInit"/>
-        </method>
       </methods>
       <properties>
-        <property name="origin" read-only="1" type="USVString"/>
         <property name="caches" read-only="1" type="CacheStorage"/>
+        <property name="origin" read-only="1" type="USVString"/>
       </properties>
     </interface>
     <interface name="WindowSessionStorage" extends="Object" no-interface-object="1">
