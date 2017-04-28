@@ -11734,38 +11734,6 @@
         <property name="sheet" read-only="1" nullable="1" type="StyleSheet"/>
       </properties>
     </interface>
-    <interface name="MSAppAsyncOperation" no-interface-object="1" sn:partial="1">
-      <events>
-        <event name="error" dispatch="sync" skips-window="1" tags="MSAppOnly" type="Event"/>
-        <event name="complete" dispatch="sync" skips-window="1" tags="MSAppOnly" type="Event"/>
-      </events>
-    </interface>
-    <interface name="MSHTMLWebViewElement" no-interface-object="1" sn:partial="1">
-      <events>
-        <event name="MSWebViewNavigationStarting" cancelable="1" dispatch="sync" precedes="MSWebViewContentLoading" tags="MSAppOnly" type="NavigationEvent"/>
-        <event name="MSWebViewContentLoading" dispatch="sync" follows="MSWebViewNavigationStarting" precedes="MSWebViewDOMContentLoaded" tags="MSAppOnly" type="NavigationEvent"/>
-        <event name="MSWebViewDOMContentLoaded" dispatch="sync" follows="MSWebViewContentLoading" precedes="MSWebViewNavigationCompleted" tags="MSAppOnly" type="NavigationEvent"/>
-        <event name="MSWebViewNavigationCompleted" dispatch="sync" follows="MSWebViewDOMContentLoaded" tags="MSAppOnly" type="NavigationCompletedEvent"/>
-        <event name="MSWebViewScriptNotify" dispatch="sync" tags="MSAppOnly" type="ScriptNotifyEvent"/>
-        <event name="MSWebViewUnsafeContentWarningDisplaying" dispatch="sync" tags="MSAppOnly" type="Event"/>
-        <event name="MSWebViewContainsFullScreenElementChanged" dispatch="sync" tags="MSAppOnly" type="Event"/>
-        <event name="MSWebViewLongRunningScriptDetected" dispatch="sync" tags="MSAppOnly" type="LongRunningScriptDetectedEvent"/>
-        <event name="MSWebViewUnviewableContentIdentified" dispatch="sync" tags="MSAppOnly" type="UnviewableContentIdentifiedEvent"/>
-        <event name="MSWebViewUnsupportedUriSchemeIdentified" cancelable="1" dispatch="sync" tags="MSAppOnly" type="NavigationEvent"/>
-        <event name="MSWebViewNewWindowRequested" dispatch="sync" tags="MSAppOnly" type="NavigationEventWithReferrer"/>
-        <event name="MSWebViewFrameNavigationStarting" cancelable="1" dispatch="sync" precedes="MSWebViewFrameContentLoading" tags="MSAppOnly" type="NavigationEvent"/>
-        <event name="MSWebViewFrameNavigationCompleted" dispatch="sync" follows="MSWebViewFrameDOMContentLoaded" tags="MSAppOnly" type="NavigationCompletedEvent"/>
-        <event name="MSWebViewFrameDOMContentLoaded" dispatch="sync" follows="MSWebViewFrameContentLoading" precedes="MSWebViewFrameNavigationCompleted" tags="MSAppOnly" type="NavigationEvent"/>
-        <event name="MSWebViewFrameContentLoading" dispatch="sync" follows="MSWebViewFrameNavigationStarting" precedes="MSWebViewFrameDOMContentLoaded" tags="MSAppOnly" type="NavigationEvent"/>
-      </events>
-      <element name="x-ms-webview" namespace="HTML"/>
-    </interface>
-    <interface name="MSWebViewAsyncOperation" no-interface-object="1" sn:partial="1">
-      <events>
-        <event name="complete" dispatch="sync" skips-window="1" tags="MSAppOnly" type="Event"/>
-        <event name="error" dispatch="sync" skips-window="1" tags="MSAppOnly" type="Event"/>
-      </events>
-    </interface>
     <interface name="NavigatorConcurrentHardware" extends="Object" no-interface-object="1" exposed="Window Worker">
       <properties>
         <property name="hardwareConcurrency" read-only="1" type="unsigned long long"/>
