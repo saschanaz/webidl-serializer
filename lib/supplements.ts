@@ -4,6 +4,7 @@ import * as xhelper from "./xmldom-helper";
 
 interface Supplement {
     events: EventSupplement[];
+    cssProperties: string[];
 }
 
 interface EventSupplement {
@@ -23,7 +24,7 @@ interface EventTypeInterfacePair {
     eventInterface: string;
 }
 
-export async function apply(base: IDLExportResult) {
+export async function apply(base: IDLExportResult, doc: Document) {
     const path = `supplements/${base.origin.description.title}.json`;
     const exists = await mz.exists(path);
     if (exists) {
@@ -31,9 +32,15 @@ export async function apply(base: IDLExportResult) {
     }
     // create an empty map when no supplement
     // to check every event handler property has its event type
-    const supplement: Supplement = exists ? JSON.parse(await mz.readFile(path, "utf8")) : { events: [] };
+    const supplement: Supplement = exists ? JSON.parse(await mz.readFile(path, "utf8")) : { };
+    if (!supplement.events) {
+        supplement.events = [];
+    }
 
     applyEventProperties(base, supplement);
+    if (supplement.cssProperties) {
+        base.snippets.push(createCSSPropertySnippet(supplement, doc));
+    }
 }
 
 function applyEventProperties(base: IDLExportResult, supplement: Supplement) {
@@ -107,4 +114,36 @@ function createEventPropertyMap(supplement: Supplement) {
         }
     }
     return map;
+}
+
+function createCSSPropertySnippet(supplement: Supplement, doc: Document): IDLSnippetContent {
+    const cssStyleDeclaration = doc.createElement("interface");
+    cssStyleDeclaration.setAttribute("name", "CSSStyleDeclaration");
+    cssStyleDeclaration.setAttribute("no-interface-object", "1");
+    cssStyleDeclaration.setAttribute("sn:partial", "1");
+
+    const properties = doc.createElement("properties")
+
+    for (const cssProperty of supplement.cssProperties) {
+        const property = doc.createElement("property");
+        property.setAttribute("name", cssProperty)
+        property.setAttribute("css-property", convertCSSNameToCamelCase(cssProperty));
+        properties.appendChild(property);
+    }
+    cssStyleDeclaration.appendChild(properties);
+
+    return {
+        callbackFunctions: [],
+        callbackInterfaces: [],
+        dictionaries: [],
+        enums: [],
+        interfaces: [cssStyleDeclaration],
+        mixinInterfaces: [],
+        typedefs: [],
+        namespaces: []
+    }
+}
+
+function convertCSSNameToCamelCase(name: string) {
+    return name.split("-").map((value, index) => index === 0 ? value : `${value[0].toUpperCase()}${value.slice(1)}`).join('');
 }

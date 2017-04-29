@@ -24,7 +24,9 @@ async function run() {
     if (process.argv[2] === "local") {
         for (const exportInfo of exportList) {
             // use remote copy only when specified
-            exportInfo.idl = "local";
+            if (exportInfo.idl !== "none") {
+                exportInfo.idl = "local";
+            }
         }
     }
 
@@ -37,6 +39,12 @@ async function run() {
             }
             console.log(`Got a local copy for ${description.title}`);
             return result;
+        }
+        else if (description.idl === "none") {
+            return {
+                description,
+                content: ""
+            }
         }
 
         const response = await fetch(description.url);
@@ -64,7 +72,7 @@ async function run() {
     // Exporting IDL texts
     const exports = await Promise.all(results.map(result => exportIDLs(result)));
     for (const exported of exports) {
-        if (exported.origin.description.idl === "local") {
+        if (exported.origin.description.idl === "local" || exported.origin.description.idl === "none") {
             continue;
         }
         await mz.writeFile(`localcopies/${exported.origin.description.title}.widl`, exported.idl);
@@ -81,7 +89,7 @@ async function run() {
 
     console.log("Loading supplements...");
     for (const exportResult of exports) {
-        supplements.apply(exportResult);
+        supplements.apply(exportResult, document);
     }
 
     const serializer = new XMLSerializer();
@@ -244,6 +252,11 @@ async function exportIDLs(result: FetchResult): Promise<IDLExportResult> {
     if (result.description.idl === "local") {
         return {
             snippets: exportIDLSnippets([result.content], result), origin: result, idl: result.content
+        }
+    }
+    else if (result.description.idl === "none") {
+        return {
+            snippets: [], origin: result, idl: ""
         }
     }
 
