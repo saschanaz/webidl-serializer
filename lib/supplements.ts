@@ -5,6 +5,7 @@ import * as xhelper from "./xmldom-helper";
 interface Supplement {
     events: EventSupplement[];
     cssProperties: string[];
+    elements: { [key: string]: string };
 }
 
 interface EventSupplement {
@@ -32,7 +33,7 @@ export async function apply(base: IDLExportResult, doc: Document) {
     }
     // create an empty map when no supplement
     // to check every event handler property has its event type
-    const supplement: Supplement = exists ? JSON.parse(await mz.readFile(path, "utf8")) : { };
+    const supplement: Supplement = exists ? JSON.parse(await mz.readFile(path, "utf8")) : {};
     if (!supplement.events) {
         supplement.events = [];
     }
@@ -40,6 +41,9 @@ export async function apply(base: IDLExportResult, doc: Document) {
     applyEventProperties(base, supplement);
     if (supplement.cssProperties) {
         base.snippets.push(createCSSPropertySnippet(supplement, doc));
+    }
+    if (supplement.elements) {
+        base.snippets.push(createElementMapSnippet(supplement, doc));
     }
 }
 
@@ -146,4 +150,31 @@ function createCSSPropertySnippet(supplement: Supplement, doc: Document): IDLSni
 
 function convertCSSNameToCamelCase(name: string) {
     return name.split("-").map((value, index) => index === 0 ? value : `${value[0].toUpperCase()}${value.slice(1)}`).join('');
+}
+
+function createElementMapSnippet(supplement: Supplement, doc: Document): IDLSnippetContent {
+    const interfaces: Element[] = [];
+    for (const interfaceName in supplement.elements) {
+        const interfaceEl = doc.createElement("interface");
+        interfaceEl.setAttribute("name", interfaceName);
+        interfaceEl.setAttribute("no-interface-object", "1");
+        interfaceEl.setAttribute("sn:partial", "1");
+
+        const element = doc.createElement("element")
+        element.setAttribute("name", supplement.elements[interfaceName]);
+        
+        interfaceEl.appendChild(element);
+        interfaces.push(interfaceEl);
+    }
+
+    return {
+        callbackFunctions: [],
+        callbackInterfaces: [],
+        dictionaries: [],
+        enums: [],
+        interfaces: interfaces,
+        mixinInterfaces: [],
+        typedefs: [],
+        namespaces: []
+    }
 }

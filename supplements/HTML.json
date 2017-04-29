@@ -245,5 +245,8 @@
                 }
             }
         }
-    ]
+    ],
+    "elements": {
+        "HTMLDialogElement": "dialog"
+    }
 }

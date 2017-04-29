@@ -5472,6 +5472,7 @@
         <property name="open" type="boolean"/>
         <property name="returnValue" type="DOMString"/>
       </properties>
+      <element name="dialog"/>
     </interface>
     <interface name="HTMLDirectoryElement" extends="HTMLElement">
       <properties>
