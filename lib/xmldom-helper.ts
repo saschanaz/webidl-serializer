@@ -13,6 +13,19 @@ export function getChildWithProperty(element: Element, childTagName: string, pro
     return getChildrenArray(element).filter(element => element.tagName.toLowerCase() === childTagName.toLowerCase() && element.getAttribute(property) === value)[0];
 }
 
+export function getElementsWithProperty(element: Element, targetTagName: string, property: string) {
+    // xmldom does not support querySelector
+    const elements = element.getElementsByTagName(targetTagName);
+    if (!elements.length) {
+        return;
+    }
+    const filtered = Array.from(elements).filter(element => element.getAttribute(property));
+    if (!filtered.length) {
+        return;
+    }
+    return filtered;
+}
+
 export function cloneNode<T extends Element>(node: T): T {
     // xmldom does not support cloneNode
     const newNode = node.ownerDocument.createElement(node.nodeName) as Element as T;

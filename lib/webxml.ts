@@ -109,7 +109,8 @@ function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLExport
 
             const events = interfaceEl.getElementsByTagName("events")[0];
             const element = interfaceEl.getElementsByTagName("element")[0];
-            if (!events && !element) {
+            const cssProperties = xhelper.getElementsWithProperty(interfaceEl, "property", "css-property");
+            if (!events && !element && !cssProperties) {
                 // no events or element information
                 continue;
             }
@@ -136,6 +137,13 @@ function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLExport
             }
             if (element) {
                 partialInterfaceEl.appendChild(xhelper.cloneNode(element));
+            }
+            if (cssProperties) {
+                const properties = document.createElement("properties");
+                for (const cssProperty of cssProperties) {
+                    properties.appendChild(xhelper.cloneNode(cssProperty));
+                }
+                partialInterfaceEl.appendChild(properties);
             }
 
             snippet.mixinInterfaces.push(partialInterfaceEl);
@@ -204,36 +212,6 @@ function transferEventInformation(exports: IDLExportResult[], eventMap: Map<stri
             }
         }
     }
-}
-
-/** Creates (CSS attribute name):(CSS property name) map from Edge document to apply on converted XML */
-function exportCSSPropertyMap(edgeIdl: Document) {
-    const eventPropertyMap = new Map<string, string>();
-
-    const interfaceSets = [edgeIdl.getElementsByTagName("interfaces")[0], edgeIdl.getElementsByTagName("mixin-interfaces")[0]];
-    for (const interfaceSet of interfaceSets) {
-        for (const interfaceEl of Array.from(interfaceSet.getElementsByTagName("interface"))) {
-            const properties = interfaceEl.getElementsByTagName("properties")[0];
-
-            if (properties) {
-                for (const property of xhelper.getChildrenArray(properties)) {
-                    const handler = property.getAttribute("event-handler");
-                    if (!handler) {
-                        continue;
-                    }
-
-                    eventPropertyMap.set(`${interfaceEl.getAttribute("name")}:${property.getAttribute("name")}`, handler);
-                }
-            }
-        }
-    }
-
-    return eventPropertyMap;
-}
-
-/** transfer css-property value map */
-function transferCSSPropertyInformation(exports: IDLExportResult[], eventMap: Map<string, string>) {
-
 }
 
 function convertAsSingleDocument(exports: IDLExportResult[]) {
