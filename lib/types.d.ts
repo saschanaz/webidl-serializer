@@ -2,7 +2,7 @@ export interface ExportRemoteDescription {
     url: string;
     title: string;
     hasIdlIndex?: boolean;
-    useLocalCopy?: boolean;
+    idl?: "local" | "none"; // TODO: merge hasIdlIndex as "indexed"
 }
 
 export interface FetchResult {

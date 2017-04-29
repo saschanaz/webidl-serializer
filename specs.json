@@ -45,7 +45,7 @@
     {
         "url": "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom-view/Overview.bs",
         "title": "CSSOM View Module",
-        "useLocalCopy": true,
+        "idl": "local",
         "comment": "The Editor's Draft has duplicated members in MouseEvent and MouseEventInit"
     },
     {
@@ -117,7 +117,7 @@
         "url": "https://wicg.github.io/IntersectionObserver/",
         "title": "Intersection Observer",
         "hasIdlIndex": true,
-        "useLocalCopy": true
+        "idl": "local"
     },
     {
         "url": "http://www.w3.org/TR/mediacapture-streams/",
@@ -170,12 +170,12 @@
         "title": "Service Workers",
         "hasIdlIndex": true,
         "comment": "2015 Working Draft has no class on <pre>, and the Editor's Draft has redundant HTMLLinkElement partial interface.",
-        "useLocalCopy": true
+        "idl": "local"
     },
     {
         "url": "https://streams.spec.whatwg.org/",
         "title": "Streams",
-        "useLocalCopy": true,
+        "idl": "local",
         "comment": "The local copy is needed because the original spec does not provide WebIDL codes."
     },
     {
@@ -210,7 +210,7 @@
     {
         "url": "https://webaudio.github.io/web-audio-api/",
         "title": "Web Audio",
-        "useLocalCopy": true,
+        "idl": "local",
         "comment": "The spec source currently does not use contiguous IDL."
     },
     {
@@ -230,7 +230,7 @@
     {
         "url": "https://dvcs.w3.org/hg/speech-api/raw-file/tip/webspeechapi.html",
         "title": "Web Speech",
-        "useLocalCopy": true,
+        "idl": "local",
         "comment": "2014 Editor's Draft has invalid nested enum."
     },
     {

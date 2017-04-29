@@ -24,13 +24,13 @@ async function run() {
     if (process.argv[2] === "local") {
         for (const exportInfo of exportList) {
             // use remote copy only when specified
-            exportInfo.useLocalCopy = true;
+            exportInfo.idl = "local";
         }
     }
 
     console.log("Fetching from web...");
     const results = await Promise.all(exportList.map(async (description): Promise<FetchResult> => {
-        if (description.useLocalCopy) {
+        if (description.idl === "local") {
             const result: FetchResult = {
                 description,
                 content: await mz.readFile(`localcopies/${description.title}.widl`, "utf8")
@@ -64,7 +64,7 @@ async function run() {
     // Exporting IDL texts
     const exports = await Promise.all(results.map(result => exportIDLs(result)));
     for (const exported of exports) {
-        if (exported.origin.description.useLocalCopy) {
+        if (exported.origin.description.idl === "local") {
             continue;
         }
         await mz.writeFile(`localcopies/${exported.origin.description.title}.widl`, exported.idl);
@@ -241,7 +241,7 @@ function isWebIDLParseError(err: any): err is WebIDL2.WebIDLParseError {
 }
 
 async function exportIDLs(result: FetchResult): Promise<IDLExportResult> {
-    if (result.description.useLocalCopy) {
+    if (result.description.idl === "local") {
         return {
             snippets: exportIDLSnippets([result.content], result), origin: result, idl: result.content
         }
