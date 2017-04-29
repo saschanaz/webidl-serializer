@@ -26,3 +26,9 @@ export interface IDLSnippetContent {
     typedefs: Element[];
     namespaces: Element[];
 }
+
+export interface MSEdgeIgnore {
+    interfaces: string[],
+    events: string[],
+    cssProperties: string[]
+}

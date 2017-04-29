@@ -6,7 +6,7 @@ import * as jsdom from "jsdom";
 import fetch from "node-fetch";
 import prettifyXml = require("prettify-xml");
 import * as mz from "mz/fs";
-import { ExportRemoteDescription, IDLExportResult, IDLSnippetContent, FetchResult } from "./types"
+import { ExportRemoteDescription, IDLExportResult, IDLSnippetContent, FetchResult, MSEdgeIgnore } from "./types"
 import * as xhelper from "./xmldom-helper.js";
 import * as supplements from "./supplements.js";
 import * as merger from "./partial-type-merger.js"
@@ -73,7 +73,7 @@ async function run() {
     // Loads event information from browser.webidl.xml and create interfaces for each event target
     console.log("Loading event information from MSEdge data...");
     const msedgeEventDocument = new DOMParser().parseFromString(await mz.readFile("supplements/browser.webidl.xml", "utf8"), "text/xml");
-    const msedgeIgnore: string[] = JSON.parse(await mz.readFile("msedge-ignore.json", "utf8"));
+    const msedgeIgnore: MSEdgeIgnore = JSON.parse(await mz.readFile("msedge-ignore.json", "utf8"));
     const msedgeEventHandlers = exportEventHandlers(msedgeEventDocument, msedgeIgnore);
     const msedgeEventPropertyMap = exportEventPropertyMap(msedgeEventDocument);
     transferEventInformation(exports, msedgeEventPropertyMap);
@@ -96,13 +96,13 @@ async function run() {
 }
 
 /** export each <events> object and create a separate IDLExportResult */
-function exportEventHandlers(edgeIdl: Document, ignore: string[]): IDLExportResult {
+function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLExportResult {
     const snippet = createIDLSnippetContentContainer();
 
     const interfaceSets = [edgeIdl.getElementsByTagName("interfaces")[0], edgeIdl.getElementsByTagName("mixin-interfaces")[0]];
     for (const interfaceSet of interfaceSets) {
         for (const interfaceEl of Array.from(interfaceSet.getElementsByTagName("interface"))) {
-            if (ignore.indexOf(interfaceEl.getAttribute("name")) !== -1) {
+            if (ignore.interfaces.indexOf(interfaceEl.getAttribute("name")) !== -1) {
                 // ignore this interface
                 continue;
             }
@@ -122,7 +122,7 @@ function exportEventHandlers(edgeIdl: Document, ignore: string[]): IDLExportResu
                 const newEvents = xhelper.cloneNodeDeep(events);
 
                 for (const event of xhelper.getChildrenArray(newEvents)) {
-                    if (ignore.indexOf(event.getAttribute("type")) !== -1) {
+                    if (ignore.interfaces.indexOf(event.getAttribute("type")) !== -1) {
                         // ignore this event
                         newEvents.removeChild(event);
                     }
@@ -199,6 +199,36 @@ function transferEventInformation(exports: IDLExportResult[], eventMap: Map<stri
             }
         }
     }
+}
+
+/** Creates (CSS attribute name):(CSS property name) map from Edge document to apply on converted XML */
+function exportCSSPropertyMap(edgeIdl: Document) {
+ const eventPropertyMap = new Map<string, string>();
+
+    const interfaceSets = [edgeIdl.getElementsByTagName("interfaces")[0], edgeIdl.getElementsByTagName("mixin-interfaces")[0]];
+    for (const interfaceSet of interfaceSets) {
+        for (const interfaceEl of Array.from(interfaceSet.getElementsByTagName("interface"))) {
+            const properties = interfaceEl.getElementsByTagName("properties")[0];
+
+            if (properties) {
+                for (const property of xhelper.getChildrenArray(properties)) {
+                    const handler = property.getAttribute("event-handler");
+                    if (!handler) {
+                        continue;
+                    }
+
+                    eventPropertyMap.set(`${interfaceEl.getAttribute("name")}:${property.getAttribute("name")}`, handler);
+                }
+            }
+        }
+    }
+
+    return eventPropertyMap;
+}
+
+/** transfer css-property value map */
+function transferCSSPropertyInformation(exports: IDLExportResult[], eventMap: Map<string, string>) {
+
 }
 
 function convertAsSingleDocument(exports: IDLExportResult[]) {
