@@ -29,11 +29,15 @@ export async function apply(base: IDLExportResult) {
     if (exists) {
         console.log(`A supplement is detected for ${base.origin.description.title}`);
     }
-    const supplement: Supplement = exists && JSON.parse(await mz.readFile(path, "utf8"));
-
     // create an empty map when no supplement
     // to check every event handler property has its event type
-    const propertyMap = exists ? createEventPropertyMap(supplement) : new Map<string, EventTypeInterfacePair>();
+    const supplement: Supplement = exists ? JSON.parse(await mz.readFile(path, "utf8")) : { events: [] };
+
+    applyEventProperties(base, supplement);
+}
+
+function applyEventProperties(base: IDLExportResult, supplement: Supplement) {
+    const propertyMap = createEventPropertyMap(supplement);
 
     for (const snippet of base.snippets) {
         for (const interfaceEl of [...snippet.interfaces, ...snippet.mixinInterfaces]) {
