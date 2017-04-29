@@ -122,12 +122,17 @@ function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLExport
                 const newEvents = xhelper.cloneNodeDeep(events);
 
                 for (const event of xhelper.getChildrenArray(newEvents)) {
-                    if (ignore.interfaces.indexOf(event.getAttribute("type")) !== -1) {
+                    if (
+                        ignore.events.indexOf(event.getAttribute("name")) !== -1 ||
+                        ignore.interfaces.indexOf(event.getAttribute("type")) !== -1
+                    ) {
                         // ignore this event
                         newEvents.removeChild(event);
                     }
                 }
-                partialInterfaceEl.appendChild(newEvents);
+                if (newEvents.childNodes.length) {
+                    partialInterfaceEl.appendChild(newEvents);
+                }
             }
             if (element) {
                 partialInterfaceEl.appendChild(xhelper.cloneNode(element));
@@ -203,7 +208,7 @@ function transferEventInformation(exports: IDLExportResult[], eventMap: Map<stri
 
 /** Creates (CSS attribute name):(CSS property name) map from Edge document to apply on converted XML */
 function exportCSSPropertyMap(edgeIdl: Document) {
- const eventPropertyMap = new Map<string, string>();
+    const eventPropertyMap = new Map<string, string>();
 
     const interfaceSets = [edgeIdl.getElementsByTagName("interfaces")[0], edgeIdl.getElementsByTagName("mixin-interfaces")[0]];
     for (const interfaceSet of interfaceSets) {

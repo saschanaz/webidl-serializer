@@ -87,6 +87,20 @@
         "WindowTimers",
         "XSLTProcessor"
     ],
-    "events": [],
+    "events": [
+        "msbeforeeditfocus",
+        "MSContentZoom",
+        "mscontrolselect",
+        "mscontrolresizestart",
+        "mscontrolresizeend",
+        "mselementresize",
+        "MSHoldVisual",
+        "MSOrientationChange",
+        "MSRegionUpdate",
+        "mssitepinned",
+        "MSVideoFrameStepCompleted",
+        "MSVideoFormatChanged",
+        "MSVideoOptimalLayoutChanged"
+    ],
     "cssProperties": []
 }

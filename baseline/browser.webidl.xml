@@ -3278,7 +3278,6 @@
       </properties>
       <implements>NonDocumentTypeChildNode</implements>
       <implements>ChildNode</implements>
-      <events/>
     </interface>
     <interface name="Client" extends="Object" exposed="ServiceWorker">
       <methods>
@@ -3913,11 +3912,9 @@
         <event name="readystatechange" dispatch="sync" precedes="load DOMContentLoaded" type="Event"/>
         <event name="stop" dispatch="sync" type="Event"/>
         <event name="visibilitychanged" dispatch="async" type="Event"/>
-        <event name="MSContentZoom" dispatch="sync" tags="IEOnly" type="UIEvent"/>
         <event name="selectionchange" dispatch="async" follows="selectstart" precedes="select" tags="IEOnly" type="Event"/>
         <event name="fullscreenchange" aliases="webkitfullscreenchange" bubbles="1" dispatch="async" tags="IEOnly" type="Event"/>
         <event name="fullscreenerror" aliases="webkitfullscreenerror" bubbles="1" dispatch="async" tags="IEOnly" type="Event"/>
-        <event name="mssitepinned" dispatch="sync" type="Event"/>
       </events>
     </interface>
     <interface name="DocumentFragment" extends="Node" exposed="Window">
@@ -4499,7 +4496,6 @@
         <event name="mouseup" bubbles="1" cancelable="1" dispatch="sync" follows="mousedown" precedes="click" type="MouseEvent"/>
         <event name="mouseenter" dispatch="sync" precedes="mouseleave" type="MouseEvent"/>
         <event name="mouseleave" dispatch="sync" follows="mouseenter" type="MouseEvent"/>
-        <event name="MSHoldVisual" bubbles="1" cancelable="1" dispatch="sync" tags="IEOnly" type="MouseEvent"/>
         <event name="wheel" bubbles="1" cancelable="1" dispatch="sync" type="WheelEvent"/>
         <event name="mousewheel" bubbles="1" cancelable="1" dispatch="sync" type="WheelEvent"/>
         <event name="pointerenter" aliases="MSPointerEnter" dispatch="sync" precedes="pointerleave" type="PointerEvent"/>
@@ -4519,10 +4515,6 @@
         <event name="touchcancel" bubbles="1" dispatch="sync" follows="touchmove" tags="WinPhoneOnly" type="TouchEvent"/>
         <event name="selectstart" bubbles="1" cancelable="1" dispatch="sync" precedes="select selectionchange" tags="IEOnly" type="Event"/>
         <event name="select" bubbles="1" dispatch="sync" follows="selectstart selectionchange" type="UIEvent"/>
-        <event name="mscontrolselect" bubbles="1" cancelable="1" dispatch="sync" tags="IEOnly" type="UIEvent"/>
-        <event name="mscontrolresizestart" bubbles="1" cancelable="1" dispatch="sync" precedes="mscontrolresizeend" tags="IEOnly" type="UIEvent"/>
-        <event name="mscontrolresizeend" bubbles="1" dispatch="sync" follows="mscontrolresizestart" tags="IEOnly" type="UIEvent"/>
-        <event name="msbeforeeditfocus" bubbles="1" cancelable="1" dispatch="sync" tags="IEOnly" type="UIEvent"/>
         <event name="keyup" bubbles="1" cancelable="1" dispatch="sync" follows="keydown keypress" type="KeyboardEvent"/>
         <event name="keydown" bubbles="1" cancelable="1" dispatch="sync" precedes="keyup keypress" type="KeyboardEvent"/>
         <event name="keypress" bubbles="1" cancelable="1" dispatch="sync" follows="keydown" precedes="keyup" type="KeyboardEvent"/>
@@ -4550,10 +4542,7 @@
         <event name="deactivate" bubbles="1" dispatch="sync" follows="beforedeactivate" tags="IEOnly" type="UIEvent"/>
         <event name="beforeactivate" bubbles="1" cancelable="1" dispatch="sync" precedes="activate" tags="IEOnly" type="UIEvent"/>
         <event name="beforedeactivate" bubbles="1" cancelable="1" dispatch="sync" follows="activate" precedes="deactivate" tags="IEOnly" type="UIEvent"/>
-        <event name="mselementresize" dispatch="sync" tags="IEOnly" type="Event"/>
         <event name="scroll" dispatch="async" type="UIEvent"/>
-        <event name="MSContentZoom" dispatch="async" tags="IEOnly" type="UIEvent"/>
-        <event name="MSRegionUpdate" bubbles="1" dispatch="async" tags="IEOnly" type="Event"/>
         <event name="transitionstart" aliases="MSTransitionStart webkitTransitionStart" bubbles="1" cancelable="1" dispatch="async" precedes="transitionend" type="TransitionEvent"/>
         <event name="transitionend" aliases="MSTransitionEnd webkitTransitionEnd" bubbles="1" cancelable="1" dispatch="async" follows="transitionstart" type="TransitionEvent"/>
         <event name="animationstart" aliases="MSAnimationStart webkitAnimationStart" bubbles="1" cancelable="1" dispatch="async" precedes="animationend animationiteration" type="AnimationEvent"/>
@@ -6201,9 +6190,6 @@
         <method name="getVideoPlaybackQuality" type="VideoPlaybackQuality"/>
       </methods>
       <events>
-        <event name="MSVideoFrameStepCompleted" dispatch="sync" tags="MSAppOnly" type="Event"/>
-        <event name="MSVideoFormatChanged" dispatch="sync" tags="MSAppOnly" type="Event"/>
-        <event name="MSVideoOptimalLayoutChanged" dispatch="sync" tags="MSAppOnly" type="Event"/>
         <event name="resize" dispatch="async" type="Event"/>
       </events>
       <element name="video" namespace="HTML"/>
@@ -7730,7 +7716,6 @@
         <property name="target" read-only="1" type="DOMString"/>
       </properties>
       <implements>LinkStyle</implements>
-      <events/>
     </interface>
     <interface name="ProgressEvent" extends="Event" exposed="Window DedicatedWorker SharedWorker">
       <constructor>
@@ -8420,9 +8405,6 @@
         <property name="pixelDepth" read-only="1" type="unsigned long"/>
         <property name="width" read-only="1" type="long"/>
       </properties>
-      <events>
-        <event name="MSOrientationChange" dispatch="async" skips-window="1" tags="IEOnly" type="Event"/>
-      </events>
     </interface>
     <interface name="ScriptProcessorNode" extends="AudioNode">
       <properties>
@@ -10192,7 +10174,6 @@
       </properties>
       <implements>Slotable</implements>
       <implements>GeometryUtils</implements>
-      <events/>
     </interface>
     <interface name="TextMetrics" extends="Object">
       <properties>
