@@ -141,6 +141,9 @@ function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLExport
             if (cssProperties) {
                 const properties = document.createElement("properties");
                 for (const cssProperty of cssProperties) {
+                    if (ignore.cssProperties.indexOf(cssProperty.getAttribute("css-property")) !== -1) {
+                        continue;
+                    }
                     properties.appendChild(xhelper.cloneNode(cssProperty));
                 }
                 partialInterfaceEl.appendChild(properties);

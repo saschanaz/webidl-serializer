@@ -3629,7 +3629,6 @@
         <property name="counterIncrement" css-property="counter-increment" css-property-enum-values="none inherit initial" css-property-initial="none" css-property-value-syntax="space_separated_token_and_optional_signed_integer" nullable="1" type="DOMString"/>
         <property name="counterReset" css-property="counter-reset" css-property-enum-values="none inherit initial" css-property-initial="none" css-property-value-syntax="space_separated_token_and_optional_signed_integer" nullable="1" type="DOMString"/>
         <property name="cssFloat" type="CSSOMString"/>
-        <property name="cssFloat" css-property="float" css-property-enum-values="left right none inherit initial" css-property-initial="none" css-property-value-syntax="enum" nullable="1" type="DOMString"/>
         <property name="cssText" type="CSSOMString"/>
         <property name="cursor" css-property="cursor" css-property-enum-values="auto default none context-menu help pointer progress wait cell crosshair text vertical-text alias copy move no-drop not-allowed e-resize n-resize ne-resize nw-resize s-resize se-resize sw-resize w-resize ew-resize ns-resize nesw-resize nwse-resize col-resize row-resize all-scroll zoom-in zoom-out inherit initial" css-property-initial="auto" css-property-value-syntax="comma_separated_css_url_with_optional_x_y_offset_followed_by_enum" nullable="1" type="DOMString"/>
         <property name="dashed_attribute" type="CSSOMString"/>
