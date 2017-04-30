@@ -1,11 +1,5 @@
 [
     {
-        "url": "https://w3c.github.io/ambient-light/",
-        "title": "Ambient Light Sensor",
-        "hasIdlIndex": true,
-        "comment": "2016 Working Draft refers removed type SensorReading."
-    },
-    {
         "url": "http://www.w3.org/TR/beacon/",
         "title": "Beacon"
     },
@@ -90,11 +84,6 @@
     {
         "url": "http://www.w3.org/TR/gamepad/",
         "title": "Gamepad"
-    },
-    {
-        "url": "http://www.w3.org/TR/generic-sensor/",
-        "title": "Generic Sensor",
-        "hasIdlIndex": true
     },
     {
         "url": "http://www.w3.org/TR/geolocation-API/",

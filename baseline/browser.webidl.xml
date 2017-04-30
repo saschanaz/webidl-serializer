@@ -918,13 +918,13 @@
     </dictionary>
     <dictionary name="MediaStreamConstraints" extends="Object">
       <members>
-        <member name="audio" default="false" type="(boolean or MediaTrackConstraints)"/>
-        <member name="video" default="false" type="(boolean or MediaTrackConstraints)"/>
+        <member name="peerIdentity" type="DOMString"/>
       </members>
     </dictionary>
     <dictionary name="MediaStreamConstraints" extends="Object">
       <members>
-        <member name="peerIdentity" type="DOMString"/>
+        <member name="audio" default="false" type="(boolean or MediaTrackConstraints)"/>
+        <member name="video" default="false" type="(boolean or MediaTrackConstraints)"/>
       </members>
     </dictionary>
     <dictionary name="MediaStreamTrackAudioSourceOptions" extends="Object">
@@ -1019,6 +1019,14 @@
         <member name="source" default="null" nullable="1" type="MessageEventSource"/>
       </members>
     </dictionary>
+    <dictionary name="MouseEventInit" extends="Object">
+      <members>
+        <member name="clientX" default="0" type="double"/>
+        <member name="clientY" default="0" type="double"/>
+        <member name="screenX" default="0" type="double"/>
+        <member name="screenY" default="0" type="double"/>
+      </members>
+    </dictionary>
     <dictionary name="MouseEventInit" extends="EventModifierInit">
       <members>
         <member name="button" default="0" type="short"/>
@@ -1028,14 +1036,6 @@
         <member name="relatedTarget" default="null" nullable="1" type="EventTarget"/>
         <member name="screenX" default="0" type="long"/>
         <member name="screenY" default="0" type="long"/>
-      </members>
-    </dictionary>
-    <dictionary name="MouseEventInit" extends="Object">
-      <members>
-        <member name="clientX" default="0" type="double"/>
-        <member name="clientY" default="0" type="double"/>
-        <member name="screenX" default="0" type="double"/>
-        <member name="screenY" default="0" type="double"/>
       </members>
     </dictionary>
     <dictionary name="MutationObserverInit" extends="Object">
@@ -1585,15 +1585,15 @@
         <member name="voiceActivityDetection" default="true" type="boolean"/>
       </members>
     </dictionary>
-    <dictionary name="RTCOfferOptions" extends="RTCOfferAnswerOptions">
-      <members>
-        <member name="iceRestart" default="false" type="boolean"/>
-      </members>
-    </dictionary>
     <dictionary name="RTCOfferOptions" extends="Object">
       <members>
         <member name="offerToReceiveAudio" type="boolean"/>
         <member name="offerToReceiveVideo" type="boolean"/>
+      </members>
+    </dictionary>
+    <dictionary name="RTCOfferOptions" extends="RTCOfferAnswerOptions">
+      <members>
+        <member name="iceRestart" default="false" type="boolean"/>
       </members>
     </dictionary>
     <dictionary name="RTCOutboundRTPStreamStats" extends="RTCRTPStreamStats">
@@ -1799,16 +1799,6 @@
       <members>
         <member name="left" type="unrestricted double"/>
         <member name="top" type="unrestricted double"/>
-      </members>
-    </dictionary>
-    <dictionary name="SensorErrorEventInit" extends="EventInit">
-      <members>
-        <member name="error" type="Error" required="1"/>
-      </members>
-    </dictionary>
-    <dictionary name="SensorOptions" extends="Object">
-      <members>
-        <member name="frequency" nullable="1" type="double"/>
       </members>
     </dictionary>
     <dictionary name="Settings" extends="Object">
@@ -2457,13 +2447,6 @@
       <value>end</value>
       <value>preserve</value>
     </enum>
-    <enum name="SensorState">
-      <value>unconnected</value>
-      <value>activating</value>
-      <value>activated</value>
-      <value>idle</value>
-      <value>errored</value>
-    </enum>
     <enum name="ServiceWorkerState">
       <value>installing</value>
       <value>installed</value>
@@ -2544,14 +2527,6 @@
     </enum>
   </enums>
   <interfaces>
-    <interface name="AmbientLightSensor" extends="Sensor">
-      <constructor>
-        <param name="sensorOptions" optional="1" type="SensorOptions"/>
-      </constructor>
-      <properties>
-        <property name="illuminance" read-only="1" nullable="1" type="unrestricted double"/>
-      </properties>
-    </interface>
     <interface name="AnalyserNode" extends="AudioNode">
       <constructor>
         <param name="context" type="BaseAudioContext"/>
@@ -3404,7 +3379,7 @@
         </method>
         <method name="insertRule" type="unsigned long">
           <param name="rule" type="CSSOMString"/>
-          <param name="index" default="0" optional="1" type="unsigned long"/>
+          <param name="index" type="unsigned long"/>
         </method>
       </methods>
       <properties>
@@ -3418,7 +3393,7 @@
         </method>
         <method name="insertRule" type="unsigned long">
           <param name="rule" type="CSSOMString"/>
-          <param name="index" type="unsigned long"/>
+          <param name="index" default="0" optional="1" type="unsigned long"/>
         </method>
       </methods>
       <properties>
@@ -3461,12 +3436,12 @@
         <property name="style" read-only="1" type="CSSStyleDeclaration"/>
       </properties>
     </interface>
-    <interface name="CSSMediaRule" extends="CSSConditionRule">
+    <interface name="CSSMediaRule" extends="CSSGroupingRule">
       <properties>
         <property name="media" read-only="1" type="MediaList"/>
       </properties>
     </interface>
-    <interface name="CSSMediaRule" extends="CSSGroupingRule">
+    <interface name="CSSMediaRule" extends="CSSConditionRule">
       <properties>
         <property name="media" read-only="1" type="MediaList"/>
       </properties>
@@ -8818,33 +8793,6 @@
         <property name="isCollapsed" read-only="1" type="boolean"/>
         <property name="rangeCount" read-only="1" type="unsigned long"/>
         <property name="type" read-only="1" type="DOMString"/>
-      </properties>
-    </interface>
-    <interface name="Sensor" extends="EventTarget">
-      <methods>
-        <method name="start" type="void"/>
-        <method name="stop" type="void"/>
-      </methods>
-      <properties>
-        <property name="onactivate" type="EventHandler" event-handler="activate"/>
-        <property name="onchange" type="EventHandler" event-handler="change"/>
-        <property name="onerror" type="EventHandler" event-handler="error"/>
-        <property name="state" read-only="1" type="SensorState"/>
-        <property name="timestamp" read-only="1" nullable="1" type="DOMHighResTimeStamp"/>
-      </properties>
-      <events>
-        <event name="activate" type="Event"/>
-        <event name="change" type="Event"/>
-        <event name="error" type="SensorErrorEvent"/>
-      </events>
-    </interface>
-    <interface name="SensorErrorEvent" extends="Event">
-      <constructor>
-        <param name="type" type="DOMString"/>
-        <param name="errorEventInitDict" type="SensorErrorEventInit"/>
-      </constructor>
-      <properties>
-        <property name="error" read-only="1" type="Error"/>
       </properties>
     </interface>
     <interface name="ServiceWorker" extends="EventTarget" exposed="Window Worker">
