@@ -9090,7 +9090,7 @@
     <interface name="SpeechSynthesis" extends="EventTarget">
       <methods>
         <method name="cancel" type="void"/>
-        <method name="getVoices" type="sequence&lt;SpeechSynthesisVoiceList&gt;"/>
+        <method name="getVoices" type="sequence&lt;SpeechSynthesisVoice&gt;"/>
         <method name="pause" type="void"/>
         <method name="resume" type="void"/>
         <method name="speak" type="void">
@@ -9109,7 +9109,7 @@
     </interface>
     <interface name="SpeechSynthesisErrorEvent" extends="SpeechSynthesisEvent">
       <properties>
-        <property name="error" read-only="1" type="ErrorCode"/>
+        <property name="error" read-only="1" type="SpeechSynthesisErrorCode"/>
       </properties>
     </interface>
     <interface name="SpeechSynthesisEvent" extends="Event">

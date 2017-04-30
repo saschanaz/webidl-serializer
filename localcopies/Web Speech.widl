@@ -104,7 +104,7 @@ interface SpeechSynthesis : EventTarget {
     void cancel();
     void pause();
     void resume();
-    sequence<SpeechSynthesisVoiceList> getVoices();
+    sequence<SpeechSynthesisVoice> getVoices();
 };
 
 [NoInterfaceObject]
@@ -156,7 +156,7 @@ enum SpeechSynthesisErrorCode {
 };
 
 interface SpeechSynthesisErrorEvent : SpeechSynthesisEvent {
-    readonly attribute ErrorCode error;
+    readonly attribute SpeechSynthesisErrorCode error;
 };
 
 interface SpeechSynthesisVoice {
