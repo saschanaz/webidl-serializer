@@ -1,5 +1,0 @@
-[Constructor(optional SensorOptions sensorOptions)]
-interface AmbientLightSensor : Sensor {
-  readonly attribute unrestricted double? illuminance;
-};
-

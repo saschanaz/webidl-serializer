@@ -1,13 +1,17 @@
 import { ExportRemoteDescription, IDLExportResult, IDLSnippetContent, FetchResult } from "./types"
 import * as xhelper from "./xmldom-helper.js"
-import { xmlInterfaceSort } from "./xmlsort.js"
+import { xmlMemberSetSort } from "./xmlsort.js"
+
+export function mergePartialTypes(snippet: IDLSnippetContent) {
+    mergePartialInterfaces(snippet);
+    mergePartialDictionaries(snippet);
+}
 
 /** 
  * merge partial interfaces to create a unique name-object relation for TSJS-lib-generator
  * as the tool uses it to track event types.
- * (no event for dictionaries so no need to merge them)
  */
-export function mergePartialInterfaces(snippet: IDLSnippetContent) {
+function mergePartialInterfaces(snippet: IDLSnippetContent) {
     const interfaces = [...snippet.interfaces, ...snippet.mixinInterfaces];
     const baseInterfaces = interfaces.filter(interfaceEl => !interfaceEl.getAttribute("sn:partial"));
     const baseInterfaceMap = new Map(baseInterfaces.map<[string, Element]>(baseInterface => [baseInterface.getAttribute("name"), baseInterface]));
@@ -29,27 +33,28 @@ export function mergePartialInterfaces(snippet: IDLSnippetContent) {
 
         mergeInterface(baseInterface, interfaceEl);
     }
-    
+
     xmlInterfaceBatchSort(baseInterfaces);
     snippet.interfaces = baseInterfaces.filter(interfaceEl => !interfaceEl.getAttribute("no-interface-object"));
     snippet.mixinInterfaces = baseInterfaces.filter(interfaceEl => interfaceEl.getAttribute("no-interface-object"));
 }
 
 function xmlInterfaceBatchSort(interfaces: Element[]) {
+    const targetMemberSets = ["constants", "methods", "properties", "declarations"];
     for (const interfaceEl of interfaces) {
-        xmlInterfaceSort(interfaceEl);
+        xmlMemberSetSort(interfaceEl, targetMemberSets);
     }
     return interfaces;
 }
 
 /** Has side effect on its arguments */
 function mergeInterface(baseInterface: Element, partialInterface: Element) {
-    mergeInterfaceMemberSet(baseInterface, partialInterface, "anonymous-methods");
-    mergeInterfaceMemberSet(baseInterface, partialInterface, "constants");
-    mergeInterfaceMemberSet(baseInterface, partialInterface, "methods");
-    mergeInterfaceMemberSet(baseInterface, partialInterface, "properties");
-    mergeInterfaceMemberSet(baseInterface, partialInterface, "events");
-    mergeInterfaceMemberSet(baseInterface, partialInterface, "sn:declarations");
+    mergeMemberSet(baseInterface, partialInterface, "anonymous-methods");
+    mergeMemberSet(baseInterface, partialInterface, "constants");
+    mergeMemberSet(baseInterface, partialInterface, "methods");
+    mergeMemberSet(baseInterface, partialInterface, "properties");
+    mergeMemberSet(baseInterface, partialInterface, "events");
+    mergeMemberSet(baseInterface, partialInterface, "sn:declarations");
     mergeInterfaceSingleDeclaration(baseInterface, partialInterface, "element");
 
     const children = xhelper.getChildrenArray(partialInterface);
@@ -64,9 +69,9 @@ function mergeInterface(baseInterface: Element, partialInterface: Element) {
 }
 
 /** Has side effect on its arguments */
-function mergeInterfaceMemberSet(baseInterface: Element, partialInterface: Element, setName: string) {
-    let baseSet = xhelper.getChild(baseInterface, setName);
-    const partialSet = xhelper.getChild(partialInterface, setName);
+function mergeMemberSet(baseParent: Element, partialParent: Element, setName: string) {
+    let baseSet = xhelper.getChild(baseParent, setName);
+    const partialSet = xhelper.getChild(partialParent, setName);
 
     if (!partialSet) {
         // no merge occurs
@@ -74,16 +79,20 @@ function mergeInterfaceMemberSet(baseInterface: Element, partialInterface: Eleme
     }
 
     if (!baseSet) {
-        baseSet = baseInterface.ownerDocument.createElement(setName);
+        baseSet = baseParent.ownerDocument.createElement(setName);
     }
 
+    mergeSet(baseSet, partialSet);
+
+    if (!xhelper.getChild(baseParent, setName) /* no parentNode support on xmldom */) {
+        baseParent.appendChild(baseSet);
+    }
+}
+
+function mergeSet(baseSet: Element, partialSet: Element) {
     for (const member of xhelper.getChildrenArray(partialSet)) {
         partialSet.removeChild(member);
         baseSet.appendChild(member);
-    }
-
-    if (!xhelper.getChild(baseInterface, setName) /* no parentNode support on xmldom */) {
-        baseInterface.appendChild(baseSet);
     }
 }
 
@@ -94,7 +103,7 @@ function mergeInterfaceSingleDeclaration(baseInterface: Element, partialInterfac
         console.warn(`Duplicated declaration ${declarationName} for ${baseInterface.getAttribute("name")}`)
         return;
     }
-    
+
     if (!partialDeclaration) {
         // no merge occurs
         return;
@@ -102,4 +111,34 @@ function mergeInterfaceSingleDeclaration(baseInterface: Element, partialInterfac
 
     partialInterface.removeChild(partialDeclaration);
     baseInterface.appendChild(partialDeclaration);
+}
+
+
+/** This is done to prevent unintential diff caused by sorting same-named multiple dictionaries */
+function mergePartialDictionaries(snippet: IDLSnippetContent) {
+    const baseDictionaries = snippet.dictionaries.filter(interfaceEl => !interfaceEl.getAttribute("sn:partial"));
+    const baseDictionaryMap = new Map(baseDictionaries.map<[string, Element]>(baseDictionary => [baseDictionary.getAttribute("name"), baseDictionary]));
+
+    for (const dictionary of snippet.dictionaries) {
+        if (!dictionary.getAttribute("sn:partial")) {
+            // Not a partial dictionary element
+            continue;
+        }
+
+        const name = dictionary.getAttribute("name");
+        const baseDictionary = baseDictionaryMap.get(name);
+
+        if (!baseDictionary) {
+            baseDictionaries.push(dictionary);
+            baseDictionaryMap.set(name, dictionary);
+            continue;
+        }
+
+        mergeMemberSet(baseDictionary, dictionary, "members");
+    }
+
+    for (const baseDictionary of baseDictionaries) {
+        xmlMemberSetSort(baseDictionary, ["members"]);
+    }
+    snippet.dictionaries = baseDictionaries;
 }

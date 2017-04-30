@@ -17,10 +17,9 @@ export function xmlSort(element: Element) {
     return element;
 }
 
-export function xmlInterfaceSort(interfaceEl: Element) {
-    xmlSort(interfaceEl.getElementsByTagName("constants")[0]);
-    xmlSort(interfaceEl.getElementsByTagName("methods")[0]);
-    xmlSort(interfaceEl.getElementsByTagName("properties")[0]);
-    xmlSort(interfaceEl.getElementsByTagName("declarations")[0]);
-    return interfaceEl;
+export function xmlMemberSetSort(parent: Element, memberSets: string[]) {
+    for (const memberSet of memberSets) {
+        xmlSort(parent.getElementsByTagName(memberSet)[0]);
+    }
+    return parent;
 }

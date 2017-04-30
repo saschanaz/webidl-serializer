@@ -918,12 +918,8 @@
     </dictionary>
     <dictionary name="MediaStreamConstraints" extends="Object">
       <members>
-        <member name="peerIdentity" type="DOMString"/>
-      </members>
-    </dictionary>
-    <dictionary name="MediaStreamConstraints" extends="Object">
-      <members>
         <member name="audio" default="false" type="(boolean or MediaTrackConstraints)"/>
+        <member name="peerIdentity" type="DOMString"/>
         <member name="video" default="false" type="(boolean or MediaTrackConstraints)"/>
       </members>
     </dictionary>
@@ -1017,14 +1013,6 @@
         <member name="origin" default="&quot;&quot;" type="USVString"/>
         <member name="ports" default="[]" type="sequence&lt;MessagePort&gt;"/>
         <member name="source" default="null" nullable="1" type="MessageEventSource"/>
-      </members>
-    </dictionary>
-    <dictionary name="MouseEventInit" extends="Object">
-      <members>
-        <member name="clientX" default="0" type="double"/>
-        <member name="clientY" default="0" type="double"/>
-        <member name="screenX" default="0" type="double"/>
-        <member name="screenY" default="0" type="double"/>
       </members>
     </dictionary>
     <dictionary name="MouseEventInit" extends="EventModifierInit">
@@ -1585,15 +1573,11 @@
         <member name="voiceActivityDetection" default="true" type="boolean"/>
       </members>
     </dictionary>
-    <dictionary name="RTCOfferOptions" extends="Object">
-      <members>
-        <member name="offerToReceiveAudio" type="boolean"/>
-        <member name="offerToReceiveVideo" type="boolean"/>
-      </members>
-    </dictionary>
     <dictionary name="RTCOfferOptions" extends="RTCOfferAnswerOptions">
       <members>
         <member name="iceRestart" default="false" type="boolean"/>
+        <member name="offerToReceiveAudio" type="boolean"/>
+        <member name="offerToReceiveVideo" type="boolean"/>
       </members>
     </dictionary>
     <dictionary name="RTCOutboundRTPStreamStats" extends="RTCRTPStreamStats">

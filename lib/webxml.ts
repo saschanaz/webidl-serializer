@@ -352,7 +352,7 @@ function mergeIDLSnippets(snippets: IDLSnippetContent[]) {
         result.namespaces.push(...snippet.namespaces);
     }
 
-    merger.mergePartialInterfaces(result);
+    merger.mergePartialTypes(result);
 
     result.callbackFunctions.sort(sorter);
     result.callbackInterfaces.sort(sorter);
@@ -429,6 +429,10 @@ function createDictionary(dictionaryType: WebIDL2.DictionaryType) {
     const dictionary = document.createElement("dictionary");
     dictionary.setAttribute("name", dictionaryType.name);
     dictionary.setAttribute("extends", dictionaryType.inheritance || "Object");
+    
+    if (dictionaryType.partial) {
+        dictionary.setAttribute("sn:partial", "1");
+    }
 
     const members = document.createElement("members");
 
