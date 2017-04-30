@@ -84,6 +84,10 @@
         "hasIdlIndex": true
     },
     {
+        "url": "https://fullscreen.spec.whatwg.org/",
+        "title": "Fullscreen"
+    },
+    {
         "url": "http://www.w3.org/TR/gamepad/",
         "title": "Gamepad"
     },

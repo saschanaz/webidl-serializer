@@ -2549,7 +2549,7 @@
         <param name="sensorOptions" optional="1" type="SensorOptions"/>
       </constructor>
       <properties>
-        <property name="illuminance" read-only="1" type="unrestricted double"/>
+        <property name="illuminance" read-only="1" nullable="1" type="unrestricted double"/>
       </properties>
     </interface>
     <interface name="AnalyserNode" extends="AudioNode">
@@ -4141,6 +4141,7 @@
           <param name="showUI" default="false" optional="1" type="boolean"/>
           <param name="value" default="&quot;&quot;" optional="1" type="DOMString"/>
         </method>
+        <method name="exitFullscreen" type="Promise&lt;void&gt;"/>
         <method name="getAnimations" type="sequence&lt;Animation&gt;"/>
         <method name="getElementsByClassName" type="HTMLCollection">
           <param name="classNames" type="DOMString"/>
@@ -4217,6 +4218,8 @@
         <property name="embeds" read-only="1" type="HTMLCollection"/>
         <property name="fgColor" type="DOMString"/>
         <property name="forms" read-only="1" type="HTMLCollection"/>
+        <property name="fullscreen" read-only="1" type="boolean"/>
+        <property name="fullscreenEnabled" read-only="1" type="boolean"/>
         <property name="head" read-only="1" nullable="1" type="HTMLHeadElement"/>
         <property name="images" read-only="1" type="HTMLCollection"/>
         <property name="implementation" read-only="1" type="DOMImplementation"/>
@@ -4225,6 +4228,8 @@
         <property name="linkColor" type="DOMString"/>
         <property name="links" read-only="1" type="HTMLCollection"/>
         <property name="location" read-only="1" nullable="1" type="Location"/>
+        <property name="onfullscreenchange" type="EventHandler" event-handler="fullscreenchange"/>
+        <property name="onfullscreenerror" type="EventHandler" event-handler="fullscreenerror"/>
         <property name="onreadystatechange" type="EventHandler" event-handler="readystatechange"/>
         <property name="origin" read-only="1" type="USVString"/>
         <property name="plugins" read-only="1" type="HTMLCollection"/>
@@ -4752,6 +4757,7 @@
           <param name="namespace" nullable="1" type="DOMString"/>
           <param name="localName" type="DOMString"/>
         </method>
+        <method name="requestFullscreen" type="Promise&lt;void&gt;"/>
         <method name="scroll" type="void">
           <param name="options" optional="1" type="ScrollToOptions"/>
         </method>
@@ -11790,7 +11796,11 @@
         <event name="paste" type="Event"/>
       </events>
     </interface>
-    <interface name="DocumentOrShadowRoot" extends="Object" no-interface-object="1" exposed="Window"/>
+    <interface name="DocumentOrShadowRoot" extends="Object" no-interface-object="1" exposed="Window">
+      <properties>
+        <property name="fullscreenElement" read-only="1" nullable="1" type="Element"/>
+      </properties>
+    </interface>
     <interface name="ElementContentEditable" extends="Object" no-interface-object="1">
       <properties>
         <property name="contentEditable" type="DOMString"/>
