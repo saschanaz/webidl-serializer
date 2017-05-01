@@ -6167,6 +6167,7 @@
         <property name="width" type="DOMString"/>
       </properties>
       <element name="td"/>
+      <element name="th"/>
     </interface>
     <interface name="HTMLTableColElement" extends="HTMLElement">
       <properties>

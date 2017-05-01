@@ -154,14 +154,14 @@ function convertCSSNameToCamelCase(name: string) {
 
 function createElementMapSnippet(supplement: Supplement, doc: Document): IDLSnippetContent {
     const interfaces: Element[] = [];
-    for (const interfaceName in supplement.elements) {
+    for (const elementName in supplement.elements) {
         const interfaceEl = doc.createElement("interface");
-        interfaceEl.setAttribute("name", interfaceName);
+        interfaceEl.setAttribute("name", supplement.elements[elementName]);
         interfaceEl.setAttribute("no-interface-object", "1");
         interfaceEl.setAttribute("sn:partial", "1");
 
         const element = doc.createElement("element")
-        element.setAttribute("name", supplement.elements[interfaceName]);
+        element.setAttribute("name", elementName);
         
         interfaceEl.appendChild(element);
         interfaces.push(interfaceEl);

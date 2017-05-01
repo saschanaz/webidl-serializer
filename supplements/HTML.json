@@ -247,7 +247,8 @@
         }
     ],
     "elements": {
-        "HTMLDialogElement": "dialog",
-        "HTMLTableCellElement": "td"
+        "dialog": "HTMLDialogElement",
+        "td": "HTMLTableCellElement",
+        "th": "HTMLTableCellElement"
     }
 }
