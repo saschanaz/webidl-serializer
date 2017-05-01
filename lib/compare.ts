@@ -1,6 +1,7 @@
 "use strict";
 
 import { XMLSerializer, DOMImplementation, DOMParser } from "xmldom";
+import { MSEdgeIgnore } from "./types.js";
 import * as mz from "mz/fs";
 
 run();
@@ -8,9 +9,9 @@ run();
 async function run() {
     const msedgeDocument = new DOMParser().parseFromString(await mz.readFile("supplements/browser.webidl.xml", "utf8"), "text/xml");
     const standardDocument = new DOMParser().parseFromString(await mz.readFile("built/browser.webidl.xml", "utf8"), "text/xml");
-    const ignore = JSON.parse(await mz.readFile("msedge-ignore.json", "utf8"));
+    const ignore = JSON.parse(await mz.readFile("msedge-ignore.json", "utf8")) as MSEdgeIgnore;;
 
-    compareArray(extractInterfaceNames(msedgeDocument), extractInterfaceNames(standardDocument), ignore);
+    compareArray(extractInterfaceNames(msedgeDocument), extractInterfaceNames(standardDocument), ignore.interfaces);
 }
 
 function extractInterfaceNames(doc: Document) {
@@ -28,7 +29,7 @@ function extractInterfaceNames(doc: Document) {
 function compareArray(base: string[], comparand: string[], ignore: string[]) {
     for (const item of ignore) {
         if (base.indexOf(item) === -1) {
-            console.log(`${item} is removed in base xml so no need to check anymore.`);
+            console.log(`${item} is already removed in base xml or filtered out by MSAppOnly tag.`);
         }
     }
     // naive algorithm
