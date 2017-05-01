@@ -5,7 +5,12 @@ export function getChildrenArray(element: Element) {
 
 export function getChild(element: Element, childTagName: string) {
     // xmldom does not support getElementsByTagName on Element
-    return getChildrenArray(element).filter(element => element.tagName.toLowerCase() === childTagName.toLowerCase())[0];
+    return getChildren(element, childTagName)[0];
+}
+
+export function getChildren(element: Element, childTagName: string) {
+    // xmldom does not support getElementsByTagName on Element
+    return getChildrenArray(element).filter(element => element.tagName.toLowerCase() === childTagName.toLowerCase());
 }
 
 export function getChildWithProperty(element: Element, childTagName: string, property: string, value: string) {
@@ -16,14 +21,7 @@ export function getChildWithProperty(element: Element, childTagName: string, pro
 export function getElementsWithProperty(element: Element, targetTagName: string, property: string) {
     // xmldom does not support querySelector
     const elements = element.getElementsByTagName(targetTagName);
-    if (!elements.length) {
-        return;
-    }
-    const filtered = Array.from(elements).filter(element => element.getAttribute(property));
-    if (!filtered.length) {
-        return;
-    }
-    return filtered;
+    return Array.from(elements).filter(element => element.getAttribute(property));
 }
 
 export function cloneNode<T extends Element>(node: T): T {

@@ -116,9 +116,9 @@ function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLExport
             }
 
             const events = interfaceEl.getElementsByTagName("events")[0];
-            const element = interfaceEl.getElementsByTagName("element")[0];
+            const elements = Array.from(interfaceEl.getElementsByTagName("element"));
             const cssProperties = xhelper.getElementsWithProperty(interfaceEl, "property", "css-property");
-            if (!events && !element && !cssProperties) {
+            if (!events && !elements.length && !cssProperties.length) {
                 // no events or element information
                 continue;
             }
@@ -143,10 +143,12 @@ function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLExport
                     partialInterfaceEl.appendChild(newEvents);
                 }
             }
-            if (element) {
-                partialInterfaceEl.appendChild(xhelper.cloneNode(element));
+            if (elements.length) {
+                for (const element of elements) {
+                    partialInterfaceEl.appendChild(xhelper.cloneNode(element));
+                }
             }
-            if (cssProperties) {
+            if (cssProperties.length) {
                 const properties = document.createElement("properties");
                 for (const cssProperty of cssProperties) {
                     if (ignore.cssProperties.indexOf(cssProperty.getAttribute("css-property")) !== -1) {
@@ -429,7 +431,7 @@ function createDictionary(dictionaryType: WebIDL2.DictionaryType) {
     const dictionary = document.createElement("dictionary");
     dictionary.setAttribute("name", dictionaryType.name);
     dictionary.setAttribute("extends", dictionaryType.inheritance || "Object");
-    
+
     if (dictionaryType.partial) {
         dictionary.setAttribute("sn:partial", "1");
     }

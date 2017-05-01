@@ -5489,6 +5489,48 @@
       <implements>ElementContentEditable</implements>
       <implements>ElementCSSInlineStyle</implements>
       <element name="noframes" namespace="HTML"/>
+      <element name="noscript" namespace="HTML"/>
+      <element name="wbr" html-self-closing="1" namespace="HTML"/>
+      <element name="section" namespace="HTML"/>
+      <element name="nav" namespace="HTML"/>
+      <element name="article" namespace="HTML"/>
+      <element name="aside" namespace="HTML"/>
+      <element name="hgroup" namespace="HTML"/>
+      <element name="header" namespace="HTML"/>
+      <element name="footer" namespace="HTML"/>
+      <element name="figure" namespace="HTML"/>
+      <element name="figcaption" namespace="HTML"/>
+      <element name="mark" namespace="HTML"/>
+      <element name="dd" namespace="HTML"/>
+      <element name="dt" namespace="HTML"/>
+      <element name="abbr" namespace="HTML"/>
+      <element name="acronym" namespace="HTML"/>
+      <element name="b" namespace="HTML"/>
+      <element name="bdo" namespace="HTML"/>
+      <element name="big" namespace="HTML"/>
+      <element name="cite" namespace="HTML"/>
+      <element name="code" namespace="HTML"/>
+      <element name="dfn" namespace="HTML"/>
+      <element name="em" namespace="HTML"/>
+      <element name="i" namespace="HTML"/>
+      <element name="kbd" namespace="HTML"/>
+      <element name="nobr" namespace="HTML"/>
+      <element name="rt" namespace="HTML"/>
+      <element name="ruby" namespace="HTML"/>
+      <element name="s" namespace="HTML"/>
+      <element name="samp" namespace="HTML"/>
+      <element name="small" namespace="HTML"/>
+      <element name="strike" namespace="HTML"/>
+      <element name="strong" namespace="HTML"/>
+      <element name="sub" namespace="HTML"/>
+      <element name="sup" namespace="HTML"/>
+      <element name="tt" namespace="HTML"/>
+      <element name="u" namespace="HTML"/>
+      <element name="var" namespace="HTML"/>
+      <element name="address" namespace="HTML"/>
+      <element name="center" namespace="HTML"/>
+      <element name="keygen" html-self-closing="1" namespace="HTML"/>
+      <element name="plaintext" namespace="HTML"/>
     </interface>
     <interface name="HTMLEmbedElement" extends="HTMLElement">
       <methods>
@@ -5607,6 +5649,11 @@
         <property name="align" type="DOMString"/>
       </properties>
       <element name="h1" namespace="HTML"/>
+      <element name="h2" namespace="HTML"/>
+      <element name="h3" namespace="HTML"/>
+      <element name="h4" namespace="HTML"/>
+      <element name="h5" namespace="HTML"/>
+      <element name="h6" namespace="HTML"/>
     </interface>
     <interface name="HTMLHRElement" extends="HTMLElement">
       <properties>
@@ -6000,6 +6047,7 @@
         <property name="dateTime" type="DOMString"/>
       </properties>
       <element name="ins" namespace="HTML"/>
+      <element name="del" namespace="HTML"/>
     </interface>
     <interface name="HTMLObjectElement" extends="HTMLElement">
       <methods>
@@ -6142,6 +6190,8 @@
         <property name="width" type="long"/>
       </properties>
       <element name="pre" namespace="HTML"/>
+      <element name="listing" namespace="HTML"/>
+      <element name="xmp" namespace="HTML"/>
     </interface>
     <interface name="HTMLProgressElement" extends="HTMLElement">
       <properties>
@@ -6157,6 +6207,7 @@
         <property name="cite" type="USVString"/>
       </properties>
       <element name="q" namespace="HTML"/>
+      <element name="blockquote" namespace="HTML"/>
     </interface>
     <interface name="HTMLScriptElement" extends="HTMLElement">
       <properties>
@@ -6305,6 +6356,7 @@
         <property name="width" type="DOMString"/>
       </properties>
       <element name="col" html-self-closing="1" namespace="HTML"/>
+      <element name="colgroup" namespace="HTML"/>
     </interface>
     <interface name="HTMLTableElement" extends="HTMLElement">
       <methods>
@@ -6378,6 +6430,8 @@
         <property name="vAlign" type="DOMString"/>
       </properties>
       <element name="thead" namespace="HTML"/>
+      <element name="tbody" namespace="HTML"/>
+      <element name="tfoot" namespace="HTML"/>
     </interface>
     <interface name="HTMLTemplateElement" extends="HTMLElement">
       <properties>
@@ -6485,6 +6539,7 @@
     </interface>
     <interface name="HTMLUnknownElement" extends="HTMLElement">
       <element name="isindex" namespace="HTML"/>
+      <element name="nextid" namespace="HTML"/>
     </interface>
     <interface name="HTMLVideoElement" extends="HTMLMediaElement">
       <properties>

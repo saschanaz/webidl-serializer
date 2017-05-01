@@ -55,7 +55,7 @@ function mergeInterface(baseInterface: Element, partialInterface: Element) {
     mergeMemberSet(baseInterface, partialInterface, "properties");
     mergeMemberSet(baseInterface, partialInterface, "events");
     mergeMemberSet(baseInterface, partialInterface, "sn:declarations");
-    mergeInterfaceSingleDeclaration(baseInterface, partialInterface, "element");
+    mergeInterfaceDeclaration(baseInterface, partialInterface, "element");
 
     const children = xhelper.getChildrenArray(partialInterface);
     for (const constructor of Array.from(children.filter(child => child.nodeName.toLowerCase() === "constructor"))) {
@@ -96,21 +96,17 @@ function mergeSet(baseSet: Element, partialSet: Element) {
     }
 }
 
-function mergeInterfaceSingleDeclaration(baseInterface: Element, partialInterface: Element, declarationName: string) {
-    const baseDeclaration = xhelper.getChild(baseInterface, declarationName);
-    const partialDeclaration = xhelper.getChild(partialInterface, declarationName);
-    if (baseDeclaration && partialDeclaration) {
-        console.warn(`Duplicated declaration ${declarationName} for ${baseInterface.getAttribute("name")}`)
-        return;
-    }
-
-    if (!partialDeclaration) {
+function mergeInterfaceDeclaration(baseInterface: Element, partialInterface: Element, declarationName: string) {
+    const declarations = xhelper.getChildren(partialInterface, declarationName);
+    if (!declarations.length) {
         // no merge occurs
         return;
     }
 
-    partialInterface.removeChild(partialDeclaration);
-    baseInterface.appendChild(partialDeclaration);
+    for (const declaration of declarations) {
+        partialInterface.removeChild(declaration);
+        baseInterface.appendChild(declaration);
+    }
 }
 
 
