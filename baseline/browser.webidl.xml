@@ -174,29 +174,11 @@
         <member name="smoothingTimeConstant" default="0.8" type="double"/>
       </members>
     </dictionary>
-    <dictionary name="AnimationEffectTimingProperties" extends="Object">
-      <members>
-        <member name="delay" default="0" type="double"/>
-        <member name="direction" default="&quot;normal&quot;" type="PlaybackDirection"/>
-        <member name="duration" default="&quot;auto&quot;" type="(unrestricted double or DOMString)"/>
-        <member name="easing" default="&quot;linear&quot;" type="DOMString"/>
-        <member name="endDelay" default="0" type="double"/>
-        <member name="fill" default="&quot;auto&quot;" type="FillMode"/>
-        <member name="iterations" default="1" type="unrestricted double"/>
-        <member name="iterationStart" default="0" type="double"/>
-      </members>
-    </dictionary>
     <dictionary name="AnimationEventInit" extends="EventInit">
       <members>
         <member name="animationName" default="&quot;&quot;" type="CSSOMString"/>
         <member name="elapsedTime" default="0" type="float"/>
         <member name="pseudoElement" default="&quot;&quot;" type="CSSOMString"/>
-      </members>
-    </dictionary>
-    <dictionary name="AnimationPlaybackEventInit" extends="EventInit">
-      <members>
-        <member name="currentTime" default="null" nullable="1" type="double"/>
-        <member name="timelineTime" default="null" nullable="1" type="double"/>
       </members>
     </dictionary>
     <dictionary name="AssertionOptions" extends="Object">
@@ -277,27 +259,6 @@
     </dictionary>
     <dictionary name="AuthenticationExtensions" extends="Object">
       <members/>
-    </dictionary>
-    <dictionary name="BaseComputedKeyframe" extends="Object">
-      <members>
-        <member name="composite" type="CompositeOperation"/>
-        <member name="computedOffset" type="double"/>
-        <member name="easing" default="&quot;linear&quot;" type="DOMString"/>
-        <member name="offset" default="null" nullable="1" type="double"/>
-      </members>
-    </dictionary>
-    <dictionary name="BaseKeyframe" extends="Object">
-      <members>
-        <member name="composite" type="CompositeOperation"/>
-        <member name="easing" default="&quot;linear&quot;" type="DOMString"/>
-        <member name="offset" default="null" nullable="1" type="double"/>
-      </members>
-    </dictionary>
-    <dictionary name="BasePropertyIndexedKeyframe" extends="Object">
-      <members>
-        <member name="composite" type="CompositeOperation"/>
-        <member name="easing" default="&quot;linear&quot;" type="DOMString"/>
-      </members>
     </dictionary>
     <dictionary name="BiquadFilterOptions" extends="AudioNodeOptions">
       <members>
@@ -384,15 +345,6 @@
     <dictionary name="CompositionEventInit" extends="UIEventInit">
       <members>
         <member name="data" default="&quot;&quot;" type="DOMString"/>
-      </members>
-    </dictionary>
-    <dictionary name="ComputedTimingProperties" extends="AnimationEffectTimingProperties">
-      <members>
-        <member name="activeDuration" type="unrestricted double"/>
-        <member name="currentIteration" nullable="1" type="unrestricted double"/>
-        <member name="endTime" type="unrestricted double"/>
-        <member name="localTime" nullable="1" type="double"/>
-        <member name="progress" nullable="1" type="double"/>
       </members>
     </dictionary>
     <dictionary name="ConstantSourceOptions" extends="Object">
@@ -489,11 +441,6 @@
         <member name="alpha" default="null" nullable="1" type="double"/>
         <member name="beta" default="null" nullable="1" type="double"/>
         <member name="gamma" default="null" nullable="1" type="double"/>
-      </members>
-    </dictionary>
-    <dictionary name="DocumentTimelineOptions" extends="Object">
-      <members>
-        <member name="originTime" default="0" type="DOMHighResTimeStamp"/>
       </members>
     </dictionary>
     <dictionary name="DOMMatrixInit" extends="Object">
@@ -851,18 +798,6 @@
         <member name="key" default="&quot;&quot;" type="DOMString"/>
         <member name="location" default="0" type="unsigned long"/>
         <member name="repeat" default="false" type="boolean"/>
-      </members>
-    </dictionary>
-    <dictionary name="KeyframeAnimationOptions" extends="KeyframeEffectOptions">
-      <members>
-        <member name="id" default="&quot;&quot;" type="DOMString"/>
-      </members>
-    </dictionary>
-    <dictionary name="KeyframeEffectOptions" extends="AnimationEffectTimingProperties">
-      <members>
-        <member name="composite" default="&quot;replace&quot;" type="CompositeOperation"/>
-        <member name="iterationComposite" default="&quot;replace&quot;" type="IterationCompositeOperation"/>
-        <member name="spacing" default="&quot;distribute&quot;" type="DOMString"/>
       </members>
     </dictionary>
     <dictionary name="LongRange" extends="Object">
@@ -1909,13 +1844,6 @@
     </dictionary>
   </dictionaries>
   <enums>
-    <enum name="AnimationPlayState">
-      <value>idle</value>
-      <value>pending</value>
-      <value>running</value>
-      <value>paused</value>
-      <value>finished</value>
-    </enum>
     <enum name="AppendMode">
       <value>segments</value>
       <value>sequence</value>
@@ -2006,11 +1934,6 @@
       <value>none</value>
       <value>default</value>
     </enum>
-    <enum name="CompositeOperation">
-      <value>replace</value>
-      <value>add</value>
-      <value>accumulate</value>
-    </enum>
     <enum name="CSSBoxType">
       <value>margin</value>
       <value>border</value>
@@ -2030,13 +1953,6 @@
     <enum name="EndOfStreamError">
       <value>network</value>
       <value>decode</value>
-    </enum>
-    <enum name="FillMode">
-      <value>none</value>
-      <value>forwards</value>
-      <value>backwards</value>
-      <value>both</value>
-      <value>auto</value>
     </enum>
     <enum name="GamepadMappingType">
       <value/>
@@ -2065,10 +1981,6 @@
       <value>low</value>
       <value>medium</value>
       <value>high</value>
-    </enum>
-    <enum name="IterationCompositeOperation">
-      <value>replace</value>
-      <value>accumulate</value>
     </enum>
     <enum name="KeyFormat">
       <value>raw</value>
@@ -2169,12 +2081,6 @@
       <value>shipping</value>
       <value>delivery</value>
       <value>pickup</value>
-    </enum>
-    <enum name="PlaybackDirection">
-      <value>normal</value>
-      <value>reverse</value>
-      <value>alternate</value>
-      <value>alternate-reverse</value>
     </enum>
     <enum name="PremultiplyAlpha">
       <value>none</value>
@@ -2538,68 +2444,6 @@
         <property name="smoothingTimeConstant" type="double"/>
       </properties>
     </interface>
-    <interface name="Animation" extends="EventTarget">
-      <constructor>
-        <param name="effect" default="null" optional="1" nullable="1" type="AnimationEffectReadOnly"/>
-        <param name="timeline" optional="1" nullable="1" type="AnimationTimeline"/>
-      </constructor>
-      <methods>
-        <method name="cancel" type="void"/>
-        <method name="finish" type="void"/>
-        <method name="pause" type="void"/>
-        <method name="play" type="void"/>
-        <method name="reverse" type="void"/>
-      </methods>
-      <properties>
-        <property name="currentTime" nullable="1" type="double"/>
-        <property name="effect" nullable="1" type="AnimationEffectReadOnly"/>
-        <property name="finished" read-only="1" type="Promise&lt;Animation&gt;"/>
-        <property name="id" type="DOMString"/>
-        <property name="oncancel" type="EventHandler" event-handler="cancel"/>
-        <property name="onfinish" type="EventHandler" event-handler="finish"/>
-        <property name="playbackRate" type="double"/>
-        <property name="playState" read-only="1" type="AnimationPlayState"/>
-        <property name="ready" read-only="1" type="Promise&lt;Animation&gt;"/>
-        <property name="startTime" nullable="1" type="double"/>
-        <property name="timeline" nullable="1" type="AnimationTimeline"/>
-      </properties>
-      <events>
-        <event name="cancel" type="Event"/>
-        <event name="finish" type="Event"/>
-      </events>
-    </interface>
-    <interface name="AnimationEffectReadOnly" extends="Object">
-      <methods>
-        <method name="getComputedTiming" type="ComputedTimingProperties"/>
-      </methods>
-      <properties>
-        <property name="timing" read-only="1" type="AnimationEffectTimingReadOnly"/>
-      </properties>
-    </interface>
-    <interface name="AnimationEffectTiming" extends="AnimationEffectTimingReadOnly">
-      <properties>
-        <property name="delay" type="double"/>
-        <property name="direction" type="PlaybackDirection"/>
-        <property name="duration" type="(unrestricted double or DOMString)"/>
-        <property name="easing" type="DOMString"/>
-        <property name="endDelay" type="double"/>
-        <property name="fill" type="FillMode"/>
-        <property name="iterations" type="unrestricted double"/>
-        <property name="iterationStart" type="double"/>
-      </properties>
-    </interface>
-    <interface name="AnimationEffectTimingReadOnly" extends="Object">
-      <properties>
-        <property name="delay" read-only="1" type="double"/>
-        <property name="direction" read-only="1" type="PlaybackDirection"/>
-        <property name="duration" read-only="1" type="(unrestricted double or DOMString)"/>
-        <property name="easing" read-only="1" type="DOMString"/>
-        <property name="endDelay" read-only="1" type="double"/>
-        <property name="fill" read-only="1" type="FillMode"/>
-        <property name="iterations" read-only="1" type="unrestricted double"/>
-        <property name="iterationStart" read-only="1" type="double"/>
-      </properties>
-    </interface>
     <interface name="AnimationEvent" extends="Event">
       <constructor>
         <param name="type" type="CSSOMString"/>
@@ -2609,21 +2453,6 @@
         <property name="animationName" read-only="1" type="CSSOMString"/>
         <property name="elapsedTime" read-only="1" type="float"/>
         <property name="pseudoElement" read-only="1" type="CSSOMString"/>
-      </properties>
-    </interface>
-    <interface name="AnimationPlaybackEvent" extends="Event">
-      <constructor>
-        <param name="type" type="DOMString"/>
-        <param name="eventInitDict" optional="1" type="AnimationPlaybackEventInit"/>
-      </constructor>
-      <properties>
-        <property name="currentTime" read-only="1" nullable="1" type="double"/>
-        <property name="timelineTime" read-only="1" nullable="1" type="double"/>
-      </properties>
-    </interface>
-    <interface name="AnimationTimeline" extends="Object">
-      <properties>
-        <property name="currentTime" read-only="1" nullable="1" type="double"/>
       </properties>
     </interface>
     <interface name="ApplicationCache" extends="EventTarget">
@@ -4101,7 +3930,6 @@
           <param name="value" default="&quot;&quot;" optional="1" type="DOMString"/>
         </method>
         <method name="exitFullscreen" type="Promise&lt;void&gt;"/>
-        <method name="getAnimations" type="sequence&lt;Animation&gt;"/>
         <method name="getElementsByClassName" type="HTMLCollection">
           <param name="classNames" type="DOMString"/>
         </method>
@@ -4198,7 +4026,6 @@
         <property name="scripts" read-only="1" type="HTMLCollection"/>
         <property name="scrollingElement" read-only="1" nullable="1" type="Element"/>
         <property name="styleSheets" read-only="1" type="StyleSheetList"/>
-        <property name="timeline" read-only="1" type="DocumentTimeline"/>
         <property name="title" type="DOMString"/>
         <property name="URL" read-only="1" type="USVString"/>
         <property name="vlinkColor" type="DOMString"/>
@@ -4228,11 +4055,6 @@
       <constructor/>
       <implements>NonElementParentNode</implements>
       <implements>ParentNode</implements>
-    </interface>
-    <interface name="DocumentTimeline" extends="AnimationTimeline">
-      <constructor>
-        <param name="options" optional="1" type="DocumentTimelineOptions"/>
-      </constructor>
     </interface>
     <interface name="DocumentType" extends="Node" exposed="Window">
       <properties>
@@ -4793,7 +4615,6 @@
       <implements>ChildNode</implements>
       <implements>Slotable</implements>
       <implements>GeometryUtils</implements>
-      <implements>Animatable</implements>
       <events>
         <event name="click" bubbles="1" cancelable="1" dispatch="sync" follows="mouseup pointerup MSPointerUp" precedes="dblclick" type="MouseEvent"/>
         <event name="dblclick" bubbles="1" cancelable="1" dispatch="sync" follows="click" type="MouseEvent"/>
@@ -6921,46 +6742,6 @@
         <property name="shiftKey" read-only="1" type="boolean"/>
       </properties>
     </interface>
-    <interface name="KeyframeEffect" extends="KeyframeEffectReadOnly">
-      <constructor>
-        <param name="target" nullable="1" type="Animatable"/>
-        <param name="keyframes" nullable="1" type="object"/>
-        <param name="options" optional="1" type="(unrestricted double or KeyframeEffectOptions)"/>
-      </constructor>
-      <constructor>
-        <param name="source" type="KeyframeEffectReadOnly"/>
-      </constructor>
-      <methods>
-        <method name="setKeyframes" type="void">
-          <param name="keyframes" nullable="1" type="object"/>
-        </method>
-      </methods>
-      <properties>
-        <property name="composite" type="CompositeOperation"/>
-        <property name="iterationComposite" type="IterationCompositeOperation"/>
-        <property name="spacing" type="DOMString"/>
-        <property name="target" nullable="1" type="Animatable"/>
-      </properties>
-    </interface>
-    <interface name="KeyframeEffectReadOnly" extends="AnimationEffectReadOnly">
-      <constructor>
-        <param name="target" nullable="1" type="Animatable"/>
-        <param name="keyframes" nullable="1" type="object"/>
-        <param name="options" optional="1" type="(unrestricted double or KeyframeEffectOptions)"/>
-      </constructor>
-      <constructor>
-        <param name="source" type="KeyframeEffectReadOnly"/>
-      </constructor>
-      <methods>
-        <method name="getKeyframes" type="sequence&lt;object&gt;"/>
-      </methods>
-      <properties>
-        <property name="composite" read-only="1" type="CompositeOperation"/>
-        <property name="iterationComposite" read-only="1" type="IterationCompositeOperation"/>
-        <property name="spacing" read-only="1" type="DOMString"/>
-        <property name="target" read-only="1" nullable="1" type="Animatable"/>
-      </properties>
-    </interface>
     <interface name="Location" extends="Object">
       <methods>
         <method name="assign" type="void">
@@ -8948,11 +8729,6 @@
         <property name="mode" read-only="1" type="ShadowRootMode"/>
       </properties>
       <implements>DocumentOrShadowRoot</implements>
-    </interface>
-    <interface name="SharedKeyframeList" extends="Object">
-      <constructor>
-        <param name="keyframes" nullable="1" type="object"/>
-      </constructor>
     </interface>
     <interface name="SharedWorker" extends="EventTarget" exposed="Window Worker">
       <constructor>
@@ -11349,15 +11125,6 @@
         </method>
       </methods>
     </interface>
-    <interface name="Animatable" extends="Object" no-interface-object="1">
-      <methods>
-        <method name="animate" type="Animation">
-          <param name="keyframes" nullable="1" type="object"/>
-          <param name="options" optional="1" type="(unrestricted double or KeyframeAnimationOptions)"/>
-        </method>
-        <method name="getAnimations" type="sequence&lt;Animation&gt;"/>
-      </methods>
-    </interface>
     <interface name="Body" extends="Object" no-interface-object="1" exposed="Window Worker">
       <methods>
         <method name="arrayBuffer" type="Promise&lt;ArrayBuffer&gt;"/>
@@ -11755,7 +11522,6 @@
     </interface>
     <interface name="CSSPseudoElement" extends="Object" no-interface-object="1" sn:partial="1">
       <implements>GeometryUtils</implements>
-      <implements>Animatable</implements>
     </interface>
     <interface name="DeviceAcceleration" extends="Object" no-interface-object="1">
       <properties>

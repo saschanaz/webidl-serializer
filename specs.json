@@ -201,11 +201,6 @@
         "title": "User Timing"
     },
     {
-        "url": "http://www.w3.org/TR/web-animations-1/",
-        "title": "Web Animations",
-        "hasIdlIndex": true
-    },
-    {
         "url": "https://webaudio.github.io/web-audio-api/",
         "title": "Web Audio",
         "idl": "local",
