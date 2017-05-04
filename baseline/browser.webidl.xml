@@ -7894,7 +7894,7 @@
         <property name="data" read-only="1" nullable="1" type="PushMessageData"/>
       </properties>
     </interface>
-    <interface name="PushManager" extends="Object">
+    <interface name="PushManager" extends="Object" exposed="Window Worker">
       <methods>
         <method name="getSubscription" type="Promise&lt;PushSubscription?&gt;"/>
         <method name="permissionState" type="Promise&lt;PushPermissionState&gt;">
@@ -7916,7 +7916,7 @@
         <method name="text" type="USVString"/>
       </methods>
     </interface>
-    <interface name="PushSubscription" extends="Object">
+    <interface name="PushSubscription" extends="Object" exposed="Window Worker">
       <methods>
         <method name="getKey" nullable="1" type="ArrayBuffer">
           <param name="name" type="PushEncryptionKeyName"/>
@@ -7939,7 +7939,7 @@
         <property name="oldSubscription" read-only="1" nullable="1" type="PushSubscription"/>
       </properties>
     </interface>
-    <interface name="PushSubscriptionOptions" extends="Object">
+    <interface name="PushSubscriptionOptions" extends="Object" exposed="Window Worker">
       <properties>
         <property name="applicationServerKey" read-only="1" nullable="1" type="ArrayBuffer"/>
         <property name="userVisibleOnly" read-only="1" type="boolean"/>

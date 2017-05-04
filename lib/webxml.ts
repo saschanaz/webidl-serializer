@@ -251,7 +251,7 @@ function isWebIDLParseError(err: any): err is WebIDL2.WebIDLParseError {
 }
 
 async function exportIDLs(result: FetchResult): Promise<IDLExportResult> {
-    if (result.description.idl === "local") {
+    if (result.description.idl === "local" || result.description.idl === "raw") {
         return {
             snippets: exportIDLSnippets([result.content], result), origin: result, idl: result.content
         }

@@ -231,9 +231,9 @@
         "title": "WebRTC 1.0"
     },
     {
-        "url": "https://www.khronos.org/registry/webgl/specs/latest/1.0/",
-        "title": "WebGL 1.0 latest",
-        "comment": "1.0.3 has incorrect WebIDL syntax (typedef cannot be in interface)"
+        "url": "https://www.khronos.org/registry/webgl/specs/latest/1.0/webgl.idl",
+        "title": "WebGL 1.0",
+        "idl": "raw"
     },
     {
         "url": "https://www.khronos.org/registry/webgl/extensions/ANGLE_instanced_arrays/",
