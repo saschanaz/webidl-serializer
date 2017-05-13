@@ -19,7 +19,7 @@
     "mz": "^2.6.0",
     "node-fetch": "^1.5.3",
     "prettify-xml": "^1.0.0",
-    "webidl2": "git+https://github.com/SaschaNaz/webidl2.js.git#v0.2.4",
+    "webidl2": "git+https://github.com/SaschaNaz/webidl2.js.git#v0.2.8",
     "xmldom": "git+https://github.com/Tweddle-SE-Team/xmldom.git#v0.1.28-0"
   },
   "devDependencies": {

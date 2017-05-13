@@ -160,6 +160,11 @@
         "title": "Resource Timing"
     },
     {
+        "url": "http://www.w3.org/TR/referrer-policy/",
+        "title": "Referrer Policy",
+        "hasIdlIndex": true
+    },
+    {
         "url": "http://www.w3.org/TR/selection-api/",
         "title": "Selection"
     },
@@ -205,11 +210,6 @@
         "title": "Web Audio",
         "idl": "local",
         "comment": "The spec source currently does not use contiguous IDL."
-    },
-    {
-        "url": "http://www.w3.org/TR/webauthn/",
-        "title": "Web Authentication",
-        "hasIdlIndex": true
     },
     {
         "url": "https://wicg.github.io/BackgroundSync/spec/",

@@ -27,11 +27,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*":
-  version "4.2.6"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-4.2.6.tgz#300809a83a82f5d8c2acb9ce8acaba454fbfd079"
-
-"@types/node@^7.0.14":
+"@types/node@*", "@types/node@^7.0.14":
   version "7.0.14"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.14.tgz#1470fa002a113316ac9d9ad163fc738c7a0de2a4"
 
@@ -563,9 +559,9 @@ webidl-conversions@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.1.tgz#8015a17ab83e7e1b311638486ace81da6ce206a0"
 
-"webidl2@git+https://github.com/SaschaNaz/webidl2.js.git#v0.2.3":
+"webidl2@git+https://github.com/SaschaNaz/webidl2.js.git#v0.2.8":
   version "2.4.0"
-  resolved "git+https://github.com/SaschaNaz/webidl2.js.git#609e23a626a718f796d530520062501c98c53c65"
+  resolved "git+https://github.com/SaschaNaz/webidl2.js.git#7c93e4b82da0a71f1a578fcde6b38986fda8c4db"
 
 whatwg-encoding@^1.0.1:
   version "1.0.1"
