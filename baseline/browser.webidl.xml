@@ -838,19 +838,19 @@
     </dictionary>
     <dictionary name="MediaTrackCapabilities" extends="Object">
       <members>
-        <member name="aspectRatio" type="(double or DoubleRange)"/>
-        <member name="channelCount" type="(long or LongRange)"/>
+        <member name="aspectRatio" type="DoubleRange"/>
+        <member name="channelCount" type="LongRange"/>
         <member name="deviceId" type="DOMString"/>
         <member name="echoCancellation" type="sequence&lt;boolean&gt;"/>
         <member name="facingMode" type="sequence&lt;DOMString&gt;"/>
-        <member name="frameRate" type="(double or DoubleRange)"/>
+        <member name="frameRate" type="DoubleRange"/>
         <member name="groupId" type="DOMString"/>
-        <member name="height" type="(long or LongRange)"/>
-        <member name="latency" type="(double or DoubleRange)"/>
-        <member name="sampleRate" type="(long or LongRange)"/>
-        <member name="sampleSize" type="(long or LongRange)"/>
-        <member name="volume" type="(double or DoubleRange)"/>
-        <member name="width" type="(long or LongRange)"/>
+        <member name="height" type="LongRange"/>
+        <member name="latency" type="DoubleRange"/>
+        <member name="sampleRate" type="LongRange"/>
+        <member name="sampleSize" type="LongRange"/>
+        <member name="volume" type="DoubleRange"/>
+        <member name="width" type="LongRange"/>
       </members>
     </dictionary>
     <dictionary name="MediaTrackConstraints" extends="MediaTrackConstraintSet">
@@ -5461,7 +5461,6 @@
         <property name="allowFullscreen" type="boolean"/>
         <property name="allowPaymentRequest" type="boolean"/>
         <property name="allowUserMedia" type="boolean"/>
-        <property name="allowUserMedia" type="boolean"/>
         <property name="contentDocument" read-only="1" nullable="1" type="Document"/>
         <property name="contentWindow" read-only="1" nullable="1" type="WindowProxy"/>
         <property name="frameBorder" type="DOMString"/>
@@ -6740,7 +6739,7 @@
         <method name="enumerateDevices" type="Promise&lt;sequence&lt;MediaDeviceInfo&gt;&gt;"/>
         <method name="getSupportedConstraints" type="MediaTrackSupportedConstraints"/>
         <method name="getUserMedia" type="Promise&lt;MediaStream&gt;">
-          <param name="constraints" type="MediaStreamConstraints"/>
+          <param name="constraints" optional="1" type="MediaStreamConstraints"/>
         </method>
       </methods>
       <properties>

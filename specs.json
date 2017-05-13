@@ -118,8 +118,9 @@
         "idl": "local"
     },
     {
-        "url": "http://www.w3.org/TR/mediacapture-streams/",
-        "title": "Media Capture and Streams"
+        "url": "https://w3c.github.io/mediacapture-main/",
+        "title": "Media Capture and Streams",
+        "comment": "2016 CR has duplicated allowUserMedia property."
     },
     {
         "url": "https://wicg.github.io/media-playback-quality/",
