@@ -88,6 +88,8 @@
         "XSLTProcessor"
     ],
     "events": [
+        "candidatepairchange",
+        "localcandidate",
         "msbeforeeditfocus",
         "MSContentZoom",
         "mscontrolselect",
@@ -100,7 +102,10 @@
         "mssitepinned",
         "MSVideoFrameStepCompleted",
         "MSVideoFormatChanged",
-        "MSVideoOptimalLayoutChanged"
+        "MSVideoOptimalLayoutChanged",
+        "ssrcconflict",
+        "SVGScroll",
+        "SVGZoom"
     ],
     "cssProperties": [
         "float"

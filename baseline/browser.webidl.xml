@@ -8221,7 +8221,6 @@
         <event name="gatheringstatechange" type="Event"/>
         <event name="selectedcandidatepairchange" type="Event"/>
         <event name="statechange" type="Event"/>
-        <event name="candidatepairchange" dispatch="sync" skips-window="1" type="RTCIceCandidatePairChangedEvent"/>
       </events>
     </interface>
     <interface name="RTCIdentityAssertion" extends="Object">
@@ -8441,7 +8440,6 @@
       </properties>
       <events>
         <event name="error" dispatch="sync" skips-window="1" type="Event"/>
-        <event name="ssrcconflict" dispatch="sync" skips-window="1" type="RTCSsrcConflictEvent"/>
       </events>
     </interface>
     <interface name="RTCRtpSynchronizationSource" extends="Object">
@@ -10021,10 +10019,6 @@
       <implements>SVGFitToViewBox</implements>
       <implements>SVGZoomAndPan</implements>
       <implements>WindowEventHandlers</implements>
-      <events>
-        <event name="SVGScroll" bubbles="1" dispatch="sync-or-async" type="Event"/>
-        <event name="SVGZoom" bubbles="1" dispatch="sync" type="SVGZoomEvent"/>
-      </events>
       <element name="svg" namespace="SVG"/>
     </interface>
     <interface name="SVGSwitchElement" extends="SVGGraphicsElement">
@@ -11928,7 +11922,6 @@
     <interface name="RTCIceGatherer" no-interface-object="1" sn:partial="1">
       <events>
         <event name="error" dispatch="sync" skips-window="1" type="Event"/>
-        <event name="localcandidate" dispatch="sync" skips-window="1" type="RTCIceGathererEvent"/>
       </events>
     </interface>
     <interface name="RTCSrtpSdesTransport" no-interface-object="1" sn:partial="1">
