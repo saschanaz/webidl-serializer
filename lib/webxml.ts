@@ -362,7 +362,7 @@ function mergeIDLSnippets(snippets: IDLSnippetContent[]) {
     result.enums.sort(sorter);
     result.interfaces.sort(sorter);
     result.mixinInterfaces.sort(sorter);
-    result.typedefs.sort(sorter);
+    result.typedefs.sort((x, y) => sorter(x, y, "new-type"));
     result.namespaces.sort(sorter);
 
     return result;

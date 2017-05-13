@@ -1,5 +1,5 @@
-export function sorter(x: Element, y: Element) {
-    return x.getAttribute("name").localeCompare(y.getAttribute("name"));
+export function sorter(x: Element, y: Element, baseProperty = "name") {
+    return x.getAttribute(baseProperty).localeCompare(y.getAttribute(baseProperty));
 }
 
 export function xmlSort(element: Element) {

@@ -13013,55 +13013,55 @@
   </mixin-interfaces>
   <typedefs>
     <typedef new-type="AlgorithmIdentifier" type="(object or DOMString)"/>
-    <typedef new-type="CSSOMString" type="USVString"/>
-    <typedef new-type="HeadersInit" type="(sequence&lt;sequence&lt;ByteString&gt;&gt; or record&lt;ByteString, ByteString&gt;)"/>
+    <typedef new-type="ArrayBufferView" type="(Int8Array or Int16Array or Int32Array or Uint8Array or Uint16Array or Uint32Array or Uint8ClampedArray or Float32Array or Float64Array or DataView)"/>
+    <typedef new-type="BigInteger" type="Uint8Array"/>
     <typedef new-type="BodyInit" type="(Blob or BufferSource or FormData or URLSearchParams or ReadableStream or USVString)"/>
-    <typedef new-type="RequestInfo" type="(Request or USVString)"/>
-    <typedef new-type="DOMHighResTimeStamp" type="double"/>
-    <typedef new-type="HTMLOrSVGScriptElement" type="(HTMLScriptElement or SVGScriptElement)"/>
-    <typedef new-type="MediaProvider" type="(MediaStream or MediaSource or Blob)"/>
-    <typedef new-type="RenderingContext" type="(CanvasRenderingContext2D or WebGLRenderingContext)"/>
-    <typedef new-type="HTMLOrSVGImageElement" type="(HTMLImageElement or SVGImageElement)"/>
+    <typedef new-type="BufferSource" type="(ArrayBufferView or ArrayBuffer)"/>
     <typedef new-type="CanvasImageSource" type="(HTMLOrSVGImageElement or HTMLVideoElement or HTMLCanvasElement or ImageBitmap or OffscreenCanvas)"/>
-    <typedef new-type="OffscreenRenderingContext" type="(OffscreenCanvasRenderingContext2D or WebGLRenderingContext)"/>
-    <typedef new-type="EventHandler" nullable="1" type="EventHandlerNonNull"/>
-    <typedef new-type="OnErrorEventHandler" nullable="1" type="OnErrorEventHandlerNonNull"/>
-    <typedef new-type="OnBeforeUnloadEventHandler" nullable="1" type="OnBeforeUnloadEventHandlerNonNull"/>
-    <typedef new-type="TimerHandler" type="(DOMString or Function)"/>
-    <typedef new-type="ImageBitmapSource" type="(CanvasImageSource or Blob or ImageData)"/>
-    <typedef new-type="MessageEventSource" type="(WindowProxy or MessagePort or ServiceWorker)"/>
-    <typedef new-type="MediaStreamError" type="object"/>
-    <typedef new-type="ConstrainLong" type="(long or ConstrainLongRange)"/>
-    <typedef new-type="ConstrainDouble" type="(double or ConstrainDoubleRange)"/>
     <typedef new-type="ConstrainBoolean" type="(boolean or ConstrainBooleanParameters)"/>
     <typedef new-type="ConstrainDOMString" type="(DOMString or sequence&lt;DOMString&gt; or ConstrainDOMStringParameters)"/>
-    <typedef new-type="PerformanceEntryList" type="sequence&lt;PerformanceEntry&gt;"/>
-    <typedef new-type="PushMessageDataInit" type="(BufferSource or USVString)"/>
+    <typedef new-type="ConstrainDouble" type="(double or ConstrainDoubleRange)"/>
+    <typedef new-type="ConstrainLong" type="(long or ConstrainLongRange)"/>
+    <typedef new-type="CSSOMString" type="USVString"/>
+    <typedef new-type="DOMHighResTimeStamp" type="double"/>
+    <typedef new-type="DOMTimeStamp" type="unsigned long long"/>
+    <typedef new-type="EventHandler" nullable="1" type="EventHandlerNonNull"/>
+    <typedef new-type="Float32List" type="(Float32Array or sequence&lt;GLfloat&gt;)"/>
+    <typedef new-type="FormDataEntryValue" type="(File or USVString)"/>
     <typedef new-type="GeometryNode" type="(Text or Element or CSSPseudoElement or Document)"/>
-    <typedef new-type="HashAlgorithmIdentifier" type="AlgorithmIdentifier"/>
-    <typedef new-type="BigInteger" type="Uint8Array"/>
-    <typedef new-type="NamedCurve" type="DOMString"/>
-    <typedef new-type="GLenum" type="unsigned long"/>
-    <typedef new-type="GLboolean" type="boolean"/>
     <typedef new-type="GLbitfield" type="unsigned long"/>
+    <typedef new-type="GLboolean" type="boolean"/>
     <typedef new-type="GLbyte" type="byte"/>
-    <typedef new-type="GLshort" type="short"/>
+    <typedef new-type="GLclampf" type="unrestricted float"/>
+    <typedef new-type="GLenum" type="unsigned long"/>
+    <typedef new-type="GLfloat" type="unrestricted float"/>
     <typedef new-type="GLint" type="long"/>
-    <typedef new-type="GLsizei" type="long"/>
     <typedef new-type="GLintptr" type="long long"/>
+    <typedef new-type="GLshort" type="short"/>
+    <typedef new-type="GLsizei" type="long"/>
     <typedef new-type="GLsizeiptr" type="long long"/>
     <typedef new-type="GLubyte" type="octet"/>
-    <typedef new-type="GLushort" type="unsigned short"/>
     <typedef new-type="GLuint" type="unsigned long"/>
-    <typedef new-type="GLfloat" type="unrestricted float"/>
-    <typedef new-type="GLclampf" type="unrestricted float"/>
-    <typedef new-type="TexImageSource" type="(ImageBitmap or ImageData or HTMLImageElement or HTMLCanvasElement or HTMLVideoElement)"/>
-    <typedef new-type="Float32List" type="(Float32Array or sequence&lt;GLfloat&gt;)"/>
+    <typedef new-type="GLushort" type="unsigned short"/>
+    <typedef new-type="HashAlgorithmIdentifier" type="AlgorithmIdentifier"/>
+    <typedef new-type="HeadersInit" type="(sequence&lt;sequence&lt;ByteString&gt;&gt; or record&lt;ByteString, ByteString&gt;)"/>
+    <typedef new-type="HTMLOrSVGImageElement" type="(HTMLImageElement or SVGImageElement)"/>
+    <typedef new-type="HTMLOrSVGScriptElement" type="(HTMLScriptElement or SVGScriptElement)"/>
+    <typedef new-type="ImageBitmapSource" type="(CanvasImageSource or Blob or ImageData)"/>
     <typedef new-type="Int32List" type="(Int32Array or sequence&lt;GLint&gt;)"/>
-    <typedef new-type="ArrayBufferView" type="(Int8Array or Int16Array or Int32Array or Uint8Array or Uint16Array or Uint32Array or Uint8ClampedArray or Float32Array or Float64Array or DataView)"/>
-    <typedef new-type="BufferSource" type="(ArrayBufferView or ArrayBuffer)"/>
-    <typedef new-type="DOMTimeStamp" type="unsigned long long"/>
-    <typedef new-type="FormDataEntryValue" type="(File or USVString)"/>
+    <typedef new-type="MediaProvider" type="(MediaStream or MediaSource or Blob)"/>
+    <typedef new-type="MediaStreamError" type="object"/>
+    <typedef new-type="MessageEventSource" type="(WindowProxy or MessagePort or ServiceWorker)"/>
+    <typedef new-type="NamedCurve" type="DOMString"/>
+    <typedef new-type="OffscreenRenderingContext" type="(OffscreenCanvasRenderingContext2D or WebGLRenderingContext)"/>
+    <typedef new-type="OnBeforeUnloadEventHandler" nullable="1" type="OnBeforeUnloadEventHandlerNonNull"/>
+    <typedef new-type="OnErrorEventHandler" nullable="1" type="OnErrorEventHandlerNonNull"/>
+    <typedef new-type="PerformanceEntryList" type="sequence&lt;PerformanceEntry&gt;"/>
+    <typedef new-type="PushMessageDataInit" type="(BufferSource or USVString)"/>
+    <typedef new-type="RenderingContext" type="(CanvasRenderingContext2D or WebGLRenderingContext)"/>
+    <typedef new-type="RequestInfo" type="(Request or USVString)"/>
+    <typedef new-type="TexImageSource" type="(ImageBitmap or ImageData or HTMLImageElement or HTMLCanvasElement or HTMLVideoElement)"/>
+    <typedef new-type="TimerHandler" type="(DOMString or Function)"/>
   </typedefs>
   <namespaces>
     <namespace name="console" exposed="Window Worker Worklet">
