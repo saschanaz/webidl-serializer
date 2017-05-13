@@ -130,8 +130,8 @@ function createCSSPropertySnippet(supplement: Supplement, doc: Document): IDLSni
 
     for (const cssProperty of supplement.cssProperties) {
         const property = doc.createElement("property");
-        property.setAttribute("name", cssProperty)
-        property.setAttribute("css-property", convertCSSNameToCamelCase(cssProperty));
+        property.setAttribute("name", convertCSSNameToCamelCase(cssProperty))
+        property.setAttribute("css-property", cssProperty);
         properties.appendChild(property);
     }
     cssStyleDeclaration.appendChild(properties);
