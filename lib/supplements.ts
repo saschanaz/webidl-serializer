@@ -132,6 +132,8 @@ function createCSSPropertySnippet(supplement: Supplement, doc: Document): IDLSni
         const property = doc.createElement("property");
         property.setAttribute("name", convertCSSNameToCamelCase(cssProperty))
         property.setAttribute("css-property", cssProperty);
+        property.setAttribute("nullable", "1");
+        property.setAttribute("type", "CSSOMString");
         properties.appendChild(property);
     }
     cssStyleDeclaration.appendChild(properties);
