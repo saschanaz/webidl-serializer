@@ -2274,6 +2274,7 @@
       <value>succeeded</value>
       <value>cancelled</value>
     </enum>
+    <enum name="RTCStatsType"/>
     <enum name="RTCStatsType">
       <value>codec</value>
       <value>inbound-rtp</value>
@@ -2287,7 +2288,6 @@
       <value>remote-candidate</value>
       <value>certificate</value>
     </enum>
-    <enum name="RTCStatsType"/>
     <enum name="ScrollBehavior">
       <value>auto</value>
       <value>instant</value>
@@ -2364,6 +2364,12 @@
       <value>environment</value>
       <value>left</value>
       <value>right</value>
+    </enum>
+    <enum name="VisibilityState">
+      <value>hidden</value>
+      <value>visible</value>
+      <value>prerender</value>
+      <value>unloaded</value>
     </enum>
     <enum name="WebGLPowerPreference">
       <value>default</value>
@@ -3968,6 +3974,7 @@
         <property name="fullscreen" read-only="1" type="boolean"/>
         <property name="fullscreenEnabled" read-only="1" type="boolean"/>
         <property name="head" read-only="1" nullable="1" type="HTMLHeadElement"/>
+        <property name="hidden" read-only="1" type="boolean"/>
         <property name="images" read-only="1" type="HTMLCollection"/>
         <property name="implementation" read-only="1" type="DOMImplementation"/>
         <property name="inputEncoding" read-only="1" type="DOMString"/>
@@ -3988,6 +3995,7 @@
         <property name="styleSheets" read-only="1" type="StyleSheetList"/>
         <property name="title" type="DOMString"/>
         <property name="URL" read-only="1" type="USVString"/>
+        <property name="visibilityState" read-only="1" type="VisibilityState"/>
         <property name="vlinkColor" type="DOMString"/>
       </properties>
       <implements>NonElementParentNode</implements>

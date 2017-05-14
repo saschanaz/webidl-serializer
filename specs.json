@@ -140,6 +140,10 @@
         "hasIdlIndex": true
     },
     {
+        "url": "http://www.w3.org/TR/page-visibility/",
+        "title": "Page Visibility"
+    },
+    {
         "url": "http://www.w3.org/TR/payment-request/",
         "title": "Payment Request",
         "hasIdlIndex": true
