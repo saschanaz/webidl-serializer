@@ -597,6 +597,15 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
                     method.setAttribute("type", memberType.idlType.origin.trim());
                 }
             }
+
+            for (const extAttr of memberType.extAttrs) {
+                if (extAttr.name === "Exposed") {
+                    method.setAttribute("exposed", Array.isArray(extAttr.rhs.value) ? extAttr.rhs.value.join(' ') : extAttr.rhs.value);
+                }
+                else {
+                    console.log(`(TODO) Skipping extended attribute ${extAttr.name}`);
+                }
+            }
         }
         else if (memberType.type === "attribute") {
             const property = document.createElement("property");
@@ -620,6 +629,16 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
             else {
                 property.setAttribute("type", memberType.idlType.origin.trim());
             }
+
+            for (const extAttr of memberType.extAttrs) {
+                if (extAttr.name === "Exposed") {
+                    property.setAttribute("exposed", Array.isArray(extAttr.rhs.value) ? extAttr.rhs.value.join(' ') : extAttr.rhs.value);
+                }
+                else {
+                    console.log(`(TODO) Skipping extended attribute ${extAttr.name}`);
+                }
+            }
+
             properties.appendChild(property);
         }
         else if (memberType.type === "iterable") {
