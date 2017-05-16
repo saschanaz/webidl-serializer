@@ -82,16 +82,19 @@ function mergeMemberSet(baseParent: Element, partialParent: Element, setName: st
         baseSet = baseParent.ownerDocument.createElement(setName);
     }
 
-    mergeSet(baseSet, partialSet);
+    mergeSet(baseSet, partialSet, partialParent.getAttribute("exposed"));
 
     if (!xhelper.getChild(baseParent, setName) /* no parentNode support on xmldom */) {
         baseParent.appendChild(baseSet);
     }
 }
 
-function mergeSet(baseSet: Element, partialSet: Element) {
+function mergeSet(baseSet: Element, partialSet: Element, exposed: string) {
     for (const member of xhelper.getChildrenArray(partialSet)) {
         partialSet.removeChild(member);
+        if (exposed) {
+            member.setAttribute("exposed", exposed);
+        }
         baseSet.appendChild(member);
     }
 }
