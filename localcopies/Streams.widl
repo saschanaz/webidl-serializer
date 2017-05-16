@@ -2,13 +2,14 @@
 // but is to replicate original lib.d.ts definitions
 // which contains only ReadableStream and ReadableStream(Default)Reader
 
+[Exposed=(Window,Worker)]
 interface ReadableStream {
     readonly attribute boolean locked;
     Promise<void> cancel();
     ReadableStreamDefaultReader getReader();
 };
 
-[Constructor(ReadableStream stream)]
+[Constructor(ReadableStream stream), Exposed=(Window,Worker)]
 interface ReadableStreamDefaultReader {
     readonly attribute boolean closed;
 

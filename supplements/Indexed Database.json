@@ -4,6 +4,7 @@
             "target": "IDBDatabase",
             "types": {
                 "abort": {},
+                "close": {},
                 "error": {},
                 "versionchange": {
                     "interface": "IDBVersionChangeEvent"

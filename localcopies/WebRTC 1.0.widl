@@ -312,7 +312,7 @@ dictionary RTCRtpEncodingParameters {
     RTCPriorityType     priority;
     unsigned long       ptime;
     unsigned long       maxBitrate;
-    unsigned long       maxFramerate;
+    double              maxFramerate;
     DOMString           rid;
     double              scaleResolutionDownBy = 1;
 };

@@ -1,6 +1,7 @@
 [Constructor(optional unrestricted double x = 0, optional unrestricted double y = 0,
              optional unrestricted double z = 0, optional unrestricted double w = 1),
- Exposed=(Window,Worker)]
+ Exposed=(Window,Worker),
+ Serializable]
 interface DOMPointReadOnly {
     [NewObject] static DOMPointReadOnly fromPoint(optional DOMPointInit other);
 
@@ -16,7 +17,8 @@ interface DOMPointReadOnly {
 
 [Constructor(optional unrestricted double x = 0, optional unrestricted double y = 0,
              optional unrestricted double z = 0, optional unrestricted double w = 1),
- Exposed=(Window,Worker)]
+ Exposed=(Window,Worker),
+ Serializable]
 interface DOMPoint : DOMPointReadOnly {
     [NewObject] static DOMPoint fromPoint(optional DOMPointInit other);
 
@@ -35,7 +37,8 @@ dictionary DOMPointInit {
 
 [Constructor(optional unrestricted double x = 0, optional unrestricted double y = 0,
              optional unrestricted double width = 0, optional unrestricted double height = 0),
- Exposed=(Window,Worker)]
+ Exposed=(Window,Worker),
+ Serializable]
 interface DOMRectReadOnly {
     [NewObject] static DOMRectReadOnly fromRect(optional DOMRectInit other);
 
@@ -53,7 +56,8 @@ interface DOMRectReadOnly {
 
 [Constructor(optional unrestricted double x = 0, optional unrestricted double y = 0,
              optional unrestricted double width = 0, optional unrestricted double height = 0),
- Exposed=(Window,Worker)]
+ Exposed=(Window,Worker),
+ Serializable]
 interface DOMRect : DOMRectReadOnly {
     [NewObject] static DOMRect fromRect(optional DOMRectInit other);
 
@@ -72,7 +76,8 @@ dictionary DOMRectInit {
 
 [Constructor(optional DOMPointInit p1, optional DOMPointInit p2,
              optional DOMPointInit p3, optional DOMPointInit p4),
- Exposed=(Window,Worker)]
+ Exposed=(Window,Worker),
+ Serializable]
 interface DOMQuad {
     [NewObject] static DOMQuad fromRect(optional DOMRectInit other);
     [NewObject] static DOMQuad fromQuad(optional DOMQuadInit other);
@@ -94,7 +99,8 @@ dictionary DOMQuadInit {
 };
 
 [Constructor(optional (DOMString or sequence<unrestricted double>) init),
- Exposed=(Window,Worker)]
+ Exposed=(Window,Worker),
+ Serializable]
 interface DOMMatrixReadOnly {
     [NewObject] static DOMMatrixReadOnly fromMatrix(optional DOMMatrixInit other);
     [NewObject] static DOMMatrixReadOnly fromFloat32Array(Float32Array array32);
@@ -162,12 +168,13 @@ interface DOMMatrixReadOnly {
     [NewObject] Float32Array toFloat32Array();
     [NewObject] Float64Array toFloat64Array();
 
-    stringifier;
+    [Exposed=Window] stringifier;
     serializer = { attribute };
 };
 
 [Constructor(optional (DOMString or sequence<unrestricted double>) init),
- Exposed=(Window,Worker)]
+ Exposed=(Window,Worker),
+ Serializable]
 interface DOMMatrix : DOMMatrixReadOnly {
     [NewObject] static DOMMatrix fromMatrix(optional DOMMatrixInit other);
     [NewObject] static DOMMatrix fromFloat32Array(Float32Array array32);

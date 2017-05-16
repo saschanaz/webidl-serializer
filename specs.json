@@ -69,8 +69,10 @@
         "title": "Fetch"
     },
     {
-        "url": "http://www.w3.org/TR/FileAPI/",
-        "title": "File"
+        "url": "https://w3c.github.io/FileAPI/",
+        "title": "File",
+        "hasIdlIndex": true,
+        "comment": "2015 WD has deprecated methods and does not exposes to workers"
     },
     {
         "url": "http://www.w3.org/TR/filter-effects/",
@@ -108,8 +110,10 @@
         "title": "Identifiers for WebRTC's Statistics API"
     },
     {
-        "url": "http://www.w3.org/TR/IndexedDB/",
-        "title": "Indexed Database"
+        "url": "http://www.w3.org/TR/IndexedDB-2/",
+        "title": "Indexed Database",
+        "hasIdlIndex": true,
+        "comment": "IndexedDB 1 does not exposes to workers"
     },
     {
         "url": "https://wicg.github.io/IntersectionObserver/",
