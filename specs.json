@@ -136,7 +136,9 @@
     },
     {
         "url": "http://www.w3.org/TR/navigation-timing-2/",
-        "title": "Navigation Timing"
+        "title": "Navigation Timing",
+        "idl": "local",
+        "comment": "May 2017 WD has incorrect exposure setting on partial interface Performance"
     },
     {
         "url": "https://notifications.spec.whatwg.org/",
