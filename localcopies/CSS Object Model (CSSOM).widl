@@ -131,11 +131,6 @@ interface CSSStyleDeclaration {
 };
 
 
-partial interface CSSStyleDeclaration {
-  [CEReactions, TreatNullAs=EmptyString] attribute CSSOMString _dashed_attribute;
-};
-
-
 [NoInterfaceObject]
 interface ElementCSSInlineStyle {
   [SameObject, PutForwards=cssText] readonly attribute CSSStyleDeclaration style;
