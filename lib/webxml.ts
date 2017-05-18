@@ -211,7 +211,7 @@ function transferEventInformation(exports: IDLExportResult[], eventMap: Map<stri
                 }
 
                 for (const property of xhelper.getChildrenArray(properties)) {
-                    if (property.getAttribute("type") === "EventHandler") {
+                    if (property.getAttribute("type").endsWith("EventHandler")) {
                         const key = `${interfaceEl.getAttribute("name")}:${property.getAttribute("name")}`;
                         const event = eventMap.get(key);
                         if (!event) {

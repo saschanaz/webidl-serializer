@@ -58,7 +58,7 @@ function applyEventProperties(base: IDLExportResult, supplement: Supplement) {
             }
             const events = xhelper.getChild(interfaceEl, "events") || interfaceEl.ownerDocument.createElement("events");
             for (const property of xhelper.getChildrenArray(properties)) {
-                if (property.getAttribute("type") !== "EventHandler") {
+                if (!property.getAttribute("type").endsWith("EventHandler")) {
                     // not an event handler property
                     continue;
                 }
