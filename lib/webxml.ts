@@ -110,7 +110,7 @@ function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLExport
     const interfaceSets = [edgeIdl.getElementsByTagName("interfaces")[0], edgeIdl.getElementsByTagName("mixin-interfaces")[0]];
     for (const interfaceSet of interfaceSets) {
         for (const interfaceEl of Array.from(interfaceSet.getElementsByTagName("interface"))) {
-            if (ignore.interfaces.indexOf(interfaceEl.getAttribute("name")) !== -1) {
+            if (ignore.interfaces.includes(interfaceEl.getAttribute("name"))) {
                 // ignore this interface
                 continue;
             }
@@ -132,8 +132,8 @@ function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLExport
 
                 for (const event of xhelper.getChildrenArray(newEvents)) {
                     if (
-                        ignore.events.indexOf(event.getAttribute("name")) !== -1 ||
-                        ignore.interfaces.indexOf(event.getAttribute("type")) !== -1
+                        ignore.events.includes(event.getAttribute("name")) ||
+                        ignore.interfaces.includes(event.getAttribute("type"))
                     ) {
                         // ignore this event
                         newEvents.removeChild(event);
@@ -151,7 +151,7 @@ function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLExport
             if (cssProperties.length) {
                 const properties = document.createElement("properties");
                 for (const cssProperty of cssProperties) {
-                    if (ignore.cssProperties.indexOf(cssProperty.getAttribute("css-property")) !== -1) {
+                    if (ignore.cssProperties.includes(cssProperty.getAttribute("css-property"))) {
                         continue;
                     }
                     properties.appendChild(xhelper.cloneNode(cssProperty));

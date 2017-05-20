@@ -28,15 +28,15 @@ function extractInterfaceNames(doc: Document) {
 
 function compareArray(base: string[], comparand: string[], ignore: string[]) {
     for (const item of ignore) {
-        if (base.indexOf(item) === -1) {
+        if (!base.includes(item)) {
             console.log(`${item} is already removed in base xml or filtered out by MSAppOnly tag.`);
         }
     }
     // naive algorithm
     let count = 0;
     for (const item of base) {
-        if (comparand.indexOf(item) === -1) {
-            if (ignore.indexOf(item) !== -1) {
+        if (!comparand.includes(item)) {
+            if (ignore.includes(item)) {
                 // ignore
                 continue;
             }
