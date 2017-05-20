@@ -167,7 +167,7 @@ function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLExport
         origin: {
             description: {
                 url: "",
-                title: "MSEdge Event+ElementMap Information"
+                title: "MSEdge Supplemental Information"
             },
             content: ""
         },
