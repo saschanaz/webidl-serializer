@@ -1,0 +1,29 @@
+{
+    "cssProperties": [
+        "scroll-snap-type",
+        "scroll-padding",
+        "scroll-snap-margin",
+        "scroll-snap-align",
+        "scroll-snap-stop",
+        "scroll-padding-top",
+        "scroll-padding-right",
+        "scroll-padding-bottom",
+        "scroll-padding-left",
+        "scroll-padding-inline-start",
+        "scroll-padding-block-start",
+        "scroll-padding-inline-end",
+        "scroll-padding-block-end",
+        "scroll-padding-block",
+        "scroll-padding-inline",
+        "scroll-snap-margin-top",
+        "scroll-snap-margin-right",
+        "scroll-snap-margin-bottom",
+        "scroll-snap-margin-left",
+        "scroll-snap-margin-block-start",
+        "scroll-snap-margin-inline-start",
+        "scroll-snap-margin-block-end",
+        "scroll-snap-margin-inline-end",
+        "scroll-snap-margin-block",
+        "scroll-snap-margin-inline"
+    ]
+}

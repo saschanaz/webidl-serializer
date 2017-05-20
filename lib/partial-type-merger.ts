@@ -56,6 +56,7 @@ function mergeInterface(baseInterface: Element, partialInterface: Element) {
     mergeMemberSet(baseInterface, partialInterface, "events");
     mergeMemberSet(baseInterface, partialInterface, "sn:declarations");
     mergeInterfaceDeclaration(baseInterface, partialInterface, "element");
+    mergeInterfaceDeclaration(baseInterface, partialInterface, "named-constructor");
 
     const children = xhelper.getChildrenArray(partialInterface);
     for (const constructor of Array.from(children.filter(child => child.nodeName.toLowerCase() === "constructor"))) {

@@ -3514,13 +3514,38 @@
         <property name="pointerEvents" css-property="pointer-events" css-property-enum-values="auto none visiblePainted visibleFill visibleStroke visible painted fill stroke all inherit initial" css-property-initial="auto" css-property-value-syntax="enum" nullable="1" type="DOMString"/>
         <property name="position" css-property="position" css-property-enum-values="static relative absolute fixed inherit initial" css-property-initial="static" css-property-value-syntax="enum" nullable="1" type="DOMString"/>
         <property name="quotes" css-property="quotes" css-property-enum-values="none inherit initial" css-property-initial="none" css-property-value-syntax="space_separated_strings" nullable="1" type="DOMString"/>
-        <property name="resize" css-property="resize" nullable="1" type="CSSOMString"/>
+        <property name="resize" css-property="resize" type="CSSOMString"/>
         <property name="right" css-property="right" css-property-animatable="1" css-property-enum-values="auto inherit initial" css-property-initial="auto" css-property-value-syntax="css_percentage_or_length" nullable="1" type="DOMString"/>
         <property name="rotate" css-property="rotate" css-property-animatable="1" css-property-enum-values="inherit initial" css-property-initial="0deg 0 0 1" css-property-value-syntax="1_css_angle_followed_by_optional_3_space_separated_floating_point_number" nullable="1" type="DOMString"/>
         <property name="rubyAlign" css-property="ruby-align" css-property-enum-values="auto left center right distribute-letter distribute-space line-edge inherit initial" css-property-initial="auto" css-property-value-syntax="enum" nullable="1" type="DOMString"/>
         <property name="rubyOverhang" css-property="ruby-overhang" css-property-enum-values="auto whitespace none inherit initial" css-property-initial="auto" css-property-value-syntax="enum" nullable="1" type="DOMString"/>
         <property name="rubyPosition" css-property="ruby-position" css-property-enum-values="above inline inherit initial" css-property-initial="above" css-property-value-syntax="enum" nullable="1" type="DOMString"/>
         <property name="scale" css-property="scale" css-property-animatable="1" css-property-enum-values="inherit initial" css-property-initial="0 0 0" css-property-value-syntax="1_to_3_space_separated_floating_point_number" nullable="1" type="DOMString"/>
+        <property name="scrollPadding" css-property="scroll-padding" type="CSSOMString"/>
+        <property name="scrollPaddingBlock" css-property="scroll-padding-block" type="CSSOMString"/>
+        <property name="scrollPaddingBlockEnd" css-property="scroll-padding-block-end" type="CSSOMString"/>
+        <property name="scrollPaddingBlockStart" css-property="scroll-padding-block-start" type="CSSOMString"/>
+        <property name="scrollPaddingBottom" css-property="scroll-padding-bottom" type="CSSOMString"/>
+        <property name="scrollPaddingInline" css-property="scroll-padding-inline" type="CSSOMString"/>
+        <property name="scrollPaddingInlineEnd" css-property="scroll-padding-inline-end" type="CSSOMString"/>
+        <property name="scrollPaddingInlineStart" css-property="scroll-padding-inline-start" type="CSSOMString"/>
+        <property name="scrollPaddingLeft" css-property="scroll-padding-left" type="CSSOMString"/>
+        <property name="scrollPaddingRight" css-property="scroll-padding-right" type="CSSOMString"/>
+        <property name="scrollPaddingTop" css-property="scroll-padding-top" type="CSSOMString"/>
+        <property name="scrollSnapAlign" css-property="scroll-snap-align" type="CSSOMString"/>
+        <property name="scrollSnapMargin" css-property="scroll-snap-margin" type="CSSOMString"/>
+        <property name="scrollSnapMarginBlock" css-property="scroll-snap-margin-block" type="CSSOMString"/>
+        <property name="scrollSnapMarginBlockEnd" css-property="scroll-snap-margin-block-end" type="CSSOMString"/>
+        <property name="scrollSnapMarginBlockStart" css-property="scroll-snap-margin-block-start" type="CSSOMString"/>
+        <property name="scrollSnapMarginBottom" css-property="scroll-snap-margin-bottom" type="CSSOMString"/>
+        <property name="scrollSnapMarginInline" css-property="scroll-snap-margin-inline" type="CSSOMString"/>
+        <property name="scrollSnapMarginInlineEnd" css-property="scroll-snap-margin-inline-end" type="CSSOMString"/>
+        <property name="scrollSnapMarginInlineStart" css-property="scroll-snap-margin-inline-start" type="CSSOMString"/>
+        <property name="scrollSnapMarginLeft" css-property="scroll-snap-margin-left" type="CSSOMString"/>
+        <property name="scrollSnapMarginRight" css-property="scroll-snap-margin-right" type="CSSOMString"/>
+        <property name="scrollSnapMarginTop" css-property="scroll-snap-margin-top" type="CSSOMString"/>
+        <property name="scrollSnapStop" css-property="scroll-snap-stop" type="CSSOMString"/>
+        <property name="scrollSnapType" css-property="scroll-snap-type" type="CSSOMString"/>
         <property name="stopColor" css-property="stop-color" css-property-animatable="1" css-property-enum-values="currentColor inherit initial" css-property-initial="black" css-property-value-syntax="css_color" nullable="1" type="DOMString"/>
         <property name="stopOpacity" css-property="stop-opacity" css-property-animatable="1" css-property-enum-values="inherit initial" css-property-initial="1" css-property-value-syntax="0_to_1_floating_point_number" nullable="1" type="DOMString"/>
         <property name="stroke" css-property="stroke" css-property-animatable="1" css-property-enum-values="none currentColor inherit initial" css-property-initial="none" css-property-value-syntax="svg_paint_or_css_color" nullable="1" type="DOMString"/>
@@ -3556,7 +3581,7 @@
         <property name="transitionTimingFunction" css-property="transition-timing-function" css-property-aliases="-ms-transition-timing-function" css-property-enum-values="step-start step-end ease ease-in ease-out ease-in-out linear inherit initial" css-property-initial="ease" css-property-value-syntax="comma_separated_css_timing_functions" nullable="1" type="DOMString"/>
         <property name="translate" css-property="translate" css-property-animatable="1" css-property-enum-values="inherit initial" css-property-initial="0px 0px 0px" css-property-value-syntax="1_to_3_space_separated_css_length_and_first_two_optionally_percentage" nullable="1" type="DOMString"/>
         <property name="unicodeBidi" css-property="unicode-bidi" css-property-enum-values="normal embed bidi-override inherit" css-property-initial="normal" css-property-value-syntax="enum" nullable="1" type="DOMString"/>
-        <property name="userSelect" css-property="user-select" nullable="1" type="CSSOMString"/>
+        <property name="userSelect" css-property="user-select" type="CSSOMString"/>
         <property name="verticalAlign" css-property="vertical-align" css-property-animatable="1" css-property-enum-values="baseline auto sub super top middle bottom text-top text-bottom inherit initial" css-property-initial="baseline" css-property-value-syntax="enum" nullable="1" type="DOMString"/>
         <property name="visibility" css-property="visibility" css-property-animatable="1" css-property-enum-values="visible hidden collapse inherit initial" css-property-initial="visible" css-property-value-syntax="enum" nullable="1" type="DOMString"/>
         <property name="webkitAlignContent" css-property="-webkit-align-content" css-property-enum-values="stretch flex-start flex-end center space-between space-around inherit initial" css-property-initial="stretch" css-property-value-syntax="enum" nullable="1" type="DOMString"/>

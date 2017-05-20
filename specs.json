@@ -37,6 +37,11 @@
         "title": "CSS Object Model (CSSOM)"
     },
     {
+        "url": "http://www.w3.org/TR/css-scroll-snap-1/",
+        "title": "CSS Scroll Snap Module",
+        "idl": "none"
+    },
+    {
         "url": "https://drafts.csswg.org/css-transitions/",
         "title": "CSS Transitions",
         "hasIdlIndex": true
