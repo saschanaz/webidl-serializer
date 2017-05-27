@@ -5098,7 +5098,6 @@
         <property name="vspace" type="unsigned long"/>
         <property name="width" type="DOMString"/>
       </properties>
-      <element name="applet" namespace="HTML"/>
     </interface>
     <interface name="HTMLAreaElement" extends="HTMLElement">
       <properties>
@@ -5114,7 +5113,7 @@
         <property name="target" type="DOMString"/>
       </properties>
       <implements>HTMLHyperlinkElementUtils</implements>
-      <element name="area" html-self-closing="1" namespace="HTML"/>
+      <element name="area" namespace="HTML"/>
     </interface>
     <interface name="HTMLAudioElement" extends="HTMLMediaElement">
       <named-constructor name="Audio">
@@ -5127,7 +5126,7 @@
         <property name="href" type="USVString"/>
         <property name="target" type="DOMString"/>
       </properties>
-      <element name="base" html-self-closing="1" namespace="HTML"/>
+      <element name="base" namespace="HTML"/>
     </interface>
     <interface name="HTMLBodyElement" extends="HTMLElement">
       <implements>WindowEventHandlers</implements>
@@ -5139,17 +5138,17 @@
         <property name="text" type="DOMString"/>
         <property name="vLink" type="DOMString"/>
       </properties>
+      <element name="body" namespace="HTML"/>
       <events>
         <event name="offline" bubbles="1" dispatch="async" type="Event"/>
         <event name="online" bubbles="1" dispatch="async" type="Event"/>
       </events>
-      <element name="body" namespace="HTML"/>
     </interface>
     <interface name="HTMLBRElement" extends="HTMLElement">
       <properties>
         <property name="clear" type="DOMString"/>
       </properties>
-      <element name="br" html-self-closing="1" namespace="HTML"/>
+      <element name="br" namespace="HTML"/>
     </interface>
     <interface name="HTMLButtonElement" extends="HTMLElement">
       <methods>
@@ -5199,12 +5198,12 @@
         <property name="height" type="unsigned long"/>
         <property name="width" type="unsigned long"/>
       </properties>
+      <element name="canvas" namespace="HTML"/>
       <events>
         <event name="webglcontextlost" dispatch="async" precedes="webglcontextrestored" type="WebGLContextEvent"/>
         <event name="webglcontextrestored" dispatch="async" follows="webglcontextlost" type="WebGLContextEvent"/>
         <event name="webglcontextcreationerror" dispatch="async" type="WebGLContextEvent"/>
       </events>
-      <element name="canvas" namespace="HTML"/>
     </interface>
     <interface name="HTMLCollection" extends="Object" exposed="Window">
       <methods>
@@ -5235,6 +5234,7 @@
       <properties>
         <property name="open" type="boolean"/>
       </properties>
+      <element name="details" namespace="HTML"/>
     </interface>
     <interface name="HTMLDialogElement" extends="HTMLElement">
       <methods>
@@ -5248,13 +5248,12 @@
         <property name="open" type="boolean"/>
         <property name="returnValue" type="DOMString"/>
       </properties>
-      <element name="dialog"/>
+      <element name="dialog" namespace="HTML"/>
     </interface>
     <interface name="HTMLDirectoryElement" extends="HTMLElement">
       <properties>
         <property name="compact" type="boolean"/>
       </properties>
-      <element name="dir" namespace="HTML"/>
     </interface>
     <interface name="HTMLDivElement" extends="HTMLElement">
       <properties>
@@ -5299,49 +5298,44 @@
       <implements>DocumentAndElementEventHandlers</implements>
       <implements>ElementContentEditable</implements>
       <implements>ElementCSSInlineStyle</implements>
-      <element name="noframes" namespace="HTML"/>
-      <element name="noscript" namespace="HTML"/>
-      <element name="wbr" html-self-closing="1" namespace="HTML"/>
-      <element name="section" namespace="HTML"/>
-      <element name="nav" namespace="HTML"/>
+      <element name="abbr" namespace="HTML"/>
+      <element name="address" namespace="HTML"/>
       <element name="article" namespace="HTML"/>
       <element name="aside" namespace="HTML"/>
-      <element name="hgroup" namespace="HTML"/>
-      <element name="header" namespace="HTML"/>
-      <element name="footer" namespace="HTML"/>
-      <element name="figure" namespace="HTML"/>
-      <element name="figcaption" namespace="HTML"/>
-      <element name="mark" namespace="HTML"/>
-      <element name="dd" namespace="HTML"/>
-      <element name="dt" namespace="HTML"/>
-      <element name="abbr" namespace="HTML"/>
-      <element name="acronym" namespace="HTML"/>
       <element name="b" namespace="HTML"/>
+      <element name="bdi" namespace="HTML"/>
       <element name="bdo" namespace="HTML"/>
-      <element name="big" namespace="HTML"/>
       <element name="cite" namespace="HTML"/>
       <element name="code" namespace="HTML"/>
+      <element name="dd" namespace="HTML"/>
       <element name="dfn" namespace="HTML"/>
+      <element name="dt" namespace="HTML"/>
       <element name="em" namespace="HTML"/>
+      <element name="figcaption" namespace="HTML"/>
+      <element name="figure" namespace="HTML"/>
+      <element name="footer" namespace="HTML"/>
+      <element name="header" namespace="HTML"/>
+      <element name="hgroup" namespace="HTML"/>
       <element name="i" namespace="HTML"/>
       <element name="kbd" namespace="HTML"/>
-      <element name="nobr" namespace="HTML"/>
+      <element name="main" namespace="HTML"/>
+      <element name="mark" namespace="HTML"/>
+      <element name="nav" namespace="HTML"/>
+      <element name="noscript" namespace="HTML"/>
+      <element name="rp" namespace="HTML"/>
       <element name="rt" namespace="HTML"/>
       <element name="ruby" namespace="HTML"/>
       <element name="s" namespace="HTML"/>
       <element name="samp" namespace="HTML"/>
+      <element name="section" namespace="HTML"/>
       <element name="small" namespace="HTML"/>
-      <element name="strike" namespace="HTML"/>
       <element name="strong" namespace="HTML"/>
       <element name="sub" namespace="HTML"/>
+      <element name="summary" namespace="HTML"/>
       <element name="sup" namespace="HTML"/>
-      <element name="tt" namespace="HTML"/>
       <element name="u" namespace="HTML"/>
       <element name="var" namespace="HTML"/>
-      <element name="address" namespace="HTML"/>
-      <element name="center" namespace="HTML"/>
-      <element name="keygen" html-self-closing="1" namespace="HTML"/>
-      <element name="plaintext" namespace="HTML"/>
+      <element name="wbr" namespace="HTML"/>
     </interface>
     <interface name="HTMLEmbedElement" extends="HTMLElement">
       <methods>
@@ -5355,7 +5349,7 @@
         <property name="type" type="DOMString"/>
         <property name="width" type="DOMString"/>
       </properties>
-      <element name="embed" html-self-closing="1" namespace="HTML"/>
+      <element name="embed" namespace="HTML"/>
     </interface>
     <interface name="HTMLFieldSetElement" extends="HTMLElement">
       <methods>
@@ -5383,7 +5377,6 @@
         <property name="face" type="DOMString"/>
         <property name="size" type="DOMString"/>
       </properties>
-      <element name="font" namespace="HTML"/>
     </interface>
     <interface name="HTMLFormControlsCollection" extends="HTMLCollection">
       <methods>
@@ -5420,11 +5413,11 @@
         <property name="noValidate" type="boolean"/>
         <property name="target" type="DOMString"/>
       </properties>
+      <element name="form" namespace="HTML"/>
       <events>
         <event name="reset" bubbles="1" cancelable="1" dispatch="sync" type="Event"/>
         <event name="submit" bubbles="1" cancelable="1" dispatch="sync" type="Event"/>
       </events>
-      <element name="form" namespace="HTML"/>
     </interface>
     <interface name="HTMLFrameElement" extends="HTMLElement">
       <properties>
@@ -5442,7 +5435,6 @@
       <events>
         <event name="load" dispatch="async" skips-window="1" type="Event"/>
       </events>
-      <element name="frame" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLFrameSetElement" extends="HTMLElement">
       <properties>
@@ -5450,7 +5442,6 @@
         <property name="rows" type="DOMString"/>
       </properties>
       <implements>WindowEventHandlers</implements>
-      <element name="frameset" namespace="HTML"/>
     </interface>
     <interface name="HTMLHeadElement" extends="HTMLElement">
       <element name="head" namespace="HTML"/>
@@ -5474,7 +5465,7 @@
         <property name="size" type="DOMString"/>
         <property name="width" type="DOMString"/>
       </properties>
-      <element name="hr" html-self-closing="1" namespace="HTML"/>
+      <element name="hr" namespace="HTML"/>
     </interface>
     <interface name="HTMLHtmlElement" extends="HTMLElement">
       <properties>
@@ -5506,10 +5497,10 @@
         <property name="srcdoc" type="DOMString"/>
         <property name="width" type="DOMString"/>
       </properties>
+      <element name="iframe" namespace="HTML"/>
       <events>
         <event name="load" dispatch="async" skips-window="1" type="Event"/>
       </events>
-      <element name="iframe" namespace="HTML"/>
     </interface>
     <interface name="HTMLImageElement" extends="HTMLElement">
       <named-constructor name="Image">
@@ -5541,10 +5532,10 @@
         <property name="x" read-only="1" type="long"/>
         <property name="y" read-only="1" type="long"/>
       </properties>
+      <element name="img" namespace="HTML"/>
       <events>
         <event name="error" dispatch="sync" type="Event"/>
       </events>
-      <element name="img" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLInputElement" extends="HTMLElement">
       <methods>
@@ -5624,13 +5615,13 @@
         <property name="width" type="unsigned long"/>
         <property name="willValidate" read-only="1" type="boolean"/>
       </properties>
+      <element name="input" namespace="HTML"/>
       <events>
         <event name="change" bubbles="1" dispatch="sync" type="Event"/>
         <event name="input" bubbles="1" dispatch="async" type="Event"/>
         <event name="error" dispatch="sync" type="Event"/>
         <event name="invalid" cancelable="1" dispatch="sync" type="Event"/>
       </events>
-      <element name="input" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLLabelElement" extends="HTMLElement">
       <properties>
@@ -5676,12 +5667,12 @@
         <property name="workerType" type="WorkerType"/>
       </properties>
       <implements>LinkStyle</implements>
+      <element name="link" namespace="HTML"/>
       <events>
         <event name="error" dispatch="async" type="Event"/>
         <event name="load" dispatch="async" follows="readystatechange" skips-window="1" type="Event"/>
         <event name="readystatechange" dispatch="async" precedes="load" tags="IEOnly" type="Event"/>
       </events>
-      <element name="link" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLMapElement" extends="HTMLElement">
       <properties>
@@ -5716,7 +5707,6 @@
         <event name="start" dispatch="sync" precedes="bounce finish" tags="IEOnly" type="Event"/>
         <event name="finish" dispatch="sync" follows="start bounce" tags="IEOnly" type="Event"/>
       </events>
-      <element name="marquee" namespace="HTML"/>
     </interface>
     <interface name="HTMLMediaElement" extends="HTMLElement">
       <constants>
@@ -5829,6 +5819,7 @@
         <property name="radiogroup" type="DOMString"/>
         <property name="type" type="DOMString"/>
       </properties>
+      <element name="menuitem" namespace="HTML"/>
     </interface>
     <interface name="HTMLMetaElement" extends="HTMLElement">
       <properties>
@@ -5837,7 +5828,7 @@
         <property name="name" type="DOMString"/>
         <property name="scheme" type="DOMString"/>
       </properties>
-      <element name="meta" html-self-closing="1" namespace="HTML"/>
+      <element name="meta" namespace="HTML"/>
     </interface>
     <interface name="HTMLMeterElement" extends="HTMLElement">
       <properties>
@@ -5856,8 +5847,8 @@
         <property name="cite" type="USVString"/>
         <property name="dateTime" type="DOMString"/>
       </properties>
-      <element name="ins" namespace="HTML"/>
       <element name="del" namespace="HTML"/>
+      <element name="ins" namespace="HTML"/>
     </interface>
     <interface name="HTMLObjectElement" extends="HTMLElement">
       <methods>
@@ -5893,11 +5884,11 @@
         <property name="width" type="DOMString"/>
         <property name="willValidate" read-only="1" type="boolean"/>
       </properties>
+      <element name="object" namespace="HTML"/>
       <events>
         <event name="load" dispatch="async" skips-window="1" type="Event"/>
         <event name="abort" dispatch="sync" type="UIEvent"/>
       </events>
-      <element name="object" namespace="HTML"/>
     </interface>
     <interface name="HTMLOListElement" extends="HTMLElement">
       <properties>
@@ -5990,7 +5981,7 @@
         <property name="value" type="DOMString"/>
         <property name="valueType" type="DOMString"/>
       </properties>
-      <element name="param" html-self-closing="1" namespace="HTML"/>
+      <element name="param" namespace="HTML"/>
     </interface>
     <interface name="HTMLPictureElement" extends="HTMLElement">
       <element name="picture" namespace="HTML"/>
@@ -6000,8 +5991,6 @@
         <property name="width" type="long"/>
       </properties>
       <element name="pre" namespace="HTML"/>
-      <element name="listing" namespace="HTML"/>
-      <element name="xmp" namespace="HTML"/>
     </interface>
     <interface name="HTMLProgressElement" extends="HTMLElement">
       <properties>
@@ -6016,8 +6005,8 @@
       <properties>
         <property name="cite" type="USVString"/>
       </properties>
-      <element name="q" namespace="HTML"/>
       <element name="blockquote" namespace="HTML"/>
+      <element name="q" namespace="HTML"/>
     </interface>
     <interface name="HTMLScriptElement" extends="HTMLElement">
       <properties>
@@ -6034,11 +6023,11 @@
         <property name="text" type="DOMString"/>
         <property name="type" type="DOMString"/>
       </properties>
+      <element name="script" namespace="HTML"/>
       <events>
         <event name="error" dispatch="sync" type="Event"/>
         <event name="load" dispatch="async" skips-window="1" type="Event"/>
       </events>
-      <element name="script" namespace="HTML"/>
     </interface>
     <interface name="HTMLSelectElement" extends="HTMLElement">
       <anonymous-methods>
@@ -6088,11 +6077,11 @@
         <property name="value" type="DOMString"/>
         <property name="willValidate" read-only="1" type="boolean"/>
       </properties>
+      <element name="select" namespace="HTML"/>
       <events>
         <event name="change" bubbles="1" dispatch="sync" type="Event"/>
         <event name="invalid" cancelable="1" dispatch="sync" type="Event"/>
       </events>
-      <element name="select" namespace="HTML"/>
     </interface>
     <interface name="HTMLSlotElement" extends="HTMLElement">
       <methods>
@@ -6103,6 +6092,7 @@
       <properties>
         <property name="name" type="DOMString"/>
       </properties>
+      <element name="slot" namespace="HTML"/>
     </interface>
     <interface name="HTMLSourceElement" extends="HTMLElement">
       <properties>
@@ -6112,7 +6102,7 @@
         <property name="srcset" type="USVString"/>
         <property name="type" type="DOMString"/>
       </properties>
-      <element name="source" html-self-closing="1" namespace="HTML"/>
+      <element name="source" namespace="HTML"/>
     </interface>
     <interface name="HTMLSpanElement" extends="HTMLElement">
       <element name="span" namespace="HTML"/>
@@ -6124,12 +6114,12 @@
         <property name="type" type="DOMString"/>
       </properties>
       <implements>LinkStyle</implements>
+      <element name="style" namespace="HTML"/>
       <events>
         <event name="error" dispatch="async" type="Event"/>
         <event name="load" dispatch="async" follows="readystatechange" skips-window="1" type="Event"/>
         <event name="readystatechange" dispatch="async" precedes="load" tags="IEOnly" type="Event"/>
       </events>
-      <element name="style" namespace="HTML"/>
     </interface>
     <interface name="HTMLTableCaptionElement" extends="HTMLElement">
       <properties>
@@ -6155,8 +6145,8 @@
         <property name="vAlign" type="DOMString"/>
         <property name="width" type="DOMString"/>
       </properties>
-      <element name="td"/>
-      <element name="th"/>
+      <element name="td" namespace="HTML"/>
+      <element name="th" namespace="HTML"/>
     </interface>
     <interface name="HTMLTableColElement" extends="HTMLElement">
       <properties>
@@ -6167,7 +6157,7 @@
         <property name="vAlign" type="DOMString"/>
         <property name="width" type="DOMString"/>
       </properties>
-      <element name="col" html-self-closing="1" namespace="HTML"/>
+      <element name="col" namespace="HTML"/>
       <element name="colgroup" namespace="HTML"/>
     </interface>
     <interface name="HTMLTableElement" extends="HTMLElement">
@@ -6241,9 +6231,9 @@
         <property name="rows" read-only="1" type="HTMLCollection"/>
         <property name="vAlign" type="DOMString"/>
       </properties>
-      <element name="thead" namespace="HTML"/>
       <element name="tbody" namespace="HTML"/>
       <element name="tfoot" namespace="HTML"/>
+      <element name="thead" namespace="HTML"/>
     </interface>
     <interface name="HTMLTemplateElement" extends="HTMLElement">
       <properties>
@@ -6302,12 +6292,12 @@
         <property name="willValidate" read-only="1" type="boolean"/>
         <property name="wrap" type="DOMString"/>
       </properties>
+      <element name="textarea" namespace="HTML"/>
       <events>
         <event name="change" bubbles="1" dispatch="sync" type="Event"/>
         <event name="input" bubbles="1" dispatch="async" type="Event"/>
         <event name="invalid" cancelable="1" dispatch="sync" type="Event"/>
       </events>
-      <element name="textarea" namespace="HTML"/>
     </interface>
     <interface name="HTMLTimeElement" extends="HTMLElement">
       <properties>
@@ -6337,10 +6327,10 @@
         <property name="srclang" type="DOMString"/>
         <property name="track" read-only="1" type="TextTrack"/>
       </properties>
+      <element name="track" namespace="HTML"/>
       <events>
         <event name="cuechange" dispatch="sync" type="Event"/>
       </events>
-      <element name="track" html-self-closing="1" namespace="HTML"/>
     </interface>
     <interface name="HTMLUListElement" extends="HTMLElement">
       <properties>
@@ -6349,10 +6339,7 @@
       </properties>
       <element name="ul" namespace="HTML"/>
     </interface>
-    <interface name="HTMLUnknownElement" extends="HTMLElement">
-      <element name="isindex" namespace="HTML"/>
-      <element name="nextid" namespace="HTML"/>
-    </interface>
+    <interface name="HTMLUnknownElement" extends="HTMLElement"/>
     <interface name="HTMLVideoElement" extends="HTMLMediaElement">
       <properties>
         <property name="height" type="unsigned long"/>
@@ -6362,13 +6349,13 @@
         <property name="videoWidth" read-only="1" type="unsigned long"/>
         <property name="width" type="unsigned long"/>
       </properties>
+      <element name="video" namespace="HTML"/>
       <methods>
         <method name="getVideoPlaybackQuality" type="VideoPlaybackQuality"/>
       </methods>
       <events>
         <event name="resize" dispatch="async" type="Event"/>
       </events>
-      <element name="video" namespace="HTML"/>
     </interface>
     <interface name="IDBCursor" extends="Object" exposed="Window Worker">
       <methods>

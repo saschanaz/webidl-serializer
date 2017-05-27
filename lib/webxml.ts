@@ -145,7 +145,9 @@ function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLExport
             }
             if (elements.length) {
                 for (const element of elements) {
-                    partialInterfaceEl.appendChild(xhelper.cloneNode(element));
+                    if (element.getAttribute("namespace") !== "HTML") {
+                        partialInterfaceEl.appendChild(xhelper.cloneNode(element));
+                    }
                 }
             }
             if (cssProperties.length) {

@@ -6,6 +6,7 @@ interface Supplement {
     events: EventSupplement[];
     cssProperties: string[];
     elements: { [key: string]: string };
+    elementsPrefix: string;
 }
 
 interface EventSupplement {
@@ -38,12 +39,12 @@ export async function apply(base: IDLExportResult, doc: Document) {
         supplement.events = [];
     }
 
+    if (supplement.elements) {
+        base.snippets.push(createElementMapSnippet(supplement, doc));
+    }
     applyEventProperties(base, supplement);
     if (supplement.cssProperties) {
         base.snippets.push(createCSSPropertySnippet(supplement, doc));
-    }
-    if (supplement.elements) {
-        base.snippets.push(createElementMapSnippet(supplement, doc));
     }
 }
 
@@ -150,19 +151,28 @@ function createCSSPropertySnippet(supplement: Supplement, doc: Document): IDLSni
 }
 
 function convertCSSNameToCamelCase(name: string) {
-    return name.split("-").map((value, index) => index === 0 ? value : `${value[0].toUpperCase()}${value.slice(1)}`).join('');
+    return name.split("-").map((value, index) => index === 0 ? value : convertLowercasedNameToPascalCase(value)).join('');
+}
+
+function convertLowercasedNameToPascalCase(name: string) {
+    return `${name[0].toUpperCase()}${name.slice(1)}`
 }
 
 function createElementMapSnippet(supplement: Supplement, doc: Document): IDLSnippetContent {
     const interfaces: Element[] = [];
     for (const elementName in supplement.elements) {
         const interfaceEl = doc.createElement("interface");
-        interfaceEl.setAttribute("name", supplement.elements[elementName]);
+        const elementInterfaceValue = supplement.elements[elementName];
+        const elementInterfaceValueComputed = elementInterfaceValue == null ? convertLowercasedNameToPascalCase(elementName) : elementInterfaceValue;
+        const elementInterfaceName = `${supplement.elementsPrefix}${elementInterfaceValueComputed}Element`;
+
+        interfaceEl.setAttribute("name", elementInterfaceName);
         interfaceEl.setAttribute("no-interface-object", "1");
         interfaceEl.setAttribute("sn:partial", "1");
 
         const element = doc.createElement("element")
         element.setAttribute("name", elementName);
+        element.setAttribute("namespace", supplement.elementsPrefix);
         
         interfaceEl.appendChild(element);
         interfaces.push(interfaceEl);
