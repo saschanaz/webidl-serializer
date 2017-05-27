@@ -154,7 +154,11 @@ function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLExport
                     if (ignore.cssProperties.includes(cssProperty.getAttribute("css-property"))) {
                         continue;
                     }
-                    properties.appendChild(xhelper.cloneNode(cssProperty));
+                    const cssPropertyNode = document.createElement("property");
+                    cssPropertyNode.setAttribute("name", cssProperty.getAttribute("name"));
+                    cssPropertyNode.setAttribute("css-property", cssProperty.getAttribute("css-property"));
+                    cssPropertyNode.setAttribute("type", "CSSOMString");
+                    properties.appendChild(cssPropertyNode);
                 }
                 partialInterfaceEl.appendChild(properties);
             }
