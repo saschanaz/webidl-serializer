@@ -1,11 +1,15 @@
+// Errata applied:
+// https://github.com/w3c/gamepad/issues/28
+// https://github.com/w3c/gamepad/pull/51
+
 interface Gamepad {
     readonly attribute DOMString           id;
     readonly attribute long                index;
     readonly attribute boolean             connected;
     readonly attribute DOMHighResTimeStamp timestamp;
     readonly attribute GamepadMappingType  mapping;
-    readonly attribute double[]            axes;
-    readonly attribute GamepadButton[]     buttons;
+    readonly attribute FrozenArray<double>            axes;
+    readonly attribute FrozenArray<GamepadButton>     buttons;
 };
 
 interface GamepadButton {
@@ -23,9 +27,9 @@ partial interface Navigator {
     sequence<Gamepad?> getGamepads();
 };
 
-[Constructor(GamepadEventInit eventInitDict)]
+[Constructor(DOMString type, GamepadEventInit eventInitDict)]
 interface GamepadEvent : Event {
-    readonly attribute Gamepad gamepad;
+    [SameObject] readonly attribute Gamepad gamepad;
 };
 
 dictionary GamepadEventInit : EventInit {

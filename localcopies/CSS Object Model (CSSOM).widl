@@ -93,11 +93,6 @@ interface CSSGroupingRule : CSSRule {
 };
 
 
-interface CSSMediaRule : CSSGroupingRule {
-  [SameObject, PutForwards=mediaText] readonly attribute MediaList media;
-};
-
-
 interface CSSPageRule : CSSGroupingRule {
            attribute CSSOMString selectorText;
   [SameObject, PutForwards=cssText] readonly attribute CSSStyleDeclaration style;

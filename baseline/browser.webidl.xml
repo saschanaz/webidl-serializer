@@ -3210,11 +3210,6 @@
         <property name="style" read-only="1" type="CSSStyleDeclaration"/>
       </properties>
     </interface>
-    <interface name="CSSMediaRule" extends="CSSGroupingRule">
-      <properties>
-        <property name="media" read-only="1" type="MediaList"/>
-      </properties>
-    </interface>
     <interface name="CSSMediaRule" extends="CSSConditionRule">
       <properties>
         <property name="media" read-only="1" type="MediaList"/>
@@ -4965,8 +4960,8 @@
     </interface>
     <interface name="Gamepad" extends="Object">
       <properties>
-        <property name="axes" read-only="1" type="double[]"/>
-        <property name="buttons" read-only="1" type="GamepadButton[]"/>
+        <property name="axes" read-only="1" type="FrozenArray&lt;double&gt;"/>
+        <property name="buttons" read-only="1" type="FrozenArray&lt;GamepadButton&gt;"/>
         <property name="connected" read-only="1" type="boolean"/>
         <property name="id" read-only="1" type="DOMString"/>
         <property name="index" read-only="1" type="long"/>
@@ -4983,6 +4978,7 @@
     </interface>
     <interface name="GamepadEvent" extends="Event">
       <constructor>
+        <param name="type" type="DOMString"/>
         <param name="eventInitDict" type="GamepadEventInit"/>
       </constructor>
       <properties>

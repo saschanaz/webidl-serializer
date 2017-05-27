@@ -13,7 +13,7 @@ interface CSSConditionRule : CSSGroupingRule {
 };
 
 interface CSSMediaRule : CSSConditionRule {
-    readonly attribute MediaList media;
+    [SameObject, PutForwards=mediaText] readonly attribute MediaList media;
 };
 
 interface CSSSupportsRule : CSSConditionRule {

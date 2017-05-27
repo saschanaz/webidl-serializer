@@ -90,7 +90,8 @@
     },
     {
         "url": "http://www.w3.org/TR/gamepad/",
-        "title": "Gamepad"
+        "title": "Gamepad",
+        "idl": "local"
     },
     {
         "url": "http://www.w3.org/TR/geolocation-API/",
