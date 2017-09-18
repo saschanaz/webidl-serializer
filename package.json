@@ -1,14 +1,13 @@
 {
-  "name": "webxml",
+  "name": "webidl-serializer",
   "version": "0.0.0",
-  "description": "webxml",
+  "description": "webidl-serializer",
   "main": "lib/webxml.js",
   "author": {
     "email": "saschanaz@outlook.com",
     "name": "saschanaz"
   },
   "scripts": {
-    "pretest": "yarn global add typescript mocha",
     "test": "tsc && node . local && tsc -p test-sources/ && mocha"
   },
   "dependencies": {
