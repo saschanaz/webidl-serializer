@@ -2,7 +2,7 @@
   "name": "webidl-serializer",
   "version": "0.0.0",
   "description": "webidl-serializer",
-  "main": "lib/webxml.js",
+  "main": "lib/serializer.js",
   "author": {
     "email": "saschanaz@outlook.com",
     "name": "saschanaz"
