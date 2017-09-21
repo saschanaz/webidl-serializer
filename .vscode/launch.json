@@ -11,7 +11,9 @@
             "program": "${workspaceRoot}\\lib\\webxml.js",
             "cwd": "${workspaceRoot}",
             "args": [
-                "local"
+                "local",
+                "--pick",
+                "Beacon"
             ]
         },
         {

@@ -6,6 +6,7 @@ import * as jsdom from "jsdom";
 import fetch from "node-fetch";
 import prettifyXml = require("prettify-xml");
 import * as mz from "mz/fs";
+import * as yargs from "yargs";
 import { ExportRemoteDescription, IDLExportResult, IDLSnippetContent, FetchResult, MSEdgeIgnore } from "./types"
 import * as xhelper from "./xmldom-helper.js";
 import * as supplements from "./supplements.js";
@@ -21,13 +22,20 @@ run().catch(err => console.error(err));
 async function run() {
     console.log("Loading spec list...");
     const exportList: ExportRemoteDescription[] = JSON.parse(await mz.readFile("specs.json", "utf8"));
-    if (process.argv[2] === "local") {
+
+    const argv = yargs.array("pick").argv;
+    if (argv._[0] === "local") {
         for (const exportInfo of exportList) {
             // use remote copy only when specified
             if (exportInfo.idl !== "none") {
                 exportInfo.idl = "local";
             }
         }
+    }
+    if (argv.pick) {
+        const list = exportList.filter(item => (argv.pick as string[]).includes(item.title));
+        exportList.length = 0;
+        exportList.push(...list);
     }
 
     console.log("Fetching from web...");
