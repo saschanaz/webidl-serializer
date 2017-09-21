@@ -1,4 +1,4 @@
-import { ExportRemoteDescription, IDLExportResult, IDLSnippetContent, FetchResult } from "./types"
+import { ImportRemoteDescription, IDLImportResult, IDLSnippetContent, FetchResult } from "./types"
 import * as xhelper from "./xmldom-helper.js"
 import { xmlMemberSetSort } from "./xmlsort.js"
 

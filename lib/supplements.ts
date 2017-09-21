@@ -1,4 +1,4 @@
-import { ExportRemoteDescription, IDLExportResult, IDLSnippetContent, FetchResult } from "./types";
+import { ImportRemoteDescription, IDLImportResult, IDLSnippetContent, FetchResult } from "./types";
 import * as mz from "mz/fs";
 import * as xhelper from "./xmldom-helper";
 
@@ -26,7 +26,7 @@ interface EventTypeInterfacePair {
     eventInterface: string;
 }
 
-export async function apply(base: IDLExportResult, doc: Document) {
+export async function apply(base: IDLImportResult, doc: Document) {
     const path = `supplements/${base.origin.description.title}.json`;
     const exists = await mz.exists(path);
     if (exists) {
@@ -48,7 +48,7 @@ export async function apply(base: IDLExportResult, doc: Document) {
     }
 }
 
-function applyEventProperties(base: IDLExportResult, supplement: Supplement) {
+function applyEventProperties(base: IDLImportResult, supplement: Supplement) {
     const propertyMap = createEventPropertyMap(supplement);
 
     for (const snippet of base.snippets) {

@@ -69,7 +69,7 @@
         /** An IDL Type describing what the callback returns. */
         idlType: IDLTypeDescription;
         /** A list of arguments, as in function paramters. */
-        arguments: Arguments[];
+        arguments: Argument[];
         /** A list of extended attributes. */
         extAttrs: ExtendedAttributes[];
     }
@@ -186,7 +186,7 @@
         /** The name of the operation. If a stringifier, may be null. */
         name: string | null;
         /** An array of arguments for the operation. */
-        arguments: Arguments[] | null;
+        arguments: Argument[] | null;
         /** A list of extended attributes. */
         extAttrs: ExtendedAttributes[];
     }
@@ -241,7 +241,7 @@
         /** The name of the operation. */
         name: string;
         /** An array of arguments for the operation. */
-        arguments: Arguments;
+        arguments: Argument;
     }
 
     interface PatternSerializerMemberType extends SerializerMemberType {
@@ -256,7 +256,7 @@
         iteratorObject: string;
     }
 
-    interface Arguments {
+    interface Argument {
         default: ValueDescription;
         /** True if the argument is optional. */
         optional: boolean;
@@ -274,7 +274,7 @@
         /** The extended attribute's name. */
         name: string;
         /** If the extended attribute takes arguments or if its right-hand side does they are listed here. */
-        arguments: Arguments[];
+        arguments: Argument[];
         /** If there is a right-hand side, this will capture its type ("identifier" or "identifier-list") and its value. */
         rhs: ExtendedAttributeRightHandSideIdentifier | ExtendedAttributeRightHandSideIdentifierList;
     }

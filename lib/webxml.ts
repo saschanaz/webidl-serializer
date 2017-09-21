@@ -7,7 +7,7 @@ import fetch from "node-fetch";
 import prettifyXml = require("prettify-xml");
 import * as mz from "mz/fs";
 import * as yargs from "yargs";
-import { ExportRemoteDescription, IDLExportResult, IDLSnippetContent, FetchResult, MSEdgeIgnore } from "./types"
+import { ImportRemoteDescription, IDLImportResult, IDLSnippetContent, FetchResult, MSEdgeIgnore } from "./types"
 import * as xhelper from "./xmldom-helper.js";
 import * as supplements from "./supplements.js";
 import * as merger from "./partial-type-merger.js"
@@ -21,7 +21,7 @@ run().catch(err => console.error(err));
 
 async function run() {
     console.log("Loading spec list...");
-    const exportList: ExportRemoteDescription[] = JSON.parse(await mz.readFile("specs.json", "utf8"));
+    const exportList: ImportRemoteDescription[] = JSON.parse(await mz.readFile("specs.json", "utf8"));
 
     const argv = yargs.array("pick").argv;
     if (argv._[0] === "local") {
@@ -117,7 +117,7 @@ async function run() {
 }
 
 /** export each <events> object and create a separate IDLExportResult */
-function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLExportResult {
+function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLImportResult {
     const snippet = createIDLSnippetContentContainer();
 
     const interfaceSets = [edgeIdl.getElementsByTagName("interfaces")[0], edgeIdl.getElementsByTagName("mixin-interfaces")[0]];
@@ -220,7 +220,7 @@ function exportEventPropertyMap(edgeIdl: Document) {
 }
 
 /** Add `event-handler` attribute so that TSJS-lib-generator can detect each event type of the handlers */
-function transferEventInformation(exports: IDLExportResult[], eventMap: Map<string, string>) {
+function transferEventInformation(exports: IDLImportResult[], eventMap: Map<string, string>) {
     for (const exportResult of exports) {
         for (const snippet of exportResult.snippets) {
             for (const interfaceEl of [...snippet.interfaces, ...snippet.mixinInterfaces]) {
@@ -246,7 +246,7 @@ function transferEventInformation(exports: IDLExportResult[], eventMap: Map<stri
     }
 }
 
-function convertAsSingleDocument(exports: IDLExportResult[]) {
+function convertAsSingleDocument(exports: IDLImportResult[]) {
     const snippets: IDLSnippetContent[] = [];
     for (const item of exports) {
         snippets.push(...item.snippets);
@@ -254,7 +254,7 @@ function convertAsSingleDocument(exports: IDLExportResult[]) {
     return createWebIDLXMLDocument("WHATWG/W3C Web Platform", "null", mergeIDLSnippets(snippets));
 }
 
-function convertAsMultipleDocument(exports: IDLExportResult[]) {
+function convertAsMultipleDocument(exports: IDLImportResult[]) {
     const docs: Document[] = [];
     for (const item of exports) {
         console.log(`Conversion started for ${item.origin.description.title}`);
@@ -269,10 +269,10 @@ function isWebIDLParseError(err: any): err is WebIDL2.WebIDLParseError {
     return Array.isArray(err.tokens);
 }
 
-async function exportIDLs(result: FetchResult): Promise<IDLExportResult> {
+async function exportIDLs(result: FetchResult): Promise<IDLImportResult> {
     if (result.description.idl === "local" || result.description.idl === "raw") {
         return {
-            snippets: exportIDLSnippets([result.content], result), origin: result, idl: result.content
+            snippets: importIDLSnippets([result.content], result), origin: result, idl: result.content
         }
     }
     else if (result.description.idl === "none") {
@@ -292,11 +292,11 @@ async function exportIDLs(result: FetchResult): Promise<IDLExportResult> {
 
     win.close();
     return {
-        snippets: exportIDLSnippets(idlTexts, result), origin: result, idl: idlTexts.join('\n\n')
+        snippets: importIDLSnippets(idlTexts, result), origin: result, idl: idlTexts.join('\n\n')
     };
 }
 
-function exportIDLSnippets(idlTexts: string[], origin: FetchResult) {
+function importIDLSnippets(idlTexts: string[], origin: FetchResult) {
     const snippets: IDLSnippetContent[] = [];
 
     for (const item of idlTexts) {
@@ -802,7 +802,7 @@ function createNamespace(namespaceType: WebIDL2.NamespaceType) {
     return namespace;
 }
 
-function getParamList(argumentTypes: WebIDL2.Arguments[]) {
+function getParamList(argumentTypes: WebIDL2.Argument[]) {
     const paramList: Element[] = [];
     for (const argumentType of argumentTypes) {
         const param = document.createElement("param");
