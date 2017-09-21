@@ -86,14 +86,19 @@ async function run() {
         await mz.writeFile(`localcopies/${exported.origin.description.title}.widl`, exported.idl);
     }
 
-    // Loads event information from browser.webidl.xml and create interfaces for each event target
-    console.log("Loading event information from MSEdge data...");
-    const msedgeEventDocument = new DOMParser().parseFromString(await mz.readFile("supplements/browser.webidl.xml", "utf8"), "text/xml");
-    const msedgeIgnore: MSEdgeIgnore = JSON.parse(await mz.readFile("msedge-ignore.json", "utf8"));
-    const msedgeEventHandlers = exportEventHandlers(msedgeEventDocument, msedgeIgnore);
-    const msedgeEventPropertyMap = exportEventPropertyMap(msedgeEventDocument);
-    transferEventInformation(exports, msedgeEventPropertyMap);
-    exports.push(msedgeEventHandlers);
+    if (!argv.pick) {
+        // Loads event information from browser.webidl.xml and create interfaces for each event target
+        console.log("Loading event information from MSEdge data...");
+        const msedgeEventDocument = new DOMParser().parseFromString(await mz.readFile("supplements/browser.webidl.xml", "utf8"), "text/xml");
+        const msedgeIgnore: MSEdgeIgnore = JSON.parse(await mz.readFile("msedge-ignore.json", "utf8"));
+        const msedgeEventHandlers = exportEventHandlers(msedgeEventDocument, msedgeIgnore);
+        const msedgeEventPropertyMap = exportEventPropertyMap(msedgeEventDocument);
+        transferEventInformation(exports, msedgeEventPropertyMap);
+        exports.push(msedgeEventHandlers);
+    }
+    else {
+        console.log("Skipped MSEdge information merging.")
+    }
 
     console.log("Loading supplements...");
     for (const exportResult of exports) {
