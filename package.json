@@ -16,6 +16,7 @@
     "@types/node": "^7.0.14",
     "@types/yargs": "^8.0.2",
     "jsdom": "^9.4.1",
+    "json-compactline": "^1.1.1",
     "mz": "^2.6.0",
     "node-fetch": "^1.5.3",
     "prettify-xml": "^1.0.0",
