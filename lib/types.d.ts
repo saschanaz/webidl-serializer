@@ -78,6 +78,8 @@ export namespace IDLDefinitions {
         constants?: Constant[];
         operations?: Operation[];
         attributes?: Attribute[];
+        events?: Event[];
+        implements?: string[];
 
         iterable?: Iterable;
     }
@@ -90,6 +92,11 @@ export namespace IDLDefinitions {
 
     export interface Iterable { 
         keytype?: string;
+        type: string;
+    }
+
+    export interface Event {
+        name: string;
         type: string;
     }
 

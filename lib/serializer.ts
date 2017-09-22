@@ -12,6 +12,7 @@ import * as xhelper from "./xmldom-helper.js";
 import * as supplements from "./supplements.js";
 import * as merger from "./partial-type-merger.js"
 import { sorter, xmlSort } from "./xmlsort.js"
+import nameSorter from "./namesort.js"
 
 const unionLineBreakRegex = / or[\s]*/g;
 
@@ -115,134 +116,134 @@ async function run() {
 }
 
 /** export each <events> object and create a separate IDLExportResult */
-function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLImportResult {
-    const snippet = createIDLSnippetContentContainer();
+// function exportEventHandlers(edgeIdl: Document, ignore: MSEdgeIgnore): IDLImportResult {
+//     const snippet = createIDLSnippetContentContainer();
 
-    const interfaceSets = [edgeIdl.getElementsByTagName("interfaces")[0], edgeIdl.getElementsByTagName("mixin-interfaces")[0]];
-    for (const interfaceSet of interfaceSets) {
-        for (const interfaceEl of Array.from(interfaceSet.getElementsByTagName("interface"))) {
-            if (ignore.interfaces.includes(interfaceEl.getAttribute("name"))) {
-                // ignore this interface
-                continue;
-            }
+//     const interfaceSets = [edgeIdl.getElementsByTagName("interfaces")[0], edgeIdl.getElementsByTagName("mixin-interfaces")[0]];
+//     for (const interfaceSet of interfaceSets) {
+//         for (const interfaceEl of Array.from(interfaceSet.getElementsByTagName("interface"))) {
+//             if (ignore.interfaces.includes(interfaceEl.getAttribute("name"))) {
+//                 // ignore this interface
+//                 continue;
+//             }
 
-            const events = interfaceEl.getElementsByTagName("events")[0];
-            const elements = Array.from(interfaceEl.getElementsByTagName("element"));
-            const cssProperties = xhelper.getElementsWithProperty(interfaceEl, "property", "css-property");
-            if (!events && !elements.length && !cssProperties.length) {
-                // no events or element information
-                continue;
-            }
+//             const events = interfaceEl.getElementsByTagName("events")[0];
+//             const elements = Array.from(interfaceEl.getElementsByTagName("element"));
+//             const cssProperties = xhelper.getElementsWithProperty(interfaceEl, "property", "css-property");
+//             if (!events && !elements.length && !cssProperties.length) {
+//                 // no events or element information
+//                 continue;
+//             }
 
-            const partialInterfaceEl = document.createElement("interface");
-            partialInterfaceEl.setAttribute("name", interfaceEl.getAttribute("name"));
-            partialInterfaceEl.setAttribute("no-interface-object", "1");
-            partialInterfaceEl.setAttribute("sn:partial", "1");
-            if (events) {
-                const newEvents = xhelper.cloneNodeDeep(events);
+//             const partialInterfaceEl = document.createElement("interface");
+//             partialInterfaceEl.setAttribute("name", interfaceEl.getAttribute("name"));
+//             partialInterfaceEl.setAttribute("no-interface-object", "1");
+//             partialInterfaceEl.setAttribute("sn:partial", "1");
+//             if (events) {
+//                 const newEvents = xhelper.cloneNodeDeep(events);
 
-                for (const event of xhelper.getChildrenArray(newEvents)) {
-                    if (
-                        ignore.events.includes(event.getAttribute("name")) ||
-                        ignore.interfaces.includes(event.getAttribute("type"))
-                    ) {
-                        // ignore this event
-                        newEvents.removeChild(event);
-                    }
-                }
-                if (newEvents.childNodes.length) {
-                    partialInterfaceEl.appendChild(newEvents);
-                }
-            }
-            if (elements.length) {
-                for (const element of elements) {
-                    if (element.getAttribute("namespace") !== "HTML") {
-                        partialInterfaceEl.appendChild(xhelper.cloneNode(element));
-                    }
-                }
-            }
-            if (cssProperties.length) {
-                const properties = document.createElement("properties");
-                for (const cssProperty of cssProperties) {
-                    if (ignore.cssProperties.includes(cssProperty.getAttribute("css-property"))) {
-                        continue;
-                    }
-                    const cssPropertyNode = document.createElement("property");
-                    cssPropertyNode.setAttribute("name", cssProperty.getAttribute("name"));
-                    cssPropertyNode.setAttribute("css-property", cssProperty.getAttribute("css-property"));
-                    cssPropertyNode.setAttribute("type", "CSSOMString");
-                    properties.appendChild(cssPropertyNode);
-                }
-                partialInterfaceEl.appendChild(properties);
-            }
+//                 for (const event of xhelper.getChildrenArray(newEvents)) {
+//                     if (
+//                         ignore.events.includes(event.getAttribute("name")) ||
+//                         ignore.interfaces.includes(event.getAttribute("type"))
+//                     ) {
+//                         // ignore this event
+//                         newEvents.removeChild(event);
+//                     }
+//                 }
+//                 if (newEvents.childNodes.length) {
+//                     partialInterfaceEl.appendChild(newEvents);
+//                 }
+//             }
+//             if (elements.length) {
+//                 for (const element of elements) {
+//                     if (element.getAttribute("namespace") !== "HTML") {
+//                         partialInterfaceEl.appendChild(xhelper.cloneNode(element));
+//                     }
+//                 }
+//             }
+//             if (cssProperties.length) {
+//                 const properties = document.createElement("properties");
+//                 for (const cssProperty of cssProperties) {
+//                     if (ignore.cssProperties.includes(cssProperty.getAttribute("css-property"))) {
+//                         continue;
+//                     }
+//                     const cssPropertyNode = document.createElement("property");
+//                     cssPropertyNode.setAttribute("name", cssProperty.getAttribute("name"));
+//                     cssPropertyNode.setAttribute("css-property", cssProperty.getAttribute("css-property"));
+//                     cssPropertyNode.setAttribute("type", "CSSOMString");
+//                     properties.appendChild(cssPropertyNode);
+//                 }
+//                 partialInterfaceEl.appendChild(properties);
+//             }
 
-            snippet.mixinInterfaces.push(partialInterfaceEl);
-        }
-    }
+//             snippet.mixinInterfaces.push(partialInterfaceEl);
+//         }
+//     }
 
-    return {
-        origin: {
-            description: {
-                url: "",
-                title: "MSEdge Supplemental Information"
-            },
-            content: ""
-        },
-        snippets: [snippet], idl: ""
-    };
-}
+//     return {
+//         origin: {
+//             description: {
+//                 url: "",
+//                 title: "MSEdge Supplemental Information"
+//             },
+//             content: ""
+//         },
+//         snippets: [snippet], idl: ""
+//     };
+// }
 
 /** Creates (event handler property name):(event type name) map from Edge document to apply on converted XML */
-function exportEventPropertyMap(edgeIdl: Document) {
-    const eventPropertyMap = new Map<string, string>();
+// function exportEventPropertyMap(edgeIdl: Document) {
+//     const eventPropertyMap = new Map<string, string>();
 
-    const interfaceSets = [edgeIdl.getElementsByTagName("interfaces")[0], edgeIdl.getElementsByTagName("mixin-interfaces")[0]];
-    for (const interfaceSet of interfaceSets) {
-        for (const interfaceEl of Array.from(interfaceSet.getElementsByTagName("interface"))) {
-            const properties = interfaceEl.getElementsByTagName("properties")[0];
+//     const interfaceSets = [edgeIdl.getElementsByTagName("interfaces")[0], edgeIdl.getElementsByTagName("mixin-interfaces")[0]];
+//     for (const interfaceSet of interfaceSets) {
+//         for (const interfaceEl of Array.from(interfaceSet.getElementsByTagName("interface"))) {
+//             const properties = interfaceEl.getElementsByTagName("properties")[0];
 
-            if (properties) {
-                for (const property of xhelper.getChildrenArray(properties)) {
-                    const handler = property.getAttribute("event-handler");
-                    if (!handler) {
-                        continue;
-                    }
+//             if (properties) {
+//                 for (const property of xhelper.getChildrenArray(properties)) {
+//                     const handler = property.getAttribute("event-handler");
+//                     if (!handler) {
+//                         continue;
+//                     }
 
-                    eventPropertyMap.set(`${interfaceEl.getAttribute("name")}:${property.getAttribute("name")}`, handler);
-                }
-            }
-        }
-    }
+//                     eventPropertyMap.set(`${interfaceEl.getAttribute("name")}:${property.getAttribute("name")}`, handler);
+//                 }
+//             }
+//         }
+//     }
 
-    return eventPropertyMap;
-}
+//     return eventPropertyMap;
+// }
 
 /** Add `event-handler` attribute so that TSJS-lib-generator can detect each event type of the handlers */
-function transferEventInformation(exports: IDLImportResult[], eventMap: Map<string, string>) {
-    for (const exportResult of exports) {
-        for (const snippet of exportResult.snippets) {
-            for (const interfaceEl of [...snippet.interfaces, ...snippet.mixinInterfaces]) {
-                const properties = xhelper.getChild(interfaceEl, "properties");
-                if (!properties) {
-                    continue;
-                }
+// function transferEventInformation(exports: IDLImportResult[], eventMap: Map<string, string>) {
+//     for (const exportResult of exports) {
+//         for (const snippet of exportResult.snippets) {
+//             for (const interfaceEl of [...snippet.interfaces, ...snippet.mixinInterfaces]) {
+//                 const properties = xhelper.getChild(interfaceEl, "properties");
+//                 if (!properties) {
+//                     continue;
+//                 }
 
-                for (const property of xhelper.getChildrenArray(properties)) {
-                    if (property.getAttribute("type").endsWith("EventHandler")) {
-                        const key = `${interfaceEl.getAttribute("name")}:${property.getAttribute("name")}`;
-                        const event = eventMap.get(key);
-                        if (!event) {
-                            console.log(`no event data for ${key}, expecting supplement to have one`);
-                            continue;
-                        }
+//                 for (const property of xhelper.getChildrenArray(properties)) {
+//                     if (property.getAttribute("type").endsWith("EventHandler")) {
+//                         const key = `${interfaceEl.getAttribute("name")}:${property.getAttribute("name")}`;
+//                         const event = eventMap.get(key);
+//                         if (!event) {
+//                             console.log(`no event data for ${key}, expecting supplement to have one`);
+//                             continue;
+//                         }
 
-                        property.setAttribute("event-handler", event);
-                    }
-                }
-            }
-        }
-    }
-}
+//                         property.setAttribute("event-handler", event);
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
 
 function convertAsSingleDocument(exports: IDLImportResult[]) {
     const snippets: IDLSnippetContent[] = [];
@@ -878,8 +879,4 @@ function uncapQuestionMark(idlType: WebIDL2.IDLTypeDescription) {
         return type.slice(0, -1);
     }
     return type;
-}
-
-function nameSorter(x: { name: string }, y: { name: string }) {
-    return x.name.localeCompare(y.name);
 }

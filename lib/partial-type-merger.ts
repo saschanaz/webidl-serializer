@@ -1,6 +1,5 @@
-import { ImportRemoteDescription, IDLImportResult, IDLSnippetContent, FetchResult } from "./types"
-import * as xhelper from "./xmldom-helper.js"
-import { xmlMemberSetSort } from "./xmlsort.js"
+import { ImportRemoteDescription, IDLImportResult, IDLSnippetContent, FetchResult, IDLDefinitions } from "./types"
+import nameSorter from "./namesort.js";
 
 export function mergePartialTypes(snippet: IDLSnippetContent) {
     mergePartialInterfaces(snippet);
@@ -14,119 +13,66 @@ export function mergePartialTypes(snippet: IDLSnippetContent) {
  */
 function mergePartialInterfaces(snippet: IDLSnippetContent) {
     const interfaces = [...snippet.interfaces, ...snippet.mixinInterfaces];
-    const baseInterfaces = interfaces.filter(interfaceEl => !interfaceEl.getAttribute("sn:partial"));
-    const baseInterfaceMap = new Map(baseInterfaces.map<[string, Element]>(baseInterface => [baseInterface.getAttribute("name"), baseInterface]));
+    const baseInterfaces = interfaces.filter(interfaceEl => !interfaceEl.partial);
+    const baseInterfaceMap = new Map(baseInterfaces.map<[string, IDLDefinitions.Interface]>(baseInterface => [baseInterface.name, baseInterface]));
 
-    for (const interfaceEl of interfaces) {
-        if (!interfaceEl.getAttribute("sn:partial")) {
+    for (const interfaceDef of interfaces) {
+        if (!interfaceDef.partial) {
             // Not a partial interface element
             continue;
         }
 
-        const name = interfaceEl.getAttribute("name");
+        const name = interfaceDef.name;
         const baseInterface = baseInterfaceMap.get(name);
 
         if (!baseInterface) {
-            baseInterfaces.push(interfaceEl);
-            baseInterfaceMap.set(name, interfaceEl);
+            baseInterfaces.push(interfaceDef);
+            baseInterfaceMap.set(name, interfaceDef);
             continue;
         }
 
-        mergeInterface(baseInterface, interfaceEl);
+        mergeInterface(baseInterface, interfaceDef);
     }
 
-    xmlInterfaceBatchSort(baseInterfaces);
-    snippet.interfaces = baseInterfaces.filter(interfaceEl => !interfaceEl.getAttribute("no-interface-object"));
-    snippet.mixinInterfaces = baseInterfaces.filter(interfaceEl => interfaceEl.getAttribute("no-interface-object"));
+    interfaceBatchSort(baseInterfaces);
+    snippet.interfaces = baseInterfaces.filter(interfaceEl => !interfaceEl.partial);
+    snippet.mixinInterfaces = baseInterfaces.filter(interfaceEl => interfaceEl.partial);
 }
 
-function xmlInterfaceBatchSort(interfaces: Element[]) {
-    const targetMemberSets = ["constants", "methods", "properties", "declarations"];
-    for (const interfaceEl of interfaces) {
-        xmlMemberSetSort(interfaceEl, targetMemberSets);
+function interfaceBatchSort(interfaces: IDLDefinitions.Interface[]) {
+    for (const interfaceDef of interfaces) {
+        interfaceDef.constants.sort(nameSorter);
+        interfaceDef.operations.sort(nameSorter);
+        interfaceDef.attributes.sort(nameSorter);
     }
     return interfaces;
 }
 
 /** Has side effect on its arguments */
-function mergeInterface(baseInterface: Element, partialInterface: Element) {
-    mergeMemberSet(baseInterface, partialInterface, "anonymous-methods");
-    mergeMemberSet(baseInterface, partialInterface, "constants");
-    mergeMemberSet(baseInterface, partialInterface, "methods");
-    mergeMemberSet(baseInterface, partialInterface, "properties");
-    mergeMemberSet(baseInterface, partialInterface, "events");
-    mergeMemberSet(baseInterface, partialInterface, "sn:declarations");
-    mergeInterfaceDeclaration(baseInterface, partialInterface, "element");
-    mergeInterfaceDeclaration(baseInterface, partialInterface, "named-constructor");
+function mergeInterface(baseInterface: IDLDefinitions.Interface, partialInterface: IDLDefinitions.Interface) {
+    baseInterface.anonymousOperations.push(...partialInterface.anonymousOperations);
+    baseInterface.constants.push(...partialInterface.constants);
+    baseInterface.operations.push(...partialInterface.operations);
+    baseInterface.attributes.push(...partialInterface.attributes);
+    baseInterface.events.push(...partialInterface.events);
+    // Note: no partial interface is found to have iterable<> or named constructor
 
-    const children = xhelper.getChildrenArray(partialInterface);
-    for (const constructor of Array.from(children.filter(child => child.nodeName.toLowerCase() === "constructor"))) {
-        partialInterface.removeChild(constructor);
-        baseInterface.appendChild(constructor);
-    }
-    for (const implementsEl of Array.from(children.filter(child => child.nodeName.toLowerCase() === "implements"))) {
-        partialInterface.removeChild(implementsEl);
-        baseInterface.appendChild(implementsEl);
-    }
+    baseInterface.constructors.push(...partialInterface.constructors);
+    baseInterface.implements.push(...partialInterface.implements);
 }
-
-/** Has side effect on its arguments */
-function mergeMemberSet(baseParent: Element, partialParent: Element, setName: string) {
-    let baseSet = xhelper.getChild(baseParent, setName);
-    const partialSet = xhelper.getChild(partialParent, setName);
-
-    if (!partialSet) {
-        // no merge occurs
-        return;
-    }
-
-    if (!baseSet) {
-        baseSet = baseParent.ownerDocument.createElement(setName);
-    }
-
-    mergeSet(baseSet, partialSet, partialParent.getAttribute("exposed"));
-
-    if (!xhelper.getChild(baseParent, setName) /* no parentNode support on xmldom */) {
-        baseParent.appendChild(baseSet);
-    }
-}
-
-function mergeSet(baseSet: Element, partialSet: Element, exposed: string) {
-    for (const member of xhelper.getChildrenArray(partialSet)) {
-        partialSet.removeChild(member);
-        if (exposed) {
-            member.setAttribute("exposed", exposed);
-        }
-        baseSet.appendChild(member);
-    }
-}
-
-function mergeInterfaceDeclaration(baseInterface: Element, partialInterface: Element, declarationName: string) {
-    const declarations = xhelper.getChildren(partialInterface, declarationName);
-    if (!declarations.length) {
-        // no merge occurs
-        return;
-    }
-
-    for (const declaration of declarations) {
-        partialInterface.removeChild(declaration);
-        baseInterface.appendChild(declaration);
-    }
-}
-
 
 /** This is done to prevent unintential diff caused by sorting same-named multiple dictionaries */
 function mergePartialDictionaries(snippet: IDLSnippetContent) {
-    const baseDictionaries = snippet.dictionaries.filter(interfaceEl => !interfaceEl.getAttribute("sn:partial"));
-    const baseDictionaryMap = new Map(baseDictionaries.map<[string, Element]>(baseDictionary => [baseDictionary.getAttribute("name"), baseDictionary]));
+    const baseDictionaries = snippet.dictionaries.filter(interfaceEl => !interfaceEl.partial);
+    const baseDictionaryMap = new Map(baseDictionaries.map<[string, IDLDefinitions.Dictionary]>(baseDictionary => [baseDictionary.name, baseDictionary]));
 
     for (const dictionary of snippet.dictionaries) {
-        if (!dictionary.getAttribute("sn:partial")) {
+        if (!dictionary.partial) {
             // Not a partial dictionary element
             continue;
         }
 
-        const name = dictionary.getAttribute("name");
+        const name = dictionary.name;
         const baseDictionary = baseDictionaryMap.get(name);
 
         if (!baseDictionary) {
@@ -135,11 +81,11 @@ function mergePartialDictionaries(snippet: IDLSnippetContent) {
             continue;
         }
 
-        mergeMemberSet(baseDictionary, dictionary, "members");
+        baseDictionary.members.push(...dictionary.members);
     }
 
     for (const baseDictionary of baseDictionaries) {
-        xmlMemberSetSort(baseDictionary, ["members"]);
+        baseDictionary.members.sort(nameSorter);
     }
     snippet.dictionaries = baseDictionaries;
 }
