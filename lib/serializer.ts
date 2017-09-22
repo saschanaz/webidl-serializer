@@ -1,21 +1,19 @@
 ﻿"use strict";
 
 import * as WebIDL2 from "webidl2";
-import { XMLSerializer, DOMImplementation, DOMParser } from "xmldom";
+import { DOMParser } from "xmldom";
 import * as jsdom from "jsdom";
 import fetch from "node-fetch";
 import prettifyXml = require("prettify-xml");
 import * as mz from "mz/fs";
 import * as yargs from "yargs";
-import { ImportRemoteDescription, IDLImportResult, IDLSnippetContent, FetchResult, MSEdgeIgnore } from "./types"
+import { ImportRemoteDescription, IDLImportResult, IDLSnippetContent, FetchResult, MSEdgeIgnore, IDLDefinitions } from "./types"
 import * as xhelper from "./xmldom-helper.js";
 import * as supplements from "./supplements.js";
 import * as merger from "./partial-type-merger.js"
 import { sorter, xmlSort } from "./xmlsort.js"
 
-const impl = new DOMImplementation();
 const unionLineBreakRegex = / or[\s]*/g;
-const document = impl.createDocument("http://example.com/", "global", null);
 
 run().catch(err => console.error(err));
 
@@ -375,14 +373,14 @@ function mergeIDLSnippets(snippets: IDLSnippetContent[]) {
 
     merger.mergePartialTypes(result);
 
-    result.callbackFunctions.sort(sorter);
-    result.callbackInterfaces.sort(sorter);
-    result.dictionaries.sort(sorter);
-    result.enums.sort(sorter);
-    result.interfaces.sort(sorter);
-    result.mixinInterfaces.sort(sorter);
-    result.typedefs.sort((x, y) => sorter(x, y, "new-type"));
-    result.namespaces.sort(sorter);
+    result.callbackFunctions.sort(nameSorter);
+    result.callbackInterfaces.sort(nameSorter);
+    result.dictionaries.sort(nameSorter);
+    result.enums.sort(nameSorter);
+    result.interfaces.sort(nameSorter);
+    result.mixinInterfaces.sort(nameSorter);
+    result.typedefs.sort(nameSorter);
+    result.namespaces.sort(nameSorter);
 
     return result;
 }
@@ -427,241 +425,125 @@ function insert(webidl: WebIDL2.IDLRootType, snippetContent: IDLSnippetContent) 
     }
 }
 
-function createCallbackFunction(callbackType: WebIDL2.CallbackType) {
-    const callbackFunction = document.createElement("callback-function");
-    callbackFunction.setAttribute("name", callbackType.name);
-    callbackFunction.setAttribute("callback", "1");
-    if (callbackType.idlType.nullable) {
-        callbackFunction.setAttribute("nullable", "1");
-        callbackFunction.setAttribute("type", callbackType.idlType.origin.trim().slice(0, -1));
-    }
-    else {
-        callbackFunction.setAttribute("type", callbackType.idlType.origin.trim());
-    }
-
-    for (const param of getParamList(callbackType.arguments)) {
-        callbackFunction.appendChild(param);
-    }
-
-    return callbackFunction;
+function createCallbackFunction(callbackType: WebIDL2.CallbackType): IDLDefinitions.CallbackFunction {
+    return {
+        name: callbackType.name,
+        nullable: callbackType.idlType.nullable,
+        type: uncapQuestionMark(callbackType.idlType),
+        params: [...getArguments(callbackType.arguments)]
+    };
 }
 
 function createDictionary(dictionaryType: WebIDL2.DictionaryType) {
-    const dictionary = document.createElement("dictionary");
-    dictionary.setAttribute("name", dictionaryType.name);
-    dictionary.setAttribute("extends", dictionaryType.inheritance || "Object");
-
+    const dictionary: IDLDefinitions.Dictionary = {
+        name: dictionaryType.name,
+        extends: dictionaryType.inheritance || "Object",
+        members: []
+    };
     if (dictionaryType.partial) {
-        dictionary.setAttribute("sn:partial", "1");
+        dictionary.partial = true;
     }
-
-    const members = document.createElement("members");
 
     for (const memberType of dictionaryType.members) {
-        const member = document.createElement("member");
-        member.setAttribute("name", memberType.name);
+        const member: IDLDefinitions.DictionaryMember = {
+            name: memberType.name,
+            nullable: memberType.idlType.nullable,
+            type: uncapQuestionMark(memberType.idlType)
+        };
         if (memberType.default) {
-            member.setAttribute("default", getValueString(memberType.default));
-        }
-        if (memberType.idlType.nullable) {
-            member.setAttribute("nullable", "1");
-            member.setAttribute("type", memberType.idlType.origin.trim().slice(0, -1));
-        }
-        else {
-            member.setAttribute("type", memberType.idlType.origin.trim());
+            member.default = getValueString(memberType.default)
         }
         if (memberType.required) {
-            member.setAttribute("required", "1");
+            member.required = true;
         }
-        members.appendChild(member);
+        dictionary.members.push(member);
     }
 
-    xmlSort(members);
-    dictionary.appendChild(members);
-
+    dictionary.members.sort(nameSorter);
     return dictionary;
 }
 
 function createInterface(interfaceType: WebIDL2.InterfaceType) {
-    const interfaceEl = document.createElement("interface");
-    interfaceEl.setAttribute("name", interfaceType.name);
-    interfaceEl.setAttribute("extends", interfaceType.inheritance || "Object");
+    const interfaceDef: IDLDefinitions.Interface = {
+        name: interfaceType.name,
+        extends: interfaceType.inheritance || "Object"
+    };
 
     if (interfaceType.partial) {
-        interfaceEl.setAttribute("no-interface-object", "1");
-        interfaceEl.setAttribute("sn:partial", "1");
+        interfaceDef.partial = true;
     }
 
     for (const extAttr of interfaceType.extAttrs) {
         if (extAttr.name === "NoInterfaceObject") {
-            interfaceEl.setAttribute("no-interface-object", "1");
+            interfaceDef.noInterfaceObject = true;
         }
         else if (extAttr.name === "HTMLConstructor") {
             // empty constuctor, only callable when subclassed
         }
         else if (extAttr.name === "NamedConstructor") {
-            const namedConstructor = document.createElement("named-constructor");
-            namedConstructor.setAttribute("name", extAttr.rhs.value as string);
-            for (const param of getParamList(extAttr.arguments)) {
-                namedConstructor.appendChild(param);
+            interfaceDef.namedConstructor = {
+                name: extAttr.rhs.value as string,
+                arguments: [...getArguments(extAttr.arguments)]
             }
-            interfaceEl.appendChild(namedConstructor);
         }
         else if (extAttr.name === "Constructor") {
-            const constructor = document.createElement("constructor");
-            if (extAttr.arguments) {
-                for (const param of getParamList(extAttr.arguments)) {
-                    constructor.appendChild(param);
-                }
+            if (!interfaceDef.constructors) {
+                interfaceDef.constructors = [];
             }
-            interfaceEl.appendChild(constructor);
+            interfaceDef.constructors.push({
+                arguments: [...getArguments(extAttr.arguments)]
+            });
         }
         else if (extAttr.name === "Global") {
             if (!extAttr.rhs) {
-                interfaceEl.setAttribute("global", interfaceType.name);
+                interfaceDef.global = interfaceType.name;
             }
             else {
-                interfaceEl.setAttribute("global", (extAttr.rhs.value as string[]).join(' '));
+                interfaceDef.global = (extAttr.rhs.value as string[]).join(' ');
             }
         }
         else if (extAttr.name === "PrimaryGlobal") {
-            interfaceEl.setAttribute("primary-global", interfaceType.name);
+            interfaceDef.primaryGlobal = true;
         }
         else if (extAttr.name === "OverrideBuiltins") {
-            interfaceEl.setAttribute("override-builtins", "1");
+            interfaceDef.overrideBuiltins = true;
         }
         else if (extAttr.name === "LegacyUnenumerableNamedProperties") {
             // do nothing, just continue
         }
         else if (extAttr.name === "Exposed") {
-            interfaceEl.setAttribute("exposed", Array.isArray(extAttr.rhs.value) ? extAttr.rhs.value.join(' ') : extAttr.rhs.value);
+            interfaceDef.exposed = Array.isArray(extAttr.rhs.value) ? extAttr.rhs.value : [extAttr.rhs.value];
         }
         else {
             console.log(`(TODO) Skipping extended attribute ${extAttr.name}`);
         }
     }
 
-    const anonymousMethods = document.createElement("anonymous-methods");
-    const constants = document.createElement("constants");
-    const methods = document.createElement("methods");
-    const properties = document.createElement("properties");
-    const declarations = document.createElement("sn:declarations");
+    const anonymousOperations: IDLDefinitions.AnonymousOperation[] = [];
+    const constants: IDLDefinitions.Constant[] = [];
+    const operations: IDLDefinitions.Operation[] = [];
+    const attributes: IDLDefinitions.Attribute[] = [];
 
-    // TODO: separate member processor function
-    // TODO: process extAttr for members
+    // // TODO: separate member processor function
+    // // TODO: process extAttr for members
     for (const memberType of interfaceType.members) {
         if (memberType.type === "const") {
-            const constant = document.createElement("constant");
-
-            constant.setAttribute("name", memberType.name);
-            if (memberType.nullable) {
-                constant.setAttribute("nullable", "1");
-                constant.setAttribute("type", memberType.idlType.trim().slice(0, -1));
-            }
-            else {
-                constant.setAttribute("type", memberType.idlType.trim());
-            }
-            constant.setAttribute("value", getValueString(memberType.value));
-
-            constants.appendChild(constant);
+            constants.push(createConstant(memberType));
         }
         else if (memberType.type === "operation") {
-            const method = document.createElement("method");
-
-            if (memberType.arguments) {
-                for (const param of getParamList(memberType.arguments)) {
-                    method.appendChild(param);
-                }
-            }
-
+            const operation = createAnonymousOperation(memberType);
             if (memberType.name) {
-                method.setAttribute("name", memberType.name);
-                methods.appendChild(method);
+                operations.push({ name: memberType.name, ...operation })
             }
             else {
-                anonymousMethods.appendChild(method);
-            }
-
-            if (memberType.getter) {
-                method.setAttribute("getter", "1");
-            }
-            if (memberType.setter) {
-                method.setAttribute("setter", "1");
-            }
-            if (memberType.creator) {
-                method.setAttribute("creator", "1");
-            }
-            if (memberType.deleter) {
-                method.setAttribute("deleter", "1");
-            }
-            if (memberType.legacycaller) {
-                method.setAttribute("legacy-caller", "1");
-            }
-            if (memberType.static) {
-                method.setAttribute("static", "1");
-            }
-            if (memberType.stringifier) {
-                method.setAttribute("stringifier", "1");
-            }
-
-            if (!memberType.idlType && memberType.stringifier) {
-                method.setAttribute("type", "DOMString");
-            }
-            else {
-                if (memberType.idlType.nullable) {
-                    method.setAttribute("nullable", "1");
-                    method.setAttribute("type", memberType.idlType.origin.trim().slice(0, -1));
-                }
-                else {
-                    method.setAttribute("type", memberType.idlType.origin.trim());
-                }
-            }
-
-            for (const extAttr of memberType.extAttrs) {
-                if (extAttr.name === "Exposed") {
-                    method.setAttribute("exposed", Array.isArray(extAttr.rhs.value) ? extAttr.rhs.value.join(' ') : extAttr.rhs.value);
-                }
-                else {
-                    console.log(`(TODO) Skipping extended attribute ${extAttr.name}`);
-                }
+                anonymousOperations.push(operation);
             }
         }
         else if (memberType.type === "attribute") {
-            const property = document.createElement("property");
-            property.setAttribute("name", memberType.name);
-            if (memberType.readonly) {
-                property.setAttribute("read-only", "1");
-            }
-            if (memberType.static) {
-                property.setAttribute("static", "1");
-            }
-            if (memberType.inherit) {
-                console.log("(TODO) Met an inherited attribute. What should be done for it?");
-            }
-            if (memberType.stringifier) {
-                property.setAttribute("stringifier", "1");
-            }
-            if (memberType.idlType.nullable) {
-                property.setAttribute("nullable", "1");
-                property.setAttribute("type", memberType.idlType.origin.trim().slice(0, -1));
-            }
-            else {
-                property.setAttribute("type", memberType.idlType.origin.trim());
-            }
-
-            for (const extAttr of memberType.extAttrs) {
-                if (extAttr.name === "Exposed") {
-                    property.setAttribute("exposed", Array.isArray(extAttr.rhs.value) ? extAttr.rhs.value.join(' ') : extAttr.rhs.value);
-                }
-                else {
-                    console.log(`(TODO) Skipping extended attribute ${extAttr.name}`);
-                }
-            }
-
-            properties.appendChild(property);
+            attributes.push(createAttribute(memberType));
         }
         else if (memberType.type === "iterable") {
-            declarations.appendChild(createIterableDeclarationMember(memberType));
+            interfaceDef.iterable = createIterableDeclarationMember(memberType);
         }
         else {
             console.log(`Skipped type ${memberType.type}`);
@@ -669,137 +551,223 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
         }
     }
 
-    if (anonymousMethods.childNodes.length) {
-        interfaceEl.appendChild(anonymousMethods);
+    // No need to sort here, they will be sorted inside partial type merger
+    if (anonymousOperations.length) {
+        interfaceDef.anonymousOperations = anonymousOperations;
     }
-    if (constants.childNodes.length) {
-        interfaceEl.appendChild(constants);
+    if (constants.length) {
+        interfaceDef.constants = constants;
     }
-    if (methods.childNodes.length) {
-        interfaceEl.appendChild(methods);
+    if (operations.length) {
+        interfaceDef.operations = operations;
     }
-    if (properties.childNodes.length) {
-        interfaceEl.appendChild(properties);
+    if (attributes.length) {
+        interfaceDef.attributes = attributes;
     }
-    if (declarations.childNodes.length) {
-        interfaceEl.appendChild(declarations);
+
+    return interfaceDef;
+
+    function createConstant(memberType: WebIDL2.ConstantMemberType): IDLDefinitions.Constant {
+        return {
+            name: memberType.name,
+            type: memberType.idlType.trim(),
+            value: getValueString(memberType.value)
+        };
     }
-    return interfaceEl;
+
+    function createAnonymousOperation(operationType: WebIDL2.OperationMemberType) {
+        const operation: IDLDefinitions.AnonymousOperation = {
+            nullable: operationType.idlType ? operationType.idlType.nullable : false,
+            type: getReturnType()
+        }
+
+        if (operationType.arguments) {
+            operation.arguments = [...getArguments(operationType.arguments)];
+        }
+
+        if (operationType.getter) {
+            operation.getter = true;
+        }
+        if (operationType.setter) {
+            operation.setter = true;
+        }
+        if (operationType.creator) {
+            operation.creator = true;
+        }
+        if (operationType.deleter) {
+            operation.deleter = true;
+        }
+        if (operationType.static) {
+            operation.static = true;
+        }
+        if (operationType.stringifier) {
+            operation.stringifier = true;
+        }
+
+        for (const extAttr of operationType.extAttrs) {
+            if (extAttr.name === "Exposed") {
+                operation.exposed = Array.isArray(extAttr.rhs.value) ? extAttr.rhs.value : [extAttr.rhs.value];
+            }
+            else {
+                console.log(`(TODO) Skipping extended attribute ${extAttr.name}`);
+            }
+        }
+
+        return operation;
+
+        function getReturnType() {
+            if (!operationType.idlType && operationType.stringifier) {
+                return "DOMString";
+            }
+            else {
+                return uncapQuestionMark(operationType.idlType);
+            }
+        }
+    }
+
+    function createAttribute(attributeType: WebIDL2.AttributeMemberType) {
+        const attribute: IDLDefinitions.Attribute = {
+            name: attributeType.name,
+            nullable: attributeType.idlType.nullable,
+            type: uncapQuestionMark(attributeType.idlType)
+        }
+
+        if (attributeType.readonly) {
+            attribute.readonly = true;
+        }
+        if (attributeType.static) {
+            attribute.static = true;
+        }
+        if (attributeType.inherit) {
+            console.log("(TODO) Met an inherited attribute. What should be done for it?");
+        }
+        if (attributeType.stringifier) {
+            attribute.stringifier = true;
+        }
+
+        for (const extAttr of attributeType.extAttrs) {
+            if (extAttr.name === "Exposed") {
+                attribute.exposed = Array.isArray(extAttr.rhs.value) ? extAttr.rhs.value : [extAttr.rhs.value];
+            }
+            else {
+                console.log(`(TODO) Skipping extended attribute ${extAttr.name}`);
+            }
+        }
+
+        return attribute;
+    }
+
+    function createIterableDeclarationMember(declarationMemberType: WebIDL2.IterableDeclarationMemberType) {
+        if (Array.isArray(declarationMemberType.idlType)) {
+            // key, value
+            return {
+                keytype: declarationMemberType.idlType[0].origin.trim(),
+                type: declarationMemberType.idlType[1].origin.trim()
+            }
+        }
+        else {
+            // value only
+            return {
+                type: declarationMemberType.idlType.origin.trim()
+            }
+        }
+        // TODO: extAttr
+    }
 }
 
-function createIterableDeclarationMember(declarationMemberType: WebIDL2.IterableDeclarationMemberType) {
-    const iterable = document.createElement("sn:iterable");
-
-    if (Array.isArray(declarationMemberType.idlType)) {
-        // key, value
-        iterable.setAttribute("keytype", declarationMemberType.idlType[1].origin.trim());
-        iterable.setAttribute("type", declarationMemberType.idlType[1].origin.trim());
-    }
-    else {
-        // value only
-        iterable.setAttribute("type", declarationMemberType.idlType.origin.trim());
-    }
-    // TODO: extAttr
-    return iterable;
+function createEnum(enumType: WebIDL2.EnumType): IDLDefinitions.Enum {
+    return {
+        name: enumType.name,
+        values: enumType.values
+    };
 }
 
-function createEnum(enumType: WebIDL2.EnumType) {
-    const enumEl = document.createElement("enum");
-    enumEl.setAttribute("name", enumType.name);
-
-    for (const valueStr of enumType.values) {
-        const value = document.createElement("value");
-        value.textContent = valueStr;
-        enumEl.appendChild(value);
+function createTypedef(typedefType: WebIDL2.TypedefType): IDLDefinitions.Typedef {
+    return {
+        name: typedefType.name,
+        nullable: typedefType.idlType.nullable,
+        type: uncapQuestionMark(typedefType.idlType)
     }
-
-    return enumEl;
-}
-
-function createTypedef(typedefType: WebIDL2.TypedefType) {
-    const typedef = document.createElement("typedef");
-    typedef.setAttribute("new-type", typedefType.name);
-    if (typedefType.idlType.nullable) {
-        typedef.setAttribute("nullable", "1");
-        typedef.setAttribute("type", typedefType.idlType.origin.trim().replace(unionLineBreakRegex, " or ").slice(0, -1));
-    }
-    else {
-        typedef.setAttribute("type", typedefType.idlType.origin.trim().replace(unionLineBreakRegex, " or "));
-    }
-
-    return typedef;
 }
 
 function createNamespace(namespaceType: WebIDL2.NamespaceType) {
-    const namespace = document.createElement("namespace");
-    namespace.setAttribute("name", namespaceType.name);
+    const namespace: IDLDefinitions.Namespace = {
+        name: namespaceType.name
+    };
 
     if (namespaceType.partial) {
-        namespace.setAttribute("no-interface-object", "1");
-        namespace.setAttribute("sn:partial", "1");
+        namespace.partial = true;
     }
 
     for (const extAttr of namespaceType.extAttrs) {
         if (extAttr.name === "Exposed") {
-            namespace.setAttribute("exposed", Array.isArray(extAttr.rhs.value) ? extAttr.rhs.value.join(' ') : extAttr.rhs.value);
+            namespace.exposed = Array.isArray(extAttr.rhs.value) ? extAttr.rhs.value : [extAttr.rhs.value];
         }
         else {
             console.log(`(TODO) Skipping extended attribute ${extAttr.name}`);
         }
     }
 
-    const methods = document.createElement("methods");
-    const properties = document.createElement("properties");
+    const operations: IDLDefinitions.Operation[] = [];
+    const attributes: IDLDefinitions.Attribute[] = [];
 
     // TODO: separate member processor function
     // TODO: process extAttr for members
     for (const memberType of namespaceType.members) {
         if (memberType.type === "operation") {
-            const method = document.createElement("method");
-
+            const operation: IDLDefinitions.Operation = {
+                name: memberType.name,
+                nullable: memberType.idlType.nullable,
+                type: uncapQuestionMark(memberType.idlType)
+            };
+            
             if (memberType.arguments) {
-                for (const param of getParamList(memberType.arguments)) {
-                    method.appendChild(param);
-                }
+                operation.arguments = [...getArguments(memberType.arguments)];
             }
-
-            method.setAttribute("name", memberType.name);
-            methods.appendChild(method);
-
-            if (memberType.idlType.nullable) {
-                method.setAttribute("nullable", "1");
-                method.setAttribute("type", memberType.idlType.origin.trim().slice(0, -1));
-            }
-            else {
-                method.setAttribute("type", memberType.idlType.origin.trim());
-            }
+            operations.push(operation);
         }
         else if (memberType.type === "attribute") {
-            const property = document.createElement("property");
-            property.setAttribute("name", memberType.name);
+            const attribute: IDLDefinitions.Attribute = {
+                name: memberType.name,
+                nullable: memberType.idlType.nullable,
+                type: uncapQuestionMark(memberType.idlType)
+            }
             if (memberType.readonly) {
-                property.setAttribute("read-only", "1");
+                attribute.readonly = true;
             }
-            if (memberType.idlType.nullable) {
-                property.setAttribute("nullable", "1");
-                property.setAttribute("type", memberType.idlType.origin.trim().slice(0, -1));
-            }
-            else {
-                property.setAttribute("type", memberType.idlType.origin.trim());
-            }
-            properties.appendChild(property);
+            attributes.push(attribute);
         }
     }
 
-    if (methods.childNodes.length) {
-        xmlSort(methods);
-        namespace.appendChild(methods);
+    if (operations.length) {
+        operations.sort(nameSorter);
+        namespace.operations = operations;
     }
-    if (properties.childNodes.length) {
-        xmlSort(properties);
-        namespace.appendChild(properties);
+    if (attributes.length) {
+        attributes.sort(nameSorter);
+        namespace.attributes = attributes;
     }
     return namespace;
+}
+
+function* getArguments(argumentTypes: WebIDL2.Argument[]) {
+    for (const argumentType of argumentTypes) {
+        const arg: IDLDefinitions.Argument = {
+            name: argumentType.name,
+            nullable: argumentType.idlType.nullable,
+            type: uncapQuestionMark(argumentType.idlType),
+        }
+        if (argumentType.optional) {
+            arg.optional = true;
+        }
+        if (argumentType.variadic) {
+            arg.variadic = true;
+        }
+        if (argumentType.default) {
+            arg.default = getValueString(argumentType.default);
+        }
+        yield arg;
+    }
 }
 
 function getParamList(argumentTypes: WebIDL2.Argument[]) {
@@ -901,4 +869,17 @@ function jsdomEnv(html: string) {
             }
         });
     });
+}
+
+/** TODO: uncapping may not be needed */
+function uncapQuestionMark(idlType: WebIDL2.IDLTypeDescription) {
+    const type = idlType.origin.trim().replace(unionLineBreakRegex, " or ");
+    if (idlType.nullable) {
+        return type.slice(0, -1);
+    }
+    return type;
+}
+
+function nameSorter(x: { name: string }, y: { name: string }) {
+    return x.name.localeCompare(y.name);
 }

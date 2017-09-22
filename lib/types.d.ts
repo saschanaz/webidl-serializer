@@ -17,14 +17,14 @@ export interface IDLImportResult {
 }
 
 export interface IDLSnippetContent {
-    callbackFunctions: Element[];
-    callbackInterfaces: Element[];
-    dictionaries: Element[];
-    enums: Element[];
-    interfaces: Element[];
-    mixinInterfaces: Element[];
-    typedefs: Element[];
-    namespaces: Element[];
+    callbackFunctions: IDLDefinitions.CallbackFunction[];
+    callbackInterfaces: IDLDefinitions.Interface[];
+    dictionaries: IDLDefinitions.Dictionary[];
+    enums: IDLDefinitions.Enum[];
+    interfaces: IDLDefinitions.Interface[];
+    mixinInterfaces: IDLDefinitions.Interface[];
+    typedefs: IDLDefinitions.Typedef[];
+    namespaces: IDLDefinitions.Namespace[];
 }
 
 export interface MSEdgeIgnore {
@@ -33,27 +33,27 @@ export interface MSEdgeIgnore {
     cssProperties: string[]
 }
 
-export namespace Definitions {
+export namespace IDLDefinitions {
     export interface CallbackFunction {
         name: string;
-        callback: true,
         nullable: boolean;
         type: string;
+        params: Argument[];
     }
 
     export interface Dictionary {
         name: string;
         extends: string;
-        partial: boolean;
+        partial?: boolean;
         members: DictionaryMember[];
     }
 
     export interface DictionaryMember {
         name: string;
-        default: string;
+        default?: string;
         nullable: boolean;
         type: string;
-        required: boolean;
+        required?: boolean;
     }
 
     export interface Enum {
@@ -67,21 +67,33 @@ export namespace Definitions {
         partial?: boolean;
 
         noInterfaceObject?: boolean;
-        namedConstructor?: { name: string; params: Param[]; };
-        constructor?: { params: Param[]; }[];
+        namedConstructor?: { name: string; arguments: Argument[]; };
+        constructors?: { arguments: Argument[]; }[];
         global?: string;
-        primaryGlobal?: string;
+        primaryGlobal?: boolean;
         overrideBuiltins?: boolean;
         exposed?: string[];
 
-        constants?: { name: string; nullable: boolean; value: string; }[];
+        anonymousOperations?: AnonymousOperation[];
+        constants?: Constant[];
         operations?: Operation[];
         attributes?: Attribute[];
 
-        iterable?: { keytype?: string; type: string; }
+        iterable?: Iterable;
     }
 
-    export interface namespace {
+    export interface Constant {
+        name: string;
+        type: string;
+        value: string;
+    }
+
+    export interface Iterable { 
+        keytype?: string;
+        type: string;
+    }
+
+    export interface Namespace {
         name: string;
         partial?: boolean;
 
@@ -91,15 +103,18 @@ export namespace Definitions {
         attributes?: Attribute[];
     }
 
-    export interface Operation {
+    export interface Operation extends AnonymousOperation {
         name: string;
-        params: Param[]
+    }
+
+    export interface AnonymousOperation {
+        arguments?: Argument[];
         nullable: boolean;
         type: string;
 
         getter?: true;
         setter?: true;
-        creater?: true;
+        creator?: true;
         deleter?: true;
         static?: true;
         stringifier?: true;
@@ -109,7 +124,7 @@ export namespace Definitions {
 
     export interface Attribute {
         name: string;
-        readOnly?: boolean;
+        readonly?: boolean;
         static?: boolean;
         stringifier?: boolean;
         nullable?: boolean;
@@ -117,13 +132,13 @@ export namespace Definitions {
         exposed?: string[];
     }
 
-    export interface Param {
+    export interface Argument {
         name: string;
-        default: boolean;
-        optional: boolean;
+        default?: string;
+        optional?: boolean;
         nullable: boolean;
         type: string;
-        variadic: boolean;
+        variadic?: boolean;
     }
 
     export interface Typedef {

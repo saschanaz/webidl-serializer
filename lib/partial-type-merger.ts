@@ -5,6 +5,7 @@ import { xmlMemberSetSort } from "./xmlsort.js"
 export function mergePartialTypes(snippet: IDLSnippetContent) {
     mergePartialInterfaces(snippet);
     mergePartialDictionaries(snippet);
+    // TODO: partial namespaces (not used in specs yet)
 }
 
 /** 
