@@ -357,14 +357,13 @@ function mergeIDLSnippets(snippets: IDLSnippetContent[]) {
     const result = createIDLSnippetContentContainer();
 
     for (const snippet of snippets) {
-        result.callbackFunctions.push(...snippet.callbackFunctions);
-        result.callbackInterfaces.push(...snippet.callbackInterfaces);
-        result.dictionaries.push(...snippet.dictionaries);
-        result.enums.push(...snippet.enums);
-        result.interfaces.push(...snippet.interfaces);
-        result.mixinInterfaces.push(...snippet.mixinInterfaces);
-        result.typedefs.push(...snippet.typedefs);
-        result.namespaces.push(...snippet.namespaces);
+        result.callbackFunctions.push(...cloneAsJSON(snippet.callbackFunctions));
+        result.callbackInterfaces.push(...cloneAsJSON(snippet.callbackInterfaces));
+        result.dictionaries.push(...cloneAsJSON(snippet.dictionaries));
+        result.enums.push(...cloneAsJSON(snippet.enums));
+        result.interfaces.push(...cloneAsJSON(snippet.interfaces));
+        result.typedefs.push(...cloneAsJSON(snippet.typedefs));
+        result.namespaces.push(...cloneAsJSON(snippet.namespaces));
     }
 
     merger.mergePartialTypes(result);
@@ -869,4 +868,8 @@ function uncapQuestionMark(idlType: WebIDL2.IDLTypeDescription) {
         return type.slice(0, -1);
     }
     return type;
+}
+
+function cloneAsJSON<T>(obj: T) {
+    return JSON.parse(JSON.stringify(obj));
 }
