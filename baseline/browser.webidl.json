@@ -1380,8 +1380,6 @@
       "members": [
         { "name": "iceRestart", "type": "boolean", "default": "false" },
         { "name": "offerToReceiveAudio", "type": "boolean" },
-        { "name": "offerToReceiveAudio", "type": "boolean" },
-        { "name": "offerToReceiveVideo", "type": "boolean" },
         { "name": "offerToReceiveVideo", "type": "boolean" }
       ]
     }, {
@@ -1590,6 +1588,15 @@
       "members": [
         { "name": "lastChance", "type": "boolean", "default": "false" },
         { "name": "tag", "type": "DOMString", "required": true }
+      ]
+    }, {
+      "name": "TextDecodeOptions", "extends": "Object",
+      "members": [{ "name": "stream", "type": "boolean", "default": "false" }]
+    }, {
+      "name": "TextDecoderOptions", "extends": "Object",
+      "members": [
+        { "name": "fatal", "type": "boolean", "default": "false" },
+        { "name": "ignoreBOM", "type": "boolean", "default": "false" }
       ]
     }, {
       "name": "TouchEventInit", "extends": "EventModifierInit",
@@ -2663,13 +2670,13 @@
         { "name": "beginPath", "type": "void", "arguments": [] },
         {
           "name": "clip", "type": "void",
-          "arguments": [{ "name": "fillRule", "type": "CanvasFillRule", "optional": true, "default": "\"nonzero\"" }]
-        }, {
-          "name": "clip", "type": "void",
           "arguments": [
             { "name": "path", "type": "Path2D" },
             { "name": "fillRule", "type": "CanvasFillRule", "optional": true, "default": "\"nonzero\"" }
           ]
+        }, {
+          "name": "clip", "type": "void",
+          "arguments": [{ "name": "fillRule", "type": "CanvasFillRule", "optional": true, "default": "\"nonzero\"" }]
         }, {
           "name": "fill", "type": "void",
           "arguments": [
@@ -3369,6 +3376,9 @@
         { "name": "style", "type": "CSSStyleDeclaration", "readonly": true }
       ]
     }, {
+      "name": "CSSPseudoElement", "extends": "Object", "partial": true,
+      "implements": ["GeometryUtils"]
+    }, {
       "name": "CSSRule", "extends": "Object",
       "constants": [
         { "name": "CHARSET_RULE", "type": "unsigned short", "value": "2" },
@@ -3673,14 +3683,7 @@
           "arguments": [{ "name": "node", "type": "Node" }]
         },
         { "name": "captureEvents", "type": "void", "arguments": [] },
-        { "name": "captureEvents", "type": "void", "arguments": [] },
         {
-          "name": "caretPositionFromPoint", "type": "CaretPosition", "nullable": true,
-          "arguments": [
-            { "name": "x", "type": "double" },
-            { "name": "y", "type": "double" }
-          ]
-        }, {
           "name": "caretPositionFromPoint", "type": "CaretPosition", "nullable": true,
           "arguments": [
             { "name": "x", "type": "double" },
@@ -3688,8 +3691,6 @@
           ]
         },
         { "name": "clear", "type": "void", "arguments": [] },
-        { "name": "clear", "type": "void", "arguments": [] },
-        { "name": "close", "type": "void", "arguments": [] },
         { "name": "close", "type": "void", "arguments": [] },
         {
           "name": "createAttribute", "type": "Attr",
@@ -3770,29 +3771,10 @@
             { "name": "y", "type": "double" }
           ]
         }, {
-          "name": "elementFromPoint", "type": "Element", "nullable": true,
-          "arguments": [
-            { "name": "x", "type": "double" },
-            { "name": "y", "type": "double" }
-          ]
-        }, {
           "name": "elementsFromPoint", "type": "sequence<Element>",
           "arguments": [
             { "name": "x", "type": "double" },
             { "name": "y", "type": "double" }
-          ]
-        }, {
-          "name": "elementsFromPoint", "type": "sequence<Element>",
-          "arguments": [
-            { "name": "x", "type": "double" },
-            { "name": "y", "type": "double" }
-          ]
-        }, {
-          "name": "execCommand", "type": "boolean",
-          "arguments": [
-            { "name": "commandId", "type": "DOMString" },
-            { "name": "showUI", "type": "boolean", "optional": true, "default": "false" },
-            { "name": "value", "type": "DOMString", "optional": true, "default": "\"\"" }
           ]
         }, {
           "name": "execCommand", "type": "boolean",
@@ -3810,9 +3792,6 @@
           "name": "getElementsByName", "type": "NodeList",
           "arguments": [{ "name": "elementName", "type": "DOMString" }]
         }, {
-          "name": "getElementsByName", "type": "NodeList",
-          "arguments": [{ "name": "elementName", "type": "DOMString" }]
-        }, {
           "name": "getElementsByTagName", "type": "HTMLCollection",
           "arguments": [{ "name": "qualifiedName", "type": "DOMString" }]
         }, {
@@ -3823,7 +3802,6 @@
           ]
         },
         { "name": "getSelection", "type": "Selection", "nullable": true, "arguments": [] },
-        { "name": "hasFocus", "type": "boolean", "arguments": [] },
         { "name": "hasFocus", "type": "boolean", "arguments": [] },
         {
           "name": "importNode", "type": "Node",
@@ -3838,19 +3816,6 @@
             { "name": "replace", "type": "DOMString", "optional": true, "default": "\"\"" }
           ]
         }, {
-          "name": "open", "type": "Document",
-          "arguments": [
-            { "name": "type", "type": "DOMString", "optional": true, "default": "\"text/html\"" },
-            { "name": "replace", "type": "DOMString", "optional": true, "default": "\"\"" }
-          ]
-        }, {
-          "name": "open", "type": "WindowProxy",
-          "arguments": [
-            { "name": "url", "type": "USVString" },
-            { "name": "name", "type": "DOMString" },
-            { "name": "features", "type": "DOMString" }
-          ]
-        }, {
           "name": "open", "type": "WindowProxy",
           "arguments": [
             { "name": "url", "type": "USVString" },
@@ -3861,43 +3826,21 @@
           "name": "queryCommandEnabled", "type": "boolean",
           "arguments": [{ "name": "commandId", "type": "DOMString" }]
         }, {
-          "name": "queryCommandEnabled", "type": "boolean",
-          "arguments": [{ "name": "commandId", "type": "DOMString" }]
-        }, {
-          "name": "queryCommandIndeterm", "type": "boolean",
-          "arguments": [{ "name": "commandId", "type": "DOMString" }]
-        }, {
           "name": "queryCommandIndeterm", "type": "boolean",
           "arguments": [{ "name": "commandId", "type": "DOMString" }]
         }, {
           "name": "queryCommandState", "type": "boolean",
           "arguments": [{ "name": "commandId", "type": "DOMString" }]
         }, {
-          "name": "queryCommandState", "type": "boolean",
-          "arguments": [{ "name": "commandId", "type": "DOMString" }]
-        }, {
           "name": "queryCommandSupported", "type": "boolean",
-          "arguments": [{ "name": "commandId", "type": "DOMString" }]
-        }, {
-          "name": "queryCommandSupported", "type": "boolean",
-          "arguments": [{ "name": "commandId", "type": "DOMString" }]
-        }, {
-          "name": "queryCommandValue", "type": "DOMString",
           "arguments": [{ "name": "commandId", "type": "DOMString" }]
         }, {
           "name": "queryCommandValue", "type": "DOMString",
           "arguments": [{ "name": "commandId", "type": "DOMString" }]
         },
         { "name": "releaseEvents", "type": "void", "arguments": [] },
-        { "name": "releaseEvents", "type": "void", "arguments": [] },
         {
           "name": "write", "type": "void",
-          "arguments": [{ "name": "text", "type": "DOMString", "variadic": true }]
-        }, {
-          "name": "write", "type": "void",
-          "arguments": [{ "name": "text", "type": "DOMString", "variadic": true }]
-        }, {
-          "name": "writeln", "type": "void",
           "arguments": [{ "name": "text", "type": "DOMString", "variadic": true }]
         }, {
           "name": "writeln", "type": "void",
@@ -3906,90 +3849,57 @@
       ],
       "attributes": [
         { "name": "activeElement", "type": "Element", "nullable": true, "readonly": true },
-        { "name": "activeElement", "type": "Element", "nullable": true, "readonly": true },
-        { "name": "alinkColor", "type": "DOMString" },
         { "name": "alinkColor", "type": "DOMString" },
         { "name": "all", "type": "HTMLAllCollection", "readonly": true },
-        { "name": "all", "type": "HTMLAllCollection", "readonly": true },
-        { "name": "anchors", "type": "HTMLCollection", "readonly": true },
         { "name": "anchors", "type": "HTMLCollection", "readonly": true },
         { "name": "applets", "type": "HTMLCollection", "readonly": true },
-        { "name": "applets", "type": "HTMLCollection", "readonly": true },
         { "name": "bgColor", "type": "DOMString" },
-        { "name": "bgColor", "type": "DOMString" },
-        { "name": "body", "type": "HTMLElement", "nullable": true },
         { "name": "body", "type": "HTMLElement", "nullable": true },
         { "name": "characterSet", "type": "DOMString", "readonly": true },
         { "name": "charset", "type": "DOMString", "readonly": true },
         { "name": "compatMode", "type": "DOMString", "readonly": true },
         { "name": "contentType", "type": "DOMString", "readonly": true },
         { "name": "cookie", "type": "USVString" },
-        { "name": "cookie", "type": "USVString" },
-        { "name": "currentScript", "type": "HTMLOrSVGScriptElement", "nullable": true, "readonly": true },
         { "name": "currentScript", "type": "HTMLOrSVGScriptElement", "nullable": true, "readonly": true },
         { "name": "defaultView", "type": "WindowProxy", "nullable": true, "readonly": true },
-        { "name": "defaultView", "type": "WindowProxy", "nullable": true, "readonly": true },
         { "name": "designMode", "type": "DOMString" },
-        { "name": "designMode", "type": "DOMString" },
-        { "name": "dir", "type": "DOMString" },
         { "name": "dir", "type": "DOMString" },
         { "name": "doctype", "type": "DocumentType", "nullable": true, "readonly": true },
         { "name": "documentElement", "type": "Element", "nullable": true, "readonly": true },
         { "name": "documentURI", "type": "USVString", "readonly": true },
         { "name": "domain", "type": "USVString" },
-        { "name": "domain", "type": "USVString" },
-        { "name": "embeds", "type": "HTMLCollection", "readonly": true },
         { "name": "embeds", "type": "HTMLCollection", "readonly": true },
         { "name": "fgColor", "type": "DOMString" },
-        { "name": "fgColor", "type": "DOMString" },
-        { "name": "forms", "type": "HTMLCollection", "readonly": true },
         { "name": "forms", "type": "HTMLCollection", "readonly": true },
         { "name": "fullscreen", "type": "boolean", "readonly": true },
         { "name": "fullscreenEnabled", "type": "boolean", "readonly": true },
         { "name": "head", "type": "HTMLHeadElement", "nullable": true, "readonly": true },
-        { "name": "head", "type": "HTMLHeadElement", "nullable": true, "readonly": true },
         { "name": "hidden", "type": "boolean", "readonly": true },
-        { "name": "images", "type": "HTMLCollection", "readonly": true },
         { "name": "images", "type": "HTMLCollection", "readonly": true },
         { "name": "implementation", "type": "DOMImplementation", "readonly": true },
         { "name": "inputEncoding", "type": "DOMString", "readonly": true },
         { "name": "lastModified", "type": "DOMString", "readonly": true },
-        { "name": "lastModified", "type": "DOMString", "readonly": true },
-        { "name": "linkColor", "type": "DOMString" },
         { "name": "linkColor", "type": "DOMString" },
         { "name": "links", "type": "HTMLCollection", "readonly": true },
-        { "name": "links", "type": "HTMLCollection", "readonly": true },
-        { "name": "location", "type": "Location", "nullable": true, "readonly": true },
         { "name": "location", "type": "Location", "nullable": true, "readonly": true },
         { "name": "onfullscreenchange", "type": "EventHandler" },
         { "name": "onfullscreenerror", "type": "EventHandler" },
         { "name": "onreadystatechange", "type": "EventHandler" },
-        { "name": "onreadystatechange", "type": "EventHandler" },
         { "name": "origin", "type": "USVString", "readonly": true },
         { "name": "plugins", "type": "HTMLCollection", "readonly": true },
-        { "name": "plugins", "type": "HTMLCollection", "readonly": true },
         { "name": "readyState", "type": "DocumentReadyState", "readonly": true },
-        { "name": "readyState", "type": "DocumentReadyState", "readonly": true },
-        { "name": "referrer", "type": "USVString", "readonly": true },
         { "name": "referrer", "type": "USVString", "readonly": true },
         { "name": "rootElement", "type": "SVGSVGElement", "nullable": true, "readonly": true },
         { "name": "scripts", "type": "HTMLCollection", "readonly": true },
-        { "name": "scripts", "type": "HTMLCollection", "readonly": true },
-        { "name": "scrollingElement", "type": "Element", "nullable": true, "readonly": true },
         { "name": "scrollingElement", "type": "Element", "nullable": true, "readonly": true },
         { "name": "styleSheets", "type": "StyleSheetList", "readonly": true },
         { "name": "title", "type": "DOMString" },
-        { "name": "title", "type": "DOMString" },
         { "name": "URL", "type": "USVString", "readonly": true },
         { "name": "visibilityState", "type": "VisibilityState", "readonly": true },
-        { "name": "vlinkColor", "type": "DOMString" },
         { "name": "vlinkColor", "type": "DOMString" }
       ],
       "implements": ["NonElementParentNode", "DocumentOrShadowRoot", "ParentNode", "GeometryUtils", "GlobalEventHandlers", "DocumentAndElementEventHandlers"],
       "anonymousOperations": [{
-        "type": "object", "getter": true,
-        "arguments": [{ "name": "name", "type": "DOMString" }]
-      }, {
         "type": "object", "getter": true,
         "arguments": [{ "name": "name", "type": "DOMString" }]
       }]
@@ -4512,8 +4422,6 @@
           ]
         },
         { "name": "getBoundingClientRect", "type": "DOMRect", "arguments": [] },
-        { "name": "getBoundingClientRect", "type": "DOMRect", "arguments": [] },
-        { "name": "getClientRects", "type": "sequence<DOMRect>", "arguments": [] },
         { "name": "getClientRects", "type": "sequence<DOMRect>", "arguments": [] },
         {
           "name": "getElementsByClassName", "type": "HTMLCollection",
@@ -4586,21 +4494,6 @@
             { "name": "y", "type": "unrestricted double" }
           ]
         }, {
-          "name": "scroll", "type": "void",
-          "arguments": [
-            { "name": "x", "type": "unrestricted double" },
-            { "name": "y", "type": "unrestricted double" }
-          ]
-        }, {
-          "name": "scroll", "type": "void",
-          "arguments": [{ "name": "options", "type": "ScrollToOptions", "optional": true }]
-        }, {
-          "name": "scrollBy", "type": "void",
-          "arguments": [{ "name": "options", "type": "ScrollToOptions", "optional": true }]
-        }, {
-          "name": "scrollBy", "type": "void",
-          "arguments": [{ "name": "options", "type": "ScrollToOptions", "optional": true }]
-        }, {
           "name": "scrollBy", "type": "void",
           "arguments": [
             { "name": "x", "type": "unrestricted double" },
@@ -4608,35 +4501,18 @@
           ]
         }, {
           "name": "scrollBy", "type": "void",
-          "arguments": [
-            { "name": "x", "type": "unrestricted double" },
-            { "name": "y", "type": "unrestricted double" }
-          ]
+          "arguments": [{ "name": "options", "type": "ScrollToOptions", "optional": true }]
         },
         { "name": "scrollIntoView", "type": "void", "arguments": [] },
         {
           "name": "scrollIntoView", "type": "void",
           "arguments": [{ "name": "arg", "type": "(boolean or object)" }]
         }, {
-          "name": "scrollIntoView", "type": "void",
-          "arguments": [{ "name": "arg", "type": "(boolean or object)" }]
-        },
-        { "name": "scrollIntoView", "type": "void", "arguments": [] },
-        {
           "name": "scrollTo", "type": "void",
           "arguments": [
             { "name": "x", "type": "unrestricted double" },
             { "name": "y", "type": "unrestricted double" }
           ]
-        }, {
-          "name": "scrollTo", "type": "void",
-          "arguments": [
-            { "name": "x", "type": "unrestricted double" },
-            { "name": "y", "type": "unrestricted double" }
-          ]
-        }, {
-          "name": "scrollTo", "type": "void",
-          "arguments": [{ "name": "options", "type": "ScrollToOptions", "optional": true }]
         }, {
           "name": "scrollTo", "type": "void",
           "arguments": [{ "name": "options", "type": "ScrollToOptions", "optional": true }]
@@ -4672,12 +4548,8 @@
         { "name": "classList", "type": "DOMTokenList", "readonly": true },
         { "name": "className", "type": "DOMString" },
         { "name": "clientHeight", "type": "long", "readonly": true },
-        { "name": "clientHeight", "type": "long", "readonly": true },
-        { "name": "clientLeft", "type": "long", "readonly": true },
         { "name": "clientLeft", "type": "long", "readonly": true },
         { "name": "clientTop", "type": "long", "readonly": true },
-        { "name": "clientTop", "type": "long", "readonly": true },
-        { "name": "clientWidth", "type": "long", "readonly": true },
         { "name": "clientWidth", "type": "long", "readonly": true },
         { "name": "id", "type": "DOMString" },
         { "name": "innerHTML", "type": "DOMString" },
@@ -4688,12 +4560,8 @@
         { "name": "outerHTML", "type": "DOMString" },
         { "name": "prefix", "type": "DOMString", "nullable": true, "readonly": true },
         { "name": "scrollHeight", "type": "long", "readonly": true },
-        { "name": "scrollHeight", "type": "long", "readonly": true },
-        { "name": "scrollLeft", "type": "unrestricted double" },
         { "name": "scrollLeft", "type": "unrestricted double" },
         { "name": "scrollTop", "type": "unrestricted double" },
-        { "name": "scrollTop", "type": "unrestricted double" },
-        { "name": "scrollWidth", "type": "long", "readonly": true },
         { "name": "scrollWidth", "type": "long", "readonly": true },
         { "name": "shadowRoot", "type": "ShadowRoot", "nullable": true, "readonly": true },
         { "name": "slot", "type": "DOMString" },
@@ -5388,30 +5256,22 @@
       "name": "HTMLAnchorElement", "extends": "HTMLElement",
       "attributes": [
         { "name": "charset", "type": "DOMString" },
-        { "name": "charset", "type": "DOMString" },
-        { "name": "coords", "type": "DOMString" },
         { "name": "coords", "type": "DOMString" },
         { "name": "download", "type": "DOMString" },
         { "name": "hreflang", "type": "DOMString" },
-        { "name": "name", "type": "DOMString" },
         { "name": "name", "type": "DOMString" },
         { "name": "ping", "type": "USVString" },
         { "name": "referrerPolicy", "type": "DOMString" },
         { "name": "rel", "type": "DOMString" },
         { "name": "relList", "type": "DOMTokenList", "readonly": true },
         { "name": "rev", "type": "DOMString" },
-        { "name": "rev", "type": "DOMString" },
-        { "name": "shape", "type": "DOMString" },
         { "name": "shape", "type": "DOMString" },
         { "name": "target", "type": "DOMString" },
         { "name": "text", "type": "DOMString" },
         { "name": "type", "type": "DOMString" }
       ],
       "implements": ["HTMLHyperlinkElementUtils"],
-      "elements": [
-        { "name": "a", "namespace": "HTML" },
-        { "name": "a", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "a", "namespace": "HTML" }]
     }, {
       "name": "HTMLAppletElement", "extends": "HTMLElement",
       "attributes": [
@@ -5434,7 +5294,6 @@
         { "name": "coords", "type": "DOMString" },
         { "name": "download", "type": "DOMString" },
         { "name": "noHref", "type": "boolean" },
-        { "name": "noHref", "type": "boolean" },
         { "name": "ping", "type": "USVString" },
         { "name": "referrerPolicy", "type": "DOMString" },
         { "name": "rel", "type": "DOMString" },
@@ -5443,61 +5302,37 @@
         { "name": "target", "type": "DOMString" }
       ],
       "implements": ["HTMLHyperlinkElementUtils"],
-      "elements": [
-        { "name": "area", "namespace": "HTML" },
-        { "name": "area", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "area", "namespace": "HTML" }]
     }, {
       "name": "HTMLAudioElement", "extends": "HTMLMediaElement",
       "namedConstructor": {
         "name": "Audio",
         "arguments": [{ "name": "src", "type": "DOMString", "optional": true }]
       },
-      "elements": [
-        { "name": "audio", "namespace": "HTML" },
-        { "name": "audio", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "audio", "namespace": "HTML" }]
     }, {
       "name": "HTMLBaseElement", "extends": "HTMLElement",
       "attributes": [
         { "name": "href", "type": "USVString" },
         { "name": "target", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "base", "namespace": "HTML" },
-        { "name": "base", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "base", "namespace": "HTML" }]
     }, {
       "name": "HTMLBodyElement", "extends": "HTMLElement",
       "implements": ["WindowEventHandlers"],
-      "elements": [
-        { "name": "body", "namespace": "HTML" },
-        { "name": "body", "namespace": "HTML" }
-      ],
       "attributes": [
         { "name": "aLink", "type": "DOMString" },
-        { "name": "aLink", "type": "DOMString" },
-        { "name": "background", "type": "DOMString" },
         { "name": "background", "type": "DOMString" },
         { "name": "bgColor", "type": "DOMString" },
-        { "name": "bgColor", "type": "DOMString" },
-        { "name": "link", "type": "DOMString" },
         { "name": "link", "type": "DOMString" },
         { "name": "text", "type": "DOMString" },
-        { "name": "text", "type": "DOMString" },
-        { "name": "vLink", "type": "DOMString" },
         { "name": "vLink", "type": "DOMString" }
-      ]
+      ],
+      "elements": [{ "name": "body", "namespace": "HTML" }]
     }, {
       "name": "HTMLBRElement", "extends": "HTMLElement",
-      "elements": [
-        { "name": "br", "namespace": "HTML" },
-        { "name": "br", "namespace": "HTML" }
-      ],
-      "attributes": [
-        { "name": "clear", "type": "DOMString" },
-        { "name": "clear", "type": "DOMString" }
-      ]
+      "attributes": [{ "name": "clear", "type": "DOMString" }],
+      "elements": [{ "name": "br", "namespace": "HTML" }]
     }, {
       "name": "HTMLButtonElement", "extends": "HTMLElement",
       "operations": [
@@ -5525,10 +5360,7 @@
         { "name": "value", "type": "DOMString" },
         { "name": "willValidate", "type": "boolean", "readonly": true }
       ],
-      "elements": [
-        { "name": "button", "namespace": "HTML" },
-        { "name": "button", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "button", "namespace": "HTML" }]
     }, {
       "name": "HTMLCanvasElement", "extends": "HTMLElement",
       "operations": [
@@ -5558,10 +5390,7 @@
         { "name": "height", "type": "unsigned long" },
         { "name": "width", "type": "unsigned long" }
       ],
-      "elements": [
-        { "name": "canvas", "namespace": "HTML" },
-        { "name": "canvas", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "canvas", "namespace": "HTML" }]
     }, {
       "name": "HTMLCollection", "extends": "Object",
       "exposed": ["Window"],
@@ -5576,24 +5405,15 @@
     }, {
       "name": "HTMLDataElement", "extends": "HTMLElement",
       "attributes": [{ "name": "value", "type": "DOMString" }],
-      "elements": [
-        { "name": "data", "namespace": "HTML" },
-        { "name": "data", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "data", "namespace": "HTML" }]
     }, {
       "name": "HTMLDataListElement", "extends": "HTMLElement",
       "attributes": [{ "name": "options", "type": "HTMLCollection", "readonly": true }],
-      "elements": [
-        { "name": "datalist", "namespace": "HTML" },
-        { "name": "datalist", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "datalist", "namespace": "HTML" }]
     }, {
       "name": "HTMLDetailsElement", "extends": "HTMLElement",
       "attributes": [{ "name": "open", "type": "boolean" }],
-      "elements": [
-        { "name": "details", "namespace": "HTML" },
-        { "name": "details", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "details", "namespace": "HTML" }]
     }, {
       "name": "HTMLDialogElement", "extends": "HTMLElement",
       "operations": [
@@ -5608,33 +5428,18 @@
         { "name": "open", "type": "boolean" },
         { "name": "returnValue", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "dialog", "namespace": "HTML" },
-        { "name": "dialog", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "dialog", "namespace": "HTML" }]
     }, {
       "name": "HTMLDirectoryElement", "extends": "HTMLElement",
       "attributes": [{ "name": "compact", "type": "boolean" }]
     }, {
       "name": "HTMLDivElement", "extends": "HTMLElement",
-      "elements": [
-        { "name": "div", "namespace": "HTML" },
-        { "name": "div", "namespace": "HTML" }
-      ],
-      "attributes": [
-        { "name": "align", "type": "DOMString" },
-        { "name": "align", "type": "DOMString" }
-      ]
+      "attributes": [{ "name": "align", "type": "DOMString" }],
+      "elements": [{ "name": "div", "namespace": "HTML" }]
     }, {
       "name": "HTMLDListElement", "extends": "HTMLElement",
-      "elements": [
-        { "name": "dl", "namespace": "HTML" },
-        { "name": "dl", "namespace": "HTML" }
-      ],
-      "attributes": [
-        { "name": "compact", "type": "boolean" },
-        { "name": "compact", "type": "boolean" }
-      ]
+      "attributes": [{ "name": "compact", "type": "boolean" }],
+      "elements": [{ "name": "dl", "namespace": "HTML" }]
     }, {
       "name": "HTMLElement", "extends": "Element",
       "operations": [
@@ -5702,44 +5507,6 @@
         { "name": "sup", "namespace": "HTML" },
         { "name": "u", "namespace": "HTML" },
         { "name": "var", "namespace": "HTML" },
-        { "name": "wbr", "namespace": "HTML" },
-        { "name": "abbr", "namespace": "HTML" },
-        { "name": "address", "namespace": "HTML" },
-        { "name": "article", "namespace": "HTML" },
-        { "name": "aside", "namespace": "HTML" },
-        { "name": "b", "namespace": "HTML" },
-        { "name": "bdi", "namespace": "HTML" },
-        { "name": "bdo", "namespace": "HTML" },
-        { "name": "cite", "namespace": "HTML" },
-        { "name": "code", "namespace": "HTML" },
-        { "name": "dd", "namespace": "HTML" },
-        { "name": "dfn", "namespace": "HTML" },
-        { "name": "dt", "namespace": "HTML" },
-        { "name": "em", "namespace": "HTML" },
-        { "name": "figcaption", "namespace": "HTML" },
-        { "name": "figure", "namespace": "HTML" },
-        { "name": "footer", "namespace": "HTML" },
-        { "name": "header", "namespace": "HTML" },
-        { "name": "hgroup", "namespace": "HTML" },
-        { "name": "i", "namespace": "HTML" },
-        { "name": "kbd", "namespace": "HTML" },
-        { "name": "main", "namespace": "HTML" },
-        { "name": "mark", "namespace": "HTML" },
-        { "name": "nav", "namespace": "HTML" },
-        { "name": "noscript", "namespace": "HTML" },
-        { "name": "rp", "namespace": "HTML" },
-        { "name": "rt", "namespace": "HTML" },
-        { "name": "ruby", "namespace": "HTML" },
-        { "name": "s", "namespace": "HTML" },
-        { "name": "samp", "namespace": "HTML" },
-        { "name": "section", "namespace": "HTML" },
-        { "name": "small", "namespace": "HTML" },
-        { "name": "strong", "namespace": "HTML" },
-        { "name": "sub", "namespace": "HTML" },
-        { "name": "summary", "namespace": "HTML" },
-        { "name": "sup", "namespace": "HTML" },
-        { "name": "u", "namespace": "HTML" },
-        { "name": "var", "namespace": "HTML" },
         { "name": "wbr", "namespace": "HTML" }
       ]
     }, {
@@ -5747,18 +5514,13 @@
       "operations": [{ "name": "getSVGDocument", "type": "Document", "nullable": true, "arguments": [] }],
       "attributes": [
         { "name": "align", "type": "DOMString" },
-        { "name": "align", "type": "DOMString" },
         { "name": "height", "type": "DOMString" },
-        { "name": "name", "type": "DOMString" },
         { "name": "name", "type": "DOMString" },
         { "name": "src", "type": "USVString" },
         { "name": "type", "type": "DOMString" },
         { "name": "width", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "embed", "namespace": "HTML" },
-        { "name": "embed", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "embed", "namespace": "HTML" }]
     }, {
       "name": "HTMLFieldSetElement", "extends": "HTMLElement",
       "operations": [
@@ -5779,10 +5541,7 @@
         { "name": "validity", "type": "ValidityState", "readonly": true },
         { "name": "willValidate", "type": "boolean", "readonly": true }
       ],
-      "elements": [
-        { "name": "fieldset", "namespace": "HTML" },
-        { "name": "fieldset", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "fieldset", "namespace": "HTML" }]
     }, {
       "name": "HTMLFontElement", "extends": "HTMLElement",
       "attributes": [
@@ -5824,10 +5583,7 @@
         { "name": "noValidate", "type": "boolean" },
         { "name": "target", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "form", "namespace": "HTML" },
-        { "name": "form", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "form", "namespace": "HTML" }]
     }, {
       "name": "HTMLFrameElement", "extends": "HTMLElement",
       "attributes": [
@@ -5851,58 +5607,32 @@
       "implements": ["WindowEventHandlers"]
     }, {
       "name": "HTMLHeadElement", "extends": "HTMLElement",
-      "elements": [
-        { "name": "head", "namespace": "HTML" },
-        { "name": "head", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "head", "namespace": "HTML" }]
     }, {
       "name": "HTMLHeadingElement", "extends": "HTMLElement",
+      "attributes": [{ "name": "align", "type": "DOMString" }],
       "elements": [
-        { "name": "h1", "namespace": "HTML" },
-        { "name": "h2", "namespace": "HTML" },
-        { "name": "h3", "namespace": "HTML" },
-        { "name": "h4", "namespace": "HTML" },
-        { "name": "h5", "namespace": "HTML" },
-        { "name": "h6", "namespace": "HTML" },
         { "name": "h1", "namespace": "HTML" },
         { "name": "h2", "namespace": "HTML" },
         { "name": "h3", "namespace": "HTML" },
         { "name": "h4", "namespace": "HTML" },
         { "name": "h5", "namespace": "HTML" },
         { "name": "h6", "namespace": "HTML" }
-      ],
-      "attributes": [
-        { "name": "align", "type": "DOMString" },
-        { "name": "align", "type": "DOMString" }
       ]
     }, {
       "name": "HTMLHRElement", "extends": "HTMLElement",
-      "elements": [
-        { "name": "hr", "namespace": "HTML" },
-        { "name": "hr", "namespace": "HTML" }
-      ],
       "attributes": [
         { "name": "align", "type": "DOMString" },
-        { "name": "align", "type": "DOMString" },
-        { "name": "color", "type": "DOMString" },
         { "name": "color", "type": "DOMString" },
         { "name": "noShade", "type": "boolean" },
-        { "name": "noShade", "type": "boolean" },
         { "name": "size", "type": "DOMString" },
-        { "name": "size", "type": "DOMString" },
-        { "name": "width", "type": "DOMString" },
         { "name": "width", "type": "DOMString" }
-      ]
+      ],
+      "elements": [{ "name": "hr", "namespace": "HTML" }]
     }, {
       "name": "HTMLHtmlElement", "extends": "HTMLElement",
-      "elements": [
-        { "name": "html", "namespace": "HTML" },
-        { "name": "html", "namespace": "HTML" }
-      ],
-      "attributes": [
-        { "name": "version", "type": "DOMString" },
-        { "name": "version", "type": "DOMString" }
-      ]
+      "attributes": [{ "name": "version", "type": "DOMString" }],
+      "elements": [{ "name": "html", "namespace": "HTML" }]
     }, {
       "name": "HTMLHyperlinkElementUtils", "extends": "Object", "noInterfaceObject": true,
       "attributes": [
@@ -5923,34 +5653,25 @@
       "operations": [{ "name": "getSVGDocument", "type": "Document", "nullable": true, "arguments": [] }],
       "attributes": [
         { "name": "align", "type": "DOMString" },
-        { "name": "align", "type": "DOMString" },
         { "name": "allowFullscreen", "type": "boolean" },
         { "name": "allowPaymentRequest", "type": "boolean" },
         { "name": "allowUserMedia", "type": "boolean" },
         { "name": "contentDocument", "type": "Document", "nullable": true, "readonly": true },
         { "name": "contentWindow", "type": "WindowProxy", "nullable": true, "readonly": true },
         { "name": "frameBorder", "type": "DOMString" },
-        { "name": "frameBorder", "type": "DOMString" },
         { "name": "height", "type": "DOMString" },
         { "name": "longDesc", "type": "USVString" },
-        { "name": "longDesc", "type": "USVString" },
         { "name": "marginHeight", "type": "DOMString" },
-        { "name": "marginHeight", "type": "DOMString" },
-        { "name": "marginWidth", "type": "DOMString" },
         { "name": "marginWidth", "type": "DOMString" },
         { "name": "name", "type": "DOMString" },
         { "name": "referrerPolicy", "type": "DOMString" },
         { "name": "sandbox", "type": "DOMTokenList", "readonly": true },
         { "name": "scrolling", "type": "DOMString" },
-        { "name": "scrolling", "type": "DOMString" },
         { "name": "src", "type": "USVString" },
         { "name": "srcdoc", "type": "DOMString" },
         { "name": "width", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "iframe", "namespace": "HTML" },
-        { "name": "iframe", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "iframe", "namespace": "HTML" }]
     }, {
       "name": "HTMLImageElement", "extends": "HTMLElement",
       "namedConstructor": {
@@ -5962,22 +5683,16 @@
       },
       "attributes": [
         { "name": "align", "type": "DOMString" },
-        { "name": "align", "type": "DOMString" },
         { "name": "alt", "type": "DOMString" },
-        { "name": "border", "type": "DOMString" },
         { "name": "border", "type": "DOMString" },
         { "name": "complete", "type": "boolean", "readonly": true },
         { "name": "crossOrigin", "type": "DOMString", "nullable": true },
         { "name": "currentSrc", "type": "USVString", "readonly": true },
         { "name": "height", "type": "unsigned long" },
         { "name": "hspace", "type": "unsigned long" },
-        { "name": "hspace", "type": "unsigned long" },
         { "name": "isMap", "type": "boolean" },
         { "name": "longDesc", "type": "USVString" },
-        { "name": "longDesc", "type": "USVString" },
         { "name": "lowsrc", "type": "USVString" },
-        { "name": "lowsrc", "type": "USVString" },
-        { "name": "name", "type": "DOMString" },
         { "name": "name", "type": "DOMString" },
         { "name": "naturalHeight", "type": "unsigned long", "readonly": true },
         { "name": "naturalWidth", "type": "unsigned long", "readonly": true },
@@ -5987,15 +5702,11 @@
         { "name": "srcset", "type": "USVString" },
         { "name": "useMap", "type": "DOMString" },
         { "name": "vspace", "type": "unsigned long" },
-        { "name": "vspace", "type": "unsigned long" },
         { "name": "width", "type": "unsigned long" },
         { "name": "x", "type": "long", "readonly": true },
         { "name": "y", "type": "long", "readonly": true }
       ],
-      "elements": [
-        { "name": "img", "namespace": "HTML" },
-        { "name": "img", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "img", "namespace": "HTML" }]
     }, {
       "name": "HTMLInputElement", "extends": "HTMLElement",
       "operations": [
@@ -6033,7 +5744,6 @@
       ],
       "attributes": [
         { "name": "accept", "type": "DOMString" },
-        { "name": "align", "type": "DOMString" },
         { "name": "align", "type": "DOMString" },
         { "name": "alt", "type": "DOMString" },
         { "name": "autocomplete", "type": "DOMString" },
@@ -6073,7 +5783,6 @@
         { "name": "step", "type": "DOMString" },
         { "name": "type", "type": "DOMString" },
         { "name": "useMap", "type": "DOMString" },
-        { "name": "useMap", "type": "DOMString" },
         { "name": "validationMessage", "type": "DOMString", "readonly": true },
         { "name": "validity", "type": "ValidityState", "readonly": true },
         { "name": "value", "type": "DOMString" },
@@ -6082,10 +5791,7 @@
         { "name": "width", "type": "unsigned long" },
         { "name": "willValidate", "type": "boolean", "readonly": true }
       ],
-      "elements": [
-        { "name": "input", "namespace": "HTML" },
-        { "name": "input", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "input", "namespace": "HTML" }]
     }, {
       "name": "HTMLLabelElement", "extends": "HTMLElement",
       "attributes": [
@@ -6093,37 +5799,25 @@
         { "name": "form", "type": "HTMLFormElement", "nullable": true, "readonly": true },
         { "name": "htmlFor", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "label", "namespace": "HTML" },
-        { "name": "label", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "label", "namespace": "HTML" }]
     }, {
       "name": "HTMLLegendElement", "extends": "HTMLElement",
       "attributes": [
         { "name": "align", "type": "DOMString" },
-        { "name": "align", "type": "DOMString" },
         { "name": "form", "type": "HTMLFormElement", "nullable": true, "readonly": true }
       ],
-      "elements": [
-        { "name": "legend", "namespace": "HTML" },
-        { "name": "legend", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "legend", "namespace": "HTML" }]
     }, {
       "name": "HTMLLIElement", "extends": "HTMLElement",
       "attributes": [
         { "name": "type", "type": "DOMString" },
-        { "name": "type", "type": "DOMString" },
         { "name": "value", "type": "long" }
       ],
-      "elements": [
-        { "name": "li", "namespace": "HTML" },
-        { "name": "li", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "li", "namespace": "HTML" }]
     }, {
       "name": "HTMLLinkElement", "extends": "HTMLElement",
       "attributes": [
         { "name": "as", "type": "DOMString" },
-        { "name": "charset", "type": "DOMString" },
         { "name": "charset", "type": "DOMString" },
         { "name": "crossOrigin", "type": "DOMString", "nullable": true },
         { "name": "href", "type": "USVString" },
@@ -6135,30 +5829,22 @@
         { "name": "rel", "type": "DOMString" },
         { "name": "relList", "type": "DOMTokenList", "readonly": true },
         { "name": "rev", "type": "DOMString" },
-        { "name": "rev", "type": "DOMString" },
         { "name": "scope", "type": "USVString" },
         { "name": "sizes", "type": "DOMTokenList", "readonly": true },
-        { "name": "target", "type": "DOMString" },
         { "name": "target", "type": "DOMString" },
         { "name": "type", "type": "DOMString" },
         { "name": "useCache", "type": "boolean" },
         { "name": "workerType", "type": "WorkerType" }
       ],
       "implements": ["LinkStyle"],
-      "elements": [
-        { "name": "link", "namespace": "HTML" },
-        { "name": "link", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "link", "namespace": "HTML" }]
     }, {
       "name": "HTMLMapElement", "extends": "HTMLElement",
       "attributes": [
         { "name": "areas", "type": "HTMLCollection", "readonly": true },
         { "name": "name", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "map", "namespace": "HTML" },
-        { "name": "map", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "map", "namespace": "HTML" }]
     }, {
       "name": "HTMLMarqueeElement", "extends": "HTMLElement",
       "operations": [
@@ -6258,14 +5944,10 @@
       "name": "HTMLMenuElement", "extends": "HTMLElement",
       "attributes": [
         { "name": "compact", "type": "boolean" },
-        { "name": "compact", "type": "boolean" },
         { "name": "label", "type": "DOMString" },
         { "name": "type", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "menu", "namespace": "HTML" },
-        { "name": "menu", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "menu", "namespace": "HTML" }]
     }, {
       "name": "HTMLMenuItemElement", "extends": "HTMLElement",
       "attributes": [
@@ -6277,23 +5959,16 @@
         { "name": "radiogroup", "type": "DOMString" },
         { "name": "type", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "menuitem", "namespace": "HTML" },
-        { "name": "menuitem", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "menuitem", "namespace": "HTML" }]
     }, {
       "name": "HTMLMetaElement", "extends": "HTMLElement",
       "attributes": [
         { "name": "content", "type": "DOMString" },
         { "name": "httpEquiv", "type": "DOMString" },
         { "name": "name", "type": "DOMString" },
-        { "name": "scheme", "type": "DOMString" },
         { "name": "scheme", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "meta", "namespace": "HTML" },
-        { "name": "meta", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "meta", "namespace": "HTML" }]
     }, {
       "name": "HTMLMeterElement", "extends": "HTMLElement",
       "attributes": [
@@ -6305,10 +5980,7 @@
         { "name": "optimum", "type": "double" },
         { "name": "value", "type": "double" }
       ],
-      "elements": [
-        { "name": "meter", "namespace": "HTML" },
-        { "name": "meter", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "meter", "namespace": "HTML" }]
     }, {
       "name": "HTMLModElement", "extends": "HTMLElement",
       "attributes": [
@@ -6316,8 +5988,6 @@
         { "name": "dateTime", "type": "DOMString" }
       ],
       "elements": [
-        { "name": "del", "namespace": "HTML" },
-        { "name": "ins", "namespace": "HTML" },
         { "name": "del", "namespace": "HTML" },
         { "name": "ins", "namespace": "HTML" }
       ]
@@ -6334,28 +6004,19 @@
       ],
       "attributes": [
         { "name": "align", "type": "DOMString" },
-        { "name": "align", "type": "DOMString" },
-        { "name": "archive", "type": "DOMString" },
         { "name": "archive", "type": "DOMString" },
         { "name": "border", "type": "DOMString" },
-        { "name": "border", "type": "DOMString" },
-        { "name": "code", "type": "DOMString" },
         { "name": "code", "type": "DOMString" },
         { "name": "codeBase", "type": "DOMString" },
-        { "name": "codeBase", "type": "DOMString" },
-        { "name": "codeType", "type": "DOMString" },
         { "name": "codeType", "type": "DOMString" },
         { "name": "contentDocument", "type": "Document", "nullable": true, "readonly": true },
         { "name": "contentWindow", "type": "WindowProxy", "nullable": true, "readonly": true },
         { "name": "data", "type": "USVString" },
         { "name": "declare", "type": "boolean" },
-        { "name": "declare", "type": "boolean" },
         { "name": "form", "type": "HTMLFormElement", "nullable": true, "readonly": true },
         { "name": "height", "type": "DOMString" },
         { "name": "hspace", "type": "unsigned long" },
-        { "name": "hspace", "type": "unsigned long" },
         { "name": "name", "type": "DOMString" },
-        { "name": "standby", "type": "DOMString" },
         { "name": "standby", "type": "DOMString" },
         { "name": "type", "type": "DOMString" },
         { "name": "typeMustMatch", "type": "boolean" },
@@ -6363,37 +6024,26 @@
         { "name": "validationMessage", "type": "DOMString", "readonly": true },
         { "name": "validity", "type": "ValidityState", "readonly": true },
         { "name": "vspace", "type": "unsigned long" },
-        { "name": "vspace", "type": "unsigned long" },
         { "name": "width", "type": "DOMString" },
         { "name": "willValidate", "type": "boolean", "readonly": true }
       ],
-      "elements": [
-        { "name": "object", "namespace": "HTML" },
-        { "name": "object", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "object", "namespace": "HTML" }]
     }, {
       "name": "HTMLOListElement", "extends": "HTMLElement",
       "attributes": [
-        { "name": "compact", "type": "boolean" },
         { "name": "compact", "type": "boolean" },
         { "name": "reversed", "type": "boolean" },
         { "name": "start", "type": "long" },
         { "name": "type", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "ol", "namespace": "HTML" },
-        { "name": "ol", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "ol", "namespace": "HTML" }]
     }, {
       "name": "HTMLOptGroupElement", "extends": "HTMLElement",
       "attributes": [
         { "name": "disabled", "type": "boolean" },
         { "name": "label", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "optgroup", "namespace": "HTML" },
-        { "name": "optgroup", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "optgroup", "namespace": "HTML" }]
     }, {
       "name": "HTMLOptionElement", "extends": "HTMLElement",
       "namedConstructor": {
@@ -6415,10 +6065,7 @@
         { "name": "text", "type": "DOMString" },
         { "name": "value", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "option", "namespace": "HTML" },
-        { "name": "option", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "option", "namespace": "HTML" }]
     }, {
       "name": "HTMLOptionsCollection", "extends": "HTMLCollection",
       "anonymousOperations": [{
@@ -6464,50 +6111,27 @@
         { "name": "value", "type": "DOMString" },
         { "name": "willValidate", "type": "boolean", "readonly": true }
       ],
-      "elements": [
-        { "name": "output", "namespace": "HTML" },
-        { "name": "output", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "output", "namespace": "HTML" }]
     }, {
       "name": "HTMLParagraphElement", "extends": "HTMLElement",
-      "elements": [
-        { "name": "p", "namespace": "HTML" },
-        { "name": "p", "namespace": "HTML" }
-      ],
-      "attributes": [
-        { "name": "align", "type": "DOMString" },
-        { "name": "align", "type": "DOMString" }
-      ]
+      "attributes": [{ "name": "align", "type": "DOMString" }],
+      "elements": [{ "name": "p", "namespace": "HTML" }]
     }, {
       "name": "HTMLParamElement", "extends": "HTMLElement",
       "attributes": [
         { "name": "name", "type": "DOMString" },
         { "name": "type", "type": "DOMString" },
-        { "name": "type", "type": "DOMString" },
         { "name": "value", "type": "DOMString" },
-        { "name": "valueType", "type": "DOMString" },
         { "name": "valueType", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "param", "namespace": "HTML" },
-        { "name": "param", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "param", "namespace": "HTML" }]
     }, {
       "name": "HTMLPictureElement", "extends": "HTMLElement",
-      "elements": [
-        { "name": "picture", "namespace": "HTML" },
-        { "name": "picture", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "picture", "namespace": "HTML" }]
     }, {
       "name": "HTMLPreElement", "extends": "HTMLElement",
-      "elements": [
-        { "name": "pre", "namespace": "HTML" },
-        { "name": "pre", "namespace": "HTML" }
-      ],
-      "attributes": [
-        { "name": "width", "type": "long" },
-        { "name": "width", "type": "long" }
-      ]
+      "attributes": [{ "name": "width", "type": "long" }],
+      "elements": [{ "name": "pre", "namespace": "HTML" }]
     }, {
       "name": "HTMLProgressElement", "extends": "HTMLElement",
       "attributes": [
@@ -6516,16 +6140,11 @@
         { "name": "position", "type": "double", "readonly": true },
         { "name": "value", "type": "double" }
       ],
-      "elements": [
-        { "name": "progress", "namespace": "HTML" },
-        { "name": "progress", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "progress", "namespace": "HTML" }]
     }, {
       "name": "HTMLQuoteElement", "extends": "HTMLElement",
       "attributes": [{ "name": "cite", "type": "USVString" }],
       "elements": [
-        { "name": "blockquote", "namespace": "HTML" },
-        { "name": "q", "namespace": "HTML" },
         { "name": "blockquote", "namespace": "HTML" },
         { "name": "q", "namespace": "HTML" }
       ]
@@ -6537,8 +6156,6 @@
         { "name": "crossOrigin", "type": "DOMString", "nullable": true },
         { "name": "defer", "type": "boolean" },
         { "name": "event", "type": "DOMString" },
-        { "name": "event", "type": "DOMString" },
-        { "name": "htmlFor", "type": "DOMString" },
         { "name": "htmlFor", "type": "DOMString" },
         { "name": "integrity", "type": "DOMString" },
         { "name": "noModule", "type": "boolean" },
@@ -6547,10 +6164,7 @@
         { "name": "text", "type": "DOMString" },
         { "name": "type", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "script", "namespace": "HTML" },
-        { "name": "script", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "script", "namespace": "HTML" }]
     }, {
       "name": "HTMLSelectElement", "extends": "HTMLElement",
       "anonymousOperations": [{
@@ -6607,10 +6221,7 @@
         { "name": "value", "type": "DOMString" },
         { "name": "willValidate", "type": "boolean", "readonly": true }
       ],
-      "elements": [
-        { "name": "select", "namespace": "HTML" },
-        { "name": "select", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "select", "namespace": "HTML" }]
     }, {
       "name": "HTMLSlotElement", "extends": "HTMLElement",
       "operations": [{
@@ -6618,10 +6229,7 @@
         "arguments": [{ "name": "options", "type": "AssignedNodesOptions", "optional": true }]
       }],
       "attributes": [{ "name": "name", "type": "DOMString" }],
-      "elements": [
-        { "name": "slot", "namespace": "HTML" },
-        { "name": "slot", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "slot", "namespace": "HTML" }]
     }, {
       "name": "HTMLSourceElement", "extends": "HTMLElement",
       "attributes": [
@@ -6631,16 +6239,10 @@
         { "name": "srcset", "type": "USVString" },
         { "name": "type", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "source", "namespace": "HTML" },
-        { "name": "source", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "source", "namespace": "HTML" }]
     }, {
       "name": "HTMLSpanElement", "extends": "HTMLElement",
-      "elements": [
-        { "name": "span", "namespace": "HTML" },
-        { "name": "span", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "span", "namespace": "HTML" }]
     }, {
       "name": "HTMLStyleElement", "extends": "HTMLElement",
       "attributes": [
@@ -6649,51 +6251,31 @@
         { "name": "type", "type": "DOMString" }
       ],
       "implements": ["LinkStyle"],
-      "elements": [
-        { "name": "style", "namespace": "HTML" },
-        { "name": "style", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "style", "namespace": "HTML" }]
     }, {
       "name": "HTMLTableCaptionElement", "extends": "HTMLElement",
-      "elements": [
-        { "name": "caption", "namespace": "HTML" },
-        { "name": "caption", "namespace": "HTML" }
-      ],
-      "attributes": [
-        { "name": "align", "type": "DOMString" },
-        { "name": "align", "type": "DOMString" }
-      ]
+      "attributes": [{ "name": "align", "type": "DOMString" }],
+      "elements": [{ "name": "caption", "namespace": "HTML" }]
     }, {
       "name": "HTMLTableCellElement", "extends": "HTMLElement",
       "attributes": [
         { "name": "abbr", "type": "DOMString" },
         { "name": "align", "type": "DOMString" },
-        { "name": "align", "type": "DOMString" },
         { "name": "axis", "type": "DOMString" },
-        { "name": "axis", "type": "DOMString" },
-        { "name": "bgColor", "type": "DOMString" },
         { "name": "bgColor", "type": "DOMString" },
         { "name": "cellIndex", "type": "long", "readonly": true },
         { "name": "ch", "type": "DOMString" },
-        { "name": "ch", "type": "DOMString" },
-        { "name": "chOff", "type": "DOMString" },
         { "name": "chOff", "type": "DOMString" },
         { "name": "colSpan", "type": "unsigned long" },
         { "name": "headers", "type": "DOMString" },
         { "name": "height", "type": "DOMString" },
-        { "name": "height", "type": "DOMString" },
-        { "name": "noWrap", "type": "boolean" },
         { "name": "noWrap", "type": "boolean" },
         { "name": "rowSpan", "type": "unsigned long" },
         { "name": "scope", "type": "DOMString" },
         { "name": "vAlign", "type": "DOMString" },
-        { "name": "vAlign", "type": "DOMString" },
-        { "name": "width", "type": "DOMString" },
         { "name": "width", "type": "DOMString" }
       ],
       "elements": [
-        { "name": "td", "namespace": "HTML" },
-        { "name": "th", "namespace": "HTML" },
         { "name": "td", "namespace": "HTML" },
         { "name": "th", "namespace": "HTML" }
       ]
@@ -6701,20 +6283,13 @@
       "name": "HTMLTableColElement", "extends": "HTMLElement",
       "attributes": [
         { "name": "align", "type": "DOMString" },
-        { "name": "align", "type": "DOMString" },
         { "name": "ch", "type": "DOMString" },
-        { "name": "ch", "type": "DOMString" },
-        { "name": "chOff", "type": "DOMString" },
         { "name": "chOff", "type": "DOMString" },
         { "name": "span", "type": "unsigned long" },
         { "name": "vAlign", "type": "DOMString" },
-        { "name": "vAlign", "type": "DOMString" },
-        { "name": "width", "type": "DOMString" },
         { "name": "width", "type": "DOMString" }
       ],
       "elements": [
-        { "name": "col", "namespace": "HTML" },
-        { "name": "colgroup", "namespace": "HTML" },
         { "name": "col", "namespace": "HTML" },
         { "name": "colgroup", "namespace": "HTML" }
       ]
@@ -6739,33 +6314,21 @@
       ],
       "attributes": [
         { "name": "align", "type": "DOMString" },
-        { "name": "align", "type": "DOMString" },
         { "name": "bgColor", "type": "DOMString" },
-        { "name": "bgColor", "type": "DOMString" },
-        { "name": "border", "type": "DOMString" },
         { "name": "border", "type": "DOMString" },
         { "name": "caption", "type": "HTMLTableCaptionElement", "nullable": true },
         { "name": "cellPadding", "type": "DOMString" },
-        { "name": "cellPadding", "type": "DOMString" },
         { "name": "cellSpacing", "type": "DOMString" },
-        { "name": "cellSpacing", "type": "DOMString" },
-        { "name": "frame", "type": "DOMString" },
         { "name": "frame", "type": "DOMString" },
         { "name": "rows", "type": "HTMLCollection", "readonly": true },
         { "name": "rules", "type": "DOMString" },
-        { "name": "rules", "type": "DOMString" },
-        { "name": "summary", "type": "DOMString" },
         { "name": "summary", "type": "DOMString" },
         { "name": "tBodies", "type": "HTMLCollection", "readonly": true },
         { "name": "tFoot", "type": "HTMLTableSectionElement", "nullable": true },
         { "name": "tHead", "type": "HTMLTableSectionElement", "nullable": true },
-        { "name": "width", "type": "DOMString" },
         { "name": "width", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "table", "namespace": "HTML" },
-        { "name": "table", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "table", "namespace": "HTML" }]
     }, {
       "name": "HTMLTableRowElement", "extends": "HTMLElement",
       "operations": [{
@@ -6777,23 +6340,15 @@
       }],
       "attributes": [
         { "name": "align", "type": "DOMString" },
-        { "name": "align", "type": "DOMString" },
-        { "name": "bgColor", "type": "DOMString" },
         { "name": "bgColor", "type": "DOMString" },
         { "name": "cells", "type": "HTMLCollection", "readonly": true },
         { "name": "ch", "type": "DOMString" },
-        { "name": "ch", "type": "DOMString" },
-        { "name": "chOff", "type": "DOMString" },
         { "name": "chOff", "type": "DOMString" },
         { "name": "rowIndex", "type": "long", "readonly": true },
         { "name": "sectionRowIndex", "type": "long", "readonly": true },
-        { "name": "vAlign", "type": "DOMString" },
         { "name": "vAlign", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "tr", "namespace": "HTML" },
-        { "name": "tr", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "tr", "namespace": "HTML" }]
     }, {
       "name": "HTMLTableSectionElement", "extends": "HTMLElement",
       "operations": [{
@@ -6805,19 +6360,12 @@
       }],
       "attributes": [
         { "name": "align", "type": "DOMString" },
-        { "name": "align", "type": "DOMString" },
         { "name": "ch", "type": "DOMString" },
-        { "name": "ch", "type": "DOMString" },
-        { "name": "chOff", "type": "DOMString" },
         { "name": "chOff", "type": "DOMString" },
         { "name": "rows", "type": "HTMLCollection", "readonly": true },
-        { "name": "vAlign", "type": "DOMString" },
         { "name": "vAlign", "type": "DOMString" }
       ],
       "elements": [
-        { "name": "tbody", "namespace": "HTML" },
-        { "name": "tfoot", "namespace": "HTML" },
-        { "name": "thead", "namespace": "HTML" },
         { "name": "tbody", "namespace": "HTML" },
         { "name": "tfoot", "namespace": "HTML" },
         { "name": "thead", "namespace": "HTML" }
@@ -6825,10 +6373,7 @@
     }, {
       "name": "HTMLTemplateElement", "extends": "HTMLElement",
       "attributes": [{ "name": "content", "type": "DocumentFragment", "readonly": true }],
-      "elements": [
-        { "name": "template", "namespace": "HTML" },
-        { "name": "template", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "template", "namespace": "HTML" }]
     }, {
       "name": "HTMLTextAreaElement", "extends": "HTMLElement",
       "operations": [
@@ -6886,24 +6431,15 @@
         { "name": "willValidate", "type": "boolean", "readonly": true },
         { "name": "wrap", "type": "DOMString" }
       ],
-      "elements": [
-        { "name": "textarea", "namespace": "HTML" },
-        { "name": "textarea", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "textarea", "namespace": "HTML" }]
     }, {
       "name": "HTMLTimeElement", "extends": "HTMLElement",
       "attributes": [{ "name": "dateTime", "type": "DOMString" }],
-      "elements": [
-        { "name": "time", "namespace": "HTML" },
-        { "name": "time", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "time", "namespace": "HTML" }]
     }, {
       "name": "HTMLTitleElement", "extends": "HTMLElement",
       "attributes": [{ "name": "text", "type": "DOMString" }],
-      "elements": [
-        { "name": "title", "namespace": "HTML" },
-        { "name": "title", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "title", "namespace": "HTML" }]
     }, {
       "name": "HTMLTrackElement", "extends": "HTMLElement",
       "constants": [
@@ -6921,22 +6457,14 @@
         { "name": "srclang", "type": "DOMString" },
         { "name": "track", "type": "TextTrack", "readonly": true }
       ],
-      "elements": [
-        { "name": "track", "namespace": "HTML" },
-        { "name": "track", "namespace": "HTML" }
-      ]
+      "elements": [{ "name": "track", "namespace": "HTML" }]
     }, {
       "name": "HTMLUListElement", "extends": "HTMLElement",
-      "elements": [
-        { "name": "ul", "namespace": "HTML" },
-        { "name": "ul", "namespace": "HTML" }
-      ],
       "attributes": [
         { "name": "compact", "type": "boolean" },
-        { "name": "compact", "type": "boolean" },
-        { "name": "type", "type": "DOMString" },
         { "name": "type", "type": "DOMString" }
-      ]
+      ],
+      "elements": [{ "name": "ul", "namespace": "HTML" }]
     },
     { "name": "HTMLUnknownElement", "extends": "HTMLElement" },
     {
@@ -6949,10 +6477,7 @@
         { "name": "videoWidth", "type": "unsigned long", "readonly": true },
         { "name": "width", "type": "unsigned long" }
       ],
-      "elements": [
-        { "name": "video", "namespace": "HTML" },
-        { "name": "video", "namespace": "HTML" }
-      ],
+      "elements": [{ "name": "video", "namespace": "HTML" }],
       "operations": [{ "name": "getVideoPlaybackQuality", "type": "VideoPlaybackQuality", "arguments": [] }]
     }, {
       "name": "IDBCursor", "extends": "Object",
@@ -7441,11 +6966,7 @@
       "operations": [
         { "name": "enumerateDevices", "type": "Promise<sequence<MediaDeviceInfo>>", "arguments": [] },
         { "name": "getSupportedConstraints", "type": "MediaTrackSupportedConstraints", "arguments": [] },
-        { "name": "getSupportedConstraints", "type": "MediaTrackSupportedConstraints", "arguments": [] },
         {
-          "name": "getUserMedia", "type": "Promise<MediaStream>",
-          "arguments": [{ "name": "constraints", "type": "MediaStreamConstraints", "optional": true }]
-        }, {
           "name": "getUserMedia", "type": "Promise<MediaStream>",
           "arguments": [{ "name": "constraints", "type": "MediaStreamConstraints", "optional": true }]
         }
@@ -7997,9 +7518,6 @@
         {
           "name": "oscpu", "type": "DOMString", "readonly": true,
           "exposed": ["Window"]
-        }, {
-          "name": "oscpu", "type": "DOMString", "readonly": true,
-          "exposed": ["Window"]
         },
         { "name": "platform", "type": "DOMString", "readonly": true },
         { "name": "product", "type": "DOMString", "readonly": true },
@@ -8017,9 +7535,6 @@
         }
       ],
       "operations": [{
-        "name": "taintEnabled", "type": "boolean", "arguments": [],
-        "exposed": ["Window"]
-      }, {
         "name": "taintEnabled", "type": "boolean", "arguments": [],
         "exposed": ["Window"]
       }]
@@ -8046,13 +7561,6 @@
       "exposed": ["Window"],
       "attributes": [{ "name": "mediaDevices", "type": "MediaDevices", "readonly": true }],
       "operations": [{
-        "name": "getUserMedia", "type": "void",
-        "arguments": [
-          { "name": "constraints", "type": "MediaStreamConstraints" },
-          { "name": "successCallback", "type": "NavigatorUserMediaSuccessCallback" },
-          { "name": "errorCallback", "type": "NavigatorUserMediaErrorCallback" }
-        ]
-      }, {
         "name": "getUserMedia", "type": "void",
         "arguments": [
           { "name": "constraints", "type": "MediaStreamConstraints" },
@@ -9202,38 +8710,19 @@
       "operations": [
         {
           "name": "addIceCandidate", "type": "Promise<void>",
+          "arguments": [
+            { "name": "candidate", "type": "(RTCIceCandidateInit or RTCIceCandidate)" },
+            { "name": "successCallback", "type": "VoidFunction" },
+            { "name": "failureCallback", "type": "RTCPeerConnectionErrorCallback" }
+          ]
+        }, {
+          "name": "addIceCandidate", "type": "Promise<void>",
           "arguments": [{ "name": "candidate", "type": "(RTCIceCandidateInit or RTCIceCandidate)" }]
         }, {
-          "name": "addIceCandidate", "type": "Promise<void>",
-          "arguments": [
-            { "name": "candidate", "type": "(RTCIceCandidateInit or RTCIceCandidate)" },
-            { "name": "successCallback", "type": "VoidFunction" },
-            { "name": "failureCallback", "type": "RTCPeerConnectionErrorCallback" }
-          ]
-        }, {
-          "name": "addIceCandidate", "type": "Promise<void>",
-          "arguments": [
-            { "name": "candidate", "type": "(RTCIceCandidateInit or RTCIceCandidate)" },
-            { "name": "successCallback", "type": "VoidFunction" },
-            { "name": "failureCallback", "type": "RTCPeerConnectionErrorCallback" }
-          ]
-        }, {
           "name": "addTrack", "type": "RTCRtpSender",
           "arguments": [
             { "name": "track", "type": "MediaStreamTrack" },
             { "name": "streams", "type": "MediaStream", "variadic": true }
-          ]
-        }, {
-          "name": "addTrack", "type": "RTCRtpSender",
-          "arguments": [
-            { "name": "track", "type": "MediaStreamTrack" },
-            { "name": "streams", "type": "MediaStream", "variadic": true }
-          ]
-        }, {
-          "name": "addTransceiver", "type": "RTCRtpTransceiver",
-          "arguments": [
-            { "name": "trackOrKind", "type": "(MediaStreamTrack or DOMString)" },
-            { "name": "init", "type": "RTCRtpTransceiverInit", "optional": true }
           ]
         }, {
           "name": "addTransceiver", "type": "RTCRtpTransceiver",
@@ -9250,20 +8739,8 @@
             { "name": "failureCallback", "type": "RTCPeerConnectionErrorCallback" }
           ]
         }, {
-          "name": "createAnswer", "type": "Promise<void>",
-          "arguments": [
-            { "name": "successCallback", "type": "RTCSessionDescriptionCallback" },
-            { "name": "failureCallback", "type": "RTCPeerConnectionErrorCallback" }
-          ]
-        }, {
           "name": "createAnswer", "type": "Promise<RTCSessionDescriptionInit>",
           "arguments": [{ "name": "options", "type": "RTCAnswerOptions", "optional": true }]
-        }, {
-          "name": "createDataChannel", "type": "RTCDataChannel",
-          "arguments": [
-            { "name": "label", "type": "USVString" },
-            { "name": "dataChannelDict", "type": "RTCDataChannelInit", "optional": true }
-          ]
         }, {
           "name": "createDataChannel", "type": "RTCDataChannel",
           "arguments": [
@@ -9281,40 +8758,20 @@
           "name": "createOffer", "type": "Promise<RTCSessionDescriptionInit>",
           "arguments": [{ "name": "options", "type": "RTCOfferOptions", "optional": true }]
         }, {
-          "name": "createOffer", "type": "Promise<void>",
-          "arguments": [
-            { "name": "successCallback", "type": "RTCSessionDescriptionCallback" },
-            { "name": "failureCallback", "type": "RTCPeerConnectionErrorCallback" },
-            { "name": "options", "type": "RTCOfferOptions", "optional": true }
-          ]
-        }, {
-          "name": "generateCertificate", "type": "Promise<RTCCertificate>", "static": true,
-          "arguments": [{ "name": "keygenAlgorithm", "type": "AlgorithmIdentifier" }]
-        }, {
           "name": "generateCertificate", "type": "Promise<RTCCertificate>", "static": true,
           "arguments": [{ "name": "keygenAlgorithm", "type": "AlgorithmIdentifier" }]
         },
         { "name": "getConfiguration", "type": "RTCConfiguration", "arguments": [] },
         { "name": "getDefaultIceServers", "type": "sequence<RTCIceServer>", "arguments": [], "static": true },
         { "name": "getIdentityAssertion", "type": "Promise<DOMString>", "arguments": [] },
-        { "name": "getIdentityAssertion", "type": "Promise<DOMString>", "arguments": [] },
         { "name": "getReceivers", "type": "sequence<RTCRtpReceiver>", "arguments": [] },
-        { "name": "getReceivers", "type": "sequence<RTCRtpReceiver>", "arguments": [] },
-        { "name": "getSenders", "type": "sequence<RTCRtpSender>", "arguments": [] },
         { "name": "getSenders", "type": "sequence<RTCRtpSender>", "arguments": [] },
         {
-          "name": "getStats", "type": "Promise<RTCStatsReport>",
-          "arguments": [{ "name": "selector", "type": "MediaStreamTrack", "nullable": true, "optional": true, "default": "null" }]
-        }, {
           "name": "getStats", "type": "Promise<RTCStatsReport>",
           "arguments": [{ "name": "selector", "type": "MediaStreamTrack", "nullable": true, "optional": true, "default": "null" }]
         },
         { "name": "getTransceivers", "type": "sequence<RTCRtpTransceiver>", "arguments": [] },
-        { "name": "getTransceivers", "type": "sequence<RTCRtpTransceiver>", "arguments": [] },
         {
-          "name": "removeTrack", "type": "void",
-          "arguments": [{ "name": "sender", "type": "RTCRtpSender" }]
-        }, {
           "name": "removeTrack", "type": "void",
           "arguments": [{ "name": "sender", "type": "RTCRtpSender" }]
         }, {
@@ -9327,19 +8784,6 @@
             { "name": "options", "type": "RTCIdentityProviderOptions", "optional": true }
           ]
         }, {
-          "name": "setIdentityProvider", "type": "void",
-          "arguments": [
-            { "name": "provider", "type": "DOMString" },
-            { "name": "options", "type": "RTCIdentityProviderOptions", "optional": true }
-          ]
-        }, {
-          "name": "setLocalDescription", "type": "Promise<void>",
-          "arguments": [
-            { "name": "description", "type": "RTCSessionDescriptionInit" },
-            { "name": "successCallback", "type": "VoidFunction" },
-            { "name": "failureCallback", "type": "RTCPeerConnectionErrorCallback" }
-          ]
-        }, {
           "name": "setLocalDescription", "type": "Promise<void>",
           "arguments": [{ "name": "description", "type": "RTCSessionDescriptionInit" }]
         }, {
@@ -9352,13 +8796,6 @@
         }, {
           "name": "setRemoteDescription", "type": "Promise<void>",
           "arguments": [{ "name": "description", "type": "RTCSessionDescriptionInit" }]
-        }, {
-          "name": "setRemoteDescription", "type": "Promise<void>",
-          "arguments": [
-            { "name": "description", "type": "RTCSessionDescriptionInit" },
-            { "name": "successCallback", "type": "VoidFunction" },
-            { "name": "failureCallback", "type": "RTCPeerConnectionErrorCallback" }
-          ]
         }, {
           "name": "setRemoteDescription", "type": "Promise<void>",
           "arguments": [
@@ -9376,12 +8813,9 @@
         { "name": "iceConnectionState", "type": "RTCIceConnectionState", "readonly": true },
         { "name": "iceGatheringState", "type": "RTCIceGatheringState", "readonly": true },
         { "name": "idpErrorInfo", "type": "DOMString", "nullable": true, "readonly": true },
-        { "name": "idpErrorInfo", "type": "DOMString", "nullable": true, "readonly": true },
-        { "name": "idpLoginUrl", "type": "DOMString", "nullable": true, "readonly": true },
         { "name": "idpLoginUrl", "type": "DOMString", "nullable": true, "readonly": true },
         { "name": "localDescription", "type": "RTCSessionDescription", "nullable": true, "readonly": true },
         { "name": "onconnectionstatechange", "type": "EventHandler", "eventHandler": "connectionstatechange" },
-        { "name": "ondatachannel", "type": "EventHandler", "eventHandler": "datachannel" },
         { "name": "ondatachannel", "type": "EventHandler", "eventHandler": "datachannel" },
         { "name": "onfingerprintfailure", "type": "EventHandler", "eventHandler": "fingerprintfailure" },
         { "name": "onicecandidate", "type": "EventHandler", "eventHandler": "icecandidate" },
@@ -9391,13 +8825,10 @@
         { "name": "onnegotiationneeded", "type": "EventHandler", "eventHandler": "negotiationneeded" },
         { "name": "onsignalingstatechange", "type": "EventHandler", "eventHandler": "signalingstatechange" },
         { "name": "ontrack", "type": "EventHandler", "eventHandler": "track" },
-        { "name": "ontrack", "type": "EventHandler", "eventHandler": "track" },
-        { "name": "peerIdentity", "type": "Promise<RTCIdentityAssertion>", "readonly": true },
         { "name": "peerIdentity", "type": "Promise<RTCIdentityAssertion>", "readonly": true },
         { "name": "pendingLocalDescription", "type": "RTCSessionDescription", "nullable": true, "readonly": true },
         { "name": "pendingRemoteDescription", "type": "RTCSessionDescription", "nullable": true, "readonly": true },
         { "name": "remoteDescription", "type": "RTCSessionDescription", "nullable": true, "readonly": true },
-        { "name": "sctp", "type": "RTCSctpTransport", "nullable": true, "readonly": true },
         { "name": "sctp", "type": "RTCSctpTransport", "nullable": true, "readonly": true },
         { "name": "signalingState", "type": "RTCSignalingState", "readonly": true }
       ],
@@ -9410,8 +8841,6 @@
         { "name": "icegatheringstatechange", "type": "Event" },
         { "name": "connectionstatechange", "type": "Event" },
         { "name": "fingerprintfailure", "type": "Event" },
-        { "name": "track", "type": "RTCTrackEvent" },
-        { "name": "datachannel", "type": "RTCDataChannelEvent" },
         { "name": "track", "type": "RTCTrackEvent" },
         { "name": "datachannel", "type": "RTCDataChannelEvent" }
       ]
@@ -9483,7 +8912,6 @@
         }
       ],
       "attributes": [
-        { "name": "dtmf", "type": "RTCDTMFSender", "nullable": true, "readonly": true },
         { "name": "dtmf", "type": "RTCDTMFSender", "nullable": true, "readonly": true },
         { "name": "rtcpTransport", "type": "RTCDtlsTransport", "nullable": true, "readonly": true },
         { "name": "track", "type": "MediaStreamTrack", "nullable": true, "readonly": true },
@@ -11344,6 +10772,36 @@
       "attributes": [{ "name": "wholeText", "type": "DOMString", "readonly": true }],
       "implements": ["Slotable", "GeometryUtils"]
     }, {
+      "name": "TextDecoder", "extends": "Object",
+      "constructors": [{
+        "arguments": [
+          { "name": "label", "type": "DOMString", "optional": true, "default": "\"utf-8\"" },
+          { "name": "options", "type": "TextDecoderOptions", "optional": true }
+        ]
+      }],
+      "exposed": ["Window", "Worker"],
+      "operations": [{
+        "name": "decode", "type": "USVString",
+        "arguments": [
+          { "name": "input", "type": "BufferSource", "optional": true },
+          { "name": "options", "type": "TextDecodeOptions", "optional": true }
+        ]
+      }],
+      "attributes": [
+        { "name": "encoding", "type": "DOMString", "readonly": true },
+        { "name": "fatal", "type": "boolean", "readonly": true },
+        { "name": "ignoreBOM", "type": "boolean", "readonly": true }
+      ]
+    }, {
+      "name": "TextEncoder", "extends": "Object",
+      "constructors": [{ "arguments": [] }],
+      "exposed": ["Window", "Worker"],
+      "operations": [{
+        "name": "encode", "type": "Uint8Array",
+        "arguments": [{ "name": "input", "type": "USVString", "optional": true, "default": "\"\"" }]
+      }],
+      "attributes": [{ "name": "encoding", "type": "DOMString", "readonly": true }]
+    }, {
       "name": "TextMetrics", "extends": "Object",
       "attributes": [
         { "name": "actualBoundingBoxAscent", "type": "double", "readonly": true },
@@ -12887,7 +12345,6 @@
           "arguments": [{ "name": "handle", "type": "unsigned long" }]
         },
         { "name": "captureEvents", "type": "void", "arguments": [] },
-        { "name": "captureEvents", "type": "void", "arguments": [] },
         { "name": "close", "type": "void", "arguments": [] },
         {
           "name": "confirm", "type": "boolean",
@@ -12941,7 +12398,6 @@
           ]
         },
         { "name": "releaseEvents", "type": "void", "arguments": [] },
-        { "name": "releaseEvents", "type": "void", "arguments": [] },
         {
           "name": "requestAnimationFrame", "type": "unsigned long",
           "arguments": [{ "name": "callback", "type": "FrameRequestCallback" }]
@@ -12959,13 +12415,13 @@
           ]
         }, {
           "name": "scroll", "type": "void",
-          "arguments": [{ "name": "options", "type": "ScrollToOptions", "optional": true }]
+          "arguments": [
+            { "name": "x", "type": "unrestricted double" },
+            { "name": "y", "type": "unrestricted double" }
+          ]
         }, {
           "name": "scroll", "type": "void",
-          "arguments": [
-            { "name": "x", "type": "unrestricted double" },
-            { "name": "y", "type": "unrestricted double" }
-          ]
+          "arguments": [{ "name": "options", "type": "ScrollToOptions", "optional": true }]
         }, {
           "name": "scrollBy", "type": "void",
           "arguments": [{ "name": "options", "type": "ScrollToOptions", "optional": true }]
@@ -12977,13 +12433,13 @@
           ]
         }, {
           "name": "scrollTo", "type": "void",
+          "arguments": [{ "name": "options", "type": "ScrollToOptions", "optional": true }]
+        }, {
+          "name": "scrollTo", "type": "void",
           "arguments": [
             { "name": "x", "type": "unrestricted double" },
             { "name": "y", "type": "unrestricted double" }
           ]
-        }, {
-          "name": "scrollTo", "type": "void",
-          "arguments": [{ "name": "options", "type": "ScrollToOptions", "optional": true }]
         },
         { "name": "stop", "type": "void", "arguments": [] }
       ],
@@ -12994,7 +12450,6 @@
         { "name": "customElements", "type": "CustomElementRegistry", "readonly": true },
         { "name": "devicePixelRatio", "type": "double", "readonly": true },
         { "name": "document", "type": "Document", "readonly": true },
-        { "name": "external", "type": "External", "readonly": true },
         { "name": "external", "type": "External", "readonly": true },
         { "name": "frameElement", "type": "Element", "nullable": true, "readonly": true },
         { "name": "frames", "type": "WindowProxy", "readonly": true },
@@ -13007,7 +12462,6 @@
         { "name": "menubar", "type": "BarProp", "readonly": true },
         { "name": "name", "type": "DOMString" },
         { "name": "navigator", "type": "Navigator", "readonly": true },
-        { "name": "ondevicemotion", "type": "EventHandler" },
         { "name": "ondevicemotion", "type": "EventHandler" },
         { "name": "ondeviceorientation", "type": "EventHandler" },
         { "name": "opener", "type": "any" },
@@ -13320,10 +12774,6 @@
       }]
     }
   ],
-  "mixinInterfaces": [{
-    "name": "CSSPseudoElement", "extends": "Object", "partial": true,
-    "implements": ["GeometryUtils"]
-  }],
   "typedefs": [
     { "name": "AlgorithmIdentifier", "type": "(object or DOMString)" },
     { "name": "ArrayBufferView", "type": "(Int8Array or Int16Array or Int32Array or Uint8Array or Uint16Array or Uint32Array or Uint8ClampedArray or Float32Array or Float64Array or DataView)" },

@@ -12,7 +12,7 @@ export function mergePartialTypes(snippet: IDLSnippetContent) {
  * as the tool uses it to track event types.
  */
 function mergePartialInterfaces(snippet: IDLSnippetContent) {
-    const interfaces = [...snippet.interfaces, ...snippet.mixinInterfaces];
+    const interfaces = snippet.interfaces;
     const baseInterfaces = interfaces.filter(interfaceEl => !interfaceEl.partial);
     const baseInterfaceMap = new Map(baseInterfaces.map<[string, IDLDefinitions.Interface]>(baseInterface => [baseInterface.name, baseInterface]));
 
@@ -35,8 +35,7 @@ function mergePartialInterfaces(snippet: IDLSnippetContent) {
     }
 
     interfaceBatchSort(baseInterfaces);
-    snippet.interfaces = baseInterfaces.filter(interfaceEl => !interfaceEl.partial);
-    snippet.mixinInterfaces = baseInterfaces.filter(interfaceEl => interfaceEl.partial);
+    snippet.interfaces = baseInterfaces;
 }
 
 function interfaceBatchSort(interfaces: IDLDefinitions.Interface[]) {
@@ -69,6 +68,7 @@ function mergeInterface(baseInterface: IDLDefinitions.Interface, partialInterfac
     mergeMemberSet(baseInterface, partialInterface, "elements");
 }
 
+/** Has side effect on its arguments */
 function mergeMemberSet(baseParent: any, partialParent: any, setName: string) {
     let baseSet = baseParent[setName];
     const partialSet = partialParent[setName];

@@ -22,7 +22,6 @@ export interface IDLSnippetContent {
     dictionaries: IDLDefinitions.Dictionary[];
     enums: IDLDefinitions.Enum[];
     interfaces: IDLDefinitions.Interface[];
-    mixinInterfaces: IDLDefinitions.Interface[];
     typedefs: IDLDefinitions.Typedef[];
     namespaces: IDLDefinitions.Namespace[];
 }

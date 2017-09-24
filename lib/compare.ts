@@ -21,16 +21,14 @@ function extractInterfaceNamesOnEdgeXML(doc: Document) {
 
     return [
         ...getChildrenArray(callbackInterfaces),
-        ...getChildrenArray(interfaces),
-        ...getChildrenArray(mixinInterfaces)
+        ...getChildrenArray(interfaces)
     ].filter(interfaceEl => interfaceEl.getAttribute("tags") !== "MSAppOnly").map(interfaceEl => interfaceEl.getAttribute("name")!);
 }
 
 function extractInterfaceNamesOnIDLSnippetContent(doc: IDLSnippetContent) {
     return [
         ...doc.callbackInterfaces,
-        ...doc.interfaces,
-        ...doc.mixinInterfaces
+        ...doc.interfaces
     ].map(definition => definition.name);
 }
 

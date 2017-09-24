@@ -51,7 +51,7 @@ function applyEventProperties(base: IDLImportResult, supplement: Supplement) {
     const propertyMap = createEventPropertyMap(supplement);
 
     for (const snippet of base.snippets) {
-        for (const interfaceDef of [...snippet.interfaces, ...snippet.mixinInterfaces]) {
+        for (const interfaceDef of snippet.interfaces) {
             const { attributes } = interfaceDef;
             if (!attributes) {
                 continue;
@@ -141,7 +141,6 @@ function createCSSPropertySnippet(supplement: Supplement): IDLSnippetContent {
         dictionaries: [],
         enums: [],
         interfaces: [cssStyleDeclaration],
-        mixinInterfaces: [],
         typedefs: [],
         namespaces: []
     }
@@ -174,8 +173,7 @@ function createElementMapSnippet(supplement: Supplement): IDLSnippetContent {
         callbackInterfaces: [],
         dictionaries: [],
         enums: [],
-        interfaces: interfaces,
-        mixinInterfaces: [],
+        interfaces,
         typedefs: [],
         namespaces: []
     }

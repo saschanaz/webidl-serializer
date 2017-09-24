@@ -373,7 +373,6 @@ function mergeIDLSnippets(snippets: IDLSnippetContent[]) {
     result.dictionaries.sort(nameSorter);
     result.enums.sort(nameSorter);
     result.interfaces.sort(nameSorter);
-    result.mixinInterfaces.sort(nameSorter);
     result.typedefs.sort(nameSorter);
     result.namespaces.sort(nameSorter);
 
@@ -402,12 +401,7 @@ function insert(webidl: WebIDL2.IDLRootType, snippetContent: IDLSnippetContent) 
         snippetContent.enums.push(createEnum(webidl));
     }
     else if (webidl.type === "interface") {
-        if (webidl.partial || webidl.extAttrs.filter(extAttr => extAttr.name === "NoInterfaceObject").length) {
-            snippetContent.mixinInterfaces.push(createInterface(webidl));
-        }
-        else {
-            snippetContent.interfaces.push(createInterface(webidl));
-        }
+        snippetContent.interfaces.push(createInterface(webidl));
     }
     else if (webidl.type === "typedef") {
         snippetContent.typedefs.push(createTypedef(webidl));
@@ -842,7 +836,6 @@ function createIDLSnippetContentContainer(): IDLSnippetContent {
         dictionaries: [],
         enums: [],
         interfaces: [],
-        mixinInterfaces: [],
         typedefs: [],
         namespaces: []
     }
