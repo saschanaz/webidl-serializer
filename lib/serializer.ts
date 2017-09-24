@@ -8,12 +8,10 @@ import prettifyXml = require("prettify-xml");
 import * as mz from "mz/fs";
 import * as yargs from "yargs";
 import stringify from "json-compactline";
-import { ImportRemoteDescription, IDLImportResult, IDLSnippetContent, FetchResult, MSEdgeIgnore, IDLDefinitions } from "./types"
-import * as xhelper from "./xmldom-helper.js";
+import { ImportRemoteDescription, IDLImportResult, IDLSnippetContent, FetchResult, MSEdgeIgnore, IDLDefinitions } from "./types";
 import * as supplements from "./supplements.js";
-import * as merger from "./partial-type-merger.js"
-import { sorter, xmlSort } from "./xmlsort.js"
-import nameSorter from "./namesort.js"
+import * as merger from "./partial-type-merger.js";
+import nameSorter from "./namesort.js";
 
 const unionLineBreakRegex = / or[\s]*/g;
 

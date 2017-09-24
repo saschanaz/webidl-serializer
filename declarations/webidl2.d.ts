@@ -116,7 +116,7 @@
         /** A list of extended attributes. */
         extAttrs: ExtendedAttributes[];
         /** A default value, absent if there is none. */
-        default: ValueDescription;
+        default: ValueDescription | null;
     }
 
     interface EnumType {

@@ -1,20 +1,20 @@
 "use strict";
 
 import { XMLSerializer, DOMImplementation, DOMParser } from "xmldom";
-import { MSEdgeIgnore } from "./types.js";
+import { MSEdgeIgnore, IDLSnippetContent } from "./types.js";
 import * as mz from "mz/fs";
 
 run();
 
 async function run() {
     const msedgeDocument = new DOMParser().parseFromString(await mz.readFile("supplements/browser.webidl.xml", "utf8"), "text/xml");
-    const standardDocument = new DOMParser().parseFromString(await mz.readFile("built/browser.webidl.xml", "utf8"), "text/xml");
+    const standardDocument = JSON.parse(await mz.readFile("built/browser.webidl.json", "utf8")) as IDLSnippetContent;
     const ignore = JSON.parse(await mz.readFile("msedge-ignore.json", "utf8")) as MSEdgeIgnore;;
 
-    compareArray(extractInterfaceNames(msedgeDocument), extractInterfaceNames(standardDocument), ignore.interfaces);
+    compareArray(extractInterfaceNamesOnEdgeXML(msedgeDocument), extractInterfaceNamesOnIDLSnippetContent(standardDocument), ignore.interfaces);
 }
 
-function extractInterfaceNames(doc: Document) {
+function extractInterfaceNamesOnEdgeXML(doc: Document) {
     const callbackInterfaces = doc.getElementsByTagName("callback-interfaces")[0];
     const interfaces = doc.getElementsByTagName("interfaces")[0];
     const mixinInterfaces = doc.getElementsByTagName("mixin-interfaces")[0];
@@ -23,7 +23,15 @@ function extractInterfaceNames(doc: Document) {
         ...getChildrenArray(callbackInterfaces),
         ...getChildrenArray(interfaces),
         ...getChildrenArray(mixinInterfaces)
-    ].filter(interfaceEl => interfaceEl.getAttribute("tags") !== "MSAppOnly").map(interfaceEl => interfaceEl.getAttribute("name"));
+    ].filter(interfaceEl => interfaceEl.getAttribute("tags") !== "MSAppOnly").map(interfaceEl => interfaceEl.getAttribute("name")!);
+}
+
+function extractInterfaceNamesOnIDLSnippetContent(doc: IDLSnippetContent) {
+    return [
+        ...doc.callbackInterfaces,
+        ...doc.interfaces,
+        ...doc.mixinInterfaces
+    ].map(definition => definition.name);
 }
 
 function compareArray(base: string[], comparand: string[], ignore: string[]) {

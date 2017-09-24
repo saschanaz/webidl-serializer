@@ -1,6 +1,5 @@
 import { ImportRemoteDescription, IDLImportResult, IDLSnippetContent, FetchResult, IDLDefinitions } from "./types";
 import * as mz from "mz/fs";
-import * as xhelper from "./xmldom-helper";
 
 interface Supplement {
     events: EventSupplement[];
