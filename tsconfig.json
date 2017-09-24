@@ -3,7 +3,8 @@
         "target": "es2017",
         "noImplicitAny": true,
         "sourceMap": true,
-        "module": "commonjs"
+        "module": "commonjs",
+        "strict": true
     },
     "exclude": [
         "test-sources/"

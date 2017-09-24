@@ -63,7 +63,7 @@ export namespace IDLDefinitions {
 
     export interface Interface {
         name: string;
-        extends: string;
+        extends?: string;
         partial?: boolean;
 
         noInterfaceObject?: boolean;
@@ -78,10 +78,12 @@ export namespace IDLDefinitions {
         constants?: Constant[];
         operations?: Operation[];
         attributes?: Attribute[];
-        events?: Event[];
         implements?: string[];
 
         iterable?: Iterable;
+
+        events?: Event[];
+        elements?: { name: string; namespace: string; }[];
     }
 
     export interface Constant {
@@ -137,6 +139,9 @@ export namespace IDLDefinitions {
         nullable?: boolean;
         type: string;
         exposed?: string[];
+
+        cssProperty?: string;
+        eventHandler?: string;
     }
 
     export interface Argument {

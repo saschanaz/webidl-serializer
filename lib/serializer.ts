@@ -7,6 +7,7 @@ import fetch from "node-fetch";
 import prettifyXml = require("prettify-xml");
 import * as mz from "mz/fs";
 import * as yargs from "yargs";
+import stringify from "json-compactline";
 import { ImportRemoteDescription, IDLImportResult, IDLSnippetContent, FetchResult, MSEdgeIgnore, IDLDefinitions } from "./types"
 import * as xhelper from "./xmldom-helper.js";
 import * as supplements from "./supplements.js";
@@ -87,13 +88,13 @@ async function run() {
 
     if (!argv.pick) {
         // Loads event information from browser.webidl.xml and create interfaces for each event target
-        console.log("Loading event information from MSEdge data...");
-        const msedgeEventDocument = new DOMParser().parseFromString(await mz.readFile("supplements/browser.webidl.xml", "utf8"), "text/xml");
-        const msedgeIgnore: MSEdgeIgnore = JSON.parse(await mz.readFile("msedge-ignore.json", "utf8"));
-        const msedgeEventHandlers = exportEventHandlers(msedgeEventDocument, msedgeIgnore);
-        const msedgeEventPropertyMap = exportEventPropertyMap(msedgeEventDocument);
-        transferEventInformation(exports, msedgeEventPropertyMap);
-        exports.push(msedgeEventHandlers);
+        // console.log("Loading event information from MSEdge data...");
+        // const msedgeEventDocument = new DOMParser().parseFromString(await mz.readFile("supplements/browser.webidl.xml", "utf8"), "text/xml");
+        // const msedgeIgnore: MSEdgeIgnore = JSON.parse(await mz.readFile("msedge-ignore.json", "utf8"));
+        // const msedgeEventHandlers = exportEventHandlers(msedgeEventDocument, msedgeIgnore);
+        // const msedgeEventPropertyMap = exportEventPropertyMap(msedgeEventDocument);
+        // transferEventInformation(exports, msedgeEventPropertyMap);
+        // exports.push(msedgeEventHandlers);
     }
     else {
         console.log("Skipped MSEdge information merging.")
@@ -101,17 +102,16 @@ async function run() {
 
     console.log("Loading supplements...");
     for (const exportResult of exports) {
-        supplements.apply(exportResult, document);
+        supplements.apply(exportResult);
     }
 
-    const serializer = new XMLSerializer();
-    for (const doc of convertAsMultipleDocument(exports)) {
-        const path = `built/partial/${doc.documentElement.getAttribute("name")}.webidl.xml`;
-        await mz.writeFile(path, prettifyXml(serializer.serializeToString(doc)));
+    for (const exported of exports) {
+        const path = `built/partial/${exported.origin.description.title}.webidl.json`;
+        await mz.writeFile(path, stringify(mergeIDLSnippets(exported.snippets)));
         console.log(`Writing as ${path}`);
     }
-    console.log("Conversion as merged one as browser.webidl.xml");
-    await mz.writeFile("built/browser.webidl.xml", prettifyXml(serializer.serializeToString(convertAsSingleDocument(exports))));
+    console.log("Conversion as merged one as browser.webidl.json");
+    await mz.writeFile("built/browser.webidl.json", stringify(mergeIDLSnippetsBatch(exports)));
     console.log("Finished 100%");
 }
 
@@ -245,24 +245,24 @@ async function run() {
 //     }
 // }
 
-function convertAsSingleDocument(exports: IDLImportResult[]) {
+function mergeIDLSnippetsBatch(exports: IDLImportResult[]) {
     const snippets: IDLSnippetContent[] = [];
     for (const item of exports) {
         snippets.push(...item.snippets);
     }
-    return createWebIDLXMLDocument("WHATWG/W3C Web Platform", "null", mergeIDLSnippets(snippets));
+    return mergeIDLSnippets(snippets);
 }
 
-function convertAsMultipleDocument(exports: IDLImportResult[]) {
-    const docs: Document[] = [];
-    for (const item of exports) {
-        console.log(`Conversion started for ${item.origin.description.title}`);
-        const doc = createWebIDLXMLDocument(item.origin.description.title, item.origin.description.url, mergeIDLSnippets(item.snippets));
-        console.log(`Conversion finished for ${item.origin.description.title}`);
-        docs.push(doc);
-    }
-    return docs;
-}
+// function convertAsMultipleDocument(exports: IDLImportResult[]) {
+//     const docs: Document[] = [];
+//     for (const item of exports) {
+//         console.log(`Conversion started for ${item.origin.description.title}`);
+//         const doc = createWebIDLXMLDocument(item.origin.description.title, item.origin.description.url, mergeIDLSnippets(item.snippets));
+//         console.log(`Conversion finished for ${item.origin.description.title}`);
+//         docs.push(doc);
+//     }
+//     return docs;
+// }
 
 function isWebIDLParseError(err: any): err is WebIDL2.WebIDLParseError {
     return Array.isArray(err.tokens);
@@ -286,8 +286,8 @@ async function exportIDLs(result: FetchResult): Promise<IDLImportResult> {
         throw new Error(`No IDLs in ${result.description.url}`)
     }
     const idlTexts =
-        result.description.hasIdlIndex ? [idlElements[idlElements.length - 1].textContent] :
-            idlElements.map(element => element.textContent);
+        result.description.hasIdlIndex ? [idlElements[idlElements.length - 1].textContent!] :
+            idlElements.map(element => element.textContent!);
 
     win.close();
     return {
@@ -302,7 +302,7 @@ function importIDLSnippets(idlTexts: string[], origin: FetchResult) {
         try {
             const snippet = createIDLSnippetContentContainer();
             const parsed = WebIDL2.parse(item);
-            const implementsMap = new Map<string, Element[]>();
+            const implementsMap = new Map<string, string[]>();
 
             for (const rootItem of parsed) {
                 /*
@@ -310,13 +310,11 @@ function importIDLSnippets(idlTexts: string[], origin: FetchResult) {
                 if not, create a new partial interface that contains <implements>
                 */
                 if (rootItem.type === "implements") {
-                    const implementEl = document.createElement("implements");
-                    implementEl.textContent = rootItem.implements;
                     if (!implementsMap.has(rootItem.target)) {
-                        implementsMap.set(rootItem.target, [implementEl]);
+                        implementsMap.set(rootItem.target, [rootItem.implements]);
                     }
                     else {
-                        implementsMap.get(rootItem.target).push(implementEl);
+                        implementsMap.get(rootItem.target)!.push(rootItem.implements);
                     }
                 }
                 else {
@@ -325,20 +323,19 @@ function importIDLSnippets(idlTexts: string[], origin: FetchResult) {
             }
 
             for (const entry of implementsMap.entries()) {
-                let interfaceEl = snippet.interfaces.filter(item => item.getAttribute("name") === entry[0])[0];
-                if (!interfaceEl) {
-                    interfaceEl = document.createElement("interface");
-                    interfaceEl.setAttribute("name", entry[0]);
-                    // temp: absence of 'extends' causes incorrect interface declaration on TSJS-lib-generator
-                    interfaceEl.setAttribute("extends", "Object");
-                    interfaceEl.setAttribute("no-interface-object", "1");
-                    interfaceEl.setAttribute("sn:partial", "1");
-                    snippet.interfaces.push(interfaceEl);
+                let interfaceDef = snippet.interfaces.filter(item => item.name === entry[0])[0];
+                if (!interfaceDef) {
+                    interfaceDef = {
+                        name: entry[0],
+                        extends: "Object",
+                        partial: true
+                    };
+                    snippet.interfaces.push(interfaceDef);
                 }
-
-                for (const implementsEl of entry[1]) {
-                    interfaceEl.appendChild(implementsEl);
+                if (!interfaceDef.implements) {
+                    interfaceDef.implements = [];
                 }
+                interfaceDef.implements.push(...entry[1]);
             }
 
             snippets.push(snippet);
@@ -492,7 +489,7 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
                 interfaceDef.constructors = [];
             }
             interfaceDef.constructors.push({
-                arguments: [...getArguments(extAttr.arguments)]
+                arguments: extAttr.arguments ? [...getArguments(extAttr.arguments)] : []
             });
         }
         else if (extAttr.name === "Global") {
@@ -621,7 +618,7 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
                 return "DOMString";
             }
             else {
-                return uncapQuestionMark(operationType.idlType);
+                return uncapQuestionMark(operationType.idlType!);
             }
         }
     }
@@ -717,9 +714,9 @@ function createNamespace(namespaceType: WebIDL2.NamespaceType) {
     for (const memberType of namespaceType.members) {
         if (memberType.type === "operation") {
             const operation: IDLDefinitions.Operation = {
-                name: memberType.name,
-                nullable: memberType.idlType.nullable,
-                type: uncapQuestionMark(memberType.idlType)
+                name: memberType.name!,
+                nullable: memberType.idlType!.nullable,
+                type: uncapQuestionMark(memberType.idlType!)
             };
             
             if (memberType.arguments) {
@@ -814,29 +811,6 @@ function getValueString(typePair: WebIDL2.ValueDescription) {
         throw new Error(`Unknown value string typed ${typePair.type}`);
     }
 };
-
-function createWebIDLXMLDocument(title: string, originUrl: string, snippetContent: IDLSnippetContent) {
-    const xmlns = "http://schemas.microsoft.com/ie/webidl-xml"
-    const xsi = "http://www.w3.org/2001/XMLSchema-instance";
-
-    const doc = impl.createDocument(xmlns, "webidl-xml", null);
-    doc.documentElement.setAttribute("name", title);
-    doc.documentElement.setAttribute("original-file", originUrl);
-    doc.documentElement.setAttribute("xmlns:xsi", xsi);
-    doc.documentElement.setAttribute("xsi:schemaLocation", "http://schemas.microsoft.com/ie/webidl-xml webidl-xml-schema.xsd");
-    doc.documentElement.setAttribute("xmlns:sn", "http://saschanaz.github.io/ts/webidl-xml-ext/");
-
-    appendChildrenAs(doc, "callback-functions", snippetContent.callbackFunctions);
-    appendChildrenAs(doc, "callback-interfaces", snippetContent.callbackInterfaces);
-    appendChildrenAs(doc, "dictionaries", snippetContent.dictionaries);
-    appendChildrenAs(doc, "enums", snippetContent.enums);
-    appendChildrenAs(doc, "interfaces", snippetContent.interfaces);
-    appendChildrenAs(doc, "mixin-interfaces", snippetContent.mixinInterfaces);
-    appendChildrenAs(doc, "typedefs", snippetContent.typedefs);
-    appendChildrenAs(doc, "namespaces", snippetContent.namespaces);
-
-    return doc;
-}
 
 function appendChildrenAs(doc: Document, newParentName: string, children: Element[]) {
     const newParent = doc.createElement(newParentName);

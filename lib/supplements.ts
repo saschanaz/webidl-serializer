@@ -1,4 +1,4 @@
-import { ImportRemoteDescription, IDLImportResult, IDLSnippetContent, FetchResult } from "./types";
+import { ImportRemoteDescription, IDLImportResult, IDLSnippetContent, FetchResult, IDLDefinitions } from "./types";
 import * as mz from "mz/fs";
 import * as xhelper from "./xmldom-helper";
 
@@ -26,7 +26,7 @@ interface EventTypeInterfacePair {
     eventInterface: string;
 }
 
-export async function apply(base: IDLImportResult, doc: Document) {
+export async function apply(base: IDLImportResult) {
     const path = `supplements/${base.origin.description.title}.json`;
     const exists = await mz.exists(path);
     if (exists) {
@@ -40,11 +40,11 @@ export async function apply(base: IDLImportResult, doc: Document) {
     }
 
     if (supplement.elements) {
-        base.snippets.push(createElementMapSnippet(supplement, doc));
+        base.snippets.push(createElementMapSnippet(supplement));
     }
     applyEventProperties(base, supplement);
     if (supplement.cssProperties) {
-        base.snippets.push(createCSSPropertySnippet(supplement, doc));
+        base.snippets.push(createCSSPropertySnippet(supplement));
     }
 }
 
@@ -52,39 +52,39 @@ function applyEventProperties(base: IDLImportResult, supplement: Supplement) {
     const propertyMap = createEventPropertyMap(supplement);
 
     for (const snippet of base.snippets) {
-        for (const interfaceEl of [...snippet.interfaces, ...snippet.mixinInterfaces]) {
-            const properties = xhelper.getChild(interfaceEl, "properties");
-            if (!properties) {
+        for (const interfaceDef of [...snippet.interfaces, ...snippet.mixinInterfaces]) {
+            const { attributes } = interfaceDef;
+            if (!attributes) {
                 continue;
             }
-            const events = xhelper.getChild(interfaceEl, "events") || interfaceEl.ownerDocument.createElement("events");
-            for (const property of xhelper.getChildrenArray(properties)) {
-                if (!property.getAttribute("type").endsWith("EventHandler")) {
+            const events = interfaceDef.events || [];
+            for (const attribute of attributes) {
+                if (!attribute.type.endsWith("EventHandler")) {
                     // not an event handler property
                     continue;
                 }
-                const key = `${interfaceEl.getAttribute("name")}:${property.getAttribute("name")}`;
+                const key = `${interfaceDef.name}:${attribute.name}`;
                 const eventInfo = propertyMap.get(key);
                 if (!eventInfo) {
-                    if (!property.getAttribute("event-handler")) {
+                    if (!attribute.eventHandler) {
                         console.warn(`WARNING: event type for ${key} is unknown`);
                     }
                     continue;
                 }
-                property.setAttribute("event-handler", eventInfo.eventType);
-                const event = interfaceEl.ownerDocument.createElement("event");
+                attribute.eventHandler = eventInfo.eventType;
                 // Note: 'event type' means event name for web specification
                 // but again means event interface type on TypeScript
-                event.setAttribute("name", eventInfo.eventType);
-                event.setAttribute("type", eventInfo.eventInterface);
-                events.appendChild(event);
+                events.push({
+                    name: eventInfo.eventType,
+                    type: eventInfo.eventInterface
+                });
 
                 // should not appear twice
                 propertyMap.delete(key);
             }
 
-            if (events.childNodes.length && !xhelper.getChild(interfaceEl, "events")) {
-                interfaceEl.appendChild(events);
+            if (events.length && !interfaceDef.events) {
+                interfaceDef.events = events;
             }
         }
     }
@@ -121,22 +121,20 @@ function createEventPropertyMap(supplement: Supplement) {
     return map;
 }
 
-function createCSSPropertySnippet(supplement: Supplement, doc: Document): IDLSnippetContent {
-    const cssStyleDeclaration = doc.createElement("interface");
-    cssStyleDeclaration.setAttribute("name", "CSSStyleDeclaration");
-    cssStyleDeclaration.setAttribute("no-interface-object", "1");
-    cssStyleDeclaration.setAttribute("sn:partial", "1");
-
-    const properties = doc.createElement("properties")
+function createCSSPropertySnippet(supplement: Supplement): IDLSnippetContent {
+    const cssStyleDeclaration: IDLDefinitions.Interface = {
+        name: "CSSStyleDeclaration",
+        partial: true,
+        attributes: []
+    };
 
     for (const cssProperty of supplement.cssProperties) {
-        const property = doc.createElement("property");
-        property.setAttribute("name", convertCSSNameToCamelCase(cssProperty))
-        property.setAttribute("css-property", cssProperty);
-        property.setAttribute("type", "CSSOMString");
-        properties.appendChild(property);
+        cssStyleDeclaration.attributes!.push({
+            name: convertCSSNameToCamelCase(cssProperty),
+            cssProperty,
+            type: "CSSOMString"
+        });
     }
-    cssStyleDeclaration.appendChild(properties);
 
     return {
         callbackFunctions: [],
@@ -158,24 +156,18 @@ function convertLowercasedNameToPascalCase(name: string) {
     return `${name[0].toUpperCase()}${name.slice(1)}`
 }
 
-function createElementMapSnippet(supplement: Supplement, doc: Document): IDLSnippetContent {
-    const interfaces: Element[] = [];
+function createElementMapSnippet(supplement: Supplement): IDLSnippetContent {
+    const interfaces: IDLDefinitions.Interface[] = [];
     for (const elementName in supplement.elements) {
-        const interfaceEl = doc.createElement("interface");
         const elementInterfaceValue = supplement.elements[elementName];
         const elementInterfaceValueComputed = elementInterfaceValue == null ? convertLowercasedNameToPascalCase(elementName) : elementInterfaceValue;
         const elementInterfaceName = `${supplement.elementsPrefix}${elementInterfaceValueComputed}Element`;
 
-        interfaceEl.setAttribute("name", elementInterfaceName);
-        interfaceEl.setAttribute("no-interface-object", "1");
-        interfaceEl.setAttribute("sn:partial", "1");
-
-        const element = doc.createElement("element")
-        element.setAttribute("name", elementName);
-        element.setAttribute("namespace", supplement.elementsPrefix);
-        
-        interfaceEl.appendChild(element);
-        interfaces.push(interfaceEl);
+        interfaces.push({
+            name: elementInterfaceName,
+            partial: true,
+            elements: [{ name: elementName, namespace: supplement.elementsPrefix }]
+        });
     }
 
     return {

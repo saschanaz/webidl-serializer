@@ -41,24 +41,65 @@ function mergePartialInterfaces(snippet: IDLSnippetContent) {
 
 function interfaceBatchSort(interfaces: IDLDefinitions.Interface[]) {
     for (const interfaceDef of interfaces) {
-        interfaceDef.constants.sort(nameSorter);
-        interfaceDef.operations.sort(nameSorter);
-        interfaceDef.attributes.sort(nameSorter);
+        if (interfaceDef.constants) {
+            interfaceDef.constants.sort(nameSorter);
+        }
+        if (interfaceDef.operations) {
+            interfaceDef.operations.sort(nameSorter);
+        }
+        if (interfaceDef.attributes) {
+            interfaceDef.attributes.sort(nameSorter);
+        }
     }
     return interfaces;
 }
 
 /** Has side effect on its arguments */
 function mergeInterface(baseInterface: IDLDefinitions.Interface, partialInterface: IDLDefinitions.Interface) {
-    baseInterface.anonymousOperations.push(...partialInterface.anonymousOperations);
-    baseInterface.constants.push(...partialInterface.constants);
-    baseInterface.operations.push(...partialInterface.operations);
-    baseInterface.attributes.push(...partialInterface.attributes);
-    baseInterface.events.push(...partialInterface.events);
+    mergeMemberSet(baseInterface, partialInterface, "anonymousOperations");
+    mergeMemberSet(baseInterface, partialInterface, "constants");
+    mergeMemberSet(baseInterface, partialInterface, "operations");
+    mergeMemberSet(baseInterface, partialInterface, "attributes");
     // Note: no partial interface is found to have iterable<> or named constructor
 
-    baseInterface.constructors.push(...partialInterface.constructors);
-    baseInterface.implements.push(...partialInterface.implements);
+    mergeMemberSet(baseInterface, partialInterface, "constructors");
+    mergeMemberSet(baseInterface, partialInterface, "implements");
+
+    mergeMemberSet(baseInterface, partialInterface, "events");
+    mergeMemberSet(baseInterface, partialInterface, "elements");
+}
+
+function mergeMemberSet(baseParent: any, partialParent: any, setName: string) {
+    let baseSet = baseParent[setName];
+    const partialSet = partialParent[setName];
+
+    if (!partialSet) {
+        // no merge occurs
+        return;
+    }
+
+    if (!baseSet) {
+        baseSet = [];
+    }
+
+    if (!Array.isArray(baseSet) || !Array.isArray(partialSet)) {
+        throw new Error(`Unexpected non-array member set with its name "${setName}"`)
+    }
+
+    mergeSet(baseSet, partialSet, partialParent.exposed);
+
+    if (!baseParent[setName]) {
+        baseParent[setName] = baseSet;
+    }
+}
+
+function mergeSet(baseSet: any[], partialSet: any[], exposed: string) {
+    for (const member of partialSet) {
+        if (exposed) {
+            member.exposed = exposed;
+        }
+        baseSet.push(member);
+    }
 }
 
 /** This is done to prevent unintential diff caused by sorting same-named multiple dictionaries */

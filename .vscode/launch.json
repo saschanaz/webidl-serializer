@@ -8,12 +8,12 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceRoot}\\lib\\webxml.js",
+            "program": "${workspaceRoot}\\lib\\serializer.js",
             "cwd": "${workspaceRoot}",
             "args": [
-                "local",
-                "--pick",
-                "Beacon"
+                "local"
+                // "--pick",
+                // "Beacon"
             ]
         },
         {
