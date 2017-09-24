@@ -66,6 +66,10 @@
         "title": "DOM Parsing and Serialization"
     },
     {
+        "url": "https://encoding.spec.whatwg.org/",
+        "title": "Encoding"
+    },
+    {
         "url": "http://www.w3.org/TR/encrypted-media/",
         "title": "Encrypted Media Extensions"
     },
