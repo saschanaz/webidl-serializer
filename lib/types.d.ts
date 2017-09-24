@@ -36,7 +36,7 @@ export interface MSEdgeIgnore {
 export namespace IDLDefinitions {
     export interface CallbackFunction {
         name: string;
-        nullable: boolean;
+        nullable?: boolean;
         type: string;
         params: Argument[];
     }
@@ -51,7 +51,7 @@ export namespace IDLDefinitions {
     export interface DictionaryMember {
         name: string;
         default?: string;
-        nullable: boolean;
+        nullable?: boolean;
         type: string;
         required?: boolean;
     }
@@ -118,7 +118,7 @@ export namespace IDLDefinitions {
 
     export interface AnonymousOperation {
         arguments?: Argument[];
-        nullable: boolean;
+        nullable?: boolean;
         type: string;
 
         getter?: true;
@@ -148,14 +148,14 @@ export namespace IDLDefinitions {
         name: string;
         default?: string;
         optional?: boolean;
-        nullable: boolean;
+        nullable?: boolean;
         type: string;
         variadic?: boolean;
     }
 
     export interface Typedef {
         name: string;
-        nullable: boolean;
+        nullable?: boolean;
         type: string;
     }
 }

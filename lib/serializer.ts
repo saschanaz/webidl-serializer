@@ -86,19 +86,19 @@ async function run() {
         await mz.writeFile(`localcopies/${exported.origin.description.title}.widl`, exported.idl);
     }
 
-    if (!argv.pick) {
-        // Loads event information from browser.webidl.xml and create interfaces for each event target
-        // console.log("Loading event information from MSEdge data...");
-        // const msedgeEventDocument = new DOMParser().parseFromString(await mz.readFile("supplements/browser.webidl.xml", "utf8"), "text/xml");
-        // const msedgeIgnore: MSEdgeIgnore = JSON.parse(await mz.readFile("msedge-ignore.json", "utf8"));
-        // const msedgeEventHandlers = exportEventHandlers(msedgeEventDocument, msedgeIgnore);
-        // const msedgeEventPropertyMap = exportEventPropertyMap(msedgeEventDocument);
-        // transferEventInformation(exports, msedgeEventPropertyMap);
-        // exports.push(msedgeEventHandlers);
-    }
-    else {
-        console.log("Skipped MSEdge information merging.")
-    }
+    // if (!argv.pick) {
+    //     // Loads event information from browser.webidl.xml and create interfaces for each event target
+    //     console.log("Loading event information from MSEdge data...");
+    //     const msedgeEventDocument = new DOMParser().parseFromString(await mz.readFile("supplements/browser.webidl.xml", "utf8"), "text/xml");
+    //     const msedgeIgnore: MSEdgeIgnore = JSON.parse(await mz.readFile("msedge-ignore.json", "utf8"));
+    //     const msedgeEventHandlers = exportEventHandlers(msedgeEventDocument, msedgeIgnore);
+    //     const msedgeEventPropertyMap = exportEventPropertyMap(msedgeEventDocument);
+    //     transferEventInformation(exports, msedgeEventPropertyMap);
+    //     exports.push(msedgeEventHandlers);
+    // }
+    // else {
+    //     console.log("Skipped MSEdge information merging.")
+    // }
 
     console.log("Loading supplements...");
     for (const exportResult of exports) {
@@ -424,12 +424,15 @@ function insert(webidl: WebIDL2.IDLRootType, snippetContent: IDLSnippetContent) 
 }
 
 function createCallbackFunction(callbackType: WebIDL2.CallbackType): IDLDefinitions.CallbackFunction {
-    return {
+    const callback: IDLDefinitions.CallbackFunction = {
         name: callbackType.name,
-        nullable: callbackType.idlType.nullable,
         type: uncapQuestionMark(callbackType.idlType),
         params: [...getArguments(callbackType.arguments)]
     };
+    if (callbackType.idlType.nullable) {
+        callback.nullable = true;
+    }
+    return callback;
 }
 
 function createDictionary(dictionaryType: WebIDL2.DictionaryType) {
@@ -445,9 +448,11 @@ function createDictionary(dictionaryType: WebIDL2.DictionaryType) {
     for (const memberType of dictionaryType.members) {
         const member: IDLDefinitions.DictionaryMember = {
             name: memberType.name,
-            nullable: memberType.idlType.nullable,
             type: uncapQuestionMark(memberType.idlType)
         };
+        if (memberType.idlType.nullable) {
+            member.nullable = true;
+        }
         if (memberType.default) {
             member.default = getValueString(memberType.default)
         }
@@ -575,8 +580,10 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
 
     function createAnonymousOperation(operationType: WebIDL2.OperationMemberType) {
         const operation: IDLDefinitions.AnonymousOperation = {
-            nullable: operationType.idlType ? operationType.idlType.nullable : false,
             type: getReturnType()
+        };
+        if (operationType.idlType && operationType.idlType.nullable) {
+            operation.nullable = true;
         }
 
         if (operationType.arguments) {
@@ -626,8 +633,10 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
     function createAttribute(attributeType: WebIDL2.AttributeMemberType) {
         const attribute: IDLDefinitions.Attribute = {
             name: attributeType.name,
-            nullable: attributeType.idlType.nullable,
             type: uncapQuestionMark(attributeType.idlType)
+        };
+        if (attributeType.idlType.nullable) {
+            attribute.nullable = true;
         }
 
         if (attributeType.readonly) {
@@ -680,12 +689,15 @@ function createEnum(enumType: WebIDL2.EnumType): IDLDefinitions.Enum {
     };
 }
 
-function createTypedef(typedefType: WebIDL2.TypedefType): IDLDefinitions.Typedef {
-    return {
+function createTypedef(typedefType: WebIDL2.TypedefType) {
+    const typedef: IDLDefinitions.Typedef = {
         name: typedefType.name,
-        nullable: typedefType.idlType.nullable,
         type: uncapQuestionMark(typedefType.idlType)
+    };
+    if (typedefType.idlType.nullable) {
+        typedef.nullable = true;
     }
+    return typedef;
 }
 
 function createNamespace(namespaceType: WebIDL2.NamespaceType) {
@@ -715,9 +727,11 @@ function createNamespace(namespaceType: WebIDL2.NamespaceType) {
         if (memberType.type === "operation") {
             const operation: IDLDefinitions.Operation = {
                 name: memberType.name!,
-                nullable: memberType.idlType!.nullable,
                 type: uncapQuestionMark(memberType.idlType!)
             };
+            if (memberType.idlType!.nullable) {
+                operation.nullable = true;
+            }
             
             if (memberType.arguments) {
                 operation.arguments = [...getArguments(memberType.arguments)];
@@ -727,8 +741,10 @@ function createNamespace(namespaceType: WebIDL2.NamespaceType) {
         else if (memberType.type === "attribute") {
             const attribute: IDLDefinitions.Attribute = {
                 name: memberType.name,
-                nullable: memberType.idlType.nullable,
                 type: uncapQuestionMark(memberType.idlType)
+            }
+            if (memberType.idlType.nullable) {
+                attribute.nullable = true;
             }
             if (memberType.readonly) {
                 attribute.readonly = true;
@@ -752,8 +768,10 @@ function* getArguments(argumentTypes: WebIDL2.Argument[]) {
     for (const argumentType of argumentTypes) {
         const arg: IDLDefinitions.Argument = {
             name: argumentType.name,
-            nullable: argumentType.idlType.nullable,
-            type: uncapQuestionMark(argumentType.idlType),
+            type: uncapQuestionMark(argumentType.idlType)
+        };
+        if (argumentType.idlType.nullable) {
+            arg.nullable = true;
         }
         if (argumentType.optional) {
             arg.optional = true;
