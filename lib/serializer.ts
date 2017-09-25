@@ -325,7 +325,6 @@ function importIDLSnippets(idlTexts: string[], origin: FetchResult) {
                 if (!interfaceDef) {
                     interfaceDef = {
                         name: entry[0],
-                        extends: "Object",
                         partial: true
                     };
                     snippet.interfaces.push(interfaceDef);
@@ -429,9 +428,12 @@ function createCallbackFunction(callbackType: WebIDL2.CallbackType): IDLDefiniti
 function createDictionary(dictionaryType: WebIDL2.DictionaryType) {
     const dictionary: IDLDefinitions.Dictionary = {
         name: dictionaryType.name,
-        extends: dictionaryType.inheritance || "Object",
         members: []
     };
+
+    if (dictionaryType.inheritance) {
+        dictionary.extends = dictionaryType.inheritance;
+    }
     if (dictionaryType.partial) {
         dictionary.partial = true;
     }
@@ -460,9 +462,11 @@ function createDictionary(dictionaryType: WebIDL2.DictionaryType) {
 function createInterface(interfaceType: WebIDL2.InterfaceType) {
     const interfaceDef: IDLDefinitions.Interface = {
         name: interfaceType.name,
-        extends: interfaceType.inheritance || "Object"
     };
 
+    if (interfaceType.inheritance) {
+        interfaceDef.extends = interfaceType.inheritance;
+    }
     if (interfaceType.partial) {
         interfaceDef.partial = true;
     }
@@ -721,7 +725,7 @@ function createNamespace(namespaceType: WebIDL2.NamespaceType) {
             if (memberType.idlType!.nullable) {
                 operation.nullable = true;
             }
-            
+
             if (memberType.arguments) {
                 operation.arguments = [...getArguments(memberType.arguments)];
             }

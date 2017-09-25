@@ -42,7 +42,7 @@ export namespace IDLDefinitions {
 
     export interface Dictionary {
         name: string;
-        extends: string;
+        extends?: string;
         partial?: boolean;
         members: DictionaryMember[];
     }

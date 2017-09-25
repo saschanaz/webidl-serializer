@@ -89,13 +89,13 @@
     { "name": "VoidFunction", "type": "void", "params": [] }
   ],
   "callbackInterfaces": [{
-    "name": "EventListener", "extends": "Object",
+    "name": "EventListener",
     "operations": [{
       "name": "handleEvent", "type": "void",
       "arguments": [{ "name": "event", "type": "Event" }]
     }]
   }, {
-    "name": "NodeFilter", "extends": "Object",
+    "name": "NodeFilter",
     "exposed": ["Window"],
     "constants": [
       { "name": "FILTER_ACCEPT", "type": "unsigned short", "value": "1" },
@@ -153,7 +153,7 @@
       "name": "AesKeyGenParams", "extends": "Algorithm",
       "members": [{ "name": "length", "type": "unsigned short", "required": true }]
     }, {
-      "name": "Algorithm", "extends": "Object",
+      "name": "Algorithm",
       "members": [{ "name": "name", "type": "DOMString", "required": true }]
     }, {
       "name": "AnalyserOptions", "extends": "AudioNodeOptions",
@@ -171,17 +171,17 @@
         { "name": "pseudoElement", "type": "CSSOMString", "default": "\"\"" }
       ]
     }, {
-      "name": "AssignedNodesOptions", "extends": "Object",
+      "name": "AssignedNodesOptions",
       "members": [{ "name": "flatten", "type": "boolean", "default": "false" }]
     }, {
-      "name": "AudioBufferOptions", "extends": "Object",
+      "name": "AudioBufferOptions",
       "members": [
         { "name": "length", "type": "unsigned long", "required": true },
         { "name": "numberOfChannels", "type": "unsigned long", "default": "1" },
         { "name": "sampleRate", "type": "float", "required": true }
       ]
     }, {
-      "name": "AudioBufferSourceOptions", "extends": "Object",
+      "name": "AudioBufferSourceOptions",
       "members": [
         { "name": "buffer", "type": "AudioBuffer", "nullable": true },
         { "name": "detune", "type": "float", "default": "0" },
@@ -191,26 +191,26 @@
         { "name": "playbackRate", "type": "float", "default": "1" }
       ]
     }, {
-      "name": "AudioContextInfo", "extends": "Object",
+      "name": "AudioContextInfo",
       "members": [
         { "name": "currentTime", "type": "double" },
         { "name": "sampleRate", "type": "float" }
       ]
     }, {
-      "name": "AudioContextOptions", "extends": "Object",
+      "name": "AudioContextOptions",
       "members": [
         { "name": "latencyHint", "type": "(AudioContextLatencyCategory or double)", "default": "\"interactive\"" },
         { "name": "sampleRate", "type": "float" }
       ]
     }, {
-      "name": "AudioNodeOptions", "extends": "Object",
+      "name": "AudioNodeOptions",
       "members": [
         { "name": "channelCount", "type": "unsigned long" },
         { "name": "channelCountMode", "type": "ChannelCountMode" },
         { "name": "channelInterpretation", "type": "ChannelInterpretation" }
       ]
     }, {
-      "name": "AudioParamDescriptor", "extends": "Object",
+      "name": "AudioParamDescriptor",
       "members": [
         { "name": "defaultValue", "type": "float", "default": "0" },
         { "name": "maxValue", "type": "float" },
@@ -225,7 +225,7 @@
         { "name": "playbackTime", "type": "double", "required": true }
       ]
     }, {
-      "name": "AudioTimestamp", "extends": "Object",
+      "name": "AudioTimestamp",
       "members": [
         { "name": "contextTime", "type": "double" },
         { "name": "performanceTime", "type": "DOMHighResTimeStamp" }
@@ -246,16 +246,16 @@
         { "name": "type", "type": "BiquadFilterType", "default": "\"lowpass\"" }
       ]
     }, {
-      "name": "BlobPropertyBag", "extends": "Object",
+      "name": "BlobPropertyBag",
       "members": [{ "name": "type", "type": "DOMString", "default": "\"\"" }]
     }, {
-      "name": "BoxQuadOptions", "extends": "Object",
+      "name": "BoxQuadOptions",
       "members": [
         { "name": "box", "type": "CSSBoxType", "default": "\"border\"" },
         { "name": "relativeTo", "type": "GeometryNode" }
       ]
     }, {
-      "name": "CacheBatchOperation", "extends": "Object",
+      "name": "CacheBatchOperation",
       "members": [
         { "name": "options", "type": "CacheQueryOptions" },
         { "name": "request", "type": "Request" },
@@ -263,7 +263,7 @@
         { "name": "type", "type": "DOMString" }
       ]
     }, {
-      "name": "CacheQueryOptions", "extends": "Object",
+      "name": "CacheQueryOptions",
       "members": [
         { "name": "cacheName", "type": "DOMString" },
         { "name": "ignoreMethod", "type": "boolean", "default": "false" },
@@ -271,10 +271,10 @@
         { "name": "ignoreVary", "type": "boolean", "default": "false" }
       ]
     }, {
-      "name": "CanvasRenderingContext2DSettings", "extends": "Object",
+      "name": "CanvasRenderingContext2DSettings",
       "members": [{ "name": "alpha", "type": "boolean", "default": "true" }]
     },
-    { "name": "Capabilities", "extends": "Object", "members": [] },
+    { "name": "Capabilities", "members": [] },
     {
       "name": "ChannelMergerOptions", "extends": "AudioNodeOptions",
       "members": [{ "name": "numberOfInputs", "type": "unsigned long", "default": "6" }]
@@ -282,7 +282,7 @@
       "name": "ChannelSplitterOptions", "extends": "AudioNodeOptions",
       "members": [{ "name": "numberOfOutputs", "type": "unsigned long", "default": "6" }]
     }, {
-      "name": "ClientQueryOptions", "extends": "Object",
+      "name": "ClientQueryOptions",
       "members": [
         { "name": "includeReserved", "type": "boolean", "default": "false" },
         { "name": "includeUncontrolled", "type": "boolean", "default": "false" },
@@ -302,16 +302,16 @@
       "name": "CompositionEventInit", "extends": "UIEventInit",
       "members": [{ "name": "data", "type": "DOMString", "default": "\"\"" }]
     }, {
-      "name": "ConstantSourceOptions", "extends": "Object",
+      "name": "ConstantSourceOptions",
       "members": [{ "name": "offset", "type": "float", "default": "1" }]
     }, {
-      "name": "ConstrainBooleanParameters", "extends": "Object",
+      "name": "ConstrainBooleanParameters",
       "members": [
         { "name": "exact", "type": "boolean" },
         { "name": "ideal", "type": "boolean" }
       ]
     }, {
-      "name": "ConstrainDOMStringParameters", "extends": "Object",
+      "name": "ConstrainDOMStringParameters",
       "members": [
         { "name": "exact", "type": "(DOMString or sequence<DOMString>)" },
         { "name": "ideal", "type": "(DOMString or sequence<DOMString>)" }
@@ -332,9 +332,9 @@
       "name": "Constraints", "extends": "ConstraintSet",
       "members": [{ "name": "advanced", "type": "sequence<ConstraintSet>" }]
     },
-    { "name": "ConstraintSet", "extends": "Object", "members": [] },
+    { "name": "ConstraintSet", "members": [] },
     {
-      "name": "ConvertCoordinateOptions", "extends": "Object",
+      "name": "ConvertCoordinateOptions",
       "members": [
         { "name": "fromBox", "type": "CSSBoxType", "default": "\"border\"" },
         { "name": "toBox", "type": "CSSBoxType", "default": "\"border\"" }
@@ -346,7 +346,7 @@
         { "name": "disableNormalization", "type": "boolean", "default": "false" }
       ]
     }, {
-      "name": "CryptoKeyPair", "extends": "Object",
+      "name": "CryptoKeyPair",
       "members": [
         { "name": "privateKey", "type": "CryptoKey" },
         { "name": "publicKey", "type": "CryptoKey" }
@@ -361,7 +361,7 @@
         { "name": "maxDelayTime", "type": "double", "default": "1" }
       ]
     }, {
-      "name": "DeviceAccelerationInit", "extends": "Object",
+      "name": "DeviceAccelerationInit",
       "members": [
         { "name": "x", "type": "double", "nullable": true, "default": "null" },
         { "name": "y", "type": "double", "nullable": true, "default": "null" },
@@ -384,14 +384,14 @@
         { "name": "gamma", "type": "double", "nullable": true, "default": "null" }
       ]
     }, {
-      "name": "DeviceRotationRateInit", "extends": "Object",
+      "name": "DeviceRotationRateInit",
       "members": [
         { "name": "alpha", "type": "double", "nullable": true, "default": "null" },
         { "name": "beta", "type": "double", "nullable": true, "default": "null" },
         { "name": "gamma", "type": "double", "nullable": true, "default": "null" }
       ]
     }, {
-      "name": "DOMMatrixInit", "extends": "Object",
+      "name": "DOMMatrixInit",
       "members": [
         { "name": "a", "type": "unrestricted double" },
         { "name": "b", "type": "unrestricted double" },
@@ -418,7 +418,7 @@
         { "name": "m44", "type": "unrestricted double", "default": "1" }
       ]
     }, {
-      "name": "DOMPointInit", "extends": "Object",
+      "name": "DOMPointInit",
       "members": [
         { "name": "w", "type": "unrestricted double", "default": "1" },
         { "name": "x", "type": "unrestricted double", "default": "0" },
@@ -426,7 +426,7 @@
         { "name": "z", "type": "unrestricted double", "default": "0" }
       ]
     }, {
-      "name": "DOMQuadInit", "extends": "Object",
+      "name": "DOMQuadInit",
       "members": [
         { "name": "p1", "type": "DOMPointInit" },
         { "name": "p2", "type": "DOMPointInit" },
@@ -434,7 +434,7 @@
         { "name": "p4", "type": "DOMPointInit" }
       ]
     }, {
-      "name": "DOMRectInit", "extends": "Object",
+      "name": "DOMRectInit",
       "members": [
         { "name": "height", "type": "unrestricted double", "default": "0" },
         { "name": "width", "type": "unrestricted double", "default": "0" },
@@ -442,7 +442,7 @@
         { "name": "y", "type": "unrestricted double", "default": "0" }
       ]
     }, {
-      "name": "DoubleRange", "extends": "Object",
+      "name": "DoubleRange",
       "members": [
         { "name": "max", "type": "double" },
         { "name": "min", "type": "double" }
@@ -475,10 +475,10 @@
       "name": "EcKeyImportParams", "extends": "Algorithm",
       "members": [{ "name": "namedCurve", "type": "NamedCurve", "required": true }]
     }, {
-      "name": "ElementCreationOptions", "extends": "Object",
+      "name": "ElementCreationOptions",
       "members": [{ "name": "is", "type": "DOMString" }]
     }, {
-      "name": "ElementDefinitionOptions", "extends": "Object",
+      "name": "ElementDefinitionOptions",
       "members": [{ "name": "extends", "type": "DOMString" }]
     }, {
       "name": "ErrorEventInit", "extends": "EventInit",
@@ -490,14 +490,14 @@
         { "name": "message", "type": "DOMString", "default": "\"\"" }
       ]
     }, {
-      "name": "EventInit", "extends": "Object",
+      "name": "EventInit",
       "members": [
         { "name": "bubbles", "type": "boolean", "default": "false" },
         { "name": "cancelable", "type": "boolean", "default": "false" },
         { "name": "composed", "type": "boolean", "default": "false" }
       ]
     }, {
-      "name": "EventListenerOptions", "extends": "Object",
+      "name": "EventListenerOptions",
       "members": [{ "name": "capture", "type": "boolean", "default": "false" }]
     }, {
       "name": "EventModifierInit", "extends": "UIEventInit",
@@ -518,10 +518,10 @@
         { "name": "shiftKey", "type": "boolean", "default": "false" }
       ]
     }, {
-      "name": "EventSourceInit", "extends": "Object",
+      "name": "EventSourceInit",
       "members": [{ "name": "withCredentials", "type": "boolean", "default": "false" }]
     },
-    { "name": "ExtendableEventInit", "extends": "EventInit", "members": [] },
+    { "name": "ExtendableEventInit", "members": [], "extends": "EventInit" },
     {
       "name": "ExtendableMessageEventInit", "extends": "ExtendableEventInit",
       "members": [
@@ -553,13 +553,13 @@
         { "name": "request", "type": "Request", "required": true }
       ]
     }, {
-      "name": "ForeignFetchOptions", "extends": "Object",
+      "name": "ForeignFetchOptions",
       "members": [
         { "name": "origins", "type": "sequence<USVString>", "required": true },
         { "name": "scopes", "type": "sequence<USVString>", "required": true }
       ]
     }, {
-      "name": "ForeignFetchResponse", "extends": "Object",
+      "name": "ForeignFetchResponse",
       "members": [
         { "name": "headers", "type": "sequence<ByteString>" },
         { "name": "origin", "type": "USVString" },
@@ -572,10 +572,10 @@
       "name": "GamepadEventInit", "extends": "EventInit",
       "members": [{ "name": "gamepad", "type": "Gamepad", "required": true }]
     }, {
-      "name": "GetNotificationOptions", "extends": "Object",
+      "name": "GetNotificationOptions",
       "members": [{ "name": "tag", "type": "DOMString", "default": "\"\"" }]
     }, {
-      "name": "GetRootNodeOptions", "extends": "Object",
+      "name": "GetRootNodeOptions",
       "members": [{ "name": "composed", "type": "boolean", "default": "false" }]
     }, {
       "name": "HashChangeEventInit", "extends": "EventInit",
@@ -609,13 +609,13 @@
         { "name": "length", "type": "unsigned long" }
       ]
     }, {
-      "name": "IDBIndexParameters", "extends": "Object",
+      "name": "IDBIndexParameters",
       "members": [
         { "name": "multiEntry", "type": "boolean", "default": "false" },
         { "name": "unique", "type": "boolean", "default": "false" }
       ]
     }, {
-      "name": "IDBObjectStoreParameters", "extends": "Object",
+      "name": "IDBObjectStoreParameters",
       "members": [
         { "name": "autoIncrement", "type": "boolean", "default": "false" },
         { "name": "keyPath", "type": "(DOMString or sequence<DOMString>)", "nullable": true, "default": "null" }
@@ -633,7 +633,7 @@
         { "name": "feedforward", "type": "sequence<double>", "required": true }
       ]
     }, {
-      "name": "ImageBitmapOptions", "extends": "Object",
+      "name": "ImageBitmapOptions",
       "members": [
         { "name": "colorSpaceConversion", "type": "ColorSpaceConversion", "default": "\"default\"" },
         { "name": "imageOrientation", "type": "ImageOrientation", "default": "\"none\"" },
@@ -643,10 +643,10 @@
         { "name": "resizeWidth", "type": "unsigned long" }
       ]
     }, {
-      "name": "ImageBitmapRenderingContextSettings", "extends": "Object",
+      "name": "ImageBitmapRenderingContextSettings",
       "members": [{ "name": "alpha", "type": "boolean", "default": "true" }]
     }, {
-      "name": "ImageEncodeOptions", "extends": "Object",
+      "name": "ImageEncodeOptions",
       "members": [
         { "name": "quality", "type": "unrestricted double", "default": "1" },
         { "name": "type", "type": "DOMString", "default": "\"image/png\"" }
@@ -658,7 +658,7 @@
         { "name": "isComposing", "type": "boolean", "default": "false" }
       ]
     }, {
-      "name": "IntersectionObserverEntryInit", "extends": "Object",
+      "name": "IntersectionObserverEntryInit",
       "members": [
         { "name": "boundingClientRect", "type": "DOMRectInit", "required": true },
         { "name": "intersectionRatio", "type": "double", "required": true },
@@ -669,14 +669,14 @@
         { "name": "time", "type": "DOMHighResTimeStamp", "required": true }
       ]
     }, {
-      "name": "IntersectionObserverInit", "extends": "Object",
+      "name": "IntersectionObserverInit",
       "members": [
         { "name": "root", "type": "Element", "nullable": true, "default": "null" },
         { "name": "rootMargin", "type": "DOMString", "default": "\"0px\"" },
         { "name": "threshold", "type": "(double or sequence<double>)", "default": "0" }
       ]
     }, {
-      "name": "JsonWebKey", "extends": "Object",
+      "name": "JsonWebKey",
       "members": [
         { "name": "alg", "type": "DOMString" },
         { "name": "crv", "type": "DOMString" },
@@ -698,7 +698,7 @@
         { "name": "y", "type": "DOMString" }
       ]
     }, {
-      "name": "KeyAlgorithm", "extends": "Object",
+      "name": "KeyAlgorithm",
       "members": [{ "name": "name", "type": "DOMString", "required": true }]
     }, {
       "name": "KeyboardEventInit", "extends": "EventModifierInit",
@@ -710,13 +710,13 @@
         { "name": "repeat", "type": "boolean", "default": "false" }
       ]
     }, {
-      "name": "LongRange", "extends": "Object",
+      "name": "LongRange",
       "members": [
         { "name": "max", "type": "long" },
         { "name": "min", "type": "long" }
       ]
     }, {
-      "name": "MediaElementAudioSourceOptions", "extends": "Object",
+      "name": "MediaElementAudioSourceOptions",
       "members": [{ "name": "mediaElement", "type": "HTMLMediaElement", "required": true }]
     }, {
       "name": "MediaEncryptedEventInit", "extends": "EventInit",
@@ -731,7 +731,7 @@
         { "name": "messageType", "type": "MediaKeyMessageType", "required": true }
       ]
     }, {
-      "name": "MediaKeySystemConfiguration", "extends": "Object",
+      "name": "MediaKeySystemConfiguration",
       "members": [
         { "name": "audioCapabilities", "type": "sequence<MediaKeySystemMediaCapability>", "default": "[]" },
         { "name": "distinctiveIdentifier", "type": "MediaKeysRequirement", "default": "\"optional\"" },
@@ -742,7 +742,7 @@
         { "name": "videoCapabilities", "type": "sequence<MediaKeySystemMediaCapability>", "default": "[]" }
       ]
     }, {
-      "name": "MediaKeySystemMediaCapability", "extends": "Object",
+      "name": "MediaKeySystemMediaCapability",
       "members": [
         { "name": "contentType", "type": "DOMString", "default": "\"\"" },
         { "name": "robustness", "type": "DOMString", "default": "\"\"" }
@@ -754,23 +754,23 @@
         { "name": "media", "type": "DOMString", "default": "\"\"" }
       ]
     }, {
-      "name": "MediaStreamAudioSourceOptions", "extends": "Object",
+      "name": "MediaStreamAudioSourceOptions",
       "members": [{ "name": "mediaStream", "type": "MediaStream", "required": true }]
     }, {
-      "name": "MediaStreamConstraints", "extends": "Object",
+      "name": "MediaStreamConstraints",
       "members": [
         { "name": "audio", "type": "(boolean or MediaTrackConstraints)", "default": "false" },
         { "name": "peerIdentity", "type": "DOMString" },
         { "name": "video", "type": "(boolean or MediaTrackConstraints)", "default": "false" }
       ]
     }, {
-      "name": "MediaStreamTrackAudioSourceOptions", "extends": "Object",
+      "name": "MediaStreamTrackAudioSourceOptions",
       "members": [{ "name": "mediaStreamTrack", "type": "AudioMediaStreamTrack", "required": true }]
     }, {
       "name": "MediaStreamTrackEventInit", "extends": "EventInit",
       "members": [{ "name": "track", "type": "MediaStreamTrack", "required": true }]
     }, {
-      "name": "MediaTrackCapabilities", "extends": "Object",
+      "name": "MediaTrackCapabilities",
       "members": [
         { "name": "aspectRatio", "type": "DoubleRange" },
         { "name": "channelCount", "type": "LongRange" },
@@ -790,7 +790,7 @@
       "name": "MediaTrackConstraints", "extends": "MediaTrackConstraintSet",
       "members": [{ "name": "advanced", "type": "sequence<MediaTrackConstraintSet>" }]
     }, {
-      "name": "MediaTrackConstraintSet", "extends": "Object",
+      "name": "MediaTrackConstraintSet",
       "members": [
         { "name": "aspectRatio", "type": "ConstrainDouble" },
         { "name": "channelCount", "type": "ConstrainLong" },
@@ -807,7 +807,7 @@
         { "name": "width", "type": "ConstrainLong" }
       ]
     }, {
-      "name": "MediaTrackSettings", "extends": "Object",
+      "name": "MediaTrackSettings",
       "members": [
         { "name": "aspectRatio", "type": "double" },
         { "name": "channelCount", "type": "long" },
@@ -824,7 +824,7 @@
         { "name": "width", "type": "long" }
       ]
     }, {
-      "name": "MediaTrackSupportedConstraints", "extends": "Object",
+      "name": "MediaTrackSupportedConstraints",
       "members": [
         { "name": "aspectRatio", "type": "boolean", "default": "true" },
         { "name": "channelCount", "type": "boolean", "default": "true" },
@@ -861,7 +861,7 @@
         { "name": "screenY", "type": "long", "default": "0" }
       ]
     }, {
-      "name": "MutationObserverInit", "extends": "Object",
+      "name": "MutationObserverInit",
       "members": [
         { "name": "attributeFilter", "type": "sequence<DOMString>" },
         { "name": "attributeOldValue", "type": "boolean" },
@@ -872,13 +872,13 @@
         { "name": "subtree", "type": "boolean", "default": "false" }
       ]
     }, {
-      "name": "NavigationPreloadState", "extends": "Object",
+      "name": "NavigationPreloadState",
       "members": [
         { "name": "enabled", "type": "boolean", "default": "false" },
         { "name": "headerValue", "type": "ByteString" }
       ]
     }, {
-      "name": "NotificationAction", "extends": "Object",
+      "name": "NotificationAction",
       "members": [
         { "name": "action", "type": "DOMString", "required": true },
         { "name": "icon", "type": "USVString" },
@@ -891,7 +891,7 @@
         { "name": "notification", "type": "Notification", "required": true }
       ]
     }, {
-      "name": "NotificationOptions", "extends": "Object",
+      "name": "NotificationOptions",
       "members": [
         { "name": "actions", "type": "sequence<NotificationAction>", "default": "[]" },
         { "name": "badge", "type": "USVString" },
@@ -945,14 +945,14 @@
         { "name": "rolloffFactor", "type": "double", "default": "1" }
       ]
     }, {
-      "name": "PaymentCurrencyAmount", "extends": "Object",
+      "name": "PaymentCurrencyAmount",
       "members": [
         { "name": "currency", "type": "DOMString", "required": true },
         { "name": "currencySystem", "type": "DOMString", "default": "\"urn:iso:std:iso:4217\"" },
         { "name": "value", "type": "DOMString", "required": true }
       ]
     }, {
-      "name": "PaymentDetailsBase", "extends": "Object",
+      "name": "PaymentDetailsBase",
       "members": [
         { "name": "displayItems", "type": "sequence<PaymentItem>" },
         { "name": "modifiers", "type": "sequence<PaymentDetailsModifier>" },
@@ -965,7 +965,7 @@
         { "name": "total", "type": "PaymentItem", "required": true }
       ]
     }, {
-      "name": "PaymentDetailsModifier", "extends": "Object",
+      "name": "PaymentDetailsModifier",
       "members": [
         { "name": "additionalDisplayItems", "type": "sequence<PaymentItem>" },
         { "name": "data", "type": "object" },
@@ -979,20 +979,20 @@
         { "name": "total", "type": "PaymentItem" }
       ]
     }, {
-      "name": "PaymentItem", "extends": "Object",
+      "name": "PaymentItem",
       "members": [
         { "name": "amount", "type": "PaymentCurrencyAmount", "required": true },
         { "name": "label", "type": "DOMString", "required": true },
         { "name": "pending", "type": "boolean", "default": "false" }
       ]
     }, {
-      "name": "PaymentMethodData", "extends": "Object",
+      "name": "PaymentMethodData",
       "members": [
         { "name": "data", "type": "object" },
         { "name": "supportedMethods", "type": "sequence<DOMString>", "required": true }
       ]
     }, {
-      "name": "PaymentOptions", "extends": "Object",
+      "name": "PaymentOptions",
       "members": [
         { "name": "requestPayerEmail", "type": "boolean", "default": "false" },
         { "name": "requestPayerName", "type": "boolean", "default": "false" },
@@ -1001,9 +1001,9 @@
         { "name": "shippingType", "type": "PaymentShippingType", "default": "\"shipping\"" }
       ]
     },
-    { "name": "PaymentRequestUpdateEventInit", "extends": "EventInit", "members": [] },
+    { "name": "PaymentRequestUpdateEventInit", "members": [], "extends": "EventInit" },
     {
-      "name": "PaymentShippingOption", "extends": "Object",
+      "name": "PaymentShippingOption",
       "members": [
         { "name": "amount", "type": "PaymentCurrencyAmount", "required": true },
         { "name": "id", "type": "DOMString", "required": true },
@@ -1018,10 +1018,10 @@
         { "name": "salt", "type": "BufferSource", "required": true }
       ]
     }, {
-      "name": "PerformanceObserverInit", "extends": "Object",
+      "name": "PerformanceObserverInit",
       "members": [{ "name": "entryTypes", "type": "sequence<DOMString>", "required": true }]
     }, {
-      "name": "PeriodicWaveConstraints", "extends": "Object",
+      "name": "PeriodicWaveConstraints",
       "members": [{ "name": "disableNormalization", "type": "boolean", "default": "false" }]
     }, {
       "name": "PeriodicWaveOptions", "extends": "PeriodicWaveConstraints",
@@ -1045,7 +1045,7 @@
       "name": "PopStateEventInit", "extends": "EventInit",
       "members": [{ "name": "state", "type": "any", "default": "null" }]
     }, {
-      "name": "PositionOptions", "extends": "Object",
+      "name": "PositionOptions",
       "members": [
         { "name": "enableHighAccuracy", "type": "boolean", "default": "false" },
         { "name": "maximumAge", "type": "unsigned long", "default": "0" },
@@ -1074,13 +1074,13 @@
         { "name": "oldSubscription", "type": "PushSubscription", "default": "null" }
       ]
     }, {
-      "name": "PushSubscriptionOptionsInit", "extends": "Object",
+      "name": "PushSubscriptionOptionsInit",
       "members": [
         { "name": "applicationServerKey", "type": "(BufferSource or DOMString)", "nullable": true, "default": "null" },
         { "name": "userVisibleOnly", "type": "boolean", "default": "false" }
       ]
     }, {
-      "name": "RegistrationOptions", "extends": "Object",
+      "name": "RegistrationOptions",
       "members": [
         { "name": "scope", "type": "USVString" },
         { "name": "type", "type": "WorkerType", "default": "\"classic\"" },
@@ -1090,7 +1090,7 @@
       "name": "RelatedEventInit", "extends": "EventInit",
       "members": [{ "name": "relatedTarget", "type": "EventTarget", "nullable": true, "default": "null" }]
     }, {
-      "name": "RequestInit", "extends": "Object",
+      "name": "RequestInit",
       "members": [
         { "name": "body", "type": "BodyInit", "nullable": true },
         { "name": "cache", "type": "RequestCache" },
@@ -1106,7 +1106,7 @@
         { "name": "window", "type": "any" }
       ]
     }, {
-      "name": "ResponseInit", "extends": "Object",
+      "name": "ResponseInit",
       "members": [
         { "name": "headers", "type": "HeadersInit" },
         { "name": "status", "type": "unsigned short", "default": "200" },
@@ -1137,7 +1137,7 @@
       "name": "RsaOaepParams", "extends": "Algorithm",
       "members": [{ "name": "label", "type": "BufferSource" }]
     }, {
-      "name": "RsaOtherPrimesInfo", "extends": "Object",
+      "name": "RsaOtherPrimesInfo",
       "members": [
         { "name": "d", "type": "DOMString" },
         { "name": "r", "type": "DOMString" },
@@ -1147,9 +1147,9 @@
       "name": "RsaPssParams", "extends": "Algorithm",
       "members": [{ "name": "saltLength", "type": "unsigned long", "required": true }]
     },
-    { "name": "RTCAnswerOptions", "extends": "RTCOfferAnswerOptions", "members": [] },
+    { "name": "RTCAnswerOptions", "members": [], "extends": "RTCOfferAnswerOptions" },
     {
-      "name": "RTCCertificateExpiration", "extends": "Object",
+      "name": "RTCCertificateExpiration",
       "members": [{ "name": "expires", "type": "DOMTimeStamp" }]
     }, {
       "name": "RTCCertificateStats", "extends": "RTCStats",
@@ -1170,7 +1170,7 @@
         { "name": "payloadType", "type": "unsigned long" }
       ]
     }, {
-      "name": "RTCConfiguration", "extends": "Object",
+      "name": "RTCConfiguration",
       "members": [
         { "name": "bundlePolicy", "type": "RTCBundlePolicy", "default": "\"balanced\"" },
         { "name": "certificates", "type": "sequence<RTCCertificate>" },
@@ -1184,7 +1184,7 @@
       "name": "RTCDataChannelEventInit", "extends": "EventInit",
       "members": [{ "name": "channel", "type": "RTCDataChannel", "required": true }]
     }, {
-      "name": "RTCDataChannelInit", "extends": "Object",
+      "name": "RTCDataChannelInit",
       "members": [
         { "name": "id", "type": "unsigned short" },
         { "name": "maxPacketLifeTime", "type": "unsigned short" },
@@ -1207,7 +1207,7 @@
         { "name": "state", "type": "RTCDataChannelState" }
       ]
     }, {
-      "name": "RTCDtlsFingerprint", "extends": "Object",
+      "name": "RTCDtlsFingerprint",
       "members": [
         { "name": "algorithm", "type": "DOMString" },
         { "name": "value", "type": "DOMString" }
@@ -1219,7 +1219,7 @@
       "name": "RTCErrorEventInit", "extends": "EventInit",
       "members": [{ "name": "error", "type": "RTCError", "nullable": true, "default": "null" }]
     }, {
-      "name": "RTCIceCandidateInit", "extends": "Object",
+      "name": "RTCIceCandidateInit",
       "members": [
         { "name": "candidate", "type": "DOMString", "default": "\"\"" },
         { "name": "sdpMid", "type": "DOMString", "nullable": true, "default": "null" },
@@ -1227,7 +1227,7 @@
         { "name": "ufrag", "type": "DOMString" }
       ]
     }, {
-      "name": "RTCIceCandidatePair", "extends": "Object",
+      "name": "RTCIceCandidatePair",
       "members": [
         { "name": "local", "type": "RTCIceCandidate" },
         { "name": "remote", "type": "RTCIceCandidate" }
@@ -1274,13 +1274,13 @@
         { "name": "url", "type": "DOMString" }
       ]
     }, {
-      "name": "RTCIceParameters", "extends": "Object",
+      "name": "RTCIceParameters",
       "members": [
         { "name": "password", "type": "DOMString" },
         { "name": "usernameFragment", "type": "DOMString" }
       ]
     }, {
-      "name": "RTCIceServer", "extends": "Object",
+      "name": "RTCIceServer",
       "members": [
         { "name": "credential", "type": "(DOMString or RTCOAuthCredential)" },
         { "name": "credentialType", "type": "RTCIceCredentialType", "default": "\"password\"" },
@@ -1288,32 +1288,32 @@
         { "name": "username", "type": "DOMString" }
       ]
     }, {
-      "name": "RTCIdentityAssertionResult", "extends": "Object",
+      "name": "RTCIdentityAssertionResult",
       "members": [
         { "name": "assertion", "type": "DOMString", "required": true },
         { "name": "idp", "type": "RTCIdentityProviderDetails", "required": true }
       ]
     }, {
-      "name": "RTCIdentityProvider", "extends": "Object",
+      "name": "RTCIdentityProvider",
       "members": [
         { "name": "generateAssertion", "type": "GenerateAssertionCallback", "required": true },
         { "name": "validateAssertion", "type": "ValidateAssertionCallback", "required": true }
       ]
     }, {
-      "name": "RTCIdentityProviderDetails", "extends": "Object",
+      "name": "RTCIdentityProviderDetails",
       "members": [
         { "name": "domain", "type": "DOMString", "required": true },
         { "name": "protocol", "type": "DOMString", "default": "\"default\"" }
       ]
     }, {
-      "name": "RTCIdentityProviderOptions", "extends": "Object",
+      "name": "RTCIdentityProviderOptions",
       "members": [
         { "name": "peerIdentity", "type": "DOMString" },
         { "name": "protocol", "type": "DOMString", "default": "\"default\"" },
         { "name": "usernameHint", "type": "DOMString" }
       ]
     }, {
-      "name": "RTCIdentityValidationResult", "extends": "Object",
+      "name": "RTCIdentityValidationResult",
       "members": [
         { "name": "contents", "type": "DOMString", "required": true },
         { "name": "identity", "type": "DOMString", "required": true }
@@ -1367,13 +1367,13 @@
         { "name": "trackIdentifier", "type": "DOMString" }
       ]
     }, {
-      "name": "RTCOAuthCredential", "extends": "Object",
+      "name": "RTCOAuthCredential",
       "members": [
         { "name": "accessToken", "type": "DOMString", "required": true },
         { "name": "macKey", "type": "DOMString", "required": true }
       ]
     }, {
-      "name": "RTCOfferAnswerOptions", "extends": "Object",
+      "name": "RTCOfferAnswerOptions",
       "members": [{ "name": "voiceActivityDetection", "type": "boolean", "default": "true" }]
     }, {
       "name": "RTCOfferOptions", "extends": "RTCOfferAnswerOptions",
@@ -1412,19 +1412,19 @@
         { "name": "dataChannelsOpened", "type": "unsigned long" }
       ]
     }, {
-      "name": "RTCRtcpParameters", "extends": "Object",
+      "name": "RTCRtcpParameters",
       "members": [
         { "name": "cname", "type": "DOMString" },
         { "name": "reducedSize", "type": "boolean" }
       ]
     }, {
-      "name": "RTCRtpCapabilities", "extends": "Object",
+      "name": "RTCRtpCapabilities",
       "members": [
         { "name": "codecs", "type": "sequence<RTCRtpCodecCapability>" },
         { "name": "headerExtensions", "type": "sequence<RTCRtpHeaderExtensionCapability>" }
       ]
     }, {
-      "name": "RTCRtpCodecCapability", "extends": "Object",
+      "name": "RTCRtpCodecCapability",
       "members": [
         { "name": "channels", "type": "unsigned short", "default": "1" },
         { "name": "clockRate", "type": "unsigned long" },
@@ -1432,7 +1432,7 @@
         { "name": "sdpFmtpLine", "type": "DOMString" }
       ]
     }, {
-      "name": "RTCRtpCodecParameters", "extends": "Object",
+      "name": "RTCRtpCodecParameters",
       "members": [
         { "name": "channels", "type": "unsigned short", "default": "1" },
         { "name": "clockRate", "type": "unsigned long" },
@@ -1441,7 +1441,7 @@
         { "name": "sdpFmtpLine", "type": "DOMString" }
       ]
     }, {
-      "name": "RTCRtpEncodingParameters", "extends": "Object",
+      "name": "RTCRtpEncodingParameters",
       "members": [
         { "name": "active", "type": "boolean" },
         { "name": "dtx", "type": "RTCDtxStatus" },
@@ -1456,20 +1456,20 @@
         { "name": "ssrc", "type": "unsigned long" }
       ]
     }, {
-      "name": "RTCRtpFecParameters", "extends": "Object",
+      "name": "RTCRtpFecParameters",
       "members": [{ "name": "ssrc", "type": "unsigned long" }]
     }, {
-      "name": "RTCRtpHeaderExtensionCapability", "extends": "Object",
+      "name": "RTCRtpHeaderExtensionCapability",
       "members": [{ "name": "uri", "type": "DOMString" }]
     }, {
-      "name": "RTCRtpHeaderExtensionParameters", "extends": "Object",
+      "name": "RTCRtpHeaderExtensionParameters",
       "members": [
         { "name": "encrypted", "type": "boolean" },
         { "name": "id", "type": "unsigned short" },
         { "name": "uri", "type": "DOMString" }
       ]
     }, {
-      "name": "RTCRtpParameters", "extends": "Object",
+      "name": "RTCRtpParameters",
       "members": [
         { "name": "codecs", "type": "sequence<RTCRtpCodecParameters>" },
         { "name": "degradationPreference", "type": "RTCDegradationPreference", "default": "\"balanced\"" },
@@ -1479,7 +1479,7 @@
         { "name": "transactionId", "type": "DOMString" }
       ]
     }, {
-      "name": "RTCRtpRtxParameters", "extends": "Object",
+      "name": "RTCRtpRtxParameters",
       "members": [{ "name": "ssrc", "type": "unsigned long" }]
     }, {
       "name": "RTCRTPStreamStats", "extends": "RTCStats",
@@ -1498,27 +1498,27 @@
         { "name": "transportId", "type": "DOMString" }
       ]
     }, {
-      "name": "RTCRtpTransceiverInit", "extends": "Object",
+      "name": "RTCRtpTransceiverInit",
       "members": [
         { "name": "direction", "type": "RTCRtpTransceiverDirection", "default": "\"sendrecv\"" },
         { "name": "sendEncodings", "type": "sequence<RTCRtpEncodingParameters>" },
         { "name": "streams", "type": "sequence<MediaStream>" }
       ]
     }, {
-      "name": "RTCSessionDescriptionInit", "extends": "Object",
+      "name": "RTCSessionDescriptionInit",
       "members": [
         { "name": "sdp", "type": "DOMString", "default": "\"\"" },
         { "name": "type", "type": "RTCSdpType", "required": true }
       ]
     }, {
-      "name": "RTCStats", "extends": "Object",
+      "name": "RTCStats",
       "members": [
         { "name": "id", "type": "DOMString" },
         { "name": "timestamp", "type": "DOMHighResTimeStamp" },
         { "name": "type", "type": "RTCStatsType" }
       ]
     }, {
-      "name": "RTCStats", "extends": "Object",
+      "name": "RTCStats",
       "members": [
         { "name": "id", "type": "DOMString" },
         { "name": "timestamp", "type": "DOMHighResTimeStamp" },
@@ -1550,7 +1550,7 @@
         { "name": "inline", "type": "ScrollLogicalPosition", "default": "\"center\"" }
       ]
     }, {
-      "name": "ScrollOptions", "extends": "Object",
+      "name": "ScrollOptions",
       "members": [{ "name": "behavior", "type": "ScrollBehavior", "default": "\"auto\"" }]
     }, {
       "name": "ScrollToOptions", "extends": "ScrollOptions",
@@ -1559,9 +1559,9 @@
         { "name": "top", "type": "unrestricted double" }
       ]
     },
-    { "name": "Settings", "extends": "Object", "members": [] },
+    { "name": "Settings", "members": [] },
     {
-      "name": "ShadowRootInit", "extends": "Object",
+      "name": "ShadowRootInit",
       "members": [{ "name": "mode", "type": "ShadowRootMode", "required": true }]
     }, {
       "name": "StereoPannerOptions", "extends": "AudioNodeOptions",
@@ -1576,7 +1576,7 @@
         { "name": "url", "type": "USVString", "default": "\"\"" }
       ]
     }, {
-      "name": "SVGBoundingBoxOptions", "extends": "Object",
+      "name": "SVGBoundingBoxOptions",
       "members": [
         { "name": "clipped", "type": "boolean", "default": "false" },
         { "name": "fill", "type": "boolean", "default": "true" },
@@ -1590,10 +1590,10 @@
         { "name": "tag", "type": "DOMString", "required": true }
       ]
     }, {
-      "name": "TextDecodeOptions", "extends": "Object",
+      "name": "TextDecodeOptions",
       "members": [{ "name": "stream", "type": "boolean", "default": "false" }]
     }, {
-      "name": "TextDecoderOptions", "extends": "Object",
+      "name": "TextDecoderOptions",
       "members": [
         { "name": "fatal", "type": "boolean", "default": "false" },
         { "name": "ignoreBOM", "type": "boolean", "default": "false" }
@@ -1606,7 +1606,7 @@
         { "name": "touches", "type": "sequence<Touch>", "default": "[]" }
       ]
     }, {
-      "name": "TouchInit", "extends": "Object",
+      "name": "TouchInit",
       "members": [
         { "name": "altitudeAngle", "type": "double", "default": "0" },
         { "name": "azimuthAngle", "type": "double", "default": "0" },
@@ -1647,7 +1647,7 @@
         { "name": "oversample", "type": "OverSampleType", "default": "\"none\"" }
       ]
     }, {
-      "name": "WebGLContextAttributes", "extends": "Object",
+      "name": "WebGLContextAttributes",
       "members": [
         { "name": "alpha", "type": "GLboolean", "default": "true" },
         { "name": "antialias", "type": "GLboolean", "default": "true" },
@@ -1670,14 +1670,14 @@
         { "name": "deltaZ", "type": "double", "default": "0" }
       ]
     }, {
-      "name": "WorkerOptions", "extends": "Object",
+      "name": "WorkerOptions",
       "members": [
         { "name": "credentials", "type": "RequestCredentials", "default": "\"omit\"" },
         { "name": "name", "type": "DOMString", "default": "\"\"" },
         { "name": "type", "type": "WorkerType", "default": "\"classic\"" }
       ]
     }, {
-      "name": "WorkletOptions", "extends": "Object",
+      "name": "WorkletOptions",
       "members": [{ "name": "credentials", "type": "RequestCredentials", "default": "\"omit\"" }]
     }
   ],
@@ -1982,7 +1982,7 @@
   ],
   "interfaces": [
     {
-      "name": "AbstractWorker", "extends": "Object", "noInterfaceObject": true,
+      "name": "AbstractWorker", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "attributes": [{ "name": "onerror", "type": "EventHandler" }]
     }, {
@@ -2014,7 +2014,7 @@
         { "name": "smoothingTimeConstant", "type": "double" }
       ]
     }, {
-      "name": "ANGLE_instanced_arrays", "extends": "Object", "noInterfaceObject": true,
+      "name": "ANGLE_instanced_arrays", "noInterfaceObject": true,
       "constants": [{ "name": "VERTEX_ATTRIB_ARRAY_DIVISOR_ANGLE", "type": "GLenum", "value": "35070" }],
       "operations": [{
         "name": "drawArraysInstancedANGLE", "type": "void",
@@ -2092,7 +2092,7 @@
         { "name": "value", "type": "DOMString" }
       ]
     }, {
-      "name": "AudioBuffer", "extends": "Object",
+      "name": "AudioBuffer",
       "constructors": [{
         "arguments": [{ "name": "options", "type": "AudioBufferOptions" }]
       }],
@@ -2177,7 +2177,7 @@
       "name": "AudioDestinationNode", "extends": "AudioNode",
       "attributes": [{ "name": "maxChannelCount", "type": "unsigned long", "readonly": true }]
     }, {
-      "name": "AudioListener", "extends": "Object",
+      "name": "AudioListener",
       "operations": [{
         "name": "setOrientation", "type": "void",
         "arguments": [
@@ -2264,7 +2264,7 @@
         { "name": "numberOfOutputs", "type": "unsigned long", "readonly": true }
       ]
     }, {
-      "name": "AudioParam", "extends": "Object",
+      "name": "AudioParam",
       "operations": [{
         "name": "cancelAndHoldAtTime", "type": "AudioParam",
         "arguments": [{ "name": "cancelTime", "type": "double" }]
@@ -2311,7 +2311,7 @@
         { "name": "value", "type": "float" }
       ]
     },
-    { "name": "AudioParamMap", "extends": "Object" },
+    { "name": "AudioParamMap" },
     {
       "name": "AudioProcessingEvent", "extends": "Event",
       "constructors": [{
@@ -2337,7 +2337,7 @@
       "attributes": [{ "name": "onended", "type": "EventHandler", "eventHandler": "ended" }],
       "events": [{ "name": "ended", "type": "Event" }]
     }, {
-      "name": "AudioTrack", "extends": "Object",
+      "name": "AudioTrack",
       "attributes": [
         { "name": "enabled", "type": "boolean" },
         { "name": "id", "type": "DOMString", "readonly": true },
@@ -2401,7 +2401,7 @@
       ],
       "events": [{ "name": "data", "type": "Event" }]
     }, {
-      "name": "BarProp", "extends": "Object",
+      "name": "BarProp",
       "attributes": [{ "name": "visible", "type": "boolean", "readonly": true }]
     }, {
       "name": "BaseAudioContext", "extends": "EventTarget",
@@ -2504,7 +2504,7 @@
         { "name": "type", "type": "BiquadFilterType" }
       ]
     }, {
-      "name": "Blob", "extends": "Object",
+      "name": "Blob",
       "constructors": [{
         "arguments": [
           { "name": "blobParts", "type": "sequence<BlobPart>", "optional": true },
@@ -2525,7 +2525,7 @@
         { "name": "type", "type": "DOMString", "readonly": true }
       ]
     }, {
-      "name": "Body", "extends": "Object", "noInterfaceObject": true,
+      "name": "Body", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "operations": [
         { "name": "arrayBuffer", "type": "Promise<ArrayBuffer>", "arguments": [] },
@@ -2561,7 +2561,7 @@
         { "name": "messageerror", "type": "MessageEvent" }
       ]
     }, {
-      "name": "Cache", "extends": "Object",
+      "name": "Cache",
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "add", "type": "Promise<void>",
@@ -2601,7 +2601,7 @@
         ]
       }]
     }, {
-      "name": "CacheStorage", "extends": "Object",
+      "name": "CacheStorage",
       "exposed": ["Window", "Worker"],
       "operations": [
         {
@@ -2624,14 +2624,14 @@
         }
       ]
     }, {
-      "name": "CanvasCompositing", "extends": "Object", "noInterfaceObject": true,
+      "name": "CanvasCompositing", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "attributes": [
         { "name": "globalAlpha", "type": "unrestricted double" },
         { "name": "globalCompositeOperation", "type": "DOMString" }
       ]
     }, {
-      "name": "CanvasDrawImage", "extends": "Object", "noInterfaceObject": true,
+      "name": "CanvasDrawImage", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "drawImage", "type": "void",
@@ -2664,7 +2664,7 @@
         ]
       }]
     }, {
-      "name": "CanvasDrawPath", "extends": "Object", "noInterfaceObject": true,
+      "name": "CanvasDrawPath", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "operations": [
         { "name": "beginPath", "type": "void", "arguments": [] },
@@ -2723,7 +2723,7 @@
         }
       ]
     }, {
-      "name": "CanvasFillStrokeStyles", "extends": "Object", "noInterfaceObject": true,
+      "name": "CanvasFillStrokeStyles", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "createLinearGradient", "type": "CanvasGradient",
@@ -2755,11 +2755,11 @@
         { "name": "strokeStyle", "type": "(DOMString or CanvasGradient or CanvasPattern)" }
       ]
     }, {
-      "name": "CanvasFilters", "extends": "Object", "noInterfaceObject": true,
+      "name": "CanvasFilters", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "attributes": [{ "name": "filter", "type": "DOMString" }]
     }, {
-      "name": "CanvasGradient", "extends": "Object",
+      "name": "CanvasGradient",
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "addColorStop", "type": "void",
@@ -2769,7 +2769,7 @@
         ]
       }]
     }, {
-      "name": "CanvasImageData", "extends": "Object", "noInterfaceObject": true,
+      "name": "CanvasImageData", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "createImageData", "type": "ImageData",
@@ -2808,14 +2808,14 @@
         ]
       }]
     }, {
-      "name": "CanvasImageSmoothing", "extends": "Object", "noInterfaceObject": true,
+      "name": "CanvasImageSmoothing", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "attributes": [
         { "name": "imageSmoothingEnabled", "type": "boolean" },
         { "name": "imageSmoothingQuality", "type": "ImageSmoothingQuality" }
       ]
     }, {
-      "name": "CanvasPath", "extends": "Object", "noInterfaceObject": true,
+      "name": "CanvasPath", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "operations": [
         {
@@ -2903,7 +2903,7 @@
         }
       ]
     }, {
-      "name": "CanvasPathDrawingStyles", "extends": "Object", "noInterfaceObject": true,
+      "name": "CanvasPathDrawingStyles", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "operations": [
         { "name": "getLineDash", "type": "sequence<unrestricted double>", "arguments": [] },
@@ -2920,14 +2920,14 @@
         { "name": "miterLimit", "type": "unrestricted double" }
       ]
     }, {
-      "name": "CanvasPattern", "extends": "Object",
+      "name": "CanvasPattern",
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "setTransform", "type": "void",
         "arguments": [{ "name": "transform", "type": "DOMMatrixInit", "optional": true }]
       }]
     }, {
-      "name": "CanvasRect", "extends": "Object", "noInterfaceObject": true,
+      "name": "CanvasRect", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "clearRect", "type": "void",
@@ -2955,11 +2955,11 @@
         ]
       }]
     }, {
-      "name": "CanvasRenderingContext2D", "extends": "Object",
+      "name": "CanvasRenderingContext2D",
       "attributes": [{ "name": "canvas", "type": "HTMLCanvasElement", "readonly": true }],
       "implements": ["CanvasState", "CanvasTransform", "CanvasCompositing", "CanvasImageSmoothing", "CanvasFillStrokeStyles", "CanvasShadowStyles", "CanvasFilters", "CanvasRect", "CanvasDrawPath", "CanvasUserInterface", "CanvasText", "CanvasDrawImage", "CanvasImageData", "CanvasPathDrawingStyles", "CanvasTextDrawingStyles", "CanvasPath"]
     }, {
-      "name": "CanvasShadowStyles", "extends": "Object", "noInterfaceObject": true,
+      "name": "CanvasShadowStyles", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "attributes": [
         { "name": "shadowBlur", "type": "unrestricted double" },
@@ -2968,14 +2968,14 @@
         { "name": "shadowOffsetY", "type": "unrestricted double" }
       ]
     }, {
-      "name": "CanvasState", "extends": "Object", "noInterfaceObject": true,
+      "name": "CanvasState", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "operations": [
         { "name": "restore", "type": "void", "arguments": [] },
         { "name": "save", "type": "void", "arguments": [] }
       ]
     }, {
-      "name": "CanvasText", "extends": "Object", "noInterfaceObject": true,
+      "name": "CanvasText", "noInterfaceObject": true,
       "operations": [{
         "name": "fillText", "type": "void",
         "arguments": [
@@ -2997,7 +2997,7 @@
         ]
       }]
     }, {
-      "name": "CanvasTextDrawingStyles", "extends": "Object", "noInterfaceObject": true,
+      "name": "CanvasTextDrawingStyles", "noInterfaceObject": true,
       "attributes": [
         { "name": "direction", "type": "CanvasDirection" },
         { "name": "font", "type": "DOMString" },
@@ -3005,7 +3005,7 @@
         { "name": "textBaseline", "type": "CanvasTextBaseline" }
       ]
     }, {
-      "name": "CanvasTransform", "extends": "Object", "noInterfaceObject": true,
+      "name": "CanvasTransform", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "operations": [
         { "name": "getTransform", "type": "DOMMatrix", "arguments": [] },
@@ -3051,7 +3051,7 @@
         }
       ]
     }, {
-      "name": "CanvasUserInterface", "extends": "Object", "noInterfaceObject": true,
+      "name": "CanvasUserInterface", "noInterfaceObject": true,
       "operations": [
         {
           "name": "drawFocusIfNeeded", "type": "void",
@@ -3070,7 +3070,7 @@
         }
       ]
     }, {
-      "name": "CaretPosition", "extends": "Object",
+      "name": "CaretPosition",
       "operations": [{ "name": "getClientRect", "type": "DOMRect", "nullable": true, "arguments": [] }],
       "attributes": [
         { "name": "offset", "type": "unsigned long", "readonly": true },
@@ -3133,7 +3133,7 @@
       ],
       "implements": ["NonDocumentTypeChildNode", "ChildNode"]
     }, {
-      "name": "ChildNode", "extends": "Object", "noInterfaceObject": true,
+      "name": "ChildNode", "noInterfaceObject": true,
       "exposed": ["Window"],
       "operations": [
         {
@@ -3150,7 +3150,7 @@
         }
       ]
     }, {
-      "name": "Client", "extends": "Object",
+      "name": "Client",
       "exposed": ["ServiceWorker"],
       "operations": [{
         "name": "postMessage", "type": "void",
@@ -3166,7 +3166,7 @@
         { "name": "url", "type": "USVString", "readonly": true }
       ]
     }, {
-      "name": "Clients", "extends": "Object",
+      "name": "Clients",
       "exposed": ["ServiceWorker"],
       "operations": [
         { "name": "claim", "type": "Promise<void>", "arguments": [] },
@@ -3229,7 +3229,7 @@
       }],
       "attributes": [{ "name": "offset", "type": "AudioParam", "readonly": true }]
     }, {
-      "name": "ConstrainablePattern", "extends": "Object", "noInterfaceObject": true,
+      "name": "ConstrainablePattern", "noInterfaceObject": true,
       "operations": [
         {
           "name": "applyConstraints", "type": "Promise<void>",
@@ -3254,7 +3254,7 @@
         { "name": "normalize", "type": "boolean" }
       ]
     }, {
-      "name": "Coordinates", "extends": "Object", "noInterfaceObject": true,
+      "name": "Coordinates", "noInterfaceObject": true,
       "attributes": [
         { "name": "accuracy", "type": "double", "readonly": true },
         { "name": "altitude", "type": "double", "nullable": true, "readonly": true },
@@ -3265,7 +3265,7 @@
         { "name": "speed", "type": "double", "nullable": true, "readonly": true }
       ]
     }, {
-      "name": "Crypto", "extends": "Object",
+      "name": "Crypto",
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "getRandomValues", "type": "ArrayBufferView",
@@ -3273,7 +3273,7 @@
       }],
       "attributes": [{ "name": "subtle", "type": "SubtleCrypto", "readonly": true }]
     }, {
-      "name": "CryptoKey", "extends": "Object",
+      "name": "CryptoKey",
       "exposed": ["Window", "Worker"],
       "attributes": [
         { "name": "algorithm", "type": "object", "readonly": true },
@@ -3282,7 +3282,7 @@
         { "name": "usages", "type": "object", "readonly": true }
       ]
     }, {
-      "name": "CSS", "extends": "Object",
+      "name": "CSS",
       "operations": [{
         "name": "escape", "type": "CSSOMString", "static": true,
         "arguments": [{ "name": "ident", "type": "CSSOMString" }]
@@ -3376,10 +3376,10 @@
         { "name": "style", "type": "CSSStyleDeclaration", "readonly": true }
       ]
     }, {
-      "name": "CSSPseudoElement", "extends": "Object", "partial": true,
+      "name": "CSSPseudoElement", "partial": true,
       "implements": ["GeometryUtils"]
     }, {
-      "name": "CSSRule", "extends": "Object",
+      "name": "CSSRule",
       "constants": [
         { "name": "CHARSET_RULE", "type": "unsigned short", "value": "2" },
         { "name": "FONT_FACE_RULE", "type": "unsigned short", "value": "5" },
@@ -3400,14 +3400,14 @@
         { "name": "type", "type": "unsigned short", "readonly": true }
       ]
     }, {
-      "name": "CSSRuleList", "extends": "Object",
+      "name": "CSSRuleList",
       "operations": [{
         "name": "item", "type": "CSSRule", "nullable": true, "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
       }],
       "attributes": [{ "name": "length", "type": "unsigned long", "readonly": true }]
     }, {
-      "name": "CSSStyleDeclaration", "extends": "Object",
+      "name": "CSSStyleDeclaration",
       "operations": [{
         "name": "getPropertyPriority", "type": "CSSOMString",
         "arguments": [{ "name": "property", "type": "CSSOMString" }]
@@ -3498,7 +3498,7 @@
     },
     { "name": "CSSSupportsRule", "extends": "CSSConditionRule" },
     {
-      "name": "CustomElementRegistry", "extends": "Object",
+      "name": "CustomElementRegistry",
       "operations": [{
         "name": "define", "type": "void",
         "arguments": [
@@ -3533,7 +3533,7 @@
       }],
       "attributes": [{ "name": "detail", "type": "any", "readonly": true }]
     }, {
-      "name": "DataTransfer", "extends": "Object",
+      "name": "DataTransfer",
       "constructors": [{ "arguments": [] }],
       "exposed": ["Window"],
       "operations": [{
@@ -3564,7 +3564,7 @@
         { "name": "types", "type": "FrozenArray<DOMString>", "readonly": true }
       ]
     }, {
-      "name": "DataTransferItem", "extends": "Object",
+      "name": "DataTransferItem",
       "operations": [
         { "name": "getAsFile", "type": "File", "nullable": true, "arguments": [] },
         {
@@ -3577,7 +3577,7 @@
         { "name": "type", "type": "DOMString", "readonly": true }
       ]
     }, {
-      "name": "DataTransferItemList", "extends": "Object",
+      "name": "DataTransferItemList",
       "anonymousOperations": [{
         "type": "DataTransferItem", "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -3632,7 +3632,7 @@
       }],
       "attributes": [{ "name": "delayTime", "type": "AudioParam", "readonly": true }]
     }, {
-      "name": "DeviceAcceleration", "extends": "Object", "noInterfaceObject": true,
+      "name": "DeviceAcceleration", "noInterfaceObject": true,
       "attributes": [
         { "name": "x", "type": "double", "nullable": true, "readonly": true },
         { "name": "y", "type": "double", "nullable": true, "readonly": true },
@@ -3667,7 +3667,7 @@
         { "name": "gamma", "type": "double", "nullable": true, "readonly": true }
       ]
     }, {
-      "name": "DeviceRotationRate", "extends": "Object", "noInterfaceObject": true,
+      "name": "DeviceRotationRate", "noInterfaceObject": true,
       "attributes": [
         { "name": "alpha", "type": "double", "nullable": true, "readonly": true },
         { "name": "beta", "type": "double", "nullable": true, "readonly": true },
@@ -3904,7 +3904,7 @@
         "arguments": [{ "name": "name", "type": "DOMString" }]
       }]
     }, {
-      "name": "DocumentAndElementEventHandlers", "extends": "Object", "noInterfaceObject": true,
+      "name": "DocumentAndElementEventHandlers", "noInterfaceObject": true,
       "attributes": [
         { "name": "oncopy", "type": "EventHandler", "eventHandler": "copy" },
         { "name": "oncut", "type": "EventHandler", "eventHandler": "cut" },
@@ -3921,7 +3921,7 @@
       "exposed": ["Window"],
       "implements": ["NonElementParentNode", "ParentNode"]
     }, {
-      "name": "DocumentOrShadowRoot", "extends": "Object", "noInterfaceObject": true,
+      "name": "DocumentOrShadowRoot", "noInterfaceObject": true,
       "exposed": ["Window"],
       "attributes": [{ "name": "fullscreenElement", "type": "Element", "nullable": true, "readonly": true }]
     }, {
@@ -3934,7 +3934,7 @@
       ],
       "implements": ["ChildNode"]
     }, {
-      "name": "DOMImplementation", "extends": "Object",
+      "name": "DOMImplementation",
       "exposed": ["Window"],
       "operations": [
         {
@@ -4064,7 +4064,7 @@
         { "name": "m44", "type": "unrestricted double" }
       ]
     }, {
-      "name": "DOMMatrixReadOnly", "extends": "Object",
+      "name": "DOMMatrixReadOnly",
       "constructors": [{
         "arguments": [{ "name": "init", "type": "(DOMString or sequence<unrestricted double>)", "optional": true }]
       }],
@@ -4177,7 +4177,7 @@
         { "name": "m44", "type": "unrestricted double", "readonly": true }
       ]
     }, {
-      "name": "DOMParser", "extends": "Object",
+      "name": "DOMParser",
       "constructors": [{ "arguments": [] }],
       "operations": [{
         "name": "parseFromString", "type": "Document",
@@ -4208,7 +4208,7 @@
         { "name": "z", "type": "unrestricted double" }
       ]
     }, {
-      "name": "DOMPointReadOnly", "extends": "Object",
+      "name": "DOMPointReadOnly",
       "constructors": [{
         "arguments": [
           { "name": "x", "type": "unrestricted double", "optional": true, "default": "0" },
@@ -4232,7 +4232,7 @@
         { "name": "z", "type": "unrestricted double", "readonly": true }
       ]
     }, {
-      "name": "DOMQuad", "extends": "Object",
+      "name": "DOMQuad",
       "constructors": [{
         "arguments": [
           { "name": "p1", "type": "DOMPointInit", "optional": true },
@@ -4280,7 +4280,7 @@
         { "name": "y", "type": "unrestricted double" }
       ]
     }, {
-      "name": "DOMRectReadOnly", "extends": "Object",
+      "name": "DOMRectReadOnly",
       "constructors": [{
         "arguments": [
           { "name": "x", "type": "unrestricted double", "optional": true, "default": "0" },
@@ -4305,7 +4305,7 @@
         { "name": "y", "type": "unrestricted double", "readonly": true }
       ]
     }, {
-      "name": "DOMStringList", "extends": "Object",
+      "name": "DOMStringList",
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "contains", "type": "boolean",
@@ -4316,7 +4316,7 @@
       }],
       "attributes": [{ "name": "length", "type": "unsigned long", "readonly": true }]
     }, {
-      "name": "DOMStringMap", "extends": "Object", "overrideBuiltins": true,
+      "name": "DOMStringMap", "overrideBuiltins": true,
       "anonymousOperations": [{
         "type": "DOMString", "getter": true,
         "arguments": [{ "name": "name", "type": "DOMString" }]
@@ -4331,7 +4331,7 @@
         "arguments": [{ "name": "name", "type": "DOMString" }]
       }]
     }, {
-      "name": "DOMTokenList", "extends": "Object",
+      "name": "DOMTokenList",
       "iterable": { "type": "DOMString" },
       "operations": [{
         "name": "add", "type": "void",
@@ -4569,13 +4569,13 @@
       ],
       "implements": ["ParentNode", "NonDocumentTypeChildNode", "ChildNode", "Slotable", "GeometryUtils"]
     }, {
-      "name": "ElementContentEditable", "extends": "Object", "noInterfaceObject": true,
+      "name": "ElementContentEditable", "noInterfaceObject": true,
       "attributes": [
         { "name": "contentEditable", "type": "DOMString" },
         { "name": "isContentEditable", "type": "boolean", "readonly": true }
       ]
     }, {
-      "name": "ElementCSSInlineStyle", "extends": "Object", "noInterfaceObject": true,
+      "name": "ElementCSSInlineStyle", "noInterfaceObject": true,
       "attributes": [{ "name": "style", "type": "CSSStyleDeclaration", "readonly": true }]
     }, {
       "name": "ErrorEvent", "extends": "Event",
@@ -4594,7 +4594,7 @@
         { "name": "message", "type": "DOMString", "readonly": true }
       ]
     }, {
-      "name": "Event", "extends": "Object",
+      "name": "Event",
       "constructors": [{
         "arguments": [
           { "name": "type", "type": "DOMString" },
@@ -4664,7 +4664,7 @@
         { "name": "error", "type": "Event" }
       ]
     }, {
-      "name": "EventTarget", "extends": "Object",
+      "name": "EventTarget",
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "addEventListener", "type": "void",
@@ -4685,9 +4685,9 @@
         ]
       }]
     },
-    { "name": "EXT_frag_depth", "extends": "Object", "noInterfaceObject": true },
+    { "name": "EXT_frag_depth", "noInterfaceObject": true },
     {
-      "name": "EXT_texture_filter_anisotropic", "extends": "Object", "noInterfaceObject": true,
+      "name": "EXT_texture_filter_anisotropic", "noInterfaceObject": true,
       "constants": [
         { "name": "MAX_TEXTURE_MAX_ANISOTROPY_EXT", "type": "GLenum", "value": "34047" },
         { "name": "TEXTURE_MAX_ANISOTROPY_EXT", "type": "GLenum", "value": "34046" }
@@ -4722,7 +4722,7 @@
         { "name": "source", "type": "(Client or ServiceWorker or MessagePort)", "nullable": true, "readonly": true }
       ]
     }, {
-      "name": "External", "extends": "Object", "noInterfaceObject": true,
+      "name": "External", "noInterfaceObject": true,
       "operations": [
         { "name": "AddSearchProvider", "type": "void", "arguments": [] },
         { "name": "IsSearchProviderInstalled", "type": "void", "arguments": [] }
@@ -4762,7 +4762,7 @@
         { "name": "name", "type": "DOMString", "readonly": true }
       ]
     }, {
-      "name": "FileList", "extends": "Object",
+      "name": "FileList",
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "item", "type": "File", "nullable": true, "getter": true,
@@ -4817,7 +4817,7 @@
         { "name": "loadend", "type": "ProgressEvent" }
       ]
     }, {
-      "name": "FileReaderSync", "extends": "Object",
+      "name": "FileReaderSync",
       "constructors": [{ "arguments": [] }],
       "exposed": ["DedicatedWorker", "SharedWorker"],
       "operations": [{
@@ -4863,7 +4863,7 @@
         { "name": "request", "type": "Request", "readonly": true }
       ]
     }, {
-      "name": "FormData", "extends": "Object",
+      "name": "FormData",
       "constructors": [{
         "arguments": [{ "name": "form", "type": "HTMLFormElement", "optional": true }]
       }],
@@ -4918,7 +4918,7 @@
       }],
       "attributes": [{ "name": "gain", "type": "AudioParam", "readonly": true }]
     }, {
-      "name": "Gamepad", "extends": "Object",
+      "name": "Gamepad",
       "attributes": [
         { "name": "axes", "type": "FrozenArray<double>", "readonly": true },
         { "name": "buttons", "type": "FrozenArray<GamepadButton>", "readonly": true },
@@ -4929,7 +4929,7 @@
         { "name": "timestamp", "type": "DOMHighResTimeStamp", "readonly": true }
       ]
     }, {
-      "name": "GamepadButton", "extends": "Object",
+      "name": "GamepadButton",
       "attributes": [
         { "name": "pressed", "type": "boolean", "readonly": true },
         { "name": "touched", "type": "boolean", "readonly": true },
@@ -4945,7 +4945,7 @@
       }],
       "attributes": [{ "name": "gamepad", "type": "Gamepad", "readonly": true }]
     }, {
-      "name": "Geolocation", "extends": "Object", "noInterfaceObject": true,
+      "name": "Geolocation", "noInterfaceObject": true,
       "operations": [{
         "name": "clearWatch", "type": "void",
         "arguments": [{ "name": "watchId", "type": "long" }]
@@ -4965,7 +4965,7 @@
         ]
       }]
     }, {
-      "name": "GeometryUtils", "extends": "Object", "noInterfaceObject": true,
+      "name": "GeometryUtils", "noInterfaceObject": true,
       "operations": [{
         "name": "convertPointFromNode", "type": "DOMPoint",
         "arguments": [
@@ -4992,14 +4992,14 @@
         "arguments": [{ "name": "options", "type": "BoxQuadOptions", "optional": true }]
       }]
     }, {
-      "name": "GetSVGDocument", "extends": "Object", "noInterfaceObject": true,
+      "name": "GetSVGDocument", "noInterfaceObject": true,
       "operations": [{ "name": "getSVGDocument", "type": "Document", "arguments": [] }]
     }, {
-      "name": "GlobalCrypto", "extends": "Object", "noInterfaceObject": true,
+      "name": "GlobalCrypto", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "attributes": [{ "name": "crypto", "type": "Crypto", "readonly": true }]
     }, {
-      "name": "GlobalEventHandlers", "extends": "Object", "noInterfaceObject": true,
+      "name": "GlobalEventHandlers", "noInterfaceObject": true,
       "attributes": [
         { "name": "onabort", "type": "EventHandler", "eventHandler": "abort" },
         { "name": "onanimationcancel", "type": "EventHandler", "eventHandler": "animationcancel" },
@@ -5165,7 +5165,7 @@
         { "name": "touchcancel", "type": "TouchEvent" }
       ]
     }, {
-      "name": "GlobalPerformance", "extends": "Object", "noInterfaceObject": true,
+      "name": "GlobalPerformance", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "attributes": [{ "name": "performance", "type": "Performance", "readonly": true }]
     }, {
@@ -5181,7 +5181,7 @@
         { "name": "oldURL", "type": "USVString", "readonly": true }
       ]
     }, {
-      "name": "Headers", "extends": "Object",
+      "name": "Headers",
       "constructors": [{
         "arguments": [{ "name": "init", "type": "HeadersInit", "optional": true }]
       }],
@@ -5210,7 +5210,7 @@
         ]
       }]
     }, {
-      "name": "History", "extends": "Object",
+      "name": "History",
       "operations": [
         { "name": "back", "type": "void", "arguments": [] },
         { "name": "forward", "type": "void", "arguments": [] },
@@ -5239,7 +5239,7 @@
         { "name": "state", "type": "any", "readonly": true }
       ]
     }, {
-      "name": "HTMLAllCollection", "extends": "Object",
+      "name": "HTMLAllCollection",
       "anonymousOperations": [{
         "type": "Element", "nullable": true, "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -5392,7 +5392,7 @@
       ],
       "elements": [{ "name": "canvas", "namespace": "HTML" }]
     }, {
-      "name": "HTMLCollection", "extends": "Object",
+      "name": "HTMLCollection",
       "exposed": ["Window"],
       "operations": [{
         "name": "item", "type": "Element", "nullable": true, "getter": true,
@@ -5634,7 +5634,7 @@
       "attributes": [{ "name": "version", "type": "DOMString" }],
       "elements": [{ "name": "html", "namespace": "HTML" }]
     }, {
-      "name": "HTMLHyperlinkElementUtils", "extends": "Object", "noInterfaceObject": true,
+      "name": "HTMLHyperlinkElementUtils", "noInterfaceObject": true,
       "attributes": [
         { "name": "hash", "type": "USVString" },
         { "name": "host", "type": "USVString" },
@@ -6480,7 +6480,7 @@
       "elements": [{ "name": "video", "namespace": "HTML" }],
       "operations": [{ "name": "getVideoPlaybackQuality", "type": "VideoPlaybackQuality", "arguments": [] }]
     }, {
-      "name": "IDBCursor", "extends": "Object",
+      "name": "IDBCursor",
       "exposed": ["Window", "Worker"],
       "operations": [
         {
@@ -6550,7 +6550,7 @@
         { "name": "versionchange", "type": "IDBVersionChangeEvent" }
       ]
     }, {
-      "name": "IDBFactory", "extends": "Object",
+      "name": "IDBFactory",
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "cmp", "type": "short",
@@ -6569,7 +6569,7 @@
         ]
       }]
     }, {
-      "name": "IDBIndex", "extends": "Object",
+      "name": "IDBIndex",
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "count", "type": "IDBRequest",
@@ -6613,7 +6613,7 @@
         { "name": "unique", "type": "boolean", "readonly": true }
       ]
     }, {
-      "name": "IDBKeyRange", "extends": "Object",
+      "name": "IDBKeyRange",
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "bound", "type": "IDBKeyRange", "static": true,
@@ -6649,7 +6649,7 @@
         { "name": "upperOpen", "type": "boolean", "readonly": true }
       ]
     }, {
-      "name": "IDBObjectStore", "extends": "Object",
+      "name": "IDBObjectStore",
       "exposed": ["Window", "Worker"],
       "operations": [
         {
@@ -6792,7 +6792,7 @@
         ]
       }]
     }, {
-      "name": "ImageBitmap", "extends": "Object",
+      "name": "ImageBitmap",
       "exposed": ["Window", "Worker"],
       "operations": [{ "name": "close", "type": "void", "arguments": [] }],
       "attributes": [
@@ -6800,14 +6800,14 @@
         { "name": "width", "type": "unsigned long", "readonly": true }
       ]
     }, {
-      "name": "ImageBitmapRenderingContext", "extends": "Object",
+      "name": "ImageBitmapRenderingContext",
       "operations": [{
         "name": "transferFromImageBitmap", "type": "void",
         "arguments": [{ "name": "bitmap", "type": "ImageBitmap", "nullable": true }]
       }],
       "attributes": [{ "name": "canvas", "type": "HTMLCanvasElement", "readonly": true }]
     }, {
-      "name": "ImageData", "extends": "Object",
+      "name": "ImageData",
       "constructors": [{
         "arguments": [
           { "name": "sw", "type": "unsigned long" },
@@ -6855,7 +6855,7 @@
         "arguments": [{ "name": "options", "type": "ForeignFetchOptions" }]
       }]
     }, {
-      "name": "IntersectionObserver", "extends": "Object",
+      "name": "IntersectionObserver",
       "constructors": [{
         "arguments": [
           { "name": "callback", "type": "IntersectionObserverCallback" },
@@ -6881,7 +6881,7 @@
         { "name": "thresholds", "type": "FrozenArray<double>", "readonly": true }
       ]
     }, {
-      "name": "IntersectionObserverEntry", "extends": "Object",
+      "name": "IntersectionObserverEntry",
       "constructors": [{
         "arguments": [{ "name": "intersectionObserverEntryInit", "type": "IntersectionObserverEntryInit" }]
       }],
@@ -6924,10 +6924,10 @@
         { "name": "shiftKey", "type": "boolean", "readonly": true }
       ]
     }, {
-      "name": "LinkStyle", "extends": "Object", "noInterfaceObject": true,
+      "name": "LinkStyle", "noInterfaceObject": true,
       "attributes": [{ "name": "sheet", "type": "StyleSheet", "nullable": true, "readonly": true }]
     }, {
-      "name": "Location", "extends": "Object",
+      "name": "Location",
       "operations": [
         {
           "name": "assign", "type": "void",
@@ -6952,7 +6952,7 @@
         { "name": "search", "type": "USVString" }
       ]
     }, {
-      "name": "MediaDeviceInfo", "extends": "Object",
+      "name": "MediaDeviceInfo",
       "exposed": ["Window"],
       "attributes": [
         { "name": "deviceId", "type": "DOMString", "readonly": true },
@@ -6993,7 +6993,7 @@
         { "name": "initDataType", "type": "DOMString", "readonly": true }
       ]
     }, {
-      "name": "MediaError", "extends": "Object",
+      "name": "MediaError",
       "constants": [
         { "name": "MEDIA_ERR_ABORTED", "type": "unsigned short", "value": "1" },
         { "name": "MEDIA_ERR_DECODE", "type": "unsigned short", "value": "3" },
@@ -7017,7 +7017,7 @@
         { "name": "messageType", "type": "MediaKeyMessageType", "readonly": true }
       ]
     }, {
-      "name": "MediaKeys", "extends": "Object",
+      "name": "MediaKeys",
       "operations": [{
         "name": "createSession", "type": "MediaKeySession",
         "arguments": [{ "name": "sessionType", "type": "MediaKeySessionType", "optional": true, "default": "\"temporary\"" }]
@@ -7058,7 +7058,7 @@
         { "name": "message", "type": "MediaKeyMessageEvent" }
       ]
     }, {
-      "name": "MediaKeyStatusMap", "extends": "Object",
+      "name": "MediaKeyStatusMap",
       "iterable": { "keytype": "BufferSource", "type": "MediaKeyStatus" },
       "operations": [{
         "name": "get", "type": "any",
@@ -7069,14 +7069,14 @@
       }],
       "attributes": [{ "name": "size", "type": "unsigned long", "readonly": true }]
     }, {
-      "name": "MediaKeySystemAccess", "extends": "Object",
+      "name": "MediaKeySystemAccess",
       "operations": [
         { "name": "createMediaKeys", "type": "Promise<MediaKeys>", "arguments": [] },
         { "name": "getConfiguration", "type": "MediaKeySystemConfiguration", "arguments": [] }
       ],
       "attributes": [{ "name": "keySystem", "type": "DOMString", "readonly": true }]
     }, {
-      "name": "MediaList", "extends": "Object",
+      "name": "MediaList",
       "operations": [{
         "name": "appendMedium", "type": "void",
         "arguments": [{ "name": "medium", "type": "CSSOMString" }]
@@ -7258,7 +7258,7 @@
       }],
       "attributes": [{ "name": "track", "type": "MediaStreamTrack", "readonly": true }]
     }, {
-      "name": "MessageChannel", "extends": "Object",
+      "name": "MessageChannel",
       "constructors": [{ "arguments": [] }],
       "exposed": ["Window", "Worker"],
       "attributes": [
@@ -7314,7 +7314,7 @@
       ],
       "events": [{ "name": "messageerror", "type": "MessageEvent" }]
     }, {
-      "name": "MimeType", "extends": "Object",
+      "name": "MimeType",
       "attributes": [
         { "name": "description", "type": "DOMString", "readonly": true },
         { "name": "enabledPlugin", "type": "Plugin", "readonly": true },
@@ -7322,7 +7322,7 @@
         { "name": "type", "type": "DOMString", "readonly": true }
       ]
     }, {
-      "name": "MimeTypeArray", "extends": "Object",
+      "name": "MimeTypeArray",
       "operations": [{
         "name": "item", "type": "MimeType", "nullable": true, "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -7363,7 +7363,7 @@
         { "name": "y", "type": "double", "readonly": true }
       ]
     }, {
-      "name": "MutationObserver", "extends": "Object",
+      "name": "MutationObserver",
       "constructors": [{
         "arguments": [{ "name": "callback", "type": "MutationCallback" }]
       }],
@@ -7379,7 +7379,7 @@
         { "name": "takeRecords", "type": "sequence<MutationRecord>", "arguments": [] }
       ]
     }, {
-      "name": "MutationRecord", "extends": "Object",
+      "name": "MutationRecord",
       "exposed": ["Window"],
       "attributes": [
         { "name": "addedNodes", "type": "NodeList", "readonly": true },
@@ -7393,7 +7393,7 @@
         { "name": "type", "type": "DOMString", "readonly": true }
       ]
     }, {
-      "name": "NamedNodeMap", "extends": "Object",
+      "name": "NamedNodeMap",
       "exposed": ["Window"],
       "operations": [{
         "name": "getNamedItem", "type": "Attr", "nullable": true, "getter": true,
@@ -7425,7 +7425,7 @@
       }],
       "attributes": [{ "name": "length", "type": "unsigned long", "readonly": true }]
     }, {
-      "name": "NavigationPreloadManager", "extends": "Object",
+      "name": "NavigationPreloadManager",
       "exposed": ["Window", "Worker"],
       "operations": [
         { "name": "disable", "type": "Promise<void>", "arguments": [] },
@@ -7437,7 +7437,7 @@
         }
       ]
     }, {
-      "name": "Navigator", "extends": "Object",
+      "name": "Navigator",
       "implements": ["NavigatorID", "NavigatorLanguage", "NavigatorOnLine", "NavigatorContentUtils", "NavigatorCookies", "NavigatorPlugins", "NavigatorConcurrentHardware", "NavigatorUserMedia"],
       "operations": [
         { "name": "getGamepads", "type": "sequence<Gamepad?>", "arguments": [] },
@@ -7461,11 +7461,11 @@
         { "name": "serviceWorker", "type": "ServiceWorkerContainer", "readonly": true }
       ]
     }, {
-      "name": "NavigatorConcurrentHardware", "extends": "Object", "noInterfaceObject": true,
+      "name": "NavigatorConcurrentHardware", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "attributes": [{ "name": "hardwareConcurrency", "type": "unsigned long long", "readonly": true }]
     }, {
-      "name": "NavigatorContentUtils", "extends": "Object", "noInterfaceObject": true,
+      "name": "NavigatorContentUtils", "noInterfaceObject": true,
       "operations": [{
         "name": "isContentHandlerRegistered", "type": "DOMString",
         "arguments": [
@@ -7506,10 +7506,10 @@
         ]
       }]
     }, {
-      "name": "NavigatorCookies", "extends": "Object", "noInterfaceObject": true,
+      "name": "NavigatorCookies", "noInterfaceObject": true,
       "attributes": [{ "name": "cookieEnabled", "type": "boolean", "readonly": true }]
     }, {
-      "name": "NavigatorID", "extends": "Object", "noInterfaceObject": true,
+      "name": "NavigatorID", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "attributes": [
         { "name": "appCodeName", "type": "DOMString", "readonly": true },
@@ -7539,25 +7539,25 @@
         "exposed": ["Window"]
       }]
     }, {
-      "name": "NavigatorLanguage", "extends": "Object", "noInterfaceObject": true,
+      "name": "NavigatorLanguage", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "attributes": [
         { "name": "language", "type": "DOMString", "readonly": true },
         { "name": "languages", "type": "FrozenArray<DOMString>", "readonly": true }
       ]
     }, {
-      "name": "NavigatorOnLine", "extends": "Object", "noInterfaceObject": true,
+      "name": "NavigatorOnLine", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "attributes": [{ "name": "onLine", "type": "boolean", "readonly": true }]
     }, {
-      "name": "NavigatorPlugins", "extends": "Object", "noInterfaceObject": true,
+      "name": "NavigatorPlugins", "noInterfaceObject": true,
       "operations": [{ "name": "javaEnabled", "type": "boolean", "arguments": [] }],
       "attributes": [
         { "name": "mimeTypes", "type": "MimeTypeArray", "readonly": true },
         { "name": "plugins", "type": "PluginArray", "readonly": true }
       ]
     }, {
-      "name": "NavigatorUserMedia", "extends": "Object", "noInterfaceObject": true,
+      "name": "NavigatorUserMedia", "noInterfaceObject": true,
       "exposed": ["Window"],
       "attributes": [{ "name": "mediaDevices", "type": "MediaDevices", "readonly": true }],
       "operations": [{
@@ -7660,7 +7660,7 @@
         { "name": "textContent", "type": "DOMString", "nullable": true }
       ]
     }, {
-      "name": "NodeIterator", "extends": "Object",
+      "name": "NodeIterator",
       "exposed": ["Window"],
       "operations": [
         { "name": "detach", "type": "void", "arguments": [] },
@@ -7675,7 +7675,7 @@
         { "name": "whatToShow", "type": "unsigned long", "readonly": true }
       ]
     }, {
-      "name": "NodeList", "extends": "Object",
+      "name": "NodeList",
       "exposed": ["Window"],
       "iterable": { "type": "Node" },
       "operations": [{
@@ -7684,14 +7684,14 @@
       }],
       "attributes": [{ "name": "length", "type": "unsigned long", "readonly": true }]
     }, {
-      "name": "NonDocumentTypeChildNode", "extends": "Object", "noInterfaceObject": true,
+      "name": "NonDocumentTypeChildNode", "noInterfaceObject": true,
       "exposed": ["Window"],
       "attributes": [
         { "name": "nextElementSibling", "type": "Element", "nullable": true, "readonly": true },
         { "name": "previousElementSibling", "type": "Element", "nullable": true, "readonly": true }
       ]
     }, {
-      "name": "NonElementParentNode", "extends": "Object", "noInterfaceObject": true,
+      "name": "NonElementParentNode", "noInterfaceObject": true,
       "exposed": ["Window"],
       "operations": [{
         "name": "getElementById", "type": "Element", "nullable": true,
@@ -7750,18 +7750,18 @@
         { "name": "notification", "type": "Notification", "readonly": true }
       ]
     },
-    { "name": "OES_element_index_uint", "extends": "Object", "noInterfaceObject": true },
+    { "name": "OES_element_index_uint", "noInterfaceObject": true },
     {
-      "name": "OES_standard_derivatives", "extends": "Object", "noInterfaceObject": true,
+      "name": "OES_standard_derivatives", "noInterfaceObject": true,
       "constants": [{ "name": "FRAGMENT_SHADER_DERIVATIVE_HINT_OES", "type": "GLenum", "value": "35723" }]
     },
-    { "name": "OES_texture_float", "extends": "Object", "noInterfaceObject": true },
-    { "name": "OES_texture_float_linear", "extends": "Object", "noInterfaceObject": true },
+    { "name": "OES_texture_float", "noInterfaceObject": true },
+    { "name": "OES_texture_float_linear", "noInterfaceObject": true },
     {
-      "name": "OES_texture_half_float", "extends": "Object", "noInterfaceObject": true,
+      "name": "OES_texture_half_float", "noInterfaceObject": true,
       "constants": [{ "name": "HALF_FLOAT_OES", "type": "GLenum", "value": "36193" }]
     },
-    { "name": "OES_texture_half_float_linear", "extends": "Object", "noInterfaceObject": true },
+    { "name": "OES_texture_half_float_linear", "noInterfaceObject": true },
     {
       "name": "OfflineAudioCompletionEvent", "extends": "Event",
       "constructors": [{
@@ -7818,7 +7818,7 @@
         { "name": "width", "type": "unsigned long long" }
       ]
     }, {
-      "name": "OffscreenCanvasRenderingContext2D", "extends": "Object",
+      "name": "OffscreenCanvasRenderingContext2D",
       "exposed": ["Window", "Worker"],
       "operations": [{ "name": "commit", "type": "void", "arguments": [] }],
       "attributes": [{ "name": "canvas", "type": "OffscreenCanvas", "readonly": true }],
@@ -7899,7 +7899,7 @@
         { "name": "rolloffFactor", "type": "double" }
       ]
     }, {
-      "name": "ParentNode", "extends": "Object", "noInterfaceObject": true,
+      "name": "ParentNode", "noInterfaceObject": true,
       "exposed": ["Window"],
       "operations": [{
         "name": "append", "type": "void",
@@ -7921,7 +7921,7 @@
         { "name": "lastElementChild", "type": "Element", "nullable": true, "readonly": true }
       ]
     }, {
-      "name": "Path2D", "extends": "Object",
+      "name": "Path2D",
       "constructors": [
         { "arguments": [] },
         {
@@ -7945,7 +7945,7 @@
       }],
       "implements": ["CanvasPath"]
     }, {
-      "name": "PaymentAddress", "extends": "Object",
+      "name": "PaymentAddress",
       "attributes": [
         { "name": "addressLine", "type": "FrozenArray<DOMString>", "readonly": true },
         { "name": "city", "type": "DOMString", "readonly": true },
@@ -7994,7 +7994,7 @@
         "arguments": [{ "name": "detailsPromise", "type": "Promise<PaymentDetailsUpdate>" }]
       }]
     }, {
-      "name": "PaymentResponse", "extends": "Object",
+      "name": "PaymentResponse",
       "operations": [{
         "name": "complete", "type": "Promise<void>",
         "arguments": [{ "name": "result", "type": "PaymentComplete", "optional": true, "default": "\"unknown\"" }]
@@ -8061,7 +8061,7 @@
       ],
       "events": [{ "name": "resourcetimingbufferfull", "type": "Event" }]
     }, {
-      "name": "PerformanceEntry", "extends": "Object",
+      "name": "PerformanceEntry",
       "exposed": ["Window", "Worker"],
       "attributes": [
         { "name": "duration", "type": "DOMHighResTimeStamp", "readonly": true },
@@ -8073,7 +8073,7 @@
     { "name": "PerformanceMark", "extends": "PerformanceEntry" },
     { "name": "PerformanceMeasure", "extends": "PerformanceEntry" },
     {
-      "name": "PerformanceNavigation", "extends": "Object",
+      "name": "PerformanceNavigation",
       "exposed": ["Window"],
       "constants": [
         { "name": "TYPE_BACK_FORWARD", "type": "unsigned short", "value": "2" },
@@ -8100,7 +8100,7 @@
         { "name": "unloadEventStart", "type": "DOMHighResTimeStamp", "readonly": true }
       ]
     }, {
-      "name": "PerformanceObserver", "extends": "Object",
+      "name": "PerformanceObserver",
       "constructors": [{
         "arguments": [{ "name": "callback", "type": "PerformanceObserverCallback" }]
       }],
@@ -8113,7 +8113,7 @@
         }
       ]
     }, {
-      "name": "PerformanceObserverEntryList", "extends": "Object",
+      "name": "PerformanceObserverEntryList",
       "exposed": ["Window", "Worker"],
       "operations": [
         { "name": "getEntries", "type": "PerformanceEntryList", "arguments": [] },
@@ -8146,7 +8146,7 @@
         { "name": "secureConnectionStart", "type": "DOMHighResTimeStamp", "readonly": true }
       ]
     }, {
-      "name": "PerformanceTiming", "extends": "Object",
+      "name": "PerformanceTiming",
       "exposed": ["Window"],
       "attributes": [
         { "name": "connectEnd", "type": "unsigned long long", "readonly": true },
@@ -8172,7 +8172,7 @@
         { "name": "unloadEventStart", "type": "unsigned long long", "readonly": true }
       ]
     }, {
-      "name": "PeriodicWave", "extends": "Object",
+      "name": "PeriodicWave",
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -8180,7 +8180,7 @@
         ]
       }]
     }, {
-      "name": "Plugin", "extends": "Object",
+      "name": "Plugin",
       "operations": [{
         "name": "item", "type": "MimeType", "nullable": true, "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -8195,7 +8195,7 @@
         { "name": "name", "type": "DOMString", "readonly": true }
       ]
     }, {
-      "name": "PluginArray", "extends": "Object",
+      "name": "PluginArray",
       "operations": [{
         "name": "item", "type": "Plugin", "nullable": true, "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -8235,13 +8235,13 @@
       }],
       "attributes": [{ "name": "state", "type": "any", "readonly": true }]
     }, {
-      "name": "Position", "extends": "Object", "noInterfaceObject": true,
+      "name": "Position", "noInterfaceObject": true,
       "attributes": [
         { "name": "coords", "type": "Coordinates", "readonly": true },
         { "name": "timestamp", "type": "DOMTimeStamp", "readonly": true }
       ]
     }, {
-      "name": "PositionError", "extends": "Object", "noInterfaceObject": true,
+      "name": "PositionError", "noInterfaceObject": true,
       "constants": [
         { "name": "PERMISSION_DENIED", "type": "unsigned short", "value": "1" },
         { "name": "POSITION_UNAVAILABLE", "type": "unsigned short", "value": "2" },
@@ -8294,7 +8294,7 @@
       "exposed": ["ServiceWorker"],
       "attributes": [{ "name": "data", "type": "PushMessageData", "nullable": true, "readonly": true }]
     }, {
-      "name": "PushManager", "extends": "Object",
+      "name": "PushManager",
       "exposed": ["Window", "Worker"],
       "operations": [
         { "name": "getSubscription", "type": "Promise<PushSubscription?>", "arguments": [] },
@@ -8308,7 +8308,7 @@
       ],
       "attributes": [{ "name": "supportedContentEncodings", "type": "FrozenArray<DOMString>", "readonly": true, "static": true }]
     }, {
-      "name": "PushMessageData", "extends": "Object",
+      "name": "PushMessageData",
       "exposed": ["ServiceWorker"],
       "operations": [
         { "name": "arrayBuffer", "type": "ArrayBuffer", "arguments": [] },
@@ -8317,7 +8317,7 @@
         { "name": "text", "type": "USVString", "arguments": [] }
       ]
     }, {
-      "name": "PushSubscription", "extends": "Object",
+      "name": "PushSubscription",
       "exposed": ["Window", "Worker"],
       "operations": [
         {
@@ -8345,7 +8345,7 @@
         { "name": "oldSubscription", "type": "PushSubscription", "nullable": true, "readonly": true }
       ]
     }, {
-      "name": "PushSubscriptionOptions", "extends": "Object",
+      "name": "PushSubscriptionOptions",
       "exposed": ["Window", "Worker"],
       "attributes": [
         { "name": "applicationServerKey", "type": "ArrayBuffer", "nullable": true, "readonly": true },
@@ -8355,7 +8355,7 @@
       "name": "RadioNodeList", "extends": "NodeList",
       "attributes": [{ "name": "value", "type": "DOMString" }]
     }, {
-      "name": "Range", "extends": "Object",
+      "name": "Range",
       "constructors": [{ "arguments": [] }],
       "exposed": ["Window"],
       "anonymousOperations": [{ "type": "DOMString", "stringifier": true }],
@@ -8448,7 +8448,7 @@
         { "name": "startOffset", "type": "unsigned long", "readonly": true }
       ]
     }, {
-      "name": "ReadableStream", "extends": "Object",
+      "name": "ReadableStream",
       "exposed": ["Window", "Worker"],
       "operations": [
         { "name": "cancel", "type": "Promise<void>", "arguments": [] },
@@ -8456,7 +8456,7 @@
       ],
       "attributes": [{ "name": "locked", "type": "boolean", "readonly": true }]
     }, {
-      "name": "ReadableStreamDefaultReader", "extends": "Object",
+      "name": "ReadableStreamDefaultReader",
       "constructors": [{
         "arguments": [{ "name": "stream", "type": "ReadableStream" }]
       }],
@@ -8477,7 +8477,7 @@
       }],
       "attributes": [{ "name": "relatedTarget", "type": "EventTarget", "nullable": true, "readonly": true }]
     }, {
-      "name": "Request", "extends": "Object",
+      "name": "Request",
       "constructors": [{
         "arguments": [
           { "name": "input", "type": "RequestInfo" },
@@ -8503,7 +8503,7 @@
       ],
       "implements": ["Body"]
     }, {
-      "name": "Response", "extends": "Object",
+      "name": "Response",
       "constructors": [{
         "arguments": [
           { "name": "body", "type": "BodyInit", "nullable": true, "optional": true, "default": "null" },
@@ -8534,7 +8534,7 @@
       ],
       "implements": ["Body"]
     }, {
-      "name": "RTCCertificate", "extends": "Object",
+      "name": "RTCCertificate",
       "operations": [
         { "name": "getAlgorithm", "type": "AlgorithmIdentifier", "arguments": [] },
         { "name": "getFingerprints", "type": "sequence<RTCDtlsFingerprint>", "arguments": [] }
@@ -8594,7 +8594,7 @@
       }],
       "attributes": [{ "name": "channel", "type": "RTCDataChannel", "readonly": true }]
     }, {
-      "name": "RTCDtlsTransport", "extends": "Object",
+      "name": "RTCDtlsTransport",
       "operations": [{ "name": "getRemoteCertificates", "type": "sequence<ArrayBuffer>", "arguments": [] }],
       "attributes": [
         { "name": "onstatechange", "type": "EventHandler", "eventHandler": "statechange" },
@@ -8637,7 +8637,7 @@
       }],
       "attributes": [{ "name": "error", "type": "RTCError", "nullable": true, "readonly": true }]
     }, {
-      "name": "RTCIceCandidate", "extends": "Object",
+      "name": "RTCIceCandidate",
       "constructors": [{
         "arguments": [{ "name": "candidateInitDict", "type": "RTCIceCandidateInit" }]
       }],
@@ -8657,7 +8657,7 @@
         { "name": "ufrag", "type": "DOMString", "nullable": true, "readonly": true }
       ]
     }, {
-      "name": "RTCIceTransport", "extends": "Object",
+      "name": "RTCIceTransport",
       "operations": [
         { "name": "getLocalCandidates", "type": "sequence<RTCIceCandidate>", "arguments": [] },
         { "name": "getLocalParameters", "type": "RTCIceParameters", "nullable": true, "arguments": [] },
@@ -8680,7 +8680,7 @@
         { "name": "selectedcandidatepairchange", "type": "Event" }
       ]
     }, {
-      "name": "RTCIdentityAssertion", "extends": "Object",
+      "name": "RTCIdentityAssertion",
       "constructors": [{
         "arguments": [
           { "name": "idp", "type": "DOMString" },
@@ -8696,7 +8696,7 @@
       "exposed": ["RTCIdentityProviderGlobalScope"],
       "attributes": [{ "name": "rtcIdentityProvider", "type": "RTCIdentityProviderRegistrar", "readonly": true }]
     }, {
-      "name": "RTCIdentityProviderRegistrar", "extends": "Object",
+      "name": "RTCIdentityProviderRegistrar",
       "exposed": ["RTCIdentityProviderGlobalScope"],
       "operations": [{
         "name": "register", "type": "void",
@@ -8871,14 +8871,14 @@
         { "name": "url", "type": "DOMString", "nullable": true, "readonly": true }
       ]
     }, {
-      "name": "RTCRtpContributingSource", "extends": "Object",
+      "name": "RTCRtpContributingSource",
       "attributes": [
         { "name": "audioLevel", "type": "byte", "nullable": true, "readonly": true },
         { "name": "source", "type": "unsigned long", "readonly": true },
         { "name": "timestamp", "type": "DOMHighResTimeStamp", "readonly": true }
       ]
     }, {
-      "name": "RTCRtpReceiver", "extends": "Object",
+      "name": "RTCRtpReceiver",
       "operations": [
         {
           "name": "getCapabilities", "type": "RTCRtpCapabilities", "static": true,
@@ -8895,7 +8895,7 @@
         { "name": "transport", "type": "RTCDtlsTransport", "nullable": true, "readonly": true }
       ]
     }, {
-      "name": "RTCRtpSender", "extends": "Object",
+      "name": "RTCRtpSender",
       "operations": [
         {
           "name": "getCapabilities", "type": "RTCRtpCapabilities", "static": true,
@@ -8918,7 +8918,7 @@
         { "name": "transport", "type": "RTCDtlsTransport", "nullable": true, "readonly": true }
       ]
     }, {
-      "name": "RTCRtpSynchronizationSource", "extends": "Object",
+      "name": "RTCRtpSynchronizationSource",
       "attributes": [
         { "name": "audioLevel", "type": "byte", "readonly": true },
         { "name": "source", "type": "unsigned long", "readonly": true },
@@ -8926,7 +8926,7 @@
         { "name": "voiceActivityFlag", "type": "boolean", "nullable": true, "readonly": true }
       ]
     }, {
-      "name": "RTCRtpTransceiver", "extends": "Object",
+      "name": "RTCRtpTransceiver",
       "operations": [
         {
           "name": "setCodecPreferences", "type": "void",
@@ -8946,13 +8946,13 @@
         { "name": "stopped", "type": "boolean", "readonly": true }
       ]
     }, {
-      "name": "RTCSctpTransport", "extends": "Object",
+      "name": "RTCSctpTransport",
       "attributes": [
         { "name": "maxMessageSize", "type": "unsigned long", "readonly": true },
         { "name": "transport", "type": "RTCDtlsTransport", "readonly": true }
       ]
     }, {
-      "name": "RTCSessionDescription", "extends": "Object",
+      "name": "RTCSessionDescription",
       "constructors": [{
         "arguments": [{ "name": "descriptionInitDict", "type": "RTCSessionDescriptionInit" }]
       }],
@@ -8961,7 +8961,7 @@
         { "name": "type", "type": "RTCSdpType", "readonly": true }
       ]
     },
-    { "name": "RTCStatsReport", "extends": "Object" },
+    { "name": "RTCStatsReport" },
     {
       "name": "RTCTrackEvent", "extends": "Event",
       "constructors": [{
@@ -8977,7 +8977,7 @@
         { "name": "transceiver", "type": "RTCRtpTransceiver", "readonly": true }
       ]
     }, {
-      "name": "Screen", "extends": "Object",
+      "name": "Screen",
       "attributes": [
         { "name": "availHeight", "type": "long", "readonly": true },
         { "name": "availWidth", "type": "long", "readonly": true },
@@ -8993,7 +8993,7 @@
         { "name": "onaudioprocess", "type": "EventHandler" }
       ]
     }, {
-      "name": "Selection", "extends": "Object",
+      "name": "Selection",
       "anonymousOperations": [{ "type": "DOMString", "arguments": [], "stringifier": true }],
       "operations": [
         {
@@ -9205,7 +9205,7 @@
       ],
       "events": [{ "name": "connect", "type": "MessageEvent" }]
     }, {
-      "name": "Slotable", "extends": "Object", "noInterfaceObject": true,
+      "name": "Slotable", "noInterfaceObject": true,
       "exposed": ["Window"],
       "attributes": [{ "name": "assignedSlot", "type": "HTMLSlotElement", "nullable": true, "readonly": true }]
     }, {
@@ -9262,14 +9262,14 @@
         { "name": "removesourcebuffer", "type": "Event" }
       ]
     }, {
-      "name": "SpeechGrammar", "extends": "Object",
+      "name": "SpeechGrammar",
       "constructors": [{ "arguments": [] }],
       "attributes": [
         { "name": "src", "type": "DOMString" },
         { "name": "weight", "type": "float" }
       ]
     }, {
-      "name": "SpeechGrammarList", "extends": "Object",
+      "name": "SpeechGrammarList",
       "constructors": [{ "arguments": [] }],
       "operations": [{
         "name": "addFromString", "type": "void",
@@ -9329,7 +9329,7 @@
         { "name": "end", "type": "Event" }
       ]
     }, {
-      "name": "SpeechRecognitionAlternative", "extends": "Object",
+      "name": "SpeechRecognitionAlternative",
       "attributes": [
         { "name": "confidence", "type": "float", "readonly": true },
         { "name": "transcript", "type": "DOMString", "readonly": true }
@@ -9349,7 +9349,7 @@
         { "name": "results", "type": "SpeechRecognitionResultList", "readonly": true }
       ]
     }, {
-      "name": "SpeechRecognitionResult", "extends": "Object",
+      "name": "SpeechRecognitionResult",
       "operations": [{
         "name": "item", "type": "SpeechRecognitionAlternative", "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -9359,7 +9359,7 @@
         { "name": "length", "type": "unsigned long", "readonly": true }
       ]
     }, {
-      "name": "SpeechRecognitionResultList", "extends": "Object",
+      "name": "SpeechRecognitionResultList",
       "operations": [{
         "name": "item", "type": "SpeechRecognitionResult", "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -9395,7 +9395,7 @@
         { "name": "utterance", "type": "SpeechSynthesisUtterance", "readonly": true }
       ]
     }, {
-      "name": "SpeechSynthesisGetter", "extends": "Object", "noInterfaceObject": true,
+      "name": "SpeechSynthesisGetter", "noInterfaceObject": true,
       "attributes": [{ "name": "speechSynthesis", "type": "SpeechSynthesis", "readonly": true }]
     }, {
       "name": "SpeechSynthesisUtterance", "extends": "EventTarget",
@@ -9421,7 +9421,7 @@
         { "name": "volume", "type": "float" }
       ]
     }, {
-      "name": "SpeechSynthesisVoice", "extends": "Object",
+      "name": "SpeechSynthesisVoice",
       "attributes": [
         { "name": "default", "type": "boolean", "readonly": true },
         { "name": "lang", "type": "DOMString", "readonly": true },
@@ -9439,7 +9439,7 @@
       }],
       "attributes": [{ "name": "pan", "type": "AudioParam", "readonly": true }]
     }, {
-      "name": "Storage", "extends": "Object",
+      "name": "Storage",
       "operations": [
         { "name": "clear", "type": "void", "arguments": [] },
         {
@@ -9476,7 +9476,7 @@
         { "name": "url", "type": "USVString", "readonly": true }
       ]
     }, {
-      "name": "StyleSheet", "extends": "Object",
+      "name": "StyleSheet",
       "attributes": [
         { "name": "disabled", "type": "boolean" },
         { "name": "href", "type": "USVString", "nullable": true, "readonly": true },
@@ -9487,14 +9487,14 @@
         { "name": "type", "type": "CSSOMString", "readonly": true }
       ]
     }, {
-      "name": "StyleSheetList", "extends": "Object",
+      "name": "StyleSheetList",
       "operations": [{
         "name": "item", "type": "StyleSheet", "nullable": true, "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
       }],
       "attributes": [{ "name": "length", "type": "unsigned long", "readonly": true }]
     }, {
-      "name": "SubtleCrypto", "extends": "Object",
+      "name": "SubtleCrypto",
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "decrypt", "type": "Promise<any>",
@@ -9601,7 +9601,7 @@
       ],
       "implements": ["SVGURIReference", "HTMLHyperlinkElementUtils"]
     }, {
-      "name": "SVGAngle", "extends": "Object",
+      "name": "SVGAngle",
       "constants": [
         { "name": "SVG_ANGLETYPE_DEG", "type": "unsigned short", "value": "2" },
         { "name": "SVG_ANGLETYPE_GRAD", "type": "unsigned short", "value": "4" },
@@ -9626,79 +9626,79 @@
         { "name": "valueInSpecifiedUnits", "type": "float" }
       ]
     }, {
-      "name": "SVGAnimatedAngle", "extends": "Object",
+      "name": "SVGAnimatedAngle",
       "attributes": [
         { "name": "animVal", "type": "SVGAngle", "readonly": true },
         { "name": "baseVal", "type": "SVGAngle", "readonly": true }
       ]
     }, {
-      "name": "SVGAnimatedBoolean", "extends": "Object",
+      "name": "SVGAnimatedBoolean",
       "attributes": [
         { "name": "animVal", "type": "boolean", "readonly": true },
         { "name": "baseVal", "type": "boolean" }
       ]
     }, {
-      "name": "SVGAnimatedEnumeration", "extends": "Object",
+      "name": "SVGAnimatedEnumeration",
       "attributes": [
         { "name": "animVal", "type": "unsigned short", "readonly": true },
         { "name": "baseVal", "type": "unsigned short" }
       ]
     }, {
-      "name": "SVGAnimatedInteger", "extends": "Object",
+      "name": "SVGAnimatedInteger",
       "attributes": [
         { "name": "animVal", "type": "long", "readonly": true },
         { "name": "baseVal", "type": "long" }
       ]
     }, {
-      "name": "SVGAnimatedLength", "extends": "Object",
+      "name": "SVGAnimatedLength",
       "attributes": [
         { "name": "animVal", "type": "SVGLength", "readonly": true },
         { "name": "baseVal", "type": "SVGLength", "readonly": true }
       ]
     }, {
-      "name": "SVGAnimatedLengthList", "extends": "Object",
+      "name": "SVGAnimatedLengthList",
       "attributes": [
         { "name": "animVal", "type": "SVGLengthList", "readonly": true },
         { "name": "baseVal", "type": "SVGLengthList", "readonly": true }
       ]
     }, {
-      "name": "SVGAnimatedNumber", "extends": "Object",
+      "name": "SVGAnimatedNumber",
       "attributes": [
         { "name": "animVal", "type": "float", "readonly": true },
         { "name": "baseVal", "type": "float" }
       ]
     }, {
-      "name": "SVGAnimatedNumberList", "extends": "Object",
+      "name": "SVGAnimatedNumberList",
       "attributes": [
         { "name": "animVal", "type": "SVGNumberList", "readonly": true },
         { "name": "baseVal", "type": "SVGNumberList", "readonly": true }
       ]
     }, {
-      "name": "SVGAnimatedPoints", "extends": "Object", "noInterfaceObject": true,
+      "name": "SVGAnimatedPoints", "noInterfaceObject": true,
       "attributes": [
         { "name": "animatedPoints", "type": "SVGPointList", "readonly": true },
         { "name": "points", "type": "SVGPointList", "readonly": true }
       ]
     }, {
-      "name": "SVGAnimatedPreserveAspectRatio", "extends": "Object",
+      "name": "SVGAnimatedPreserveAspectRatio",
       "attributes": [
         { "name": "animVal", "type": "SVGPreserveAspectRatio", "readonly": true },
         { "name": "baseVal", "type": "SVGPreserveAspectRatio", "readonly": true }
       ]
     }, {
-      "name": "SVGAnimatedRect", "extends": "Object",
+      "name": "SVGAnimatedRect",
       "attributes": [
         { "name": "animVal", "type": "DOMRectReadOnly", "readonly": true },
         { "name": "baseVal", "type": "DOMRect", "readonly": true }
       ]
     }, {
-      "name": "SVGAnimatedString", "extends": "Object",
+      "name": "SVGAnimatedString",
       "attributes": [
         { "name": "animVal", "type": "DOMString", "readonly": true },
         { "name": "baseVal", "type": "DOMString" }
       ]
     }, {
-      "name": "SVGAnimatedTransformList", "extends": "Object",
+      "name": "SVGAnimatedTransformList",
       "attributes": [
         { "name": "animVal", "type": "SVGTransformList", "readonly": true },
         { "name": "baseVal", "type": "SVGTransformList", "readonly": true }
@@ -9761,7 +9761,7 @@
       ],
       "implements": ["GlobalEventHandlers", "SVGElementInstance", "ElementCSSInlineStyle"]
     }, {
-      "name": "SVGElementInstance", "extends": "Object", "noInterfaceObject": true,
+      "name": "SVGElementInstance", "noInterfaceObject": true,
       "attributes": [
         { "name": "correspondingElement", "type": "SVGElement", "nullable": true, "readonly": true },
         { "name": "correspondingUseElement", "type": "SVGUseElement", "nullable": true, "readonly": true }
@@ -10032,7 +10032,7 @@
       ],
       "implements": ["SVGURIReference", "SVGUnitTypes"]
     }, {
-      "name": "SVGFilterPrimitiveStandardAttributes", "extends": "Object", "noInterfaceObject": true,
+      "name": "SVGFilterPrimitiveStandardAttributes", "noInterfaceObject": true,
       "attributes": [
         { "name": "height", "type": "SVGAnimatedLength", "readonly": true },
         { "name": "result", "type": "SVGAnimatedString", "readonly": true },
@@ -10041,7 +10041,7 @@
         { "name": "y", "type": "SVGAnimatedLength", "readonly": true }
       ]
     }, {
-      "name": "SVGFitToViewBox", "extends": "Object", "noInterfaceObject": true,
+      "name": "SVGFitToViewBox", "noInterfaceObject": true,
       "attributes": [
         { "name": "preserveAspectRatio", "type": "SVGAnimatedPreserveAspectRatio", "readonly": true },
         { "name": "viewBox", "type": "SVGAnimatedRect", "readonly": true }
@@ -10114,7 +10114,7 @@
       ],
       "implements": ["SVGURIReference"]
     }, {
-      "name": "SVGLength", "extends": "Object",
+      "name": "SVGLength",
       "constants": [
         { "name": "SVG_LENGTHTYPE_CM", "type": "unsigned short", "value": "6" },
         { "name": "SVG_LENGTHTYPE_EMS", "type": "unsigned short", "value": "3" },
@@ -10145,7 +10145,7 @@
         { "name": "valueInSpecifiedUnits", "type": "float" }
       ]
     }, {
-      "name": "SVGLengthList", "extends": "Object",
+      "name": "SVGLengthList",
       "anonymousOperations": [{
         "type": "void", "setter": true,
         "arguments": [
@@ -10250,10 +10250,10 @@
     { "name": "SVGMeshrowElement", "extends": "SVGElement" },
     { "name": "SVGMetadataElement", "extends": "SVGElement" },
     {
-      "name": "SVGNumber", "extends": "Object",
+      "name": "SVGNumber",
       "attributes": [{ "name": "value", "type": "float" }]
     }, {
-      "name": "SVGNumberList", "extends": "Object",
+      "name": "SVGNumberList",
       "anonymousOperations": [{
         "type": "void", "setter": true,
         "arguments": [
@@ -10309,7 +10309,7 @@
       ],
       "implements": ["SVGFitToViewBox", "SVGURIReference"]
     }, {
-      "name": "SVGPointList", "extends": "Object",
+      "name": "SVGPointList",
       "anonymousOperations": [{
         "type": "void", "setter": true,
         "arguments": [
@@ -10357,7 +10357,7 @@
       "name": "SVGPolylineElement", "extends": "SVGGeometryElement",
       "implements": ["SVGAnimatedPoints"]
     }, {
-      "name": "SVGPreserveAspectRatio", "extends": "Object",
+      "name": "SVGPreserveAspectRatio",
       "constants": [
         { "name": "SVG_MEETORSLICE_MEET", "type": "unsigned short", "value": "1" },
         { "name": "SVG_MEETORSLICE_SLICE", "type": "unsigned short", "value": "2" },
@@ -10411,7 +10411,7 @@
       "name": "SVGStopElement", "extends": "SVGElement",
       "attributes": [{ "name": "offset", "type": "SVGAnimatedNumber", "readonly": true }]
     }, {
-      "name": "SVGStringList", "extends": "Object",
+      "name": "SVGStringList",
       "anonymousOperations": [{
         "type": "void", "setter": true,
         "arguments": [
@@ -10528,7 +10528,7 @@
       "name": "SVGSymbolElement", "extends": "SVGGraphicsElement",
       "implements": ["SVGFitToViewBox"]
     }, {
-      "name": "SVGTests", "extends": "Object", "noInterfaceObject": true,
+      "name": "SVGTests", "noInterfaceObject": true,
       "attributes": [
         { "name": "requiredExtensions", "type": "SVGStringList", "readonly": true },
         { "name": "systemLanguage", "type": "SVGStringList", "readonly": true }
@@ -10608,7 +10608,7 @@
     },
     { "name": "SVGTitleElement", "extends": "SVGElement" },
     {
-      "name": "SVGTransform", "extends": "Object",
+      "name": "SVGTransform",
       "constants": [
         { "name": "SVG_TRANSFORM_MATRIX", "type": "unsigned short", "value": "1" },
         { "name": "SVG_TRANSFORM_ROTATE", "type": "unsigned short", "value": "4" },
@@ -10653,7 +10653,7 @@
         { "name": "type", "type": "unsigned short", "readonly": true }
       ]
     }, {
-      "name": "SVGTransformList", "extends": "Object",
+      "name": "SVGTransformList",
       "anonymousOperations": [{
         "type": "void", "setter": true,
         "arguments": [
@@ -10701,7 +10701,7 @@
     },
     { "name": "SVGTSpanElement", "extends": "SVGTextPositioningElement" },
     {
-      "name": "SVGUnitTypes", "extends": "Object",
+      "name": "SVGUnitTypes",
       "constants": [
         { "name": "SVG_UNIT_TYPE_OBJECTBOUNDINGBOX", "type": "unsigned short", "value": "2" },
         { "name": "SVG_UNIT_TYPE_UNKNOWN", "type": "unsigned short", "value": "0" },
@@ -10710,7 +10710,7 @@
     },
     { "name": "SVGUnknownElement", "extends": "SVGGraphicsElement" },
     {
-      "name": "SVGURIReference", "extends": "Object", "noInterfaceObject": true,
+      "name": "SVGURIReference", "noInterfaceObject": true,
       "attributes": [{ "name": "href", "type": "SVGAnimatedString", "readonly": true }]
     }, {
       "name": "SVGUseElement", "extends": "SVGGraphicsElement",
@@ -10729,7 +10729,7 @@
       "name": "SVGViewElement", "extends": "SVGElement",
       "implements": ["SVGFitToViewBox", "SVGZoomAndPan"]
     }, {
-      "name": "SVGZoomAndPan", "extends": "Object", "noInterfaceObject": true,
+      "name": "SVGZoomAndPan", "noInterfaceObject": true,
       "constants": [
         { "name": "SVG_ZOOMANDPAN_DISABLE", "type": "unsigned short", "value": "1" },
         { "name": "SVG_ZOOMANDPAN_MAGNIFY", "type": "unsigned short", "value": "2" },
@@ -10750,7 +10750,7 @@
         { "name": "tag", "type": "DOMString", "readonly": true }
       ]
     }, {
-      "name": "SyncManager", "extends": "Object",
+      "name": "SyncManager",
       "exposed": ["Window", "Worker"],
       "operations": [
         { "name": "getTags", "type": "Promise<sequence<DOMString>>", "arguments": [] },
@@ -10772,7 +10772,7 @@
       "attributes": [{ "name": "wholeText", "type": "DOMString", "readonly": true }],
       "implements": ["Slotable", "GeometryUtils"]
     }, {
-      "name": "TextDecoder", "extends": "Object",
+      "name": "TextDecoder",
       "constructors": [{
         "arguments": [
           { "name": "label", "type": "DOMString", "optional": true, "default": "\"utf-8\"" },
@@ -10793,7 +10793,7 @@
         { "name": "ignoreBOM", "type": "boolean", "readonly": true }
       ]
     }, {
-      "name": "TextEncoder", "extends": "Object",
+      "name": "TextEncoder",
       "constructors": [{ "arguments": [] }],
       "exposed": ["Window", "Worker"],
       "operations": [{
@@ -10802,7 +10802,7 @@
       }],
       "attributes": [{ "name": "encoding", "type": "DOMString", "readonly": true }]
     }, {
-      "name": "TextMetrics", "extends": "Object",
+      "name": "TextMetrics",
       "attributes": [
         { "name": "actualBoundingBoxAscent", "type": "double", "readonly": true },
         { "name": "actualBoundingBoxDescent", "type": "double", "readonly": true },
@@ -10850,7 +10850,7 @@
         { "name": "track", "type": "TextTrack", "nullable": true, "readonly": true }
       ]
     }, {
-      "name": "TextTrackCueList", "extends": "Object",
+      "name": "TextTrackCueList",
       "anonymousOperations": [{
         "type": "TextTrackCue", "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -10882,7 +10882,7 @@
         { "name": "removetrack", "type": "TrackEvent" }
       ]
     }, {
-      "name": "TimeRanges", "extends": "Object",
+      "name": "TimeRanges",
       "operations": [{
         "name": "end", "type": "double",
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -10892,7 +10892,7 @@
       }],
       "attributes": [{ "name": "length", "type": "unsigned long", "readonly": true }]
     }, {
-      "name": "Touch", "extends": "Object",
+      "name": "Touch",
       "constructors": [{
         "arguments": [{ "name": "touchInitDict", "type": "TouchInit" }]
       }],
@@ -10931,7 +10931,7 @@
         { "name": "touches", "type": "TouchList", "readonly": true }
       ]
     }, {
-      "name": "TouchList", "extends": "Object",
+      "name": "TouchList",
       "operations": [{
         "name": "item", "type": "Touch", "nullable": true, "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -10960,7 +10960,7 @@
         { "name": "pseudoElement", "type": "CSSOMString", "readonly": true }
       ]
     }, {
-      "name": "TreeWalker", "extends": "Object",
+      "name": "TreeWalker",
       "exposed": ["Window"],
       "operations": [
         { "name": "firstChild", "type": "Node", "nullable": true, "arguments": [] },
@@ -10990,7 +10990,7 @@
         { "name": "view", "type": "Window", "nullable": true, "readonly": true }
       ]
     }, {
-      "name": "URL", "extends": "Object",
+      "name": "URL",
       "constructors": [{
         "arguments": [
           { "name": "url", "type": "USVString" },
@@ -11029,7 +11029,7 @@
         { "name": "username", "type": "USVString" }
       ]
     }, {
-      "name": "URLSearchParams", "extends": "Object",
+      "name": "URLSearchParams",
       "constructors": [{
         "arguments": [{ "name": "init", "type": "(sequence<sequence<USVString>> or record<USVString, USVString> or USVString)", "optional": true, "default": "\"\"" }]
       }],
@@ -11065,7 +11065,7 @@
         { "name": "sort", "type": "void", "arguments": [] }
       ]
     }, {
-      "name": "ValidityState", "extends": "Object",
+      "name": "ValidityState",
       "attributes": [
         { "name": "badInput", "type": "boolean", "readonly": true },
         { "name": "customError", "type": "boolean", "readonly": true },
@@ -11080,7 +11080,7 @@
         { "name": "valueMissing", "type": "boolean", "readonly": true }
       ]
     }, {
-      "name": "VideoPlaybackQuality", "extends": "Object",
+      "name": "VideoPlaybackQuality",
       "attributes": [
         { "name": "corruptedVideoFrames", "type": "unsigned long", "readonly": true },
         { "name": "creationTime", "type": "DOMHighResTimeStamp", "readonly": true },
@@ -11088,7 +11088,7 @@
         { "name": "totalVideoFrames", "type": "unsigned long", "readonly": true }
       ]
     }, {
-      "name": "VideoTrack", "extends": "Object",
+      "name": "VideoTrack",
       "attributes": [
         { "name": "id", "type": "DOMString", "readonly": true },
         { "name": "kind", "type": "DOMString", "readonly": true },
@@ -11127,7 +11127,7 @@
         { "name": "oversample", "type": "OverSampleType" }
       ]
     }, {
-      "name": "WEBGL_compressed_texture_s3tc", "extends": "Object", "noInterfaceObject": true,
+      "name": "WEBGL_compressed_texture_s3tc", "noInterfaceObject": true,
       "constants": [
         { "name": "COMPRESSED_RGB_S3TC_DXT1_EXT", "type": "GLenum", "value": "33776" },
         { "name": "COMPRESSED_RGBA_S3TC_DXT1_EXT", "type": "GLenum", "value": "33777" },
@@ -11135,16 +11135,16 @@
         { "name": "COMPRESSED_RGBA_S3TC_DXT5_EXT", "type": "GLenum", "value": "33779" }
       ]
     }, {
-      "name": "WEBGL_debug_renderer_info", "extends": "Object", "noInterfaceObject": true,
+      "name": "WEBGL_debug_renderer_info", "noInterfaceObject": true,
       "constants": [
         { "name": "UNMASKED_RENDERER_WEBGL", "type": "GLenum", "value": "37446" },
         { "name": "UNMASKED_VENDOR_WEBGL", "type": "GLenum", "value": "37445" }
       ]
     }, {
-      "name": "WEBGL_depth_texture", "extends": "Object", "noInterfaceObject": true,
+      "name": "WEBGL_depth_texture", "noInterfaceObject": true,
       "constants": [{ "name": "UNSIGNED_INT_24_8_WEBGL", "type": "GLenum", "value": "34042" }]
     }, {
-      "name": "WebGLActiveInfo", "extends": "Object",
+      "name": "WebGLActiveInfo",
       "attributes": [
         { "name": "name", "type": "DOMString", "readonly": true },
         { "name": "size", "type": "GLint", "readonly": true },
@@ -11163,14 +11163,14 @@
       "attributes": [{ "name": "statusMessage", "type": "DOMString", "readonly": true }]
     },
     { "name": "WebGLFramebuffer", "extends": "WebGLObject" },
-    { "name": "WebGLObject", "extends": "Object" },
+    { "name": "WebGLObject" },
     { "name": "WebGLProgram", "extends": "WebGLObject" },
     { "name": "WebGLRenderbuffer", "extends": "WebGLObject" },
     {
-      "name": "WebGLRenderingContext", "extends": "Object",
+      "name": "WebGLRenderingContext",
       "implements": ["WebGLRenderingContextBase"]
     }, {
-      "name": "WebGLRenderingContextBase", "extends": "Object", "noInterfaceObject": true,
+      "name": "WebGLRenderingContextBase", "noInterfaceObject": true,
       "constants": [
         { "name": "ACTIVE_ATTRIBUTES", "type": "GLenum", "value": "35721" },
         { "name": "ACTIVE_TEXTURE", "type": "GLenum", "value": "34016" },
@@ -12253,7 +12253,7 @@
     },
     { "name": "WebGLShader", "extends": "WebGLObject" },
     {
-      "name": "WebGLShaderPrecisionFormat", "extends": "Object",
+      "name": "WebGLShaderPrecisionFormat",
       "attributes": [
         { "name": "precision", "type": "GLint", "readonly": true },
         { "name": "rangeMax", "type": "GLint", "readonly": true },
@@ -12261,7 +12261,7 @@
       ]
     },
     { "name": "WebGLTexture", "extends": "WebGLObject" },
-    { "name": "WebGLUniformLocation", "extends": "Object" },
+    { "name": "WebGLUniformLocation" },
     {
       "name": "WebSocket", "extends": "EventTarget",
       "constructors": [{
@@ -12501,7 +12501,7 @@
         { "name": "visibilityState", "type": "VisibilityState", "readonly": true }
       ]
     }, {
-      "name": "WindowEventHandlers", "extends": "Object", "noInterfaceObject": true,
+      "name": "WindowEventHandlers", "noInterfaceObject": true,
       "attributes": [
         { "name": "onafterprint", "type": "EventHandler", "eventHandler": "afterprint" },
         { "name": "onbeforeprint", "type": "EventHandler", "eventHandler": "beforeprint" },
@@ -12539,10 +12539,10 @@
         { "name": "unload", "type": "Event" }
       ]
     }, {
-      "name": "WindowLocalStorage", "extends": "Object", "noInterfaceObject": true,
+      "name": "WindowLocalStorage", "noInterfaceObject": true,
       "attributes": [{ "name": "localStorage", "type": "Storage", "readonly": true }]
     }, {
-      "name": "WindowOrWorkerGlobalScope", "extends": "Object", "noInterfaceObject": true,
+      "name": "WindowOrWorkerGlobalScope", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "atob", "type": "DOMString",
@@ -12599,7 +12599,7 @@
         { "name": "origin", "type": "USVString", "readonly": true }
       ]
     }, {
-      "name": "WindowSessionStorage", "extends": "Object", "noInterfaceObject": true,
+      "name": "WindowSessionStorage", "noInterfaceObject": true,
       "attributes": [{ "name": "sessionStorage", "type": "Storage", "readonly": true }]
     }, {
       "name": "Worker", "extends": "EventTarget",
@@ -12654,7 +12654,7 @@
         { "name": "unhandledrejection", "type": "PromiseRejectionEvent" }
       ]
     }, {
-      "name": "WorkerLocation", "extends": "Object",
+      "name": "WorkerLocation",
       "exposed": ["Worker"],
       "attributes": [
         { "name": "hash", "type": "USVString", "readonly": true },
@@ -12668,12 +12668,12 @@
         { "name": "search", "type": "USVString", "readonly": true }
       ]
     }, {
-      "name": "WorkerNavigator", "extends": "Object",
+      "name": "WorkerNavigator",
       "exposed": ["Worker"],
       "implements": ["NavigatorID", "NavigatorLanguage", "NavigatorOnLine", "NavigatorConcurrentHardware"],
       "attributes": [{ "name": "serviceWorker", "type": "ServiceWorkerContainer", "readonly": true }]
     }, {
-      "name": "Worklet", "extends": "Object",
+      "name": "Worklet",
       "operations": [{
         "name": "addModule", "type": "Promise<void>",
         "arguments": [
@@ -12682,7 +12682,7 @@
         ]
       }]
     }, {
-      "name": "WorkletGlobalScope", "extends": "Object",
+      "name": "WorkletGlobalScope",
       "exposed": ["Worklet"]
     }, {
       "name": "XMLDocument", "extends": "Document",
@@ -12766,7 +12766,7 @@
       "name": "XMLHttpRequestUpload", "extends": "XMLHttpRequestEventTarget",
       "exposed": ["Window", "DedicatedWorker", "SharedWorker"]
     }, {
-      "name": "XMLSerializer", "extends": "Object",
+      "name": "XMLSerializer",
       "constructors": [{ "arguments": [] }],
       "operations": [{
         "name": "serializeToString", "type": "DOMString",
