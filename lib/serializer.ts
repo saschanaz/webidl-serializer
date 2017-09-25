@@ -417,7 +417,7 @@ function createCallbackFunction(callbackType: WebIDL2.CallbackType): IDLDefiniti
     const callback: IDLDefinitions.CallbackFunction = {
         name: callbackType.name,
         type: uncapQuestionMark(callbackType.idlType),
-        params: [...getArguments(callbackType.arguments)]
+        arguments: [...getArguments(callbackType.arguments)]
     };
     if (callbackType.idlType.nullable) {
         callback.nullable = true;

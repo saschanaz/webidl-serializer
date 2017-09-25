@@ -2,59 +2,59 @@
   "callbackFunctions": [
     {
       "name": "BlobCallback", "type": "void",
-      "params": [{ "name": "blob", "type": "Blob", "nullable": true }]
+      "arguments": [{ "name": "blob", "type": "Blob", "nullable": true }]
     }, {
       "name": "DecodeErrorCallback", "type": "void",
-      "params": [{ "name": "error", "type": "DOMException" }]
+      "arguments": [{ "name": "error", "type": "DOMException" }]
     }, {
       "name": "DecodeSuccessCallback", "type": "void",
-      "params": [{ "name": "decodedData", "type": "AudioBuffer" }]
+      "arguments": [{ "name": "decodedData", "type": "AudioBuffer" }]
     }, {
       "name": "EventHandlerNonNull", "type": "any",
-      "params": [{ "name": "event", "type": "Event" }]
+      "arguments": [{ "name": "event", "type": "Event" }]
     }, {
       "name": "FrameRequestCallback", "type": "void",
-      "params": [{ "name": "time", "type": "DOMHighResTimeStamp" }]
+      "arguments": [{ "name": "time", "type": "DOMHighResTimeStamp" }]
     }, {
       "name": "Function", "type": "any",
-      "params": [{ "name": "arguments", "type": "any", "variadic": true }]
+      "arguments": [{ "name": "arguments", "type": "any", "variadic": true }]
     }, {
       "name": "FunctionStringCallback", "type": "void",
-      "params": [{ "name": "data", "type": "DOMString" }]
+      "arguments": [{ "name": "data", "type": "DOMString" }]
     }, {
       "name": "GenerateAssertionCallback", "type": "Promise<RTCIdentityAssertionResult>",
-      "params": [
+      "arguments": [
         { "name": "contents", "type": "DOMString" },
         { "name": "origin", "type": "DOMString" },
         { "name": "options", "type": "RTCIdentityProviderOptions" }
       ]
     }, {
       "name": "IntersectionObserverCallback", "type": "void",
-      "params": [
+      "arguments": [
         { "name": "entries", "type": "sequence<IntersectionObserverEntry>" },
         { "name": "observer", "type": "IntersectionObserver" }
       ]
     }, {
       "name": "MutationCallback", "type": "void",
-      "params": [
+      "arguments": [
         { "name": "mutations", "type": "sequence<MutationRecord>" },
         { "name": "observer", "type": "MutationObserver" }
       ]
     }, {
       "name": "NavigatorUserMediaErrorCallback", "type": "void",
-      "params": [{ "name": "error", "type": "MediaStreamError" }]
+      "arguments": [{ "name": "error", "type": "MediaStreamError" }]
     }, {
       "name": "NavigatorUserMediaSuccessCallback", "type": "void",
-      "params": [{ "name": "stream", "type": "MediaStream" }]
+      "arguments": [{ "name": "stream", "type": "MediaStream" }]
     }, {
       "name": "NotificationPermissionCallback", "type": "void",
-      "params": [{ "name": "permission", "type": "NotificationPermission" }]
+      "arguments": [{ "name": "permission", "type": "NotificationPermission" }]
     }, {
       "name": "OnBeforeUnloadEventHandlerNonNull", "type": "DOMString", "nullable": true,
-      "params": [{ "name": "event", "type": "Event" }]
+      "arguments": [{ "name": "event", "type": "Event" }]
     }, {
       "name": "OnErrorEventHandlerNonNull", "type": "any",
-      "params": [
+      "arguments": [
         { "name": "event", "type": "(Event or DOMString)" },
         { "name": "source", "type": "DOMString", "optional": true },
         { "name": "lineno", "type": "unsigned long", "optional": true },
@@ -63,30 +63,30 @@
       ]
     }, {
       "name": "PerformanceObserverCallback", "type": "void",
-      "params": [
+      "arguments": [
         { "name": "entries", "type": "PerformanceObserverEntryList" },
         { "name": "observer", "type": "PerformanceObserver" }
       ]
     }, {
       "name": "PositionCallback", "type": "void",
-      "params": [{ "name": "position", "type": "Position" }]
+      "arguments": [{ "name": "position", "type": "Position" }]
     }, {
       "name": "PositionErrorCallback", "type": "void",
-      "params": [{ "name": "positionError", "type": "PositionError" }]
+      "arguments": [{ "name": "positionError", "type": "PositionError" }]
     }, {
       "name": "RTCPeerConnectionErrorCallback", "type": "void",
-      "params": [{ "name": "error", "type": "DOMException" }]
+      "arguments": [{ "name": "error", "type": "DOMException" }]
     }, {
       "name": "RTCSessionDescriptionCallback", "type": "void",
-      "params": [{ "name": "description", "type": "RTCSessionDescriptionInit" }]
+      "arguments": [{ "name": "description", "type": "RTCSessionDescriptionInit" }]
     }, {
       "name": "ValidateAssertionCallback", "type": "Promise<RTCIdentityValidationResult>",
-      "params": [
+      "arguments": [
         { "name": "assertion", "type": "DOMString" },
         { "name": "origin", "type": "DOMString" }
       ]
     },
-    { "name": "VoidFunction", "type": "void", "params": [] }
+    { "name": "VoidFunction", "type": "void", "arguments": [] }
   ],
   "callbackInterfaces": [{
     "name": "EventListener",

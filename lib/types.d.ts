@@ -37,7 +37,7 @@ export namespace IDLDefinitions {
         name: string;
         nullable?: boolean;
         type: string;
-        params: Argument[];
+        arguments: Argument[];
     }
 
     export interface Dictionary {
