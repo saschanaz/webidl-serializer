@@ -518,8 +518,6 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
     const operations: IDLDefinitions.Operation[] = [];
     const attributes: IDLDefinitions.Attribute[] = [];
 
-    // // TODO: separate member processor function
-    // // TODO: process extAttr for members
     for (const memberType of interfaceType.members) {
         if (memberType.type === "const") {
             constants.push(createConstant(memberType));
