@@ -48,10 +48,10 @@
         "hasIdlIndex": true
     },
     {
-        "url": "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom-view/Overview.bs",
+        "url": "https://cdn.rawgit.com/w3c/csswg-drafts/master/cssom-view-1/Overview.bs",
         "title": "CSSOM View Module",
         "idl": "local",
-        "comment": "The Editor's Draft has duplicated members in MouseEvent and MouseEventInit"
+        "comment": "The latest Working Draft/Editor's Draft have duplicated members in MouseEvent and MouseEventInit"
     },
     {
         "url": "http://www.w3.org/TR/2016/CR-orientation-event-20160818/",
@@ -97,7 +97,8 @@
     {
         "url": "http://www.w3.org/TR/gamepad/",
         "title": "Gamepad",
-        "idl": "local"
+        "idl": "local",
+        "comment": "The latest spec has an incorrect event constructor"
     },
     {
         "url": "http://www.w3.org/TR/geolocation-API/",
@@ -128,10 +129,9 @@
         "comment": "IndexedDB 1 does not exposes to workers"
     },
     {
-        "url": "https://wicg.github.io/IntersectionObserver/",
+        "url": "https://w3c.github.io/IntersectionObserver/",
         "title": "Intersection Observer",
-        "hasIdlIndex": true,
-        "idl": "local"
+        "hasIdlIndex": true
     },
     {
         "url": "https://w3c.github.io/mediacapture-main/",
@@ -148,9 +148,7 @@
     },
     {
         "url": "http://www.w3.org/TR/navigation-timing-2/",
-        "title": "Navigation Timing",
-        "idl": "local",
-        "comment": "May 2017 WD has incorrect exposure setting on partial interface Performance"
+        "title": "Navigation Timing"
     },
     {
         "url": "https://notifications.spec.whatwg.org/",
@@ -194,9 +192,7 @@
     {
         "url": "https://w3c.github.io/ServiceWorker/",
         "title": "Service Workers",
-        "hasIdlIndex": true,
-        "comment": "2015 Working Draft has no class on <pre>, and the Editor's Draft has redundant HTMLLinkElement partial interface.",
-        "idl": "local"
+        "hasIdlIndex": true
     },
     {
         "url": "https://streams.spec.whatwg.org/",
@@ -230,9 +226,7 @@
     },
     {
         "url": "https://webaudio.github.io/web-audio-api/",
-        "title": "Web Audio",
-        "idl": "local",
-        "comment": "The spec source currently does not use contiguous IDL."
+        "title": "Web Audio"
     },
     {
         "url": "https://wicg.github.io/BackgroundSync/spec/",

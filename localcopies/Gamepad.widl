@@ -27,7 +27,7 @@ partial interface Navigator {
     sequence<Gamepad?> getGamepads();
 };
 
-[Constructor(DOMString type, GamepadEventInit eventInitDict)]
+[Constructor(DOMString type, optional GamepadEventInit eventInitDict)]
 interface GamepadEvent : Event {
     [SameObject] readonly attribute Gamepad gamepad;
 };
