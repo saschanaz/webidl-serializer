@@ -130,11 +130,13 @@ function isWebIDLParseError(err: any): err is WebIDL2.WebIDLParseError {
 
 async function exportIDLs(result: FetchResult): Promise<IDLImportResult> {
     if (result.description.idl === "local" || result.description.idl === "raw") {
+        // IDL file is provided from local/remote, no need to manually get one
         return {
             snippets: importIDLSnippets([result.content], result), origin: result, idl: result.content
         }
     }
     else if (result.description.idl === "none") {
+        // The spec only has local supplements without actual IDL
         return {
             snippets: [], origin: result, idl: ""
         }
