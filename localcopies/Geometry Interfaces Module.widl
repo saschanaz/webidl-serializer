@@ -12,7 +12,7 @@ interface DOMPointReadOnly {
 
     DOMPoint matrixTransform(optional DOMMatrixInit matrix);
 
-    serializer = { attribute };
+    [Default] object toJSON();
 };
 
 [Constructor(optional unrestricted double x = 0, optional unrestricted double y = 0,
@@ -36,6 +36,7 @@ dictionary DOMPointInit {
     unrestricted double w = 1;
 };
 
+
 [Constructor(optional unrestricted double x = 0, optional unrestricted double y = 0,
              optional unrestricted double width = 0, optional unrestricted double height = 0),
  Exposed=(Window,Worker),
@@ -52,7 +53,7 @@ interface DOMRectReadOnly {
     readonly attribute unrestricted double bottom;
     readonly attribute unrestricted double left;
 
-    serializer = { attribute };
+    [Default] object toJSON();
 };
 
 [Constructor(optional unrestricted double x = 0, optional unrestricted double y = 0,
@@ -76,12 +77,14 @@ dictionary DOMRectInit {
     unrestricted double height = 0;
 };
 
+
 [NoInterfaceObject,
  LegacyArrayClass]
 interface DOMRectList {
     readonly attribute unsigned long length;
     getter DOMRect? item(unsigned long index);
 };
+
 
 [Constructor(optional DOMPointInit p1, optional DOMPointInit p2,
              optional DOMPointInit p3, optional DOMPointInit p4),
@@ -97,7 +100,7 @@ interface DOMQuad {
     [SameObject] readonly attribute DOMPoint p4;
     [NewObject] DOMRect getBounds();
 
-    serializer = { attribute };
+    [Default] object toJSON();
 };
 
 dictionary DOMQuadInit {
@@ -106,6 +109,7 @@ dictionary DOMQuadInit {
   DOMPointInit p3;
   DOMPointInit p4;
 };
+
 
 [Constructor(optional (DOMString or sequence<unrestricted double>) init),
  Exposed=(Window,Worker),
@@ -178,7 +182,7 @@ interface DOMMatrixReadOnly {
     [NewObject] Float64Array toFloat64Array();
 
     [Exposed=Window] stringifier;
-    serializer = { attribute };
+    [Default] object toJSON();
 };
 
 [Constructor(optional (DOMString or sequence<unrestricted double>) init),
@@ -275,4 +279,3 @@ dictionary DOMMatrixInit : DOMMatrix2DInit {
     unrestricted double m44 = 1;
     boolean is2D;
 };
-

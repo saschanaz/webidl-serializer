@@ -106,10 +106,9 @@
         "title": "Geolocation"
     },
     {
-        "url": "https://drafts.fxtf.org/geometry/",
+        "url": "https://rawgit.com/w3c/fxtf-drafts/master/geometry/Overview.bs",
         "title": "Geometry Interfaces Module",
-        "hasIdlIndex": true,
-        "comment": "2014 Candidate Recommendation incorrectly inserts default values on non-optional arguments"
+        "comment": "2014 Candidate Recommendation incorrectly inserts default values on non-optional arguments / Editor's Draft has obsolete serializer syntax"
     },
     {
         "url": "http://www.w3.org/TR/hr-time-2/",
@@ -166,8 +165,10 @@
         "hasIdlIndex": true
     },
     {
-        "url": "http://www.w3.org/TR/performance-timeline-2/",
-        "title": "Performance Timeline"
+        "url": "https://w3c.github.io/performance-timeline/",
+        "title": "Performance Timeline",
+        "hasIdlIndex": true,
+        "comment": "2016 Candidate Recommendation uses obsolete serializer syntax"
     },
     {
         "url": "http://www.w3.org/TR/pointerevents/",
@@ -178,8 +179,9 @@
         "title": "Push"
     },
     {
-        "url": "http://www.w3.org/TR/resource-timing-1/",
-        "title": "Resource Timing"
+        "url": "https://w3c.github.io/resource-timing/",
+        "title": "Resource Timing",
+        "comment": "2017 Candidate Recommendation uses obsolete serializer syntax"
     },
     {
         "url": "http://www.w3.org/TR/referrer-policy/",
