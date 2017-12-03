@@ -53,8 +53,9 @@
         "comment": "The Editor's Draft has duplicated members in MouseEvent and MouseEventInit"
     },
     {
-        "url": "http://www.w3.org/TR/orientation-event/",
-        "title": "Device Orientation"
+        "url": "http://www.w3.org/TR/2016/CR-orientation-event-20160818/",
+        "title": "Device Orientation",
+        "comment": "TODO: Use the latest spec instead of a snapshot when the spec is ready."
     },
     {
         "url": "https://dom.spec.whatwg.org/",
