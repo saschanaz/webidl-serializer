@@ -79,7 +79,7 @@ async function run() {
     console.log("Extracting and parsing WebIDL...");
 
     // Importing IDL texts
-    const extracts = await Promise.all(results.map(result => extractIDLs(result)));
+    const extracts = await Promise.all(results.map(result => extractIDL(result)));
     
     for (const extracted of extracts) {
         if (extracted.origin.description.idl === "local" || extracted.origin.description.idl === "none") {
@@ -115,93 +115,87 @@ function isWebIDLParseError(err: any): err is WebIDL2.WebIDLParseError {
     return Array.isArray(err.tokens);
 }
 
-async function extractIDLs(result: FetchResult): Promise<IDLExtractResult> {
+async function extractIDL(result: FetchResult): Promise<IDLExtractResult> {
     if (result.description.idl === "local" || result.description.idl === "raw") {
         // IDL file is provided from local/remote, no need to manually get one
         return {
-            snippets: parseIDLSnippets([result.content], result), origin: result, idl: result.content
-        }
+            snippets: [parseIDL(result.content, result)], origin: result, idl: result.content
+        };
     }
     else if (result.description.idl === "none") {
         // The spec only has local supplements without actual IDL
         return {
             snippets: [], origin: result, idl: ""
-        }
+        };
     }
 
     const win = await jsdomEnv(result.content);
     const idlElements = Array.from(win.document.querySelectorAll("pre.idl:not(.extract),code.idl-code")); /* .extract is used on an example IDL on specs including HTML and CSSOM */
     if (!idlElements.length) {
-        throw new Error(`No IDLs in ${result.description.url}`)
+        throw new Error(`No IDLs in ${result.description.url}`);
     }
     const idlTexts =
         result.description.hasIdlIndex ? [idlElements[idlElements.length - 1].textContent!] :
             idlElements.map(element => element.textContent!);
+    const idl = idlTexts.join('\n\n');
 
     win.close();
     return {
-        snippets: parseIDLSnippets(idlTexts, result), origin: result, idl: idlTexts.join('\n\n')
+        snippets: [parseIDL(idl, result)], origin: result, idl
     };
 }
 
-function parseIDLSnippets(idlTexts: string[], origin: FetchResult) {
-    const snippets: IDLSnippetContent[] = [];
+function parseIDL(item: string, origin: FetchResult) {
+    try {
+        const snippet = createIDLSnippetContentContainer();
+        const parsed = WebIDL2.parse(item);
+        const implementsMap = new Map<string, string[]>();
 
-    for (const item of idlTexts) {
-        try {
-            const snippet = createIDLSnippetContentContainer();
-            const parsed = WebIDL2.parse(item);
-            const implementsMap = new Map<string, string[]>();
-
-            for (const rootItem of parsed) {
-                /*
-                implements: if the IDL snippet has target interface or partial interface, then insert <implements> into it
-                if not, create a new partial interface that contains <implements>
-                */
-                if (rootItem.type === "implements") {
-                    if (!implementsMap.has(rootItem.target)) {
-                        implementsMap.set(rootItem.target, [rootItem.implements]);
-                    }
-                    else {
-                        implementsMap.get(rootItem.target)!.push(rootItem.implements);
-                    }
+        for (const rootItem of parsed) {
+            /*
+            implements: if the IDL snippet has target interface or partial interface, then insert <implements> into it
+            if not, create a new partial interface that contains <implements>
+            */
+            if (rootItem.type === "implements") {
+                if (!implementsMap.has(rootItem.target)) {
+                    implementsMap.set(rootItem.target, [rootItem.implements]);
                 }
                 else {
-                    insert(rootItem, snippet);
+                    implementsMap.get(rootItem.target)!.push(rootItem.implements);
                 }
-            }
-
-            for (const entry of implementsMap.entries()) {
-                let interfaceDef = snippet.interfaces.filter(item => item.name === entry[0])[0];
-                if (!interfaceDef) {
-                    interfaceDef = {
-                        name: entry[0],
-                        partial: true
-                    };
-                    snippet.interfaces.push(interfaceDef);
-                }
-                if (!interfaceDef.implements) {
-                    interfaceDef.implements = [];
-                }
-                interfaceDef.implements.push(...entry[1]);
-            }
-
-            snippets.push(snippet);
-        }
-        catch (err) {
-            if (isWebIDLParseError(err)) {
-                console.warn(`A syntax error has found in a WebIDL code line ${err.line} from ${origin.description.url}:\n${err.message}\n${err.input}\n`);
             }
             else {
-                err.message = `An error occured while converting WebIDL from ${origin.description.url}: ${err.message}`;
-                throw err;
+                insert(rootItem, snippet);
             }
         }
+
+        for (const entry of implementsMap.entries()) {
+            let interfaceDef = snippet.interfaces.filter(item => item.name === entry[0])[0];
+            if (!interfaceDef) {
+                interfaceDef = {
+                    name: entry[0],
+                    partial: true
+                };
+                snippet.interfaces.push(interfaceDef);
+            }
+            if (!interfaceDef.implements) {
+                interfaceDef.implements = [];
+            }
+            interfaceDef.implements.push(...entry[1]);
+        }
+
+        return snippet;
     }
-
-    return snippets;
+    catch (err) {
+        if (isWebIDLParseError(err)) {
+            err.message = `A syntax error has found in a WebIDL code line ${err.line} from ${origin.description.url}:\n${err.message}\n${err.input}\n`;
+        }
+        else {
+            err.message = `An error occured while converting WebIDL from ${origin.description.url}: ${err.message}`;
+        }
+        throw err;
+    }
 }
-
 
 function mergeIDLSnippets(snippets: IDLSnippetContent[]) {
     const result = createIDLSnippetContentContainer();
