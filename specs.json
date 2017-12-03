@@ -5,7 +5,8 @@
     },
     {
         "url": "http://www.w3.org/TR/clipboard-apis/",
-        "title": "Clipboard"
+        "title": "Clipboard",
+        "hasIdlIndex": true
     },
     {
         "url": "https://raw.githubusercontent.com/whatwg/console/master/index.bs",
