@@ -1,8 +1,10 @@
+[SecureContext]
 partial interface ServiceWorkerRegistration {
     readonly attribute PushManager pushManager;
 };
 
-[Exposed=(Window,Worker)]
+[Exposed=(Window,Worker),
+ SecureContext]
 interface PushManager {
     [SameObject]
     static readonly attribute FrozenArray<DOMString> supportedContentEncodings;
@@ -17,22 +19,31 @@ dictionary PushSubscriptionOptionsInit {
     (BufferSource or DOMString)? applicationServerKey = null;
 };
 
-[Exposed=(Window,Worker)]
+[Exposed=(Window,Worker),
+ SecureContext]
 interface PushSubscriptionOptions {
     readonly attribute boolean      userVisibleOnly;
     [SameObject]
     readonly attribute ArrayBuffer? applicationServerKey;
 };
 
-[Exposed=(Window,Worker)]
+[Exposed=(Window,Worker),
+ SecureContext]
 interface PushSubscription {
     readonly attribute USVString               endpoint;
     readonly attribute DOMTimeStamp?           expirationTime;
     [SameObject]
     readonly attribute PushSubscriptionOptions options;
-    ArrayBuffer?     getKey(PushEncryptionKeyName name);
-    Promise<boolean> unsubscribe();
-    serializer;
+    ArrayBuffer?         getKey(PushEncryptionKeyName name);
+    Promise<boolean>     unsubscribe();
+
+    PushSubscriptionJSON toJSON();
+};
+
+dictionary PushSubscriptionJSON {
+    USVString                    endpoint;
+    DOMTimeStamp?                expirationTime;
+    record<DOMString, USVString> keys;
 };
 
 enum PushEncryptionKeyName {
@@ -40,7 +51,8 @@ enum PushEncryptionKeyName {
     "auth"
 };
 
-[Exposed=ServiceWorker]
+[Exposed=ServiceWorker,
+ SecureContext]
 interface PushMessageData {
     ArrayBuffer arrayBuffer();
     Blob        blob();
@@ -48,7 +60,8 @@ interface PushMessageData {
     USVString   text();
 };
 
-[Exposed=(Window,Worker)]
+[Exposed=ServiceWorker,
+ SecureContext]
 partial interface ServiceWorkerGlobalScope {
     attribute EventHandler onpush;
     attribute EventHandler onpushsubscriptionchange;
@@ -61,7 +74,8 @@ dictionary PushEventInit : ExtendableEventInit {
 };
 
 [Constructor(DOMString type, optional PushEventInit eventInitDict),
- Exposed=ServiceWorker]
+ Exposed=ServiceWorker,
+ SecureContext]
 interface PushEvent : ExtendableEvent {
     readonly attribute PushMessageData? data;
 };
@@ -72,7 +86,8 @@ dictionary PushSubscriptionChangeInit : ExtendableEventInit {
 };
 
 [Constructor(DOMString type, optional PushSubscriptionChangeInit eventInitDict),
- Exposed=ServiceWorker]
+ Exposed=ServiceWorker,
+ SecureContext]
 interface PushSubscriptionChangeEvent : ExtendableEvent {
     readonly attribute PushSubscription? newSubscription;
     readonly attribute PushSubscription? oldSubscription;

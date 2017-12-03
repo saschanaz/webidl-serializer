@@ -1,5 +1,6 @@
 [Constructor(sequence<PaymentMethodData> methodData, PaymentDetailsInit details, optional PaymentOptions options),
- SecureContext]
+ SecureContext,
+ Exposed=Window]
 interface PaymentRequest : EventTarget {
     Promise<PaymentResponse> show();
     Promise<void>            abort();
@@ -15,12 +16,13 @@ interface PaymentRequest : EventTarget {
              attribute EventHandler         onshippingoptionchange;
 };
 dictionary PaymentMethodData {
-    required sequence<DOMString> supportedMethods;
-             object              data;
+    required DOMString supportedMethods;
+             object    data;
 };
 dictionary PaymentCurrencyAmount {
     required DOMString currency;
     required DOMString value;
+    // Note: currencySystem is "at risk" of being removed!
              DOMString currencySystem = "urn:iso:std:iso:4217";
 };
 dictionary PaymentDetailsBase {
@@ -37,7 +39,7 @@ dictionary PaymentDetailsUpdate : PaymentDetailsBase {
     PaymentItem total;
 };
 dictionary PaymentDetailsModifier {
-    required sequence<DOMString>   supportedMethods;
+    required DOMString             supportedMethods;
              PaymentItem           total;
              sequence<PaymentItem> additionalDisplayItems;
              object                data;
@@ -59,9 +61,10 @@ dictionary PaymentItem {
     required PaymentCurrencyAmount amount;
              boolean               pending = false;
 };
-[SecureContext]
+[SecureContext,
+ Exposed=Window]
 interface PaymentAddress {
-    serializer = {attribute};
+    [Default] object toJSON();
     readonly attribute DOMString              country;
     readonly attribute FrozenArray<DOMString> addressLine;
     readonly attribute DOMString              region;
@@ -85,9 +88,10 @@ enum PaymentComplete {
     "success",
     "unknown"
 };
-[SecureContext]
+[SecureContext,
+ Exposed=Window]
 interface PaymentResponse {
-    serializer = {attribute};
+    [Default] object        toJSON();
 
     readonly attribute DOMString       requestId;
     readonly attribute DOMString       methodName;
@@ -101,7 +105,8 @@ interface PaymentResponse {
     Promise<void> complete(optional PaymentComplete result = "unknown");
 };
 [Constructor(DOMString type, optional PaymentRequestUpdateEventInit eventInitDict),
- SecureContext]
+ SecureContext,
+ Exposed=Window]
 interface PaymentRequestUpdateEvent : Event {
     void updateWith(Promise<PaymentDetailsUpdate> detailsPromise);
 };

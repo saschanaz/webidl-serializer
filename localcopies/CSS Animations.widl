@@ -1,4 +1,5 @@
-[Constructor(CSSOMString type, optional AnimationEventInit animationEventInitDict)]
+[Exposed=Window,
+ Constructor(CSSOMString type, optional AnimationEventInit animationEventInitDict)]
 interface AnimationEvent : Event {
   readonly attribute CSSOMString animationName;
   readonly attribute float elapsedTime;
@@ -15,11 +16,13 @@ partial interface CSSRule {
     const unsigned short KEYFRAME_RULE = 8;
 };
 
+[Exposed=Window]
 interface CSSKeyframeRule : CSSRule {
   attribute CSSOMString keyText;
   [SameObject, PutForwards=cssText] readonly attribute CSSStyleDeclaration style;
 };
 
+[Exposed=Window]
 interface CSSKeyframesRule : CSSRule {
            attribute CSSOMString name;
   readonly attribute CSSRuleList cssRules;

@@ -54,64 +54,6 @@ dictionary RTCOfferOptions : RTCOfferAnswerOptions {
 dictionary RTCAnswerOptions : RTCOfferAnswerOptions {
 };
 
-[Constructor(optional RTCConfiguration configuration)]
-interface RTCPeerConnection : EventTarget {
-    Promise<RTCSessionDescriptionInit> createOffer(optional RTCOfferOptions options);
-    Promise<RTCSessionDescriptionInit> createAnswer(optional RTCAnswerOptions options);
-    Promise<void>                      setLocalDescription(RTCSessionDescriptionInit description);
-    readonly attribute RTCSessionDescription? localDescription;
-    readonly attribute RTCSessionDescription? currentLocalDescription;
-    readonly attribute RTCSessionDescription? pendingLocalDescription;
-    Promise<void>                      setRemoteDescription(RTCSessionDescriptionInit description);
-    readonly attribute RTCSessionDescription? remoteDescription;
-    readonly attribute RTCSessionDescription? currentRemoteDescription;
-    readonly attribute RTCSessionDescription? pendingRemoteDescription;
-    Promise<void>                      addIceCandidate((RTCIceCandidateInit or RTCIceCandidate) candidate);
-    readonly attribute RTCSignalingState      signalingState;
-    readonly attribute RTCIceGatheringState   iceGatheringState;
-    readonly attribute RTCIceConnectionState  iceConnectionState;
-    readonly attribute RTCPeerConnectionState connectionState;
-    readonly attribute boolean?               canTrickleIceCandidates;
-    static sequence<RTCIceServer>      getDefaultIceServers();
-    RTCConfiguration                   getConfiguration();
-    void                               setConfiguration(RTCConfiguration configuration);
-    void                               close();
-             attribute EventHandler           onnegotiationneeded;
-             attribute EventHandler           onicecandidate;
-             attribute EventHandler           onicecandidateerror;
-             attribute EventHandler           onsignalingstatechange;
-             attribute EventHandler           oniceconnectionstatechange;
-             attribute EventHandler           onicegatheringstatechange;
-             attribute EventHandler           onconnectionstatechange;
-             attribute EventHandler           onfingerprintfailure;
-};
-
-partial interface RTCPeerConnection {
-    Promise<void> createOffer(RTCSessionDescriptionCallback successCallback,
-                              RTCPeerConnectionErrorCallback failureCallback,
-                              optional RTCOfferOptions options);
-    Promise<void> setLocalDescription(RTCSessionDescriptionInit description,
-                                      VoidFunction successCallback,
-                                      RTCPeerConnectionErrorCallback failureCallback);
-    Promise<void> createAnswer(RTCSessionDescriptionCallback successCallback,
-                               RTCPeerConnectionErrorCallback failureCallback);
-    Promise<void> setRemoteDescription(RTCSessionDescriptionInit description,
-                                       VoidFunction successCallback,
-                                       RTCPeerConnectionErrorCallback failureCallback);
-    Promise<void> addIceCandidate((RTCIceCandidateInit or RTCIceCandidate) candidate,
-                                  VoidFunction successCallback,
-                                  RTCPeerConnectionErrorCallback failureCallback);
-};
-
-callback RTCPeerConnectionErrorCallback = void (DOMException error);
-
-callback RTCSessionDescriptionCallback = void (RTCSessionDescriptionInit description);
-
-partial dictionary RTCOfferOptions {
-    boolean offerToReceiveAudio;
-    boolean offerToReceiveVideo;
-};
-
 enum RTCSignalingState {
     "stable",
     "have-local-offer",
@@ -146,6 +88,64 @@ enum RTCIceConnectionState {
     "closed"
 };
 
+[Constructor(optional RTCConfiguration configuration),
+ Exposed=Window]
+interface RTCPeerConnection : EventTarget {
+    Promise<RTCSessionDescriptionInit> createOffer(optional RTCOfferOptions options);
+    Promise<RTCSessionDescriptionInit> createAnswer(optional RTCAnswerOptions options);
+    Promise<void>                      setLocalDescription(RTCSessionDescriptionInit description);
+    readonly attribute RTCSessionDescription? localDescription;
+    readonly attribute RTCSessionDescription? currentLocalDescription;
+    readonly attribute RTCSessionDescription? pendingLocalDescription;
+    Promise<void>                      setRemoteDescription(RTCSessionDescriptionInit description);
+    readonly attribute RTCSessionDescription? remoteDescription;
+    readonly attribute RTCSessionDescription? currentRemoteDescription;
+    readonly attribute RTCSessionDescription? pendingRemoteDescription;
+    Promise<void>                      addIceCandidate((RTCIceCandidateInit or RTCIceCandidate) candidate);
+    readonly attribute RTCSignalingState      signalingState;
+    readonly attribute RTCIceGatheringState   iceGatheringState;
+    readonly attribute RTCIceConnectionState  iceConnectionState;
+    readonly attribute RTCPeerConnectionState connectionState;
+    readonly attribute boolean?               canTrickleIceCandidates;
+    static sequence<RTCIceServer>      getDefaultIceServers();
+    RTCConfiguration                   getConfiguration();
+    void                               setConfiguration(RTCConfiguration configuration);
+    void                               close();
+             attribute EventHandler           onnegotiationneeded;
+             attribute EventHandler           onicecandidate;
+             attribute EventHandler           onicecandidateerror;
+             attribute EventHandler           onsignalingstatechange;
+             attribute EventHandler           oniceconnectionstatechange;
+             attribute EventHandler           onicegatheringstatechange;
+             attribute EventHandler           onconnectionstatechange;
+};
+
+partial interface RTCPeerConnection {
+    Promise<void> createOffer(RTCSessionDescriptionCallback successCallback,
+                              RTCPeerConnectionErrorCallback failureCallback,
+                              optional RTCOfferOptions options);
+    Promise<void> setLocalDescription(RTCSessionDescriptionInit description,
+                                      VoidFunction successCallback,
+                                      RTCPeerConnectionErrorCallback failureCallback);
+    Promise<void> createAnswer(RTCSessionDescriptionCallback successCallback,
+                               RTCPeerConnectionErrorCallback failureCallback);
+    Promise<void> setRemoteDescription(RTCSessionDescriptionInit description,
+                                       VoidFunction successCallback,
+                                       RTCPeerConnectionErrorCallback failureCallback);
+    Promise<void> addIceCandidate((RTCIceCandidateInit or RTCIceCandidate) candidate,
+                                  VoidFunction successCallback,
+                                  RTCPeerConnectionErrorCallback failureCallback);
+};
+
+callback RTCPeerConnectionErrorCallback = void (DOMException error);
+
+callback RTCSessionDescriptionCallback = void (RTCSessionDescriptionInit description);
+
+partial dictionary RTCOfferOptions {
+    boolean offerToReceiveAudio;
+    boolean offerToReceiveVideo;
+};
+
 enum RTCSdpType {
     "offer",
     "pranswer",
@@ -153,11 +153,12 @@ enum RTCSdpType {
     "rollback"
 };
 
-[Constructor(RTCSessionDescriptionInit descriptionInitDict)]
+[Constructor(RTCSessionDescriptionInit descriptionInitDict),
+ Exposed=Window]
 interface RTCSessionDescription {
     readonly attribute RTCSdpType type;
     readonly attribute DOMString  sdp;
-    serializer = {attribute};
+    [Default] object toJSON();
 };
 
 dictionary RTCSessionDescriptionInit {
@@ -165,12 +166,14 @@ dictionary RTCSessionDescriptionInit {
              DOMString  sdp = "";
 };
 
-[Constructor(RTCIceCandidateInit candidateInitDict)]
+[Constructor(optional RTCIceCandidateInit candidateInitDict),
+ Exposed=Window]
 interface RTCIceCandidate {
     readonly attribute DOMString               candidate;
     readonly attribute DOMString?              sdpMid;
     readonly attribute unsigned short?         sdpMLineIndex;
     readonly attribute DOMString?              foundation;
+    readonly attribute RTCIceComponent?        component;
     readonly attribute unsigned long?          priority;
     readonly attribute DOMString?              ip;
     readonly attribute RTCIceProtocol?         protocol;
@@ -179,15 +182,15 @@ interface RTCIceCandidate {
     readonly attribute RTCIceTcpCandidateType? tcpType;
     readonly attribute DOMString?              relatedAddress;
     readonly attribute unsigned short?         relatedPort;
-    readonly attribute DOMString?              ufrag;
-    serializer = {candidate, sdpMid, sdpMLineIndex, ufrag};
+    readonly attribute DOMString?              usernameFragment;
+    RTCIceCandidateInit toJSON();
 };
 
 dictionary RTCIceCandidateInit {
     DOMString       candidate = "";
     DOMString?      sdpMid = null;
     unsigned short? sdpMLineIndex = null;
-    DOMString       ufrag;
+    DOMString       usernameFragment;
 };
 
 enum RTCIceProtocol {
@@ -208,7 +211,8 @@ enum RTCIceCandidateType {
     "relay"
 };
 
-[Constructor(DOMString type, optional RTCPeerConnectionIceEventInit eventInitDict)]
+[Constructor(DOMString type, optional RTCPeerConnectionIceEventInit eventInitDict),
+ Exposed=Window]
 interface RTCPeerConnectionIceEvent : Event {
     readonly attribute RTCIceCandidate? candidate;
     readonly attribute DOMString?       url;
@@ -219,7 +223,8 @@ dictionary RTCPeerConnectionIceEventInit : EventInit {
     DOMString?       url;
 };
 
-[Constructor(DOMString type, RTCPeerConnectionIceErrorEventInit eventInitDict)]
+[Constructor(DOMString type, RTCPeerConnectionIceErrorEventInit eventInitDict),
+ Exposed=Window]
 interface RTCPeerConnectionIceErrorEvent : Event {
     readonly attribute DOMString      hostCandidate;
     readonly attribute DOMString      url;
@@ -250,11 +255,11 @@ dictionary RTCCertificateExpiration {
     DOMTimeStamp expires;
 };
 
+[Exposed=Window]
 interface RTCCertificate {
     readonly attribute DOMTimeStamp expires;
-    sequence<RTCDtlsFingerprint> getFingerprints();
-    // At risk due to lack of implementers' interest.
-    AlgorithmIdentifier          getAlgorithm();
+    static sequence<AlgorithmIdentifier> getSupportedAlgorithms();
+    sequence<RTCDtlsFingerprint>  getFingerprints();
 };
 
 partial interface RTCPeerConnection {
@@ -271,8 +276,8 @@ partial interface RTCPeerConnection {
 
 dictionary RTCRtpTransceiverInit {
     RTCRtpTransceiverDirection         direction = "sendrecv";
-    sequence<MediaStream>              streams;
-    sequence<RTCRtpEncodingParameters> sendEncodings;
+    sequence<MediaStream>              streams = [];
+    sequence<RTCRtpEncodingParameters> sendEncodings = [];
 };
 
 enum RTCRtpTransceiverDirection {
@@ -282,6 +287,7 @@ enum RTCRtpTransceiverDirection {
     "inactive"
 };
 
+[Exposed=Window]
 interface RTCRtpSender {
     readonly attribute MediaStreamTrack? track;
     readonly attribute RTCDtlsTransport? transport;
@@ -290,7 +296,7 @@ interface RTCRtpSender {
     static RTCRtpCapabilities getCapabilities(DOMString kind);
     Promise<void>           setParameters(optional RTCRtpParameters parameters);
     RTCRtpParameters        getParameters();
-    Promise<void>           replaceTrack(MediaStreamTrack withTrack);
+    Promise<void>           replaceTrack(MediaStreamTrack? withTrack);
     Promise<RTCStatsReport> getStats();
 };
 
@@ -300,21 +306,19 @@ dictionary RTCRtpParameters {
     sequence<RTCRtpHeaderExtensionParameters> headerExtensions;
     RTCRtcpParameters                         rtcp;
     sequence<RTCRtpCodecParameters>           codecs;
-    RTCDegradationPreference                  degradationPreference = "balanced";
+    RTCDegradationPreference                  degradationPreference;
 };
 
 dictionary RTCRtpEncodingParameters {
-    unsigned long       ssrc;
-    RTCRtpRtxParameters rtx;
-    RTCRtpFecParameters fec;
-    RTCDtxStatus        dtx;
-    boolean             active;
-    RTCPriorityType     priority;
-    unsigned long       ptime;
-    unsigned long       maxBitrate;
-    double              maxFramerate;
-    DOMString           rid;
-    double              scaleResolutionDownBy = 1;
+    octet           codecPayloadType;
+    RTCDtxStatus    dtx;
+    boolean         active = true;
+    RTCPriorityType priority = "low";
+    unsigned long   ptime;
+    unsigned long   maxBitrate;
+    double          maxFramerate;
+    DOMString       rid;
+    double          scaleResolutionDownBy;
 };
 
 enum RTCDtxStatus {
@@ -326,14 +330,6 @@ enum RTCDegradationPreference {
     "maintain-framerate",
     "maintain-resolution",
     "balanced"
-};
-
-dictionary RTCRtpRtxParameters {
-    unsigned long ssrc;
-};
-
-dictionary RTCRtpFecParameters {
-    unsigned long ssrc;
 };
 
 dictionary RTCRtcpParameters {
@@ -348,10 +344,10 @@ dictionary RTCRtpHeaderExtensionParameters {
 };
 
 dictionary RTCRtpCodecParameters {
-    unsigned short payloadType;
+    octet          payloadType;
     DOMString      mimeType;
     unsigned long  clockRate;
-    unsigned short channels = 1;
+    unsigned short channels;
     DOMString      sdpFmtpLine;
 };
 
@@ -363,7 +359,7 @@ dictionary RTCRtpCapabilities {
 dictionary RTCRtpCodecCapability {
     DOMString      mimeType;
     unsigned long  clockRate;
-    unsigned short channels = 1;
+    unsigned short channels;
     DOMString      sdpFmtpLine;
 };
 
@@ -371,6 +367,7 @@ dictionary RTCRtpHeaderExtensionCapability {
     DOMString uri;
 };
 
+[Exposed=Window]
 interface RTCRtpReceiver {
     readonly attribute MediaStreamTrack  track;
     readonly attribute RTCDtlsTransport? transport;
@@ -383,12 +380,14 @@ interface RTCRtpReceiver {
     Promise<RTCStatsReport>               getStats();
 };
 
+[Exposed=Window]
 interface RTCRtpContributingSource {
     readonly attribute DOMHighResTimeStamp timestamp;
     readonly attribute unsigned long       source;
     readonly attribute byte?               audioLevel;
 };
 
+[Exposed=Window]
 interface RTCRtpSynchronizationSource {
     readonly attribute DOMHighResTimeStamp timestamp;
     readonly attribute unsigned long       source;
@@ -396,6 +395,7 @@ interface RTCRtpSynchronizationSource {
     readonly attribute boolean?            voiceActivityFlag;
 };
 
+[Exposed=Window]
 interface RTCRtpTransceiver {
     readonly attribute DOMString?                  mid;
     [SameObject]
@@ -410,11 +410,13 @@ interface RTCRtpTransceiver {
     void setCodecPreferences(sequence<RTCRtpCodecCapability> codecs);
 };
 
-interface RTCDtlsTransport {
+[Exposed=Window]
+interface RTCDtlsTransport : EventTarget {
     readonly attribute RTCIceTransport       transport;
     readonly attribute RTCDtlsTransportState state;
     sequence<ArrayBuffer> getRemoteCertificates();
              attribute EventHandler          onstatechange;
+             attribute EventHandler          onerror;
 };
 
 enum RTCDtlsTransportState {
@@ -430,7 +432,8 @@ dictionary RTCDtlsFingerprint {
     DOMString value;
 };
 
-interface RTCIceTransport {
+[Exposed=Window]
+interface RTCIceTransport : EventTarget {
     readonly attribute RTCIceRole           role;
     readonly attribute RTCIceComponent      component;
     readonly attribute RTCIceTransportState state;
@@ -481,7 +484,8 @@ enum RTCIceComponent {
     "rtcp"
 };
 
-[Constructor(DOMString type, RTCTrackEventInit eventInitDict)]
+[Constructor(DOMString type, RTCTrackEventInit eventInitDict),
+ Exposed=Window]
 interface RTCTrackEvent : Event {
     readonly attribute RTCRtpReceiver           receiver;
     readonly attribute MediaStreamTrack         track;
@@ -504,11 +508,22 @@ partial interface RTCPeerConnection {
              attribute EventHandler      ondatachannel;
 };
 
+[Exposed=Window]
 interface RTCSctpTransport {
-    readonly attribute RTCDtlsTransport transport;
-    readonly attribute unsigned long    maxMessageSize;
+    readonly attribute RTCDtlsTransport      transport;
+    readonly attribute RTCSctpTransportState state;
+    readonly attribute unsigned long         maxMessageSize;
+             attribute EventHandler          onstatechange;
 };
 
+enum RTCSctpTransportState {
+    "new",
+    "connecting",
+    "connected",
+    "closed"
+};
+
+[Exposed=Window]
 interface RTCDataChannel : EventTarget {
     readonly attribute USVString           label;
     readonly attribute boolean             ordered;
@@ -552,7 +567,8 @@ enum RTCDataChannelState {
     "closed"
 };
 
-[Constructor(DOMString type, RTCDataChannelEventInit eventInitDict)]
+[Constructor(DOMString type, RTCDataChannelEventInit eventInitDict),
+ Exposed=Window]
 interface RTCDataChannelEvent : Event {
     readonly attribute RTCDataChannel channel;
 };
@@ -565,15 +581,18 @@ partial interface RTCRtpSender {
     readonly attribute RTCDTMFSender? dtmf;
 };
 
+[Exposed=Window]
 interface RTCDTMFSender : EventTarget {
     void insertDTMF(DOMString tones,
                     optional unsigned long duration = 100,
                     optional unsigned long interToneGap = 70);
              attribute EventHandler ontonechange;
+    readonly attribute boolean      canInsertDTMF;
     readonly attribute DOMString    toneBuffer;
 };
 
-[Constructor(DOMString type, RTCDTMFToneChangeEventInit eventInitDict)]
+[Constructor(DOMString type, RTCDTMFToneChangeEventInit eventInitDict),
+ Exposed=Window]
 interface RTCDTMFToneChangeEvent : Event {
     readonly attribute DOMString tone;
 };
@@ -586,17 +605,15 @@ partial interface RTCPeerConnection {
     Promise<RTCStatsReport> getStats(optional MediaStreamTrack? selector = null);
 };
 
+[Exposed=Window]
 interface RTCStatsReport {
     readonly maplike<DOMString, object>;
 };
 
 dictionary RTCStats {
-    DOMHighResTimeStamp timestamp;
-    RTCStatsType        type;
-    DOMString           id;
-};
-
-enum RTCStatsType {
+    required DOMHighResTimeStamp timestamp;
+    required RTCStatsType        type;
+    required DOMString           id;
 };
 
 [Global,
@@ -652,7 +669,8 @@ dictionary RTCIdentityProviderOptions {
     DOMString peerIdentity;
 };
 
-[Constructor(DOMString idp, DOMString name)]
+[Constructor(DOMString idp, DOMString name),
+ Exposed=Window]
 interface RTCIdentityAssertion {
     attribute DOMString idp;
     attribute DOMString name;
@@ -669,6 +687,8 @@ partial interface MediaStreamTrack {
 
 enum RTCErrorDetailType {
     "data-channel-failure",
+    "dtls-failure",
+    "fingerprint-failure",
     "idp-bad-script-failure",
     "idp-execution-failure",
     "idp-load-failure",
@@ -678,7 +698,9 @@ enum RTCErrorDetailType {
     "idp-token-expired",
     "idp-token-invalid",
     "sctp-failure",
-    "sdp-syntax-error"
+    "sdp-syntax-error",
+    "hardware-encoder-not-available",
+    "hardware-encoder-error"
 };
 
 [Exposed=Window,

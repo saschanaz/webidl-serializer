@@ -1,5 +1,6 @@
-[Constructor(optional sequence<BlobPart> blobParts, optional BlobPropertyBag options),
-Exposed=(Window,Worker)]
+[Constructor(optional sequence<BlobPart> blobParts,
+             optional BlobPropertyBag options),
+ Exposed=(Window,Worker), Serializable]
 interface Blob {
 
   readonly attribute unsigned long long size;
@@ -11,8 +12,11 @@ interface Blob {
             optional DOMString contentType);
 };
 
+enum EndingTypes { "transparent", "native" };
+
 dictionary BlobPropertyBag {
   DOMString type = "";
+  EndingTypes endings = "transparent";
 };
 
 typedef (BufferSource or Blob or USVString) BlobPart;
@@ -20,7 +24,7 @@ typedef (BufferSource or Blob or USVString) BlobPart;
 [Constructor(sequence<BlobPart> fileBits,
              USVString fileName,
              optional FilePropertyBag options),
-Exposed=(Window,Worker)]
+ Exposed=(Window,Worker), Serializable]
 interface File : Blob {
   readonly attribute DOMString name;
   readonly attribute long long lastModified;
@@ -30,7 +34,7 @@ dictionary FilePropertyBag : BlobPropertyBag {
   long long lastModified;
 };
 
-[Exposed=(Window,Worker)]
+[Exposed=(Window,Worker), Serializable]
 interface FileList {
   getter File? item(unsigned long index);
   readonly attribute unsigned long length;

@@ -1,17 +1,14 @@
 partial interface Navigator {
-    [SecureContext]
-    Promise<MediaKeySystemAccess> requestMediaKeySystemAccess(DOMString keySystem,
-                                                                                  sequence<MediaKeySystemConfiguration> supportedConfigurations);
+    [SecureContext] Promise<MediaKeySystemAccess> requestMediaKeySystemAccess(DOMString keySystem,
+                                                                              sequence<MediaKeySystemConfiguration> supportedConfigurations);
 };
 
-[SecureContext]
 enum MediaKeysRequirement {
     "required",
     "optional",
     "not-allowed"
 };
 
-[SecureContext]
 dictionary MediaKeySystemConfiguration {
     DOMString                               label = "";
     sequence<DOMString>                     initDataTypes = [];
@@ -22,7 +19,6 @@ dictionary MediaKeySystemConfiguration {
     sequence<DOMString>                     sessionTypes;
 };
 
-[SecureContext]
 dictionary MediaKeySystemMediaCapability {
     DOMString contentType = "";
     DOMString robustness = "";
@@ -35,7 +31,6 @@ interface MediaKeySystemAccess {
     Promise<MediaKeys>          createMediaKeys();
 };
 
-[SecureContext]
 enum MediaKeySessionType {
     "temporary",
     "persistent-license"
@@ -71,7 +66,6 @@ interface MediaKeyStatusMap {
     any     get(BufferSource keyId);
 };
 
-[SecureContext]
 enum MediaKeyStatus {
     "usable",
     "expired",
@@ -82,7 +76,6 @@ enum MediaKeyStatus {
     "internal-error"
 };
 
-[SecureContext]
 enum MediaKeyMessageType {
     "license-request",
     "license-renewal",
@@ -97,7 +90,6 @@ interface MediaKeyMessageEvent : Event {
     readonly attribute ArrayBuffer         message;
 };
 
-[SecureContext]
 dictionary MediaKeyMessageEventInit : EventInit {
     required MediaKeyMessageType messageType;
     required ArrayBuffer         message;
@@ -108,8 +100,7 @@ partial interface HTMLMediaElement {
     readonly attribute MediaKeys?   mediaKeys;
              attribute EventHandler onencrypted;
              attribute EventHandler onwaitingforkey;
-    [SecureContext]
-    Promise<void> setMediaKeys(MediaKeys? mediaKeys);
+    [SecureContext] Promise<void> setMediaKeys(MediaKeys? mediaKeys);
 };
 
 [Constructor(DOMString type, optional MediaEncryptedEventInit eventInitDict)]

@@ -1,5 +1,5 @@
 [Constructor(DOMString type, optional EventInit eventInitDict),
- Exposed=(Window,Worker)]
+ Exposed=(Window,Worker,AudioWorklet)]
 interface Event {
   readonly attribute DOMString type;
   readonly attribute EventTarget? target;
@@ -23,7 +23,7 @@ interface Event {
   readonly attribute boolean composed;
 
   [Unforgeable] readonly attribute boolean isTrusted;
-  readonly attribute DOMTimeStamp timeStamp;
+  readonly attribute DOMHighResTimeStamp timeStamp;
 
   void initEvent(DOMString type, optional boolean bubbles = false, optional boolean cancelable = false); // historical
 };
@@ -46,7 +46,8 @@ dictionary CustomEventInit : EventInit {
   any detail = null;
 };
 
-[Exposed=(Window,Worker)]
+[Constructor,
+ Exposed=(Window,Worker,AudioWorklet)]
 interface EventTarget {
   void addEventListener(DOMString type, EventListener? callback, optional (AddEventListenerOptions or boolean) options);
   void removeEventListener(DOMString type, EventListener? callback, optional (EventListenerOptions or boolean) options);
@@ -66,6 +67,19 @@ dictionary AddEventListenerOptions : EventListenerOptions {
   boolean once = false;
 };
 
+[Constructor,
+ Exposed=(Window,Worker)]
+interface AbortController {
+  [SameObject] readonly attribute AbortSignal signal;
+
+  void abort();
+};
+[Exposed=(Window,Worker)]
+interface AbortSignal : EventTarget {
+  readonly attribute boolean aborted;
+
+  attribute EventHandler onabort;
+};
 [NoInterfaceObject,
  Exposed=Window]
 interface NonElementParentNode {
@@ -142,7 +156,8 @@ interface HTMLCollection {
   getter Element? namedItem(DOMString name);
 };
 
-[Constructor(MutationCallback callback)]
+[Constructor(MutationCallback callback),
+ Exposed=Window]
 interface MutationObserver {
   void observe(Node target, optional MutationObserverInit options);
   void disconnect();
@@ -255,8 +270,8 @@ interface Document : Node {
   HTMLCollection getElementsByTagNameNS(DOMString? namespace, DOMString localName);
   HTMLCollection getElementsByClassName(DOMString classNames);
 
-  [NewObject] Element createElement(DOMString localName, optional ElementCreationOptions options);
-  [NewObject] Element createElementNS(DOMString? namespace, DOMString qualifiedName, optional ElementCreationOptions options);
+  [CEReactions, NewObject] Element createElement(DOMString localName, optional ElementCreationOptions options);
+  [CEReactions, NewObject] Element createElementNS(DOMString? namespace, DOMString qualifiedName, optional ElementCreationOptions options);
   [NewObject] DocumentFragment createDocumentFragment();
   [NewObject] Text createTextNode(DOMString data);
   [NewObject] CDATASection createCDATASection(DOMString data);
@@ -363,7 +378,8 @@ dictionary ShadowRootInit {
   required ShadowRootMode mode;
 };
 
-[Exposed=Window, LegacyUnenumerableNamedProperties]
+[Exposed=Window,
+ LegacyUnenumerableNamedProperties]
 interface NamedNodeMap {
   readonly attribute unsigned long length;
   getter Attr? item(unsigned long index);
@@ -513,6 +529,7 @@ callback interface NodeFilter {
   unsigned short acceptNode(Node node);
 };
 
+[Exposed=Window]
 interface DOMTokenList {
   readonly attribute unsigned long length;
   getter DOMString? item(unsigned long index);

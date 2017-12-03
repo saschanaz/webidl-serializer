@@ -3,16 +3,11 @@ typedef double DOMHighResTimeStamp;
 [Exposed=(Window,Worker)]
 interface Performance : EventTarget {
     DOMHighResTimeStamp now();
-    serializer = {attribute};
+    readonly attribute DOMHighResTimeStamp timeOrigin;
+    [Default] object              toJSON();
 };
 
-[NoInterfaceObject,
- Exposed=(Window,Worker)]
-interface GlobalPerformance {
+partial interface WindowOrWorkerGlobalScope {
     [Replaceable]
     readonly attribute Performance performance;
 };
-
-Window implements GlobalPerformance;
-
-WorkerGlobalScope implements GlobalPerformance;

@@ -1,9 +1,10 @@
 typedef USVString CSSOMString;
 
 
-[LegacyArrayClass]
+[Exposed=Window,
+ LegacyArrayClass]
 interface MediaList {
-  [TreatNullAs=EmptyString] stringifier attribute CSSOMString mediaText;
+  stringifier attribute [TreatNullAs=EmptyString] CSSOMString mediaText;
   readonly attribute unsigned long length;
   getter CSSOMString? item(unsigned long index);
   void appendMedium(CSSOMString medium);
@@ -11,6 +12,7 @@ interface MediaList {
 };
 
 
+[Exposed=Window]
 interface StyleSheet {
   readonly attribute CSSOMString type;
   readonly attribute USVString? href;
@@ -22,6 +24,7 @@ interface StyleSheet {
 };
 
 
+[Exposed=Window]
 interface CSSStyleSheet : StyleSheet {
   readonly attribute CSSRule? ownerRule;
   [SameObject] readonly attribute CSSRuleList cssRules;
@@ -30,7 +33,8 @@ interface CSSStyleSheet : StyleSheet {
 };
 
 
-[LegacyArrayClass]
+[Exposed=Window,
+ LegacyArrayClass]
 interface StyleSheetList {
   getter StyleSheet? item(unsigned long index);
   readonly attribute unsigned long length;
@@ -42,7 +46,8 @@ partial interface Document {
 };
 
 
-[NoInterfaceObject]
+[Exposed=Window,
+ NoInterfaceObject]
 interface LinkStyle {
   readonly attribute StyleSheet? sheet;
 };
@@ -50,13 +55,15 @@ interface LinkStyle {
 
 ProcessingInstruction implements LinkStyle;
 
-[LegacyArrayClass]
+[Exposed=Window,
+ LegacyArrayClass]
 interface CSSRuleList {
   getter CSSRule? item(unsigned long index);
   readonly attribute unsigned long length;
 };
 
 
+[Exposed=Window]
 interface CSSRule {
   const unsigned short STYLE_RULE = 1;
   const unsigned short CHARSET_RULE = 2; // historical
@@ -73,12 +80,14 @@ interface CSSRule {
 };
 
 
+[Exposed=Window]
 interface CSSStyleRule : CSSRule {
   attribute CSSOMString selectorText;
   [SameObject, PutForwards=cssText] readonly attribute CSSStyleDeclaration style;
 };
 
 
+[Exposed=Window]
 interface CSSImportRule : CSSRule {
   readonly attribute USVString href;
   [SameObject, PutForwards=mediaText] readonly attribute MediaList media;
@@ -86,6 +95,7 @@ interface CSSImportRule : CSSRule {
 };
 
 
+[Exposed=Window]
 interface CSSGroupingRule : CSSRule {
   [SameObject] readonly attribute CSSRuleList cssRules;
   unsigned long insertRule(CSSOMString rule, optional unsigned long index = 0);
@@ -93,24 +103,28 @@ interface CSSGroupingRule : CSSRule {
 };
 
 
+[Exposed=Window]
 interface CSSPageRule : CSSGroupingRule {
            attribute CSSOMString selectorText;
   [SameObject, PutForwards=cssText] readonly attribute CSSStyleDeclaration style;
 };
 
 
+[Exposed=Window]
 interface CSSMarginRule : CSSRule {
   readonly attribute CSSOMString name;
   [SameObject, PutForwards=cssText] readonly attribute CSSStyleDeclaration style;
 };
 
 
+[Exposed=Window]
 interface CSSNamespaceRule : CSSRule {
   readonly attribute CSSOMString namespaceURI;
   readonly attribute CSSOMString prefix;
 };
 
 
+[Exposed=Window]
 interface CSSStyleDeclaration {
   [CEReactions] attribute CSSOMString cssText;
   readonly attribute unsigned long length;
@@ -122,11 +136,12 @@ interface CSSStyleDeclaration {
   [CEReactions] void setPropertyPriority(CSSOMString property, [TreatNullAs=EmptyString] CSSOMString priority);
   [CEReactions] CSSOMString removeProperty(CSSOMString property);
   readonly attribute CSSRule? parentRule;
-  [CEReactions, TreatNullAs=EmptyString] attribute CSSOMString cssFloat;
+  [CEReactions] attribute [TreatNullAs=EmptyString] CSSOMString cssFloat;
 };
 
 
-[NoInterfaceObject]
+[Exposed=Window,
+ NoInterfaceObject]
 interface ElementCSSInlineStyle {
   [SameObject, PutForwards=cssText] readonly attribute CSSStyleDeclaration style;
 };
@@ -143,6 +158,7 @@ partial interface Window {
 };
 
 
+[Exposed=Window]
 interface CSS {
   static CSSOMString escape(CSSOMString ident);
 };

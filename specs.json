@@ -26,7 +26,8 @@
         "url": "https://drafts.csswg.org/css-conditional-3/",
         "title": "CSS Conditional Rules Module",
         "hasIdlIndex": true,
-        "comment": "2013 Working Draft incorrectly omits semicolons after interfaces."
+        "comment": "2013 Working Draft incorrectly omits semicolons after interfaces / The latest draft incorrectly omits a closing bracket",
+        "idl": "local"
     },
     {
         "url": "http://www.w3.org/TR/css-masking-1/",
