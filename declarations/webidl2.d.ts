@@ -124,7 +124,7 @@
         /** The enum's name. */
         name: string;
         /** An array of values (strings). */
-        values: string[];
+        values: { type: "string", value: string }[];
         /** A list of extended attributes. */
         extAttrs: ExtendedAttributes[];
     }
@@ -303,12 +303,12 @@
     interface SingularDeclarationMemberType extends DeclarationMemberTypeBase {
         type: "legacyiterable" | "setlike";
         /** An IDL Type representing the declared type arguments. */
-        idlType: IDLTypeDescription;
+        idlType: IDLTypeDescription[];
     }
 
     interface IterableDeclarationMemberType extends DeclarationMemberTypeBase {
         type: "iterable";
-        idlType: IDLTypeDescription | IDLTypeDescription[];
+        idlType: IDLTypeDescription[];
     }
 
     interface MaplikeDeclarationMemberType extends DeclarationMemberTypeBase {

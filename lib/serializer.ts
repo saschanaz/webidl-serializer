@@ -503,7 +503,7 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
     }
 
     function createIterableDeclarationMember(declarationMemberType: WebIDL2.IterableDeclarationMemberType) {
-        if (Array.isArray(declarationMemberType.idlType)) {
+        if (declarationMemberType.idlType.length > 1) {
             // key, value
             return {
                 keytype: declarationMemberType.idlType[0].origin.trim(),
@@ -513,7 +513,7 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
         else {
             // value only
             return {
-                type: declarationMemberType.idlType.origin.trim()
+                type: declarationMemberType.idlType[0].origin.trim()
             }
         }
         // TODO: extAttr
@@ -523,7 +523,7 @@ function createInterface(interfaceType: WebIDL2.InterfaceType) {
 function createEnum(enumType: WebIDL2.EnumType): IDLDefinitions.Enum {
     return {
         name: enumType.name,
-        values: enumType.values
+        values: enumType.values.map(value => value.value)
     };
 }
 

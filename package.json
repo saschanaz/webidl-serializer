@@ -19,7 +19,7 @@
     "json-compactline": "^1.2.1",
     "mz": "^2.6.0",
     "node-fetch": "^1.5.3",
-    "webidl2": "git+https://github.com/SaschaNaz/webidl2.js.git#v0.3.0",
+    "webidl2": "git+https://github.com/SaschaNaz/webidl2.js.git#v0.3.2",
     "yargs": "^9.0.1"
   },
   "devDependencies": {
