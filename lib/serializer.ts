@@ -15,7 +15,10 @@ import nameSorter from "./namesort.js";
 
 const unionLineBreakRegex = / or[\s]*/g;
 
-run().catch(err => console.error(err));
+run().catch(err => {
+    console.error(err);
+    process.exit(1);
+});
 
 async function run() {
     console.log("Loading spec list...");
@@ -55,7 +58,7 @@ async function run() {
 
         const response = await fetch(description.url);
         if (!response.ok) {
-            throw new Error(`Fetching failed: HTTP ${response.status} ${response.statusText}`);
+            throw new Error(`Fetching ${description.url} failed: HTTP ${response.status} ${response.statusText}`);
         }
         const result: FetchResult = {
             description,
