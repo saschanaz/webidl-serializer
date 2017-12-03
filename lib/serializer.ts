@@ -8,7 +8,7 @@ import prettifyXml = require("prettify-xml");
 import * as mz from "mz/fs";
 import * as yargs from "yargs";
 import stringify from "json-compactline";
-import { ImportRemoteDescription, IDLImportResult, IDLSnippetContent, FetchResult, MSEdgeIgnore, IDLDefinitions } from "./types";
+import { IDLProviderDescription, IDLExtractResult, IDLSnippetContent, FetchResult, MSEdgeIgnore, IDLDefinitions } from "./types";
 import * as supplements from "./supplements.js";
 import * as merger from "./partial-type-merger.js";
 import nameSorter from "./namesort.js";
@@ -22,25 +22,25 @@ run().catch(err => {
 
 async function run() {
     console.log("Loading spec list...");
-    const exportList: ImportRemoteDescription[] = JSON.parse(await mz.readFile("specs.json", "utf8"));
+    const providerList: IDLProviderDescription[] = JSON.parse(await mz.readFile("specs.json", "utf8"));
 
     const argv = yargs.array("pick").argv;
     if (argv._[0] === "local") {
-        for (const exportInfo of exportList) {
+        for (const provider of providerList) {
             // use remote copy only when specified
-            if (exportInfo.idl !== "none") {
-                exportInfo.idl = "local";
+            if (provider.idl !== "none") {
+                provider.idl = "local";
             }
         }
     }
     if (argv.pick) {
-        const list = exportList.filter(item => (argv.pick as string[]).includes(item.title));
-        exportList.length = 0;
-        exportList.push(...list);
+        const list = providerList.filter(item => (argv.pick as string[]).includes(item.title));
+        providerList.length = 0;
+        providerList.push(...list);
     }
 
     console.log("Fetching from web...");
-    const results = await Promise.all(exportList.map(async (description): Promise<FetchResult> => {
+    const results = await Promise.all(providerList.map(async (description): Promise<FetchResult> => {
         if (description.idl === "local") {
             const result: FetchResult = {
                 description,
@@ -76,49 +76,36 @@ async function run() {
         await mz.mkdir("built/partial");
     }
 
-    console.log("Exporting and parsing WebIDL...");
+    console.log("Extracting and parsing WebIDL...");
 
-    // Exporting IDL texts
-    const exports = await Promise.all(results.map(result => exportIDLs(result)));
-    for (const exported of exports) {
-        if (exported.origin.description.idl === "local" || exported.origin.description.idl === "none") {
+    // Importing IDL texts
+    const extracts = await Promise.all(results.map(result => extractIDLs(result)));
+    
+    for (const extracted of extracts) {
+        if (extracted.origin.description.idl === "local" || extracted.origin.description.idl === "none") {
             continue;
         }
-        await mz.writeFile(`localcopies/${exported.origin.description.title}.widl`, exported.idl);
+        await mz.writeFile(`localcopies/${extracted.origin.description.title}.widl`, extracted.idl);
     }
-
-    // if (!argv.pick) {
-    //     // Loads event information from browser.webidl.xml and create interfaces for each event target
-    //     console.log("Loading event information from MSEdge data...");
-    //     const msedgeEventDocument = new DOMParser().parseFromString(await mz.readFile("supplements/browser.webidl.xml", "utf8"), "text/xml");
-    //     const msedgeIgnore: MSEdgeIgnore = JSON.parse(await mz.readFile("msedge-ignore.json", "utf8"));
-    //     const msedgeEventHandlers = exportEventHandlers(msedgeEventDocument, msedgeIgnore);
-    //     const msedgeEventPropertyMap = exportEventPropertyMap(msedgeEventDocument);
-    //     transferEventInformation(exports, msedgeEventPropertyMap);
-    //     exports.push(msedgeEventHandlers);
-    // }
-    // else {
-    //     console.log("Skipped MSEdge information merging.")
-    // }
 
     console.log("Loading supplements...");
-    for (const exportResult of exports) {
-        supplements.apply(exportResult);
+    for (const extractResult of extracts) {
+        supplements.apply(extractResult);
     }
 
-    for (const exported of exports) {
-        const path = `built/partial/${exported.origin.description.title}.webidl.json`;
-        await mz.writeFile(path, stringify(mergeIDLSnippets(exported.snippets)));
+    for (const extracted of extracts) {
+        const path = `built/partial/${extracted.origin.description.title}.webidl.json`;
+        await mz.writeFile(path, stringify(mergeIDLSnippets(extracted.snippets)));
         console.log(`Writing as ${path}`);
     }
     console.log("Conversion as merged one as browser.webidl.json");
-    await mz.writeFile("built/browser.webidl.json", stringify(mergeIDLSnippetsBatch(exports)));
+    await mz.writeFile("built/browser.webidl.json", stringify(mergeIDLSnippetsBatch(extracts)));
     console.log("Finished 100%");
 }
 
-function mergeIDLSnippetsBatch(exports: IDLImportResult[]) {
+function mergeIDLSnippetsBatch(extracts: IDLExtractResult[]) {
     const snippets: IDLSnippetContent[] = [];
-    for (const item of exports) {
+    for (const item of extracts) {
         snippets.push(...item.snippets);
     }
     return mergeIDLSnippets(snippets);
@@ -128,11 +115,11 @@ function isWebIDLParseError(err: any): err is WebIDL2.WebIDLParseError {
     return Array.isArray(err.tokens);
 }
 
-async function exportIDLs(result: FetchResult): Promise<IDLImportResult> {
+async function extractIDLs(result: FetchResult): Promise<IDLExtractResult> {
     if (result.description.idl === "local" || result.description.idl === "raw") {
         // IDL file is provided from local/remote, no need to manually get one
         return {
-            snippets: importIDLSnippets([result.content], result), origin: result, idl: result.content
+            snippets: parseIDLSnippets([result.content], result), origin: result, idl: result.content
         }
     }
     else if (result.description.idl === "none") {
@@ -153,11 +140,11 @@ async function exportIDLs(result: FetchResult): Promise<IDLImportResult> {
 
     win.close();
     return {
-        snippets: importIDLSnippets(idlTexts, result), origin: result, idl: idlTexts.join('\n\n')
+        snippets: parseIDLSnippets(idlTexts, result), origin: result, idl: idlTexts.join('\n\n')
     };
 }
 
-function importIDLSnippets(idlTexts: string[], origin: FetchResult) {
+function parseIDLSnippets(idlTexts: string[], origin: FetchResult) {
     const snippets: IDLSnippetContent[] = [];
 
     for (const item of idlTexts) {

@@ -1,4 +1,4 @@
-import { ImportRemoteDescription, IDLImportResult, IDLSnippetContent, FetchResult, IDLDefinitions } from "./types"
+import { IDLProviderDescription, IDLExtractResult, IDLSnippetContent, FetchResult, IDLDefinitions } from "./types"
 import nameSorter from "./namesort.js";
 
 export function mergePartialTypes(snippet: IDLSnippetContent) {

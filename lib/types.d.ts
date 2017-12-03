@@ -1,4 +1,4 @@
-export interface ImportRemoteDescription {
+export interface IDLProviderDescription {
     url: string;
     title: string;
     hasIdlIndex?: boolean;
@@ -6,11 +6,11 @@ export interface ImportRemoteDescription {
 }
 
 export interface FetchResult {
-    description: ImportRemoteDescription;
+    description: IDLProviderDescription;
     content: string;
 }
 
-export interface IDLImportResult {
+export interface IDLExtractResult {
     snippets: IDLSnippetContent[];
     origin: FetchResult;
     idl: string;
