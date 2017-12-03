@@ -191,12 +191,6 @@
         { "name": "playbackRate", "type": "float", "default": "1" }
       ]
     }, {
-      "name": "AudioContextInfo",
-      "members": [
-        { "name": "currentTime", "type": "double" },
-        { "name": "sampleRate", "type": "float" }
-      ]
-    }, {
       "name": "AudioContextOptions",
       "members": [
         { "name": "latencyHint", "type": "(AudioContextLatencyCategory or double)", "default": "\"interactive\"" },
@@ -213,9 +207,9 @@
       "name": "AudioParamDescriptor",
       "members": [
         { "name": "defaultValue", "type": "float", "default": "0" },
-        { "name": "maxValue", "type": "float" },
-        { "name": "minValue", "type": "float" },
-        { "name": "name", "type": "DOMString" }
+        { "name": "maxValue", "type": "float", "default": "3.4028235e+38" },
+        { "name": "minValue", "type": "float", "default": "-3.4028235e+38" },
+        { "name": "name", "type": "DOMString", "required": true }
       ]
     }, {
       "name": "AudioProcessingEventInit", "extends": "EventInit",
@@ -233,8 +227,10 @@
     }, {
       "name": "AudioWorkletNodeOptions", "extends": "AudioNodeOptions",
       "members": [
-        { "name": "numberOfInputs", "type": "unsigned long" },
-        { "name": "numberOfOutputs", "type": "unsigned long" }
+        { "name": "numberOfInputs", "type": "unsigned long", "default": "1" },
+        { "name": "numberOfOutputs", "type": "unsigned long", "default": "1" },
+        { "name": "outputChannelCount", "type": "sequence<unsigned long>" },
+        { "name": "parameterData", "type": "record<DOMString, double>" }
       ]
     }, {
       "name": "BiquadFilterOptions", "extends": "AudioNodeOptions",
@@ -247,20 +243,15 @@
       ]
     }, {
       "name": "BlobPropertyBag",
-      "members": [{ "name": "type", "type": "DOMString", "default": "\"\"" }]
+      "members": [
+        { "name": "endings", "type": "EndingTypes", "default": "\"transparent\"" },
+        { "name": "type", "type": "DOMString", "default": "\"\"" }
+      ]
     }, {
       "name": "BoxQuadOptions",
       "members": [
         { "name": "box", "type": "CSSBoxType", "default": "\"border\"" },
         { "name": "relativeTo", "type": "GeometryNode" }
-      ]
-    }, {
-      "name": "CacheBatchOperation",
-      "members": [
-        { "name": "options", "type": "CacheQueryOptions" },
-        { "name": "request", "type": "Request" },
-        { "name": "response", "type": "Response" },
-        { "name": "type", "type": "DOMString" }
       ]
     }, {
       "name": "CacheQueryOptions",
@@ -288,6 +279,9 @@
         { "name": "includeUncontrolled", "type": "boolean", "default": "false" },
         { "name": "type", "type": "ClientType", "default": "\"window\"" }
       ]
+    }, {
+      "name": "ClipboardEventInit", "extends": "EventInit",
+      "members": [{ "name": "clipboardData", "type": "DataTransfer", "nullable": true, "default": "null" }]
     }, {
       "name": "ClipboardEventInit", "extends": "EventInit",
       "members": [{ "name": "clipboardData", "type": "DataTransfer", "nullable": true, "default": "null" }]
@@ -391,7 +385,7 @@
         { "name": "gamma", "type": "double", "nullable": true, "default": "null" }
       ]
     }, {
-      "name": "DOMMatrixInit",
+      "name": "DOMMatrix2DInit",
       "members": [
         { "name": "a", "type": "unrestricted double" },
         { "name": "b", "type": "unrestricted double" },
@@ -399,21 +393,25 @@
         { "name": "d", "type": "unrestricted double" },
         { "name": "e", "type": "unrestricted double" },
         { "name": "f", "type": "unrestricted double" },
-        { "name": "is2D", "type": "boolean" },
         { "name": "m11", "type": "unrestricted double" },
         { "name": "m12", "type": "unrestricted double" },
-        { "name": "m13", "type": "unrestricted double", "default": "0" },
-        { "name": "m14", "type": "unrestricted double", "default": "0" },
         { "name": "m21", "type": "unrestricted double" },
         { "name": "m22", "type": "unrestricted double" },
+        { "name": "m41", "type": "unrestricted double" },
+        { "name": "m42", "type": "unrestricted double" }
+      ]
+    }, {
+      "name": "DOMMatrixInit", "extends": "DOMMatrix2DInit",
+      "members": [
+        { "name": "is2D", "type": "boolean" },
+        { "name": "m13", "type": "unrestricted double", "default": "0" },
+        { "name": "m14", "type": "unrestricted double", "default": "0" },
         { "name": "m23", "type": "unrestricted double", "default": "0" },
         { "name": "m24", "type": "unrestricted double", "default": "0" },
         { "name": "m31", "type": "unrestricted double", "default": "0" },
         { "name": "m32", "type": "unrestricted double", "default": "0" },
         { "name": "m33", "type": "unrestricted double", "default": "1" },
         { "name": "m34", "type": "unrestricted double", "default": "0" },
-        { "name": "m41", "type": "unrestricted double" },
-        { "name": "m42", "type": "unrestricted double" },
         { "name": "m43", "type": "unrestricted double", "default": "0" },
         { "name": "m44", "type": "unrestricted double", "default": "1" }
       ]
@@ -547,24 +545,8 @@
       "name": "FocusEventInit", "extends": "UIEventInit",
       "members": [{ "name": "relatedTarget", "type": "EventTarget", "nullable": true, "default": "null" }]
     }, {
-      "name": "ForeignFetchEventInit", "extends": "ExtendableEventInit",
-      "members": [
-        { "name": "origin", "type": "USVString", "default": "\"null\"" },
-        { "name": "request", "type": "Request", "required": true }
-      ]
-    }, {
-      "name": "ForeignFetchOptions",
-      "members": [
-        { "name": "origins", "type": "sequence<USVString>", "required": true },
-        { "name": "scopes", "type": "sequence<USVString>", "required": true }
-      ]
-    }, {
-      "name": "ForeignFetchResponse",
-      "members": [
-        { "name": "headers", "type": "sequence<ByteString>" },
-        { "name": "origin", "type": "USVString" },
-        { "name": "response", "type": "Response", "required": true }
-      ]
+      "name": "FocusOptions",
+      "members": [{ "name": "preventScroll", "type": "boolean", "default": "false" }]
     }, {
       "name": "GainOptions", "extends": "AudioNodeOptions",
       "members": [{ "name": "gain", "type": "float", "default": "1" }]
@@ -765,7 +747,7 @@
       ]
     }, {
       "name": "MediaStreamTrackAudioSourceOptions",
-      "members": [{ "name": "mediaStreamTrack", "type": "AudioMediaStreamTrack", "required": true }]
+      "members": [{ "name": "mediaStreamTrack", "type": "MediaStreamTrack", "required": true }]
     }, {
       "name": "MediaStreamTrackEventInit", "extends": "EventInit",
       "members": [{ "name": "track", "type": "MediaStreamTrack", "required": true }]
@@ -773,6 +755,7 @@
       "name": "MediaTrackCapabilities",
       "members": [
         { "name": "aspectRatio", "type": "DoubleRange" },
+        { "name": "autoGainControl", "type": "sequence<boolean>" },
         { "name": "channelCount", "type": "LongRange" },
         { "name": "deviceId", "type": "DOMString" },
         { "name": "echoCancellation", "type": "sequence<boolean>" },
@@ -781,6 +764,7 @@
         { "name": "groupId", "type": "DOMString" },
         { "name": "height", "type": "LongRange" },
         { "name": "latency", "type": "DoubleRange" },
+        { "name": "noiseSuppression", "type": "sequence<boolean>" },
         { "name": "sampleRate", "type": "LongRange" },
         { "name": "sampleSize", "type": "LongRange" },
         { "name": "volume", "type": "DoubleRange" },
@@ -793,6 +777,7 @@
       "name": "MediaTrackConstraintSet",
       "members": [
         { "name": "aspectRatio", "type": "ConstrainDouble" },
+        { "name": "autoGainControl", "type": "ConstrainBoolean" },
         { "name": "channelCount", "type": "ConstrainLong" },
         { "name": "deviceId", "type": "ConstrainDOMString" },
         { "name": "echoCancellation", "type": "ConstrainBoolean" },
@@ -801,6 +786,7 @@
         { "name": "groupId", "type": "ConstrainDOMString" },
         { "name": "height", "type": "ConstrainLong" },
         { "name": "latency", "type": "ConstrainDouble" },
+        { "name": "noiseSuppression", "type": "ConstrainBoolean" },
         { "name": "sampleRate", "type": "ConstrainLong" },
         { "name": "sampleSize", "type": "ConstrainLong" },
         { "name": "volume", "type": "ConstrainDouble" },
@@ -810,6 +796,7 @@
       "name": "MediaTrackSettings",
       "members": [
         { "name": "aspectRatio", "type": "double" },
+        { "name": "autoGainControl", "type": "boolean" },
         { "name": "channelCount", "type": "long" },
         { "name": "deviceId", "type": "DOMString" },
         { "name": "echoCancellation", "type": "boolean" },
@@ -818,6 +805,7 @@
         { "name": "groupId", "type": "DOMString" },
         { "name": "height", "type": "long" },
         { "name": "latency", "type": "double" },
+        { "name": "noiseSuppression", "type": "boolean" },
         { "name": "sampleRate", "type": "long" },
         { "name": "sampleSize", "type": "long" },
         { "name": "volume", "type": "double" },
@@ -827,6 +815,7 @@
       "name": "MediaTrackSupportedConstraints",
       "members": [
         { "name": "aspectRatio", "type": "boolean", "default": "true" },
+        { "name": "autoGainControl", "type": "boolean", "default": "true" },
         { "name": "channelCount", "type": "boolean", "default": "true" },
         { "name": "deviceId", "type": "boolean", "default": "true" },
         { "name": "echoCancellation", "type": "boolean", "default": "true" },
@@ -835,6 +824,7 @@
         { "name": "groupId", "type": "boolean", "default": "true" },
         { "name": "height", "type": "boolean", "default": "true" },
         { "name": "latency", "type": "boolean", "default": "true" },
+        { "name": "noiseSuppression", "type": "boolean", "default": "true" },
         { "name": "sampleRate", "type": "boolean", "default": "true" },
         { "name": "sampleSize", "type": "boolean", "default": "true" },
         { "name": "volume", "type": "boolean", "default": "true" },
@@ -913,6 +903,13 @@
       "name": "OfflineAudioCompletionEventInit", "extends": "EventInit",
       "members": [{ "name": "renderedBuffer", "type": "AudioBuffer", "required": true }]
     }, {
+      "name": "OfflineAudioContextOptions",
+      "members": [
+        { "name": "length", "type": "unsigned long", "required": true },
+        { "name": "numberOfChannels", "type": "unsigned long", "default": "1" },
+        { "name": "sampleRate", "type": "float", "required": true }
+      ]
+    }, {
       "name": "OscillatorOptions", "extends": "AudioNodeOptions",
       "members": [
         { "name": "detune", "type": "float", "default": "0" },
@@ -969,7 +966,7 @@
       "members": [
         { "name": "additionalDisplayItems", "type": "sequence<PaymentItem>" },
         { "name": "data", "type": "object" },
-        { "name": "supportedMethods", "type": "sequence<DOMString>", "required": true },
+        { "name": "supportedMethods", "type": "DOMString", "required": true },
         { "name": "total", "type": "PaymentItem" }
       ]
     }, {
@@ -989,7 +986,7 @@
       "name": "PaymentMethodData",
       "members": [
         { "name": "data", "type": "object" },
-        { "name": "supportedMethods", "type": "sequence<DOMString>", "required": true }
+        { "name": "supportedMethods", "type": "DOMString", "required": true }
       ]
     }, {
       "name": "PaymentOptions",
@@ -1074,6 +1071,13 @@
         { "name": "oldSubscription", "type": "PushSubscription", "default": "null" }
       ]
     }, {
+      "name": "PushSubscriptionJSON",
+      "members": [
+        { "name": "endpoint", "type": "USVString" },
+        { "name": "expirationTime", "type": "DOMTimeStamp", "nullable": true },
+        { "name": "keys", "type": "record<DOMString, USVString>" }
+      ]
+    }, {
       "name": "PushSubscriptionOptionsInit",
       "members": [
         { "name": "applicationServerKey", "type": "(BufferSource or DOMString)", "nullable": true, "default": "null" },
@@ -1084,11 +1088,8 @@
       "members": [
         { "name": "scope", "type": "USVString" },
         { "name": "type", "type": "WorkerType", "default": "\"classic\"" },
-        { "name": "useCache", "type": "boolean", "default": "false" }
+        { "name": "updateViaCache", "type": "ServiceWorkerUpdateViaCache", "default": "\"imports\"" }
       ]
-    }, {
-      "name": "RelatedEventInit", "extends": "EventInit",
-      "members": [{ "name": "relatedTarget", "type": "EventTarget", "nullable": true, "default": "null" }]
     }, {
       "name": "RequestInit",
       "members": [
@@ -1103,6 +1104,7 @@
         { "name": "redirect", "type": "RequestRedirect" },
         { "name": "referrer", "type": "USVString" },
         { "name": "referrerPolicy", "type": "ReferrerPolicy" },
+        { "name": "signal", "type": "AbortSignal", "nullable": true },
         { "name": "window", "type": "any" }
       ]
     }, {
@@ -1224,7 +1226,7 @@
         { "name": "candidate", "type": "DOMString", "default": "\"\"" },
         { "name": "sdpMid", "type": "DOMString", "nullable": true, "default": "null" },
         { "name": "sdpMLineIndex", "type": "unsigned short", "nullable": true, "default": "null" },
-        { "name": "ufrag", "type": "DOMString" }
+        { "name": "usernameFragment", "type": "DOMString" }
       ]
     }, {
       "name": "RTCIceCandidatePair",
@@ -1426,7 +1428,7 @@
     }, {
       "name": "RTCRtpCodecCapability",
       "members": [
-        { "name": "channels", "type": "unsigned short", "default": "1" },
+        { "name": "channels", "type": "unsigned short" },
         { "name": "clockRate", "type": "unsigned long" },
         { "name": "mimeType", "type": "DOMString" },
         { "name": "sdpFmtpLine", "type": "DOMString" }
@@ -1434,30 +1436,25 @@
     }, {
       "name": "RTCRtpCodecParameters",
       "members": [
-        { "name": "channels", "type": "unsigned short", "default": "1" },
+        { "name": "channels", "type": "unsigned short" },
         { "name": "clockRate", "type": "unsigned long" },
         { "name": "mimeType", "type": "DOMString" },
-        { "name": "payloadType", "type": "unsigned short" },
+        { "name": "payloadType", "type": "octet" },
         { "name": "sdpFmtpLine", "type": "DOMString" }
       ]
     }, {
       "name": "RTCRtpEncodingParameters",
       "members": [
-        { "name": "active", "type": "boolean" },
+        { "name": "active", "type": "boolean", "default": "true" },
+        { "name": "codecPayloadType", "type": "octet" },
         { "name": "dtx", "type": "RTCDtxStatus" },
-        { "name": "fec", "type": "RTCRtpFecParameters" },
         { "name": "maxBitrate", "type": "unsigned long" },
         { "name": "maxFramerate", "type": "double" },
-        { "name": "priority", "type": "RTCPriorityType" },
+        { "name": "priority", "type": "RTCPriorityType", "default": "\"low\"" },
         { "name": "ptime", "type": "unsigned long" },
         { "name": "rid", "type": "DOMString" },
-        { "name": "rtx", "type": "RTCRtpRtxParameters" },
-        { "name": "scaleResolutionDownBy", "type": "double", "default": "1" },
-        { "name": "ssrc", "type": "unsigned long" }
+        { "name": "scaleResolutionDownBy", "type": "double" }
       ]
-    }, {
-      "name": "RTCRtpFecParameters",
-      "members": [{ "name": "ssrc", "type": "unsigned long" }]
     }, {
       "name": "RTCRtpHeaderExtensionCapability",
       "members": [{ "name": "uri", "type": "DOMString" }]
@@ -1472,15 +1469,12 @@
       "name": "RTCRtpParameters",
       "members": [
         { "name": "codecs", "type": "sequence<RTCRtpCodecParameters>" },
-        { "name": "degradationPreference", "type": "RTCDegradationPreference", "default": "\"balanced\"" },
+        { "name": "degradationPreference", "type": "RTCDegradationPreference" },
         { "name": "encodings", "type": "sequence<RTCRtpEncodingParameters>" },
         { "name": "headerExtensions", "type": "sequence<RTCRtpHeaderExtensionParameters>" },
         { "name": "rtcp", "type": "RTCRtcpParameters" },
         { "name": "transactionId", "type": "DOMString" }
       ]
-    }, {
-      "name": "RTCRtpRtxParameters",
-      "members": [{ "name": "ssrc", "type": "unsigned long" }]
     }, {
       "name": "RTCRTPStreamStats", "extends": "RTCStats",
       "members": [
@@ -1501,8 +1495,8 @@
       "name": "RTCRtpTransceiverInit",
       "members": [
         { "name": "direction", "type": "RTCRtpTransceiverDirection", "default": "\"sendrecv\"" },
-        { "name": "sendEncodings", "type": "sequence<RTCRtpEncodingParameters>" },
-        { "name": "streams", "type": "sequence<MediaStream>" }
+        { "name": "sendEncodings", "type": "sequence<RTCRtpEncodingParameters>", "default": "[]" },
+        { "name": "streams", "type": "sequence<MediaStream>", "default": "[]" }
       ]
     }, {
       "name": "RTCSessionDescriptionInit",
@@ -1513,9 +1507,9 @@
     }, {
       "name": "RTCStats",
       "members": [
-        { "name": "id", "type": "DOMString" },
-        { "name": "timestamp", "type": "DOMHighResTimeStamp" },
-        { "name": "type", "type": "RTCStatsType" }
+        { "name": "id", "type": "DOMString", "required": true },
+        { "name": "timestamp", "type": "DOMHighResTimeStamp", "required": true },
+        { "name": "type", "type": "RTCStatsType", "required": true }
       ]
     }, {
       "name": "RTCStats",
@@ -1681,312 +1675,331 @@
       "members": [{ "name": "credentials", "type": "RequestCredentials", "default": "\"omit\"" }]
     }
   ],
-  "enums": [
-    {
-      "name": "AppendMode",
-      "values": ["segments", "sequence"]
-    }, {
-      "name": "AudioContextLatencyCategory",
-      "values": ["balanced", "interactive", "playback"]
-    }, {
-      "name": "AudioContextState",
-      "values": ["suspended", "running", "closed"]
-    }, {
-      "name": "BinaryType",
-      "values": ["blob", "arraybuffer"]
-    }, {
-      "name": "BiquadFilterType",
-      "values": ["lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "peaking", "notch", "allpass"]
-    }, {
-      "name": "CanPlayTypeResult",
-      "values": ["", "maybe", "probably"]
-    }, {
-      "name": "CanvasDirection",
-      "values": ["ltr", "rtl", "inherit"]
-    }, {
-      "name": "CanvasFillRule",
-      "values": ["nonzero", "evenodd"]
-    }, {
-      "name": "CanvasLineCap",
-      "values": ["butt", "round", "square"]
-    }, {
-      "name": "CanvasLineJoin",
-      "values": ["round", "bevel", "miter"]
-    }, {
-      "name": "CanvasTextAlign",
-      "values": ["start", "end", "left", "right", "center"]
-    }, {
-      "name": "CanvasTextBaseline",
-      "values": ["top", "hanging", "middle", "alphabetic", "ideographic", "bottom"]
-    }, {
-      "name": "ChannelCountMode",
-      "values": ["max", "clamped-max", "explicit"]
-    }, {
-      "name": "ChannelInterpretation",
-      "values": ["speakers", "discrete"]
-    }, {
-      "name": "ClientType",
-      "values": ["window", "worker", "sharedworker", "all"]
-    }, {
-      "name": "ColorSpaceConversion",
-      "values": ["none", "default"]
-    }, {
-      "name": "CSSBoxType",
-      "values": ["margin", "border", "padding", "content"]
-    }, {
-      "name": "DistanceModelType",
-      "values": ["linear", "inverse", "exponential"]
-    }, {
-      "name": "DocumentReadyState",
-      "values": ["loading", "interactive", "complete"]
-    }, {
-      "name": "EndOfStreamError",
-      "values": ["network", "decode"]
-    }, {
-      "name": "GamepadMappingType",
-      "values": ["", "standard"]
-    }, {
-      "name": "IDBCursorDirection",
-      "values": ["next", "nextunique", "prev", "prevunique"]
-    }, {
-      "name": "IDBRequestReadyState",
-      "values": ["pending", "done"]
-    }, {
-      "name": "IDBTransactionMode",
-      "values": ["readonly", "readwrite", "versionchange"]
-    }, {
-      "name": "ImageOrientation",
-      "values": ["none", "flipY"]
-    }, {
-      "name": "ImageSmoothingQuality",
-      "values": ["low", "medium", "high"]
-    }, {
-      "name": "KeyFormat",
-      "values": ["raw", "spki", "pkcs8", "jwk"]
-    }, {
-      "name": "KeyType",
-      "values": ["public", "private", "secret"]
-    }, {
-      "name": "KeyUsage",
-      "values": ["encrypt", "decrypt", "sign", "verify", "deriveKey", "deriveBits", "wrapKey", "unwrapKey"]
-    }, {
-      "name": "MediaDeviceKind",
-      "values": ["audioinput", "audiooutput", "videoinput"]
-    }, {
-      "name": "MediaKeyMessageType",
-      "values": ["license-request", "license-renewal", "license-release", "individualization-request"]
-    }, {
-      "name": "MediaKeySessionType",
-      "values": ["temporary", "persistent-license"]
-    }, {
-      "name": "MediaKeysRequirement",
-      "values": ["required", "optional", "not-allowed"]
-    }, {
-      "name": "MediaKeyStatus",
-      "values": ["usable", "expired", "released", "output-restricted", "output-downscaled", "status-pending", "internal-error"]
-    }, {
-      "name": "MediaStreamTrackState",
-      "values": ["live", "ended"]
-    }, {
-      "name": "NavigationType",
-      "values": ["navigate", "reload", "back_forward", "prerender"]
-    }, {
-      "name": "NotificationDirection",
-      "values": ["auto", "ltr", "rtl"]
-    }, {
-      "name": "NotificationPermission",
-      "values": ["default", "denied", "granted"]
-    }, {
-      "name": "OffscreenRenderingContextType",
-      "values": ["2d", "webgl"]
-    }, {
-      "name": "OscillatorType",
-      "values": ["sine", "square", "sawtooth", "triangle", "custom"]
-    }, {
-      "name": "OverSampleType",
-      "values": ["none", "2x", "4x"]
-    }, {
-      "name": "PanningModelType",
-      "values": ["equalpower", "HRTF"]
-    }, {
-      "name": "PaymentComplete",
-      "values": ["fail", "success", "unknown"]
-    }, {
-      "name": "PaymentShippingType",
-      "values": ["shipping", "delivery", "pickup"]
-    }, {
-      "name": "PremultiplyAlpha",
-      "values": ["none", "premultiply", "default"]
-    }, {
-      "name": "PushEncryptionKeyName",
-      "values": ["p256dh", "auth"]
-    }, {
-      "name": "PushPermissionState",
-      "values": ["denied", "granted", "prompt"]
-    }, {
-      "name": "ReadyState",
-      "values": ["closed", "open", "ended"]
-    }, {
-      "name": "ReferrerPolicy",
-      "values": ["", "no-referrer", "no-referrer-when-downgrade", "same-origin", "origin", "strict-origin", "origin-when-cross-origin", "strict-origin-when-cross-origin", "unsafe-url"]
-    }, {
-      "name": "RequestCache",
-      "values": ["default", "no-store", "reload", "no-cache", "force-cache", "only-if-cached"]
-    }, {
-      "name": "RequestCredentials",
-      "values": ["omit", "same-origin", "include"]
-    }, {
-      "name": "RequestDestination",
-      "values": ["", "audio", "document", "embed", "font", "image", "manifest", "object", "report", "script", "serviceworker", "sharedworker", "style", "track", "video", "worker", "xslt"]
-    }, {
-      "name": "RequestMode",
-      "values": ["navigate", "same-origin", "no-cors", "cors"]
-    }, {
-      "name": "RequestRedirect",
-      "values": ["follow", "error", "manual"]
-    }, {
-      "name": "RequestType",
-      "values": ["", "audio", "font", "image", "script", "style", "track", "video"]
-    }, {
-      "name": "ResizeQuality",
-      "values": ["pixelated", "low", "medium", "high"]
-    }, {
-      "name": "ResponseType",
-      "values": ["basic", "cors", "default", "error", "opaque", "opaqueredirect"]
-    }, {
-      "name": "RTCBundlePolicy",
-      "values": ["balanced", "max-compat", "max-bundle"]
-    }, {
-      "name": "RTCDataChannelState",
-      "values": ["connecting", "open", "closing", "closed"]
-    }, {
-      "name": "RTCDegradationPreference",
-      "values": ["maintain-framerate", "maintain-resolution", "balanced"]
-    }, {
-      "name": "RTCDtlsTransportState",
-      "values": ["new", "connecting", "connected", "closed", "failed"]
-    }, {
-      "name": "RTCDtxStatus",
-      "values": ["disabled", "enabled"]
-    }, {
-      "name": "RTCErrorDetailType",
-      "values": ["data-channel-failure", "idp-bad-script-failure", "idp-execution-failure", "idp-load-failure", "idp-need-login", "idp-timeout", "idp-tls-failure", "idp-token-expired", "idp-token-invalid", "sctp-failure", "sdp-syntax-error"]
-    }, {
-      "name": "RTCIceCandidateType",
-      "values": ["host", "srflx", "prflx", "relay"]
-    }, {
-      "name": "RTCIceComponent",
-      "values": ["rtp", "rtcp"]
-    }, {
-      "name": "RTCIceConnectionState",
-      "values": ["new", "checking", "connected", "completed", "failed", "disconnected", "closed"]
-    }, {
-      "name": "RTCIceCredentialType",
-      "values": ["password", "oauth"]
-    }, {
-      "name": "RTCIceGathererState",
-      "values": ["new", "gathering", "complete"]
-    }, {
-      "name": "RTCIceGatheringState",
-      "values": ["new", "gathering", "complete"]
-    }, {
-      "name": "RTCIceProtocol",
-      "values": ["udp", "tcp"]
-    }, {
-      "name": "RTCIceRole",
-      "values": ["controlling", "controlled"]
-    }, {
-      "name": "RTCIceTcpCandidateType",
-      "values": ["active", "passive", "so"]
-    }, {
-      "name": "RTCIceTransportPolicy",
-      "values": ["relay", "all"]
-    }, {
-      "name": "RTCIceTransportState",
-      "values": ["new", "checking", "connected", "completed", "failed", "disconnected", "closed"]
-    }, {
-      "name": "RTCPeerConnectionState",
-      "values": ["new", "connecting", "connected", "disconnected", "failed", "closed"]
-    }, {
-      "name": "RTCPriorityType",
-      "values": ["very-low", "low", "medium", "high"]
-    }, {
-      "name": "RTCRtcpMuxPolicy",
-      "values": ["negotiate", "require"]
-    }, {
-      "name": "RTCRtpTransceiverDirection",
-      "values": ["sendrecv", "sendonly", "recvonly", "inactive"]
-    }, {
-      "name": "RTCSdpType",
-      "values": ["offer", "pranswer", "answer", "rollback"]
-    }, {
-      "name": "RTCSignalingState",
-      "values": ["stable", "have-local-offer", "have-remote-offer", "have-local-pranswer", "have-remote-pranswer", "closed"]
-    }, {
-      "name": "RTCStatsIceCandidatePairState",
-      "values": ["frozen", "waiting", "inprogress", "failed", "succeeded", "cancelled"]
-    },
-    { "name": "RTCStatsType", "values": [] },
-    {
-      "name": "RTCStatsType",
-      "values": ["codec", "inbound-rtp", "outbound-rtp", "peer-connection", "data-channel", "track", "transport", "candidate-pair", "local-candidate", "remote-candidate", "certificate"]
-    }, {
-      "name": "ScrollBehavior",
-      "values": ["auto", "instant", "smooth"]
-    }, {
-      "name": "ScrollLogicalPosition",
-      "values": ["start", "center", "end", "nearest"]
-    }, {
-      "name": "ScrollRestoration",
-      "values": ["auto", "manual"]
-    }, {
-      "name": "SelectionMode",
-      "values": ["select", "start", "end", "preserve"]
-    }, {
-      "name": "ServiceWorkerState",
-      "values": ["installing", "installed", "activating", "activated", "redundant"]
-    }, {
-      "name": "ShadowRootMode",
-      "values": ["open", "closed"]
-    }, {
-      "name": "SpeechRecognitionErrorCode",
-      "values": ["no-speech", "aborted", "audio-capture", "network", "not-allowed", "service-not-allowed", "bad-grammar", "language-not-supported"]
-    }, {
-      "name": "SpeechSynthesisErrorCode",
-      "values": ["canceled", "interrupted", "audio-busy", "audio-hardware", "network", "synthesis-unavailable", "synthesis-failed", "language-unavailable", "voice-unavailable", "text-too-long", "invalid-argument"]
-    }, {
-      "name": "TextTrackKind",
-      "values": ["subtitles", "captions", "descriptions", "chapters", "metadata"]
-    }, {
-      "name": "TextTrackMode",
-      "values": ["disabled", "hidden", "showing"]
-    }, {
-      "name": "TouchType",
-      "values": ["direct", "stylus"]
-    }, {
-      "name": "VideoFacingModeEnum",
-      "values": ["user", "environment", "left", "right"]
-    }, {
-      "name": "VisibilityState",
-      "values": ["hidden", "visible", "prerender", "unloaded"]
-    }, {
-      "name": "WebGLPowerPreference",
-      "values": ["default", "low-power", "high-performance"]
-    }, {
-      "name": "WorkerType",
-      "values": ["classic", "module"]
-    }, {
-      "name": "XMLHttpRequestResponseType",
-      "values": ["", "arraybuffer", "blob", "document", "json", "text"]
-    }
-  ],
+  "enums": [{
+    "name": "AppendMode",
+    "values": ["segments", "sequence"]
+  }, {
+    "name": "AudioContextLatencyCategory",
+    "values": ["balanced", "interactive", "playback"]
+  }, {
+    "name": "AudioContextState",
+    "values": ["suspended", "running", "closed"]
+  }, {
+    "name": "AudioWorkletProcessorState",
+    "values": ["pending", "running", "stopped", "error"]
+  }, {
+    "name": "BinaryType",
+    "values": ["blob", "arraybuffer"]
+  }, {
+    "name": "BiquadFilterType",
+    "values": ["lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "peaking", "notch", "allpass"]
+  }, {
+    "name": "CanPlayTypeResult",
+    "values": ["", "maybe", "probably"]
+  }, {
+    "name": "CanvasDirection",
+    "values": ["ltr", "rtl", "inherit"]
+  }, {
+    "name": "CanvasFillRule",
+    "values": ["nonzero", "evenodd"]
+  }, {
+    "name": "CanvasLineCap",
+    "values": ["butt", "round", "square"]
+  }, {
+    "name": "CanvasLineJoin",
+    "values": ["round", "bevel", "miter"]
+  }, {
+    "name": "CanvasTextAlign",
+    "values": ["start", "end", "left", "right", "center"]
+  }, {
+    "name": "CanvasTextBaseline",
+    "values": ["top", "hanging", "middle", "alphabetic", "ideographic", "bottom"]
+  }, {
+    "name": "ChannelCountMode",
+    "values": ["max", "clamped-max", "explicit"]
+  }, {
+    "name": "ChannelInterpretation",
+    "values": ["speakers", "discrete"]
+  }, {
+    "name": "ClientType",
+    "values": ["window", "worker", "sharedworker", "all"]
+  }, {
+    "name": "ColorSpaceConversion",
+    "values": ["none", "default"]
+  }, {
+    "name": "CSSBoxType",
+    "values": ["margin", "border", "padding", "content"]
+  }, {
+    "name": "DistanceModelType",
+    "values": ["linear", "inverse", "exponential"]
+  }, {
+    "name": "DocumentReadyState",
+    "values": ["loading", "interactive", "complete"]
+  }, {
+    "name": "EndingTypes",
+    "values": ["transparent", "native"]
+  }, {
+    "name": "EndOfStreamError",
+    "values": ["network", "decode"]
+  }, {
+    "name": "GamepadMappingType",
+    "values": ["", "standard"]
+  }, {
+    "name": "IDBCursorDirection",
+    "values": ["next", "nextunique", "prev", "prevunique"]
+  }, {
+    "name": "IDBRequestReadyState",
+    "values": ["pending", "done"]
+  }, {
+    "name": "IDBTransactionMode",
+    "values": ["readonly", "readwrite", "versionchange"]
+  }, {
+    "name": "ImageOrientation",
+    "values": ["none", "flipY"]
+  }, {
+    "name": "ImageSmoothingQuality",
+    "values": ["low", "medium", "high"]
+  }, {
+    "name": "KeyFormat",
+    "values": ["raw", "spki", "pkcs8", "jwk"]
+  }, {
+    "name": "KeyType",
+    "values": ["public", "private", "secret"]
+  }, {
+    "name": "KeyUsage",
+    "values": ["encrypt", "decrypt", "sign", "verify", "deriveKey", "deriveBits", "wrapKey", "unwrapKey"]
+  }, {
+    "name": "MediaDeviceKind",
+    "values": ["audioinput", "audiooutput", "videoinput"]
+  }, {
+    "name": "MediaKeyMessageType",
+    "values": ["license-request", "license-renewal", "license-release", "individualization-request"]
+  }, {
+    "name": "MediaKeySessionType",
+    "values": ["temporary", "persistent-license"]
+  }, {
+    "name": "MediaKeysRequirement",
+    "values": ["required", "optional", "not-allowed"]
+  }, {
+    "name": "MediaKeyStatus",
+    "values": ["usable", "expired", "released", "output-restricted", "output-downscaled", "status-pending", "internal-error"]
+  }, {
+    "name": "MediaStreamTrackState",
+    "values": ["live", "ended"]
+  }, {
+    "name": "NavigationType",
+    "values": ["navigate", "reload", "back_forward", "prerender"]
+  }, {
+    "name": "NotificationDirection",
+    "values": ["auto", "ltr", "rtl"]
+  }, {
+    "name": "NotificationPermission",
+    "values": ["default", "denied", "granted"]
+  }, {
+    "name": "OffscreenRenderingContextType",
+    "values": ["2d", "webgl"]
+  }, {
+    "name": "OscillatorType",
+    "values": ["sine", "square", "sawtooth", "triangle", "custom"]
+  }, {
+    "name": "OverSampleType",
+    "values": ["none", "2x", "4x"]
+  }, {
+    "name": "PanningModelType",
+    "values": ["equalpower", "HRTF"]
+  }, {
+    "name": "PaymentComplete",
+    "values": ["fail", "success", "unknown"]
+  }, {
+    "name": "PaymentShippingType",
+    "values": ["shipping", "delivery", "pickup"]
+  }, {
+    "name": "PremultiplyAlpha",
+    "values": ["none", "premultiply", "default"]
+  }, {
+    "name": "PushEncryptionKeyName",
+    "values": ["p256dh", "auth"]
+  }, {
+    "name": "PushPermissionState",
+    "values": ["denied", "granted", "prompt"]
+  }, {
+    "name": "ReadyState",
+    "values": ["closed", "open", "ended"]
+  }, {
+    "name": "ReferrerPolicy",
+    "values": ["", "no-referrer", "no-referrer-when-downgrade", "same-origin", "origin", "strict-origin", "origin-when-cross-origin", "strict-origin-when-cross-origin", "unsafe-url"]
+  }, {
+    "name": "RequestCache",
+    "values": ["default", "no-store", "reload", "no-cache", "force-cache", "only-if-cached"]
+  }, {
+    "name": "RequestCredentials",
+    "values": ["omit", "same-origin", "include"]
+  }, {
+    "name": "RequestDestination",
+    "values": ["", "audio", "audioworklet", "document", "embed", "font", "image", "manifest", "object", "paintworklet", "report", "script", "sharedworker", "style", "track", "video", "worker", "xslt"]
+  }, {
+    "name": "RequestMode",
+    "values": ["navigate", "same-origin", "no-cors", "cors"]
+  }, {
+    "name": "RequestRedirect",
+    "values": ["follow", "error", "manual"]
+  }, {
+    "name": "ResizeQuality",
+    "values": ["pixelated", "low", "medium", "high"]
+  }, {
+    "name": "ResponseType",
+    "values": ["basic", "cors", "default", "error", "opaque", "opaqueredirect"]
+  }, {
+    "name": "RTCBundlePolicy",
+    "values": ["balanced", "max-compat", "max-bundle"]
+  }, {
+    "name": "RTCDataChannelState",
+    "values": ["connecting", "open", "closing", "closed"]
+  }, {
+    "name": "RTCDegradationPreference",
+    "values": ["maintain-framerate", "maintain-resolution", "balanced"]
+  }, {
+    "name": "RTCDtlsTransportState",
+    "values": ["new", "connecting", "connected", "closed", "failed"]
+  }, {
+    "name": "RTCDtxStatus",
+    "values": ["disabled", "enabled"]
+  }, {
+    "name": "RTCErrorDetailType",
+    "values": ["data-channel-failure", "dtls-failure", "fingerprint-failure", "idp-bad-script-failure", "idp-execution-failure", "idp-load-failure", "idp-need-login", "idp-timeout", "idp-tls-failure", "idp-token-expired", "idp-token-invalid", "sctp-failure", "sdp-syntax-error", "hardware-encoder-not-available", "hardware-encoder-error"]
+  }, {
+    "name": "RTCIceCandidateType",
+    "values": ["host", "srflx", "prflx", "relay"]
+  }, {
+    "name": "RTCIceComponent",
+    "values": ["rtp", "rtcp"]
+  }, {
+    "name": "RTCIceConnectionState",
+    "values": ["new", "checking", "connected", "completed", "failed", "disconnected", "closed"]
+  }, {
+    "name": "RTCIceCredentialType",
+    "values": ["password", "oauth"]
+  }, {
+    "name": "RTCIceGathererState",
+    "values": ["new", "gathering", "complete"]
+  }, {
+    "name": "RTCIceGatheringState",
+    "values": ["new", "gathering", "complete"]
+  }, {
+    "name": "RTCIceProtocol",
+    "values": ["udp", "tcp"]
+  }, {
+    "name": "RTCIceRole",
+    "values": ["controlling", "controlled"]
+  }, {
+    "name": "RTCIceTcpCandidateType",
+    "values": ["active", "passive", "so"]
+  }, {
+    "name": "RTCIceTransportPolicy",
+    "values": ["relay", "all"]
+  }, {
+    "name": "RTCIceTransportState",
+    "values": ["new", "checking", "connected", "completed", "failed", "disconnected", "closed"]
+  }, {
+    "name": "RTCPeerConnectionState",
+    "values": ["new", "connecting", "connected", "disconnected", "failed", "closed"]
+  }, {
+    "name": "RTCPriorityType",
+    "values": ["very-low", "low", "medium", "high"]
+  }, {
+    "name": "RTCRtcpMuxPolicy",
+    "values": ["negotiate", "require"]
+  }, {
+    "name": "RTCRtpTransceiverDirection",
+    "values": ["sendrecv", "sendonly", "recvonly", "inactive"]
+  }, {
+    "name": "RTCSctpTransportState",
+    "values": ["new", "connecting", "connected", "closed"]
+  }, {
+    "name": "RTCSdpType",
+    "values": ["offer", "pranswer", "answer", "rollback"]
+  }, {
+    "name": "RTCSignalingState",
+    "values": ["stable", "have-local-offer", "have-remote-offer", "have-local-pranswer", "have-remote-pranswer", "closed"]
+  }, {
+    "name": "RTCStatsIceCandidatePairState",
+    "values": ["frozen", "waiting", "inprogress", "failed", "succeeded", "cancelled"]
+  }, {
+    "name": "RTCStatsType",
+    "values": ["codec", "inbound-rtp", "outbound-rtp", "peer-connection", "data-channel", "track", "transport", "candidate-pair", "local-candidate", "remote-candidate", "certificate"]
+  }, {
+    "name": "ScrollBehavior",
+    "values": ["auto", "instant", "smooth"]
+  }, {
+    "name": "ScrollLogicalPosition",
+    "values": ["start", "center", "end", "nearest"]
+  }, {
+    "name": "ScrollRestoration",
+    "values": ["auto", "manual"]
+  }, {
+    "name": "SelectionMode",
+    "values": ["select", "start", "end", "preserve"]
+  }, {
+    "name": "ServiceWorkerState",
+    "values": ["installing", "installed", "activating", "activated", "redundant"]
+  }, {
+    "name": "ServiceWorkerUpdateViaCache",
+    "values": ["imports", "all", "none"]
+  }, {
+    "name": "ShadowRootMode",
+    "values": ["open", "closed"]
+  }, {
+    "name": "SpeechRecognitionErrorCode",
+    "values": ["no-speech", "aborted", "audio-capture", "network", "not-allowed", "service-not-allowed", "bad-grammar", "language-not-supported"]
+  }, {
+    "name": "SpeechSynthesisErrorCode",
+    "values": ["canceled", "interrupted", "audio-busy", "audio-hardware", "network", "synthesis-unavailable", "synthesis-failed", "language-unavailable", "voice-unavailable", "text-too-long", "invalid-argument"]
+  }, {
+    "name": "TextTrackKind",
+    "values": ["subtitles", "captions", "descriptions", "chapters", "metadata"]
+  }, {
+    "name": "TextTrackMode",
+    "values": ["disabled", "hidden", "showing"]
+  }, {
+    "name": "TouchType",
+    "values": ["direct", "stylus"]
+  }, {
+    "name": "VideoFacingModeEnum",
+    "values": ["user", "environment", "left", "right"]
+  }, {
+    "name": "VisibilityState",
+    "values": ["hidden", "visible"]
+  }, {
+    "name": "WebGLPowerPreference",
+    "values": ["default", "low-power", "high-performance"]
+  }, {
+    "name": "WorkerType",
+    "values": ["classic", "module"]
+  }, {
+    "name": "XMLHttpRequestResponseType",
+    "values": ["", "arraybuffer", "blob", "document", "json", "text"]
+  }],
   "interfaces": [
     {
+      "name": "AbortController",
+      "constructors": [{ "arguments": [] }],
+      "exposed": ["Window", "Worker"],
+      "operations": [{ "name": "abort", "type": "void", "arguments": [] }],
+      "attributes": [{ "name": "signal", "type": "AbortSignal", "readonly": true }]
+    }, {
+      "name": "AbortSignal", "extends": "EventTarget",
+      "exposed": ["Window", "Worker"],
+      "attributes": [
+        { "name": "aborted", "type": "boolean", "readonly": true },
+        { "name": "onabort", "type": "EventHandler" }
+      ]
+    }, {
       "name": "AbstractWorker", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "attributes": [{ "name": "onerror", "type": "EventHandler" }]
     }, {
       "name": "AnalyserNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -2042,6 +2055,7 @@
       }]
     }, {
       "name": "AnimationEvent", "extends": "Event",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "type", "type": "CSSOMString" },
@@ -2055,6 +2069,7 @@
       ]
     }, {
       "name": "ApplicationCache", "extends": "EventTarget",
+      "exposed": ["Window"],
       "constants": [
         { "name": "CHECKING", "type": "unsigned short", "value": "2" },
         { "name": "DOWNLOADING", "type": "unsigned short", "value": "3" },
@@ -2093,6 +2108,7 @@
       ]
     }, {
       "name": "AudioBuffer",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [{ "name": "options", "type": "AudioBufferOptions" }]
       }],
@@ -2122,6 +2138,7 @@
       ]
     }, {
       "name": "AudioBufferSourceNode", "extends": "AudioScheduledSourceNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -2135,6 +2152,9 @@
           { "name": "offset", "type": "double", "optional": true },
           { "name": "duration", "type": "double", "optional": true }
         ]
+      }, {
+        "name": "stop", "type": "void",
+        "arguments": [{ "name": "when", "type": "double", "optional": true, "default": "0" }]
       }],
       "attributes": [
         { "name": "buffer", "type": "AudioBuffer", "nullable": true },
@@ -2146,12 +2166,10 @@
       ]
     }, {
       "name": "AudioContext", "extends": "BaseAudioContext",
-      "constructors": [
-        {
-          "arguments": [{ "name": "contextOptions", "type": "AudioContextOptions", "optional": true }]
-        },
-        { "arguments": [] }
-      ],
+      "exposed": ["Window"],
+      "constructors": [{
+        "arguments": [{ "name": "contextOptions", "type": "AudioContextOptions", "optional": true }]
+      }],
       "operations": [
         { "name": "close", "type": "Promise<void>", "arguments": [] },
         {
@@ -2164,7 +2182,7 @@
           "arguments": [{ "name": "mediaStream", "type": "MediaStream" }]
         }, {
           "name": "createMediaStreamTrackSource", "type": "MediaStreamTrackAudioSourceNode",
-          "arguments": [{ "name": "mediaStreamTrack", "type": "AudioMediaStreamTrack" }]
+          "arguments": [{ "name": "mediaStreamTrack", "type": "MediaStreamTrack" }]
         },
         { "name": "getOutputTimestamp", "type": "AudioTimestamp", "arguments": [] },
         { "name": "suspend", "type": "Promise<void>", "arguments": [] }
@@ -2175,9 +2193,11 @@
       ]
     }, {
       "name": "AudioDestinationNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "attributes": [{ "name": "maxChannelCount", "type": "unsigned long", "readonly": true }]
     }, {
       "name": "AudioListener",
+      "exposed": ["Window"],
       "operations": [{
         "name": "setOrientation", "type": "void",
         "arguments": [
@@ -2209,6 +2229,7 @@
       ]
     }, {
       "name": "AudioNode", "extends": "EventTarget",
+      "exposed": ["Window"],
       "operations": [
         {
           "name": "connect", "type": "AudioNode",
@@ -2265,6 +2286,7 @@
       ]
     }, {
       "name": "AudioParam",
+      "exposed": ["Window"],
       "operations": [{
         "name": "cancelAndHoldAtTime", "type": "AudioParam",
         "arguments": [{ "name": "cancelTime", "type": "double" }]
@@ -2299,7 +2321,7 @@
       }, {
         "name": "setValueCurveAtTime", "type": "AudioParam",
         "arguments": [
-          { "name": "values", "type": "Float32Array" },
+          { "name": "values", "type": "sequence<float>" },
           { "name": "startTime", "type": "double" },
           { "name": "duration", "type": "double" }
         ]
@@ -2310,10 +2332,12 @@
         { "name": "minValue", "type": "float", "readonly": true },
         { "name": "value", "type": "float" }
       ]
-    },
-    { "name": "AudioParamMap" },
-    {
+    }, {
+      "name": "AudioParamMap",
+      "exposed": ["Window"]
+    }, {
       "name": "AudioProcessingEvent", "extends": "Event",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "type", "type": "DOMString" },
@@ -2327,6 +2351,7 @@
       ]
     }, {
       "name": "AudioScheduledSourceNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "operations": [{
         "name": "start", "type": "void",
         "arguments": [{ "name": "when", "type": "double", "optional": true, "default": "0" }]
@@ -2338,6 +2363,7 @@
       "events": [{ "name": "ended", "type": "Event" }]
     }, {
       "name": "AudioTrack",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "enabled", "type": "boolean" },
         { "name": "id", "type": "DOMString", "readonly": true },
@@ -2348,6 +2374,7 @@
       ]
     }, {
       "name": "AudioTrackList", "extends": "EventTarget",
+      "exposed": ["Window"],
       "anonymousOperations": [{
         "type": "AudioTrack", "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -2363,6 +2390,9 @@
         { "name": "onremovetrack", "type": "EventHandler" }
       ]
     }, {
+      "name": "AudioWorklet", "extends": "Worklet",
+      "exposed": ["Window"]
+    }, {
       "name": "AudioWorkletGlobalScope", "extends": "WorkletGlobalScope", "global": "Worklet AudioWorklet",
       "exposed": ["AudioWorklet"],
       "operations": [{
@@ -2371,40 +2401,40 @@
           { "name": "name", "type": "DOMString" },
           { "name": "processorCtor", "type": "VoidFunction" }
         ]
-      }]
+      }],
+      "attributes": [
+        { "name": "currentTime", "type": "double", "readonly": true },
+        { "name": "sampleRate", "type": "float", "readonly": true }
+      ]
     }, {
       "name": "AudioWorkletNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
           { "name": "options", "type": "AudioWorkletOptions", "optional": true }
         ]
       }],
-      "operations": [{
-        "name": "sendData", "type": "void",
-        "arguments": [{ "name": "data", "type": "any" }]
-      }],
       "attributes": [
-        { "name": "ondata", "type": "EventHandler", "eventHandler": "data" },
-        { "name": "parameters", "type": "AudioParamMap", "readonly": true }
-      ],
-      "events": [{ "name": "data", "type": "Event" }]
+        { "name": "onprocessorstatechange", "type": "EventHandler" },
+        { "name": "parameters", "type": "AudioParamMap", "readonly": true },
+        { "name": "port", "type": "MessagePort", "readonly": true },
+        { "name": "processorState", "type": "AudioWorkletProcessorState", "readonly": true }
+      ]
     }, {
-      "name": "AudioWorkletProcessor", "extends": "EventTarget",
-      "operations": [{
-        "name": "sendData", "type": "void",
-        "arguments": [{ "name": "data", "type": "any" }]
+      "name": "AudioWorkletProcessor",
+      "exposed": ["AudioWorklet"],
+      "constructors": [{
+        "arguments": [{ "name": "options", "type": "AudioWorkletOptions", "optional": true }]
       }],
-      "attributes": [
-        { "name": "contextInfo", "type": "AudioContextInfo", "readonly": true },
-        { "name": "ondata", "type": "EventHandler", "eventHandler": "data" }
-      ],
-      "events": [{ "name": "data", "type": "Event" }]
+      "attributes": [{ "name": "port", "type": "MessagePort", "readonly": true }]
     }, {
       "name": "BarProp",
+      "exposed": ["Window"],
       "attributes": [{ "name": "visible", "type": "boolean", "readonly": true }]
     }, {
       "name": "BaseAudioContext", "extends": "EventTarget",
+      "exposed": ["Window"],
       "operations": [
         { "name": "createAnalyser", "type": "AnalyserNode", "arguments": [] },
         { "name": "createBiquadFilter", "type": "BiquadFilterNode", "arguments": [] },
@@ -2444,8 +2474,8 @@
         {
           "name": "createPeriodicWave", "type": "PeriodicWave",
           "arguments": [
-            { "name": "real", "type": "Float32Array" },
-            { "name": "imag", "type": "Float32Array" },
+            { "name": "real", "type": "sequence<float>" },
+            { "name": "imag", "type": "sequence<float>" },
             { "name": "constraints", "type": "PeriodicWaveConstraints", "optional": true }
           ]
         }, {
@@ -2469,6 +2499,7 @@
         { "name": "resume", "type": "Promise<void>", "arguments": [] }
       ],
       "attributes": [
+        { "name": "audioWorklet", "type": "AudioWorklet", "readonly": true },
         { "name": "currentTime", "type": "double", "readonly": true },
         { "name": "destination", "type": "AudioDestinationNode", "readonly": true },
         { "name": "listener", "type": "AudioListener", "readonly": true },
@@ -2479,9 +2510,11 @@
       "events": [{ "name": "statechange", "type": "Event" }]
     }, {
       "name": "BeforeUnloadEvent", "extends": "Event",
+      "exposed": ["Window"],
       "attributes": [{ "name": "returnValue", "type": "DOMString" }]
     }, {
       "name": "BiquadFilterNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -2576,7 +2609,7 @@
           { "name": "options", "type": "CacheQueryOptions", "optional": true }
         ]
       }, {
-        "name": "keys", "type": "Promise<sequence<Request>>",
+        "name": "keys", "type": "Promise<FrozenArray<Request>>",
         "arguments": [
           { "name": "request", "type": "RequestInfo", "optional": true },
           { "name": "options", "type": "CacheQueryOptions", "optional": true }
@@ -2588,7 +2621,7 @@
           { "name": "options", "type": "CacheQueryOptions", "optional": true }
         ]
       }, {
-        "name": "matchAll", "type": "Promise<sequence<Response>>",
+        "name": "matchAll", "type": "Promise<FrozenArray<Response>>",
         "arguments": [
           { "name": "request", "type": "RequestInfo", "optional": true },
           { "name": "options", "type": "CacheQueryOptions", "optional": true }
@@ -2924,7 +2957,7 @@
       "exposed": ["Window", "Worker"],
       "operations": [{
         "name": "setTransform", "type": "void",
-        "arguments": [{ "name": "transform", "type": "DOMMatrixInit", "optional": true }]
+        "arguments": [{ "name": "transform", "type": "DOMMatrix2DInit", "optional": true }]
       }]
     }, {
       "name": "CanvasRect", "noInterfaceObject": true,
@@ -2956,6 +2989,7 @@
       }]
     }, {
       "name": "CanvasRenderingContext2D",
+      "exposed": ["Window"],
       "attributes": [{ "name": "canvas", "type": "HTMLCanvasElement", "readonly": true }],
       "implements": ["CanvasState", "CanvasTransform", "CanvasCompositing", "CanvasImageSmoothing", "CanvasFillStrokeStyles", "CanvasShadowStyles", "CanvasFilters", "CanvasRect", "CanvasDrawPath", "CanvasUserInterface", "CanvasText", "CanvasDrawImage", "CanvasImageData", "CanvasPathDrawingStyles", "CanvasTextDrawingStyles", "CanvasPath"]
     }, {
@@ -2976,6 +3010,7 @@
       ]
     }, {
       "name": "CanvasText", "noInterfaceObject": true,
+      "exposed": ["Window"],
       "operations": [{
         "name": "fillText", "type": "void",
         "arguments": [
@@ -2998,6 +3033,7 @@
       }]
     }, {
       "name": "CanvasTextDrawingStyles", "noInterfaceObject": true,
+      "exposed": ["Window"],
       "attributes": [
         { "name": "direction", "type": "CanvasDirection" },
         { "name": "font", "type": "DOMString" },
@@ -3031,7 +3067,7 @@
           ]
         }, {
           "name": "setTransform", "type": "void",
-          "arguments": [{ "name": "transform", "type": "DOMMatrixInit", "optional": true }]
+          "arguments": [{ "name": "transform", "type": "DOMMatrix2DInit", "optional": true }]
         }, {
           "name": "transform", "type": "void",
           "arguments": [
@@ -3052,6 +3088,7 @@
       ]
     }, {
       "name": "CanvasUserInterface", "noInterfaceObject": true,
+      "exposed": ["Window"],
       "operations": [
         {
           "name": "drawFocusIfNeeded", "type": "void",
@@ -3081,6 +3118,7 @@
       "exposed": ["Window"]
     }, {
       "name": "ChannelMergerNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -3089,6 +3127,7 @@
       }]
     }, {
       "name": "ChannelSplitterNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -3182,6 +3221,34 @@
         }
       ]
     }, {
+      "name": "Clipboard", "extends": "EventTarget",
+      "exposed": ["Window"],
+      "operations": [
+        { "name": "read", "type": "Promise<DataTransfer>", "arguments": [] },
+        { "name": "readText", "type": "Promise<DOMString>", "arguments": [] },
+        {
+          "name": "write", "type": "Promise<void>",
+          "arguments": [{ "name": "data", "type": "DataTransfer" }]
+        }, {
+          "name": "writeText", "type": "Promise<void>",
+          "arguments": [{ "name": "data", "type": "DOMString" }]
+        }
+      ]
+    }, {
+      "name": "Clipboard", "extends": "EventTarget",
+      "exposed": ["Window"],
+      "operations": [
+        { "name": "read", "type": "Promise<DataTransfer>", "arguments": [] },
+        { "name": "readText", "type": "Promise<DOMString>", "arguments": [] },
+        {
+          "name": "write", "type": "Promise<void>",
+          "arguments": [{ "name": "data", "type": "DataTransfer" }]
+        }, {
+          "name": "writeText", "type": "Promise<void>",
+          "arguments": [{ "name": "data", "type": "DOMString" }]
+        }
+      ]
+    }, {
       "name": "ClipboardEvent", "extends": "Event",
       "constructors": [{
         "arguments": [
@@ -3189,6 +3256,17 @@
           { "name": "eventInitDict", "type": "ClipboardEventInit", "optional": true }
         ]
       }],
+      "exposed": ["Window"],
+      "attributes": [{ "name": "clipboardData", "type": "DataTransfer", "nullable": true, "readonly": true }]
+    }, {
+      "name": "ClipboardEvent", "extends": "Event",
+      "constructors": [{
+        "arguments": [
+          { "name": "type", "type": "DOMString" },
+          { "name": "eventInitDict", "type": "ClipboardEventInit", "optional": true }
+        ]
+      }],
+      "exposed": ["Window"],
       "attributes": [{ "name": "clipboardData", "type": "DataTransfer", "nullable": true, "readonly": true }]
     }, {
       "name": "CloseEvent", "extends": "Event",
@@ -3218,9 +3296,11 @@
           { "name": "eventInitDict", "type": "CompositionEventInit", "optional": true }
         ]
       }],
+      "exposed": ["Window"],
       "attributes": [{ "name": "data", "type": "DOMString", "readonly": true }]
     }, {
       "name": "ConstantSourceNode", "extends": "AudioScheduledSourceNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -3243,6 +3323,7 @@
       "events": [{ "name": "overconstrained", "type": "OverconstrainedErrorEvent" }]
     }, {
       "name": "ConvolverNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -3283,6 +3364,7 @@
       ]
     }, {
       "name": "CSS",
+      "exposed": ["Window"],
       "operations": [{
         "name": "escape", "type": "CSSOMString", "static": true,
         "arguments": [{ "name": "ident", "type": "CSSOMString" }]
@@ -3314,6 +3396,7 @@
       "attributes": [{ "name": "cssRules", "type": "CSSRuleList", "readonly": true }]
     }, {
       "name": "CSSGroupingRule", "extends": "CSSRule",
+      "exposed": ["Window"],
       "operations": [{
         "name": "deleteRule", "type": "void",
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -3327,6 +3410,7 @@
       "attributes": [{ "name": "cssRules", "type": "CSSRuleList", "readonly": true }]
     }, {
       "name": "CSSImportRule", "extends": "CSSRule",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "href", "type": "USVString", "readonly": true },
         { "name": "media", "type": "MediaList", "readonly": true },
@@ -3334,12 +3418,14 @@
       ]
     }, {
       "name": "CSSKeyframeRule", "extends": "CSSRule",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "keyText", "type": "CSSOMString" },
         { "name": "style", "type": "CSSStyleDeclaration", "readonly": true }
       ]
     }, {
       "name": "CSSKeyframesRule", "extends": "CSSRule",
+      "exposed": ["Window"],
       "operations": [{
         "name": "appendRule", "type": "void",
         "arguments": [{ "name": "rule", "type": "CSSOMString" }]
@@ -3356,6 +3442,7 @@
       ]
     }, {
       "name": "CSSMarginRule", "extends": "CSSRule",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "name", "type": "CSSOMString", "readonly": true },
         { "name": "style", "type": "CSSStyleDeclaration", "readonly": true }
@@ -3365,12 +3452,14 @@
       "attributes": [{ "name": "media", "type": "MediaList", "readonly": true }]
     }, {
       "name": "CSSNamespaceRule", "extends": "CSSRule",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "namespaceURI", "type": "CSSOMString", "readonly": true },
         { "name": "prefix", "type": "CSSOMString", "readonly": true }
       ]
     }, {
       "name": "CSSPageRule", "extends": "CSSGroupingRule",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "selectorText", "type": "CSSOMString" },
         { "name": "style", "type": "CSSStyleDeclaration", "readonly": true }
@@ -3380,6 +3469,7 @@
       "implements": ["GeometryUtils"]
     }, {
       "name": "CSSRule",
+      "exposed": ["Window"],
       "constants": [
         { "name": "CHARSET_RULE", "type": "unsigned short", "value": "2" },
         { "name": "FONT_FACE_RULE", "type": "unsigned short", "value": "5" },
@@ -3401,6 +3491,7 @@
       ]
     }, {
       "name": "CSSRuleList",
+      "exposed": ["Window"],
       "operations": [{
         "name": "item", "type": "CSSRule", "nullable": true, "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -3408,6 +3499,7 @@
       "attributes": [{ "name": "length", "type": "unsigned long", "readonly": true }]
     }, {
       "name": "CSSStyleDeclaration",
+      "exposed": ["Window"],
       "operations": [{
         "name": "getPropertyPriority", "type": "CSSOMString",
         "arguments": [{ "name": "property", "type": "CSSOMString" }]
@@ -3475,12 +3567,14 @@
       ]
     }, {
       "name": "CSSStyleRule", "extends": "CSSRule",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "selectorText", "type": "CSSOMString" },
         { "name": "style", "type": "CSSStyleDeclaration", "readonly": true }
       ]
     }, {
       "name": "CSSStyleSheet", "extends": "StyleSheet",
+      "exposed": ["Window"],
       "operations": [{
         "name": "deleteRule", "type": "void",
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -3499,6 +3593,7 @@
     { "name": "CSSSupportsRule", "extends": "CSSConditionRule" },
     {
       "name": "CustomElementRegistry",
+      "exposed": ["Window"],
       "operations": [{
         "name": "define", "type": "void",
         "arguments": [
@@ -3534,8 +3629,8 @@
       "attributes": [{ "name": "detail", "type": "any", "readonly": true }]
     }, {
       "name": "DataTransfer",
-      "constructors": [{ "arguments": [] }],
       "exposed": ["Window"],
+      "constructors": [{ "arguments": [] }],
       "operations": [{
         "name": "clearData", "type": "void",
         "arguments": [{ "name": "format", "type": "DOMString", "optional": true }]
@@ -3565,6 +3660,7 @@
       ]
     }, {
       "name": "DataTransferItem",
+      "exposed": ["Window"],
       "operations": [
         { "name": "getAsFile", "type": "File", "nullable": true, "arguments": [] },
         {
@@ -3578,6 +3674,7 @@
       ]
     }, {
       "name": "DataTransferItemList",
+      "exposed": ["Window"],
       "anonymousOperations": [{
         "type": "DataTransferItem", "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -3624,6 +3721,7 @@
       ]
     }, {
       "name": "DelayNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -3849,6 +3947,7 @@
       ],
       "attributes": [
         { "name": "activeElement", "type": "Element", "nullable": true, "readonly": true },
+        { "name": "activeElement", "type": "Element", "nullable": true, "readonly": true },
         { "name": "alinkColor", "type": "DOMString" },
         { "name": "all", "type": "HTMLAllCollection", "readonly": true },
         { "name": "anchors", "type": "HTMLCollection", "readonly": true },
@@ -3868,6 +3967,7 @@
         { "name": "documentElement", "type": "Element", "nullable": true, "readonly": true },
         { "name": "documentURI", "type": "USVString", "readonly": true },
         { "name": "domain", "type": "USVString" },
+        { "name": "domain", "type": "DOMString", "readonly": true },
         { "name": "embeds", "type": "HTMLCollection", "readonly": true },
         { "name": "fgColor", "type": "DOMString" },
         { "name": "forms", "type": "HTMLCollection", "readonly": true },
@@ -3885,15 +3985,18 @@
         { "name": "onfullscreenchange", "type": "EventHandler" },
         { "name": "onfullscreenerror", "type": "EventHandler" },
         { "name": "onreadystatechange", "type": "EventHandler" },
+        { "name": "onvisibilitychange", "type": "EventHandler" },
         { "name": "origin", "type": "USVString", "readonly": true },
         { "name": "plugins", "type": "HTMLCollection", "readonly": true },
         { "name": "readyState", "type": "DocumentReadyState", "readonly": true },
         { "name": "referrer", "type": "USVString", "readonly": true },
+        { "name": "referrer", "type": "DOMString", "readonly": true },
         { "name": "rootElement", "type": "SVGSVGElement", "nullable": true, "readonly": true },
         { "name": "scripts", "type": "HTMLCollection", "readonly": true },
         { "name": "scrollingElement", "type": "Element", "nullable": true, "readonly": true },
         { "name": "styleSheets", "type": "StyleSheetList", "readonly": true },
         { "name": "title", "type": "DOMString" },
+        { "name": "title", "type": "DOMString", "readonly": true },
         { "name": "URL", "type": "USVString", "readonly": true },
         { "name": "visibilityState", "type": "VisibilityState", "readonly": true },
         { "name": "vlinkColor", "type": "DOMString" }
@@ -3905,6 +4008,7 @@
       }]
     }, {
       "name": "DocumentAndElementEventHandlers", "noInterfaceObject": true,
+      "exposed": ["Window"],
       "attributes": [
         { "name": "oncopy", "type": "EventHandler", "eventHandler": "copy" },
         { "name": "oncut", "type": "EventHandler", "eventHandler": "cut" },
@@ -3933,6 +4037,47 @@
         { "name": "systemId", "type": "DOMString", "readonly": true }
       ],
       "implements": ["ChildNode"]
+    }, {
+      "name": "DOMException",
+      "exposed": ["Window", "Worker"],
+      "constructors": [{
+        "arguments": [
+          { "name": "message", "type": "DOMString", "optional": true, "default": "\"\"" },
+          { "name": "name", "type": "DOMString", "optional": true, "default": "\"Error\"" }
+        ]
+      }],
+      "constants": [
+        { "name": "ABORT_ERR", "type": "unsigned short", "value": "20" },
+        { "name": "DATA_CLONE_ERR", "type": "unsigned short", "value": "25" },
+        { "name": "DOMSTRING_SIZE_ERR", "type": "unsigned short", "value": "2" },
+        { "name": "HIERARCHY_REQUEST_ERR", "type": "unsigned short", "value": "3" },
+        { "name": "INDEX_SIZE_ERR", "type": "unsigned short", "value": "1" },
+        { "name": "INUSE_ATTRIBUTE_ERR", "type": "unsigned short", "value": "10" },
+        { "name": "INVALID_ACCESS_ERR", "type": "unsigned short", "value": "15" },
+        { "name": "INVALID_CHARACTER_ERR", "type": "unsigned short", "value": "5" },
+        { "name": "INVALID_MODIFICATION_ERR", "type": "unsigned short", "value": "13" },
+        { "name": "INVALID_NODE_TYPE_ERR", "type": "unsigned short", "value": "24" },
+        { "name": "INVALID_STATE_ERR", "type": "unsigned short", "value": "11" },
+        { "name": "NAMESPACE_ERR", "type": "unsigned short", "value": "14" },
+        { "name": "NETWORK_ERR", "type": "unsigned short", "value": "19" },
+        { "name": "NO_DATA_ALLOWED_ERR", "type": "unsigned short", "value": "6" },
+        { "name": "NO_MODIFICATION_ALLOWED_ERR", "type": "unsigned short", "value": "7" },
+        { "name": "NOT_FOUND_ERR", "type": "unsigned short", "value": "8" },
+        { "name": "NOT_SUPPORTED_ERR", "type": "unsigned short", "value": "9" },
+        { "name": "QUOTA_EXCEEDED_ERR", "type": "unsigned short", "value": "22" },
+        { "name": "SECURITY_ERR", "type": "unsigned short", "value": "18" },
+        { "name": "SYNTAX_ERR", "type": "unsigned short", "value": "12" },
+        { "name": "TIMEOUT_ERR", "type": "unsigned short", "value": "23" },
+        { "name": "TYPE_MISMATCH_ERR", "type": "unsigned short", "value": "17" },
+        { "name": "URL_MISMATCH_ERR", "type": "unsigned short", "value": "21" },
+        { "name": "VALIDATION_ERR", "type": "unsigned short", "value": "16" },
+        { "name": "WRONG_DOCUMENT_ERR", "type": "unsigned short", "value": "4" }
+      ],
+      "attributes": [
+        { "name": "code", "type": "unsigned short", "readonly": true },
+        { "name": "message", "type": "DOMString", "readonly": true },
+        { "name": "name", "type": "DOMString", "readonly": true }
+      ]
     }, {
       "name": "DOMImplementation",
       "exposed": ["Window"],
@@ -4280,6 +4425,13 @@
         { "name": "y", "type": "unrestricted double" }
       ]
     }, {
+      "name": "DOMRectList", "noInterfaceObject": true,
+      "operations": [{
+        "name": "item", "type": "DOMRect", "nullable": true, "getter": true,
+        "arguments": [{ "name": "index", "type": "unsigned long" }]
+      }],
+      "attributes": [{ "name": "length", "type": "unsigned long", "readonly": true }]
+    }, {
       "name": "DOMRectReadOnly",
       "constructors": [{
         "arguments": [
@@ -4317,6 +4469,7 @@
       "attributes": [{ "name": "length", "type": "unsigned long", "readonly": true }]
     }, {
       "name": "DOMStringMap", "overrideBuiltins": true,
+      "exposed": ["Window"],
       "anonymousOperations": [{
         "type": "DOMString", "getter": true,
         "arguments": [{ "name": "name", "type": "DOMString" }]
@@ -4332,6 +4485,7 @@
       }]
     }, {
       "name": "DOMTokenList",
+      "exposed": ["Window"],
       "iterable": { "type": "DOMString" },
       "operations": [{
         "name": "add", "type": "void",
@@ -4367,6 +4521,7 @@
       ]
     }, {
       "name": "DragEvent", "extends": "MouseEvent",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "type", "type": "DOMString" },
@@ -4376,6 +4531,7 @@
       "attributes": [{ "name": "dataTransfer", "type": "DataTransfer", "nullable": true, "readonly": true }]
     }, {
       "name": "DynamicsCompressorNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -4555,6 +4711,8 @@
         { "name": "innerHTML", "type": "DOMString" },
         { "name": "localName", "type": "DOMString", "readonly": true },
         { "name": "namespaceURI", "type": "DOMString", "nullable": true, "readonly": true },
+        { "name": "onfullscreenchange", "type": "EventHandler" },
+        { "name": "onfullscreenerror", "type": "EventHandler" },
         { "name": "ongotpointercapture", "type": "EventHandler" },
         { "name": "onlostpointercapture", "type": "EventHandler" },
         { "name": "outerHTML", "type": "DOMString" },
@@ -4570,12 +4728,14 @@
       "implements": ["ParentNode", "NonDocumentTypeChildNode", "ChildNode", "Slotable", "GeometryUtils"]
     }, {
       "name": "ElementContentEditable", "noInterfaceObject": true,
+      "exposed": ["Window"],
       "attributes": [
         { "name": "contentEditable", "type": "DOMString" },
         { "name": "isContentEditable", "type": "boolean", "readonly": true }
       ]
     }, {
       "name": "ElementCSSInlineStyle", "noInterfaceObject": true,
+      "exposed": ["Window"],
       "attributes": [{ "name": "style", "type": "CSSStyleDeclaration", "readonly": true }]
     }, {
       "name": "ErrorEvent", "extends": "Event",
@@ -4601,7 +4761,7 @@
           { "name": "eventInitDict", "type": "EventInit", "optional": true }
         ]
       }],
-      "exposed": ["Window", "Worker"],
+      "exposed": ["Window", "Worker", "AudioWorklet"],
       "constants": [
         { "name": "AT_TARGET", "type": "unsigned short", "value": "2" },
         { "name": "BUBBLING_PHASE", "type": "unsigned short", "value": "3" },
@@ -4632,7 +4792,7 @@
         { "name": "eventPhase", "type": "unsigned short", "readonly": true },
         { "name": "isTrusted", "type": "boolean", "readonly": true },
         { "name": "target", "type": "EventTarget", "nullable": true, "readonly": true },
-        { "name": "timeStamp", "type": "DOMTimeStamp", "readonly": true },
+        { "name": "timeStamp", "type": "DOMHighResTimeStamp", "readonly": true },
         { "name": "type", "type": "DOMString", "readonly": true }
       ]
     }, {
@@ -4665,7 +4825,8 @@
       ]
     }, {
       "name": "EventTarget",
-      "exposed": ["Window", "Worker"],
+      "constructors": [{ "arguments": [] }],
+      "exposed": ["Window", "Worker", "AudioWorklet"],
       "operations": [{
         "name": "addEventListener", "type": "void",
         "arguments": [
@@ -4723,6 +4884,7 @@
       ]
     }, {
       "name": "External", "noInterfaceObject": true,
+      "exposed": ["Window"],
       "operations": [
         { "name": "AddSearchProvider", "type": "void", "arguments": [] },
         { "name": "IsSearchProviderInstalled", "type": "void", "arguments": [] }
@@ -4844,24 +5006,8 @@
           { "name": "eventInitDict", "type": "FocusEventInit", "optional": true }
         ]
       }],
+      "exposed": ["Window"],
       "attributes": [{ "name": "relatedTarget", "type": "EventTarget", "nullable": true, "readonly": true }]
-    }, {
-      "name": "ForeignFetchEvent", "extends": "ExtendableEvent",
-      "constructors": [{
-        "arguments": [
-          { "name": "type", "type": "DOMString" },
-          { "name": "eventInitDict", "type": "ForeignFetchEventInit" }
-        ]
-      }],
-      "exposed": ["ServiceWorker"],
-      "operations": [{
-        "name": "respondWith", "type": "void",
-        "arguments": [{ "name": "r", "type": "Promise<ForeignFetchResponse>" }]
-      }],
-      "attributes": [
-        { "name": "origin", "type": "USVString", "readonly": true },
-        { "name": "request", "type": "Request", "readonly": true }
-      ]
     }, {
       "name": "FormData",
       "constructors": [{
@@ -4910,6 +5056,7 @@
       }]
     }, {
       "name": "GainNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -4940,7 +5087,7 @@
       "constructors": [{
         "arguments": [
           { "name": "type", "type": "DOMString" },
-          { "name": "eventInitDict", "type": "GamepadEventInit" }
+          { "name": "eventInitDict", "type": "GamepadEventInit", "optional": true }
         ]
       }],
       "attributes": [{ "name": "gamepad", "type": "Gamepad", "readonly": true }]
@@ -5000,6 +5147,7 @@
       "attributes": [{ "name": "crypto", "type": "Crypto", "readonly": true }]
     }, {
       "name": "GlobalEventHandlers", "noInterfaceObject": true,
+      "exposed": ["Window"],
       "attributes": [
         { "name": "onabort", "type": "EventHandler", "eventHandler": "abort" },
         { "name": "onanimationcancel", "type": "EventHandler", "eventHandler": "animationcancel" },
@@ -5063,12 +5211,12 @@
         { "name": "onreset", "type": "EventHandler", "eventHandler": "reset" },
         { "name": "onresize", "type": "EventHandler", "eventHandler": "resize" },
         { "name": "onscroll", "type": "EventHandler", "eventHandler": "scroll" },
+        { "name": "onsecuritypolicyviolation", "type": "EventHandler" },
         { "name": "onseeked", "type": "EventHandler", "eventHandler": "seeked" },
         { "name": "onseeking", "type": "EventHandler", "eventHandler": "seeking" },
         { "name": "onselect", "type": "EventHandler", "eventHandler": "select" },
         { "name": "onselectionchange", "type": "EventHandler", "eventHandler": "selectionchange" },
         { "name": "onselectstart", "type": "EventHandler", "eventHandler": "selectstart" },
-        { "name": "onshow", "type": "EventHandler", "eventHandler": "show" },
         { "name": "onstalled", "type": "EventHandler", "eventHandler": "stalled" },
         { "name": "onsubmit", "type": "EventHandler", "eventHandler": "submit" },
         { "name": "onsuspend", "type": "EventHandler", "eventHandler": "suspend" },
@@ -5141,7 +5289,6 @@
         { "name": "seeked", "type": "Event" },
         { "name": "seeking", "type": "Event" },
         { "name": "select", "type": "Event" },
-        { "name": "show", "type": "RelatedEvent" },
         { "name": "stalled", "type": "Event" },
         { "name": "submit", "type": "Event" },
         { "name": "suspend", "type": "Event" },
@@ -5165,11 +5312,8 @@
         { "name": "touchcancel", "type": "TouchEvent" }
       ]
     }, {
-      "name": "GlobalPerformance", "noInterfaceObject": true,
-      "exposed": ["Window", "Worker"],
-      "attributes": [{ "name": "performance", "type": "Performance", "readonly": true }]
-    }, {
       "name": "HashChangeEvent", "extends": "Event",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "type", "type": "DOMString" },
@@ -5211,6 +5355,7 @@
       }]
     }, {
       "name": "History",
+      "exposed": ["Window"],
       "operations": [
         { "name": "back", "type": "void", "arguments": [] },
         { "name": "forward", "type": "void", "arguments": [] },
@@ -5234,12 +5379,14 @@
         }
       ],
       "attributes": [
+        { "name": "index", "type": "unsigned long", "readonly": true },
         { "name": "length", "type": "unsigned long", "readonly": true },
         { "name": "scrollRestoration", "type": "ScrollRestoration" },
         { "name": "state", "type": "any", "readonly": true }
       ]
     }, {
       "name": "HTMLAllCollection",
+      "exposed": ["Window"],
       "anonymousOperations": [{
         "type": "Element", "nullable": true, "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -5254,6 +5401,7 @@
       "attributes": [{ "name": "length", "type": "unsigned long", "readonly": true }]
     }, {
       "name": "HTMLAnchorElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "charset", "type": "DOMString" },
         { "name": "coords", "type": "DOMString" },
@@ -5273,22 +5421,8 @@
       "implements": ["HTMLHyperlinkElementUtils"],
       "elements": [{ "name": "a", "namespace": "HTML" }]
     }, {
-      "name": "HTMLAppletElement", "extends": "HTMLElement",
-      "attributes": [
-        { "name": "align", "type": "DOMString" },
-        { "name": "alt", "type": "DOMString" },
-        { "name": "archive", "type": "DOMString" },
-        { "name": "code", "type": "DOMString" },
-        { "name": "codeBase", "type": "USVString" },
-        { "name": "height", "type": "DOMString" },
-        { "name": "hspace", "type": "unsigned long" },
-        { "name": "name", "type": "DOMString" },
-        { "name": "object", "type": "USVString" },
-        { "name": "vspace", "type": "unsigned long" },
-        { "name": "width", "type": "DOMString" }
-      ]
-    }, {
       "name": "HTMLAreaElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "alt", "type": "DOMString" },
         { "name": "coords", "type": "DOMString" },
@@ -5305,6 +5439,7 @@
       "elements": [{ "name": "area", "namespace": "HTML" }]
     }, {
       "name": "HTMLAudioElement", "extends": "HTMLMediaElement",
+      "exposed": ["Window"],
       "namedConstructor": {
         "name": "Audio",
         "arguments": [{ "name": "src", "type": "DOMString", "optional": true }]
@@ -5312,6 +5447,7 @@
       "elements": [{ "name": "audio", "namespace": "HTML" }]
     }, {
       "name": "HTMLBaseElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "href", "type": "USVString" },
         { "name": "target", "type": "DOMString" }
@@ -5319,6 +5455,7 @@
       "elements": [{ "name": "base", "namespace": "HTML" }]
     }, {
       "name": "HTMLBodyElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "implements": ["WindowEventHandlers"],
       "attributes": [
         { "name": "aLink", "type": "DOMString" },
@@ -5331,10 +5468,12 @@
       "elements": [{ "name": "body", "namespace": "HTML" }]
     }, {
       "name": "HTMLBRElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [{ "name": "clear", "type": "DOMString" }],
       "elements": [{ "name": "br", "namespace": "HTML" }]
     }, {
       "name": "HTMLButtonElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "operations": [
         { "name": "checkValidity", "type": "boolean", "arguments": [] },
         { "name": "reportValidity", "type": "boolean", "arguments": [] },
@@ -5363,6 +5502,7 @@
       "elements": [{ "name": "button", "namespace": "HTML" }]
     }, {
       "name": "HTMLCanvasElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "operations": [
         {
           "name": "getContext", "type": "RenderingContext", "nullable": true,
@@ -5404,18 +5544,22 @@
       "attributes": [{ "name": "length", "type": "unsigned long", "readonly": true }]
     }, {
       "name": "HTMLDataElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [{ "name": "value", "type": "DOMString" }],
       "elements": [{ "name": "data", "namespace": "HTML" }]
     }, {
       "name": "HTMLDataListElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [{ "name": "options", "type": "HTMLCollection", "readonly": true }],
       "elements": [{ "name": "datalist", "namespace": "HTML" }]
     }, {
       "name": "HTMLDetailsElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [{ "name": "open", "type": "boolean" }],
       "elements": [{ "name": "details", "namespace": "HTML" }]
     }, {
       "name": "HTMLDialogElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "operations": [
         {
           "name": "close", "type": "void",
@@ -5431,27 +5575,32 @@
       "elements": [{ "name": "dialog", "namespace": "HTML" }]
     }, {
       "name": "HTMLDirectoryElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [{ "name": "compact", "type": "boolean" }]
     }, {
       "name": "HTMLDivElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [{ "name": "align", "type": "DOMString" }],
       "elements": [{ "name": "div", "namespace": "HTML" }]
     }, {
       "name": "HTMLDListElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [{ "name": "compact", "type": "boolean" }],
       "elements": [{ "name": "dl", "namespace": "HTML" }]
     }, {
       "name": "HTMLElement", "extends": "Element",
+      "exposed": ["Window"],
       "operations": [
         { "name": "blur", "type": "void", "arguments": [] },
         { "name": "click", "type": "void", "arguments": [] },
-        { "name": "focus", "type": "void", "arguments": [] },
-        { "name": "forceSpellCheck", "type": "void", "arguments": [] }
+        {
+          "name": "focus", "type": "void",
+          "arguments": [{ "name": "options", "type": "FocusOptions", "optional": true }]
+        }
       ],
       "attributes": [
         { "name": "accessKey", "type": "DOMString" },
         { "name": "accessKeyLabel", "type": "DOMString", "readonly": true },
-        { "name": "contextMenu", "type": "HTMLMenuElement", "nullable": true },
         { "name": "dataset", "type": "DOMStringMap", "readonly": true },
         { "name": "dir", "type": "DOMString" },
         { "name": "draggable", "type": "boolean" },
@@ -5468,7 +5617,7 @@
         { "name": "title", "type": "DOMString" },
         { "name": "translate", "type": "boolean" }
       ],
-      "implements": ["GlobalEventHandlers", "DocumentAndElementEventHandlers", "ElementContentEditable", "ElementCSSInlineStyle"],
+      "implements": ["GlobalEventHandlers", "DocumentAndElementEventHandlers", "ElementContentEditable", "NoncedElement", "ElementCSSInlineStyle"],
       "elements": [
         { "name": "abbr", "namespace": "HTML" },
         { "name": "address", "namespace": "HTML" },
@@ -5511,6 +5660,7 @@
       ]
     }, {
       "name": "HTMLEmbedElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "operations": [{ "name": "getSVGDocument", "type": "Document", "nullable": true, "arguments": [] }],
       "attributes": [
         { "name": "align", "type": "DOMString" },
@@ -5523,6 +5673,7 @@
       "elements": [{ "name": "embed", "namespace": "HTML" }]
     }, {
       "name": "HTMLFieldSetElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "operations": [
         { "name": "checkValidity", "type": "boolean", "arguments": [] },
         { "name": "reportValidity", "type": "boolean", "arguments": [] },
@@ -5544,6 +5695,7 @@
       "elements": [{ "name": "fieldset", "namespace": "HTML" }]
     }, {
       "name": "HTMLFontElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "color", "type": "DOMString" },
         { "name": "face", "type": "DOMString" },
@@ -5551,12 +5703,14 @@
       ]
     }, {
       "name": "HTMLFormControlsCollection", "extends": "HTMLCollection",
+      "exposed": ["Window"],
       "operations": [{
         "name": "namedItem", "type": "(RadioNodeList or Element)", "nullable": true, "getter": true,
         "arguments": [{ "name": "name", "type": "DOMString" }]
       }]
     }, {
       "name": "HTMLFormElement", "extends": "HTMLElement", "overrideBuiltins": true,
+      "exposed": ["Window"],
       "anonymousOperations": [{
         "type": "Element", "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -5586,6 +5740,7 @@
       "elements": [{ "name": "form", "namespace": "HTML" }]
     }, {
       "name": "HTMLFrameElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "contentDocument", "type": "Document", "nullable": true, "readonly": true },
         { "name": "contentWindow", "type": "WindowProxy", "nullable": true, "readonly": true },
@@ -5600,6 +5755,7 @@
       ]
     }, {
       "name": "HTMLFrameSetElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "cols", "type": "DOMString" },
         { "name": "rows", "type": "DOMString" }
@@ -5607,9 +5763,11 @@
       "implements": ["WindowEventHandlers"]
     }, {
       "name": "HTMLHeadElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "elements": [{ "name": "head", "namespace": "HTML" }]
     }, {
       "name": "HTMLHeadingElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [{ "name": "align", "type": "DOMString" }],
       "elements": [
         { "name": "h1", "namespace": "HTML" },
@@ -5621,6 +5779,7 @@
       ]
     }, {
       "name": "HTMLHRElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "align", "type": "DOMString" },
         { "name": "color", "type": "DOMString" },
@@ -5631,10 +5790,12 @@
       "elements": [{ "name": "hr", "namespace": "HTML" }]
     }, {
       "name": "HTMLHtmlElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [{ "name": "version", "type": "DOMString" }],
       "elements": [{ "name": "html", "namespace": "HTML" }]
     }, {
       "name": "HTMLHyperlinkElementUtils", "noInterfaceObject": true,
+      "exposed": ["Window"],
       "attributes": [
         { "name": "hash", "type": "USVString" },
         { "name": "host", "type": "USVString" },
@@ -5650,6 +5811,7 @@
       ]
     }, {
       "name": "HTMLIFrameElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "operations": [{ "name": "getSVGDocument", "type": "Document", "nullable": true, "arguments": [] }],
       "attributes": [
         { "name": "align", "type": "DOMString" },
@@ -5674,6 +5836,7 @@
       "elements": [{ "name": "iframe", "namespace": "HTML" }]
     }, {
       "name": "HTMLImageElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "namedConstructor": {
         "name": "Image",
         "arguments": [
@@ -5681,6 +5844,7 @@
           { "name": "height", "type": "unsigned long", "optional": true }
         ]
       },
+      "operations": [{ "name": "decode", "type": "Promise<void>", "arguments": [] }],
       "attributes": [
         { "name": "align", "type": "DOMString" },
         { "name": "alt", "type": "DOMString" },
@@ -5709,6 +5873,7 @@
       "elements": [{ "name": "img", "namespace": "HTML" }]
     }, {
       "name": "HTMLInputElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "operations": [
         { "name": "checkValidity", "type": "boolean", "arguments": [] },
         { "name": "reportValidity", "type": "boolean", "arguments": [] },
@@ -5753,7 +5918,7 @@
         { "name": "defaultValue", "type": "DOMString" },
         { "name": "dirName", "type": "DOMString" },
         { "name": "disabled", "type": "boolean" },
-        { "name": "files", "type": "FileList", "nullable": true, "readonly": true },
+        { "name": "files", "type": "FileList", "nullable": true },
         { "name": "form", "type": "HTMLFormElement", "nullable": true, "readonly": true },
         { "name": "formAction", "type": "USVString" },
         { "name": "formEnctype", "type": "DOMString" },
@@ -5794,6 +5959,7 @@
       "elements": [{ "name": "input", "namespace": "HTML" }]
     }, {
       "name": "HTMLLabelElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "control", "type": "HTMLElement", "nullable": true, "readonly": true },
         { "name": "form", "type": "HTMLFormElement", "nullable": true, "readonly": true },
@@ -5802,6 +5968,7 @@
       "elements": [{ "name": "label", "namespace": "HTML" }]
     }, {
       "name": "HTMLLegendElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "align", "type": "DOMString" },
         { "name": "form", "type": "HTMLFormElement", "nullable": true, "readonly": true }
@@ -5809,6 +5976,7 @@
       "elements": [{ "name": "legend", "namespace": "HTML" }]
     }, {
       "name": "HTMLLIElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "type", "type": "DOMString" },
         { "name": "value", "type": "long" }
@@ -5816,6 +5984,7 @@
       "elements": [{ "name": "li", "namespace": "HTML" }]
     }, {
       "name": "HTMLLinkElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "as", "type": "DOMString" },
         { "name": "charset", "type": "DOMString" },
@@ -5824,22 +5993,19 @@
         { "name": "hreflang", "type": "DOMString" },
         { "name": "integrity", "type": "DOMString" },
         { "name": "media", "type": "DOMString" },
-        { "name": "nonce", "type": "DOMString" },
         { "name": "referrerPolicy", "type": "DOMString" },
         { "name": "rel", "type": "DOMString" },
         { "name": "relList", "type": "DOMTokenList", "readonly": true },
         { "name": "rev", "type": "DOMString" },
-        { "name": "scope", "type": "USVString" },
         { "name": "sizes", "type": "DOMTokenList", "readonly": true },
         { "name": "target", "type": "DOMString" },
-        { "name": "type", "type": "DOMString" },
-        { "name": "useCache", "type": "boolean" },
-        { "name": "workerType", "type": "WorkerType" }
+        { "name": "type", "type": "DOMString" }
       ],
       "implements": ["LinkStyle"],
       "elements": [{ "name": "link", "namespace": "HTML" }]
     }, {
       "name": "HTMLMapElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "areas", "type": "HTMLCollection", "readonly": true },
         { "name": "name", "type": "DOMString" }
@@ -5847,6 +6013,7 @@
       "elements": [{ "name": "map", "namespace": "HTML" }]
     }, {
       "name": "HTMLMarqueeElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "operations": [
         { "name": "start", "type": "void", "arguments": [] },
         { "name": "stop", "type": "void", "arguments": [] }
@@ -5869,6 +6036,7 @@
       ]
     }, {
       "name": "HTMLMediaElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "constants": [
         { "name": "HAVE_CURRENT_DATA", "type": "unsigned short", "value": "2" },
         { "name": "HAVE_ENOUGH_DATA", "type": "unsigned short", "value": "4" },
@@ -5942,26 +6110,15 @@
       ]
     }, {
       "name": "HTMLMenuElement", "extends": "HTMLElement",
-      "attributes": [
-        { "name": "compact", "type": "boolean" },
-        { "name": "label", "type": "DOMString" },
-        { "name": "type", "type": "DOMString" }
-      ],
+      "exposed": ["Window"],
+      "attributes": [{ "name": "compact", "type": "boolean" }],
       "elements": [{ "name": "menu", "namespace": "HTML" }]
     }, {
-      "name": "HTMLMenuItemElement", "extends": "HTMLElement",
-      "attributes": [
-        { "name": "checked", "type": "boolean" },
-        { "name": "default", "type": "boolean" },
-        { "name": "disabled", "type": "boolean" },
-        { "name": "icon", "type": "USVString" },
-        { "name": "label", "type": "DOMString" },
-        { "name": "radiogroup", "type": "DOMString" },
-        { "name": "type", "type": "DOMString" }
-      ],
+      "name": "HTMLMenuItemElement", "partial": true,
       "elements": [{ "name": "menuitem", "namespace": "HTML" }]
     }, {
       "name": "HTMLMetaElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "content", "type": "DOMString" },
         { "name": "httpEquiv", "type": "DOMString" },
@@ -5971,6 +6128,7 @@
       "elements": [{ "name": "meta", "namespace": "HTML" }]
     }, {
       "name": "HTMLMeterElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "high", "type": "double" },
         { "name": "labels", "type": "NodeList", "readonly": true },
@@ -5983,6 +6141,7 @@
       "elements": [{ "name": "meter", "namespace": "HTML" }]
     }, {
       "name": "HTMLModElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "cite", "type": "USVString" },
         { "name": "dateTime", "type": "DOMString" }
@@ -5993,6 +6152,7 @@
       ]
     }, {
       "name": "HTMLObjectElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "operations": [
         { "name": "checkValidity", "type": "boolean", "arguments": [] },
         { "name": "getSVGDocument", "type": "Document", "nullable": true, "arguments": [] },
@@ -6030,6 +6190,7 @@
       "elements": [{ "name": "object", "namespace": "HTML" }]
     }, {
       "name": "HTMLOListElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "compact", "type": "boolean" },
         { "name": "reversed", "type": "boolean" },
@@ -6039,6 +6200,7 @@
       "elements": [{ "name": "ol", "namespace": "HTML" }]
     }, {
       "name": "HTMLOptGroupElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "disabled", "type": "boolean" },
         { "name": "label", "type": "DOMString" }
@@ -6046,6 +6208,7 @@
       "elements": [{ "name": "optgroup", "namespace": "HTML" }]
     }, {
       "name": "HTMLOptionElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "namedConstructor": {
         "name": "Option",
         "arguments": [
@@ -6068,6 +6231,7 @@
       "elements": [{ "name": "option", "namespace": "HTML" }]
     }, {
       "name": "HTMLOptionsCollection", "extends": "HTMLCollection",
+      "exposed": ["Window"],
       "anonymousOperations": [{
         "type": "void", "setter": true,
         "arguments": [
@@ -6091,6 +6255,7 @@
       ]
     }, {
       "name": "HTMLOutputElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "operations": [
         { "name": "checkValidity", "type": "boolean", "arguments": [] },
         { "name": "reportValidity", "type": "boolean", "arguments": [] },
@@ -6114,10 +6279,12 @@
       "elements": [{ "name": "output", "namespace": "HTML" }]
     }, {
       "name": "HTMLParagraphElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [{ "name": "align", "type": "DOMString" }],
       "elements": [{ "name": "p", "namespace": "HTML" }]
     }, {
       "name": "HTMLParamElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "name", "type": "DOMString" },
         { "name": "type", "type": "DOMString" },
@@ -6127,13 +6294,16 @@
       "elements": [{ "name": "param", "namespace": "HTML" }]
     }, {
       "name": "HTMLPictureElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "elements": [{ "name": "picture", "namespace": "HTML" }]
     }, {
       "name": "HTMLPreElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [{ "name": "width", "type": "long" }],
       "elements": [{ "name": "pre", "namespace": "HTML" }]
     }, {
       "name": "HTMLProgressElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "labels", "type": "NodeList", "readonly": true },
         { "name": "max", "type": "double" },
@@ -6143,6 +6313,7 @@
       "elements": [{ "name": "progress", "namespace": "HTML" }]
     }, {
       "name": "HTMLQuoteElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [{ "name": "cite", "type": "USVString" }],
       "elements": [
         { "name": "blockquote", "namespace": "HTML" },
@@ -6150,6 +6321,7 @@
       ]
     }, {
       "name": "HTMLScriptElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "async", "type": "boolean" },
         { "name": "charset", "type": "DOMString" },
@@ -6159,7 +6331,6 @@
         { "name": "htmlFor", "type": "DOMString" },
         { "name": "integrity", "type": "DOMString" },
         { "name": "noModule", "type": "boolean" },
-        { "name": "nonce", "type": "DOMString" },
         { "name": "src", "type": "USVString" },
         { "name": "text", "type": "DOMString" },
         { "name": "type", "type": "DOMString" }
@@ -6167,6 +6338,7 @@
       "elements": [{ "name": "script", "namespace": "HTML" }]
     }, {
       "name": "HTMLSelectElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "anonymousOperations": [{
         "type": "void", "setter": true,
         "arguments": [
@@ -6224,6 +6396,7 @@
       "elements": [{ "name": "select", "namespace": "HTML" }]
     }, {
       "name": "HTMLSlotElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "operations": [{
         "name": "assignedNodes", "type": "sequence<Node>",
         "arguments": [{ "name": "options", "type": "AssignedNodesOptions", "optional": true }]
@@ -6232,6 +6405,7 @@
       "elements": [{ "name": "slot", "namespace": "HTML" }]
     }, {
       "name": "HTMLSourceElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "media", "type": "DOMString" },
         { "name": "sizes", "type": "DOMString" },
@@ -6242,22 +6416,25 @@
       "elements": [{ "name": "source", "namespace": "HTML" }]
     }, {
       "name": "HTMLSpanElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "elements": [{ "name": "span", "namespace": "HTML" }]
     }, {
       "name": "HTMLStyleElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "media", "type": "DOMString" },
-        { "name": "nonce", "type": "DOMString" },
         { "name": "type", "type": "DOMString" }
       ],
       "implements": ["LinkStyle"],
       "elements": [{ "name": "style", "namespace": "HTML" }]
     }, {
       "name": "HTMLTableCaptionElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [{ "name": "align", "type": "DOMString" }],
       "elements": [{ "name": "caption", "namespace": "HTML" }]
     }, {
       "name": "HTMLTableCellElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "abbr", "type": "DOMString" },
         { "name": "align", "type": "DOMString" },
@@ -6281,6 +6458,7 @@
       ]
     }, {
       "name": "HTMLTableColElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "align", "type": "DOMString" },
         { "name": "ch", "type": "DOMString" },
@@ -6295,6 +6473,7 @@
       ]
     }, {
       "name": "HTMLTableElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "operations": [
         { "name": "createCaption", "type": "HTMLTableCaptionElement", "arguments": [] },
         { "name": "createTBody", "type": "HTMLTableSectionElement", "arguments": [] },
@@ -6331,6 +6510,7 @@
       "elements": [{ "name": "table", "namespace": "HTML" }]
     }, {
       "name": "HTMLTableRowElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "operations": [{
         "name": "deleteCell", "type": "void",
         "arguments": [{ "name": "index", "type": "long" }]
@@ -6351,6 +6531,7 @@
       "elements": [{ "name": "tr", "namespace": "HTML" }]
     }, {
       "name": "HTMLTableSectionElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "operations": [{
         "name": "deleteRow", "type": "void",
         "arguments": [{ "name": "index", "type": "long" }]
@@ -6372,10 +6553,12 @@
       ]
     }, {
       "name": "HTMLTemplateElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [{ "name": "content", "type": "DocumentFragment", "readonly": true }],
       "elements": [{ "name": "template", "namespace": "HTML" }]
     }, {
       "name": "HTMLTextAreaElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "operations": [
         { "name": "checkValidity", "type": "boolean", "arguments": [] },
         { "name": "reportValidity", "type": "boolean", "arguments": [] },
@@ -6434,14 +6617,17 @@
       "elements": [{ "name": "textarea", "namespace": "HTML" }]
     }, {
       "name": "HTMLTimeElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [{ "name": "dateTime", "type": "DOMString" }],
       "elements": [{ "name": "time", "namespace": "HTML" }]
     }, {
       "name": "HTMLTitleElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [{ "name": "text", "type": "DOMString" }],
       "elements": [{ "name": "title", "namespace": "HTML" }]
     }, {
       "name": "HTMLTrackElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "constants": [
         { "name": "ERROR", "type": "unsigned short", "value": "3" },
         { "name": "LOADED", "type": "unsigned short", "value": "2" },
@@ -6460,15 +6646,18 @@
       "elements": [{ "name": "track", "namespace": "HTML" }]
     }, {
       "name": "HTMLUListElement", "extends": "HTMLElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "compact", "type": "boolean" },
         { "name": "type", "type": "DOMString" }
       ],
       "elements": [{ "name": "ul", "namespace": "HTML" }]
-    },
-    { "name": "HTMLUnknownElement", "extends": "HTMLElement" },
-    {
+    }, {
+      "name": "HTMLUnknownElement", "extends": "HTMLElement",
+      "exposed": ["Window"]
+    }, {
       "name": "HTMLVideoElement", "extends": "HTMLMediaElement",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "height", "type": "unsigned long" },
         { "name": "playsInline", "type": "boolean" },
@@ -6777,6 +6966,7 @@
       ]
     }, {
       "name": "IIRFilterNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -6801,6 +6991,7 @@
       ]
     }, {
       "name": "ImageBitmapRenderingContext",
+      "exposed": ["Window"],
       "operations": [{
         "name": "transferFromImageBitmap", "type": "void",
         "arguments": [{ "name": "bitmap", "type": "ImageBitmap", "nullable": true }]
@@ -6837,23 +7028,11 @@
           { "name": "eventInitDict", "type": "InputEventInit", "optional": true }
         ]
       }],
+      "exposed": ["Window"],
       "attributes": [
         { "name": "data", "type": "DOMString", "nullable": true, "readonly": true },
         { "name": "isComposing", "type": "boolean", "readonly": true }
       ]
-    }, {
-      "name": "InstallEvent", "extends": "ExtendableEvent",
-      "constructors": [{
-        "arguments": [
-          { "name": "type", "type": "DOMString" },
-          { "name": "eventInitDict", "type": "ExtendableEventInit", "optional": true }
-        ]
-      }],
-      "exposed": ["ServiceWorker"],
-      "operations": [{
-        "name": "registerForeignFetch", "type": "void",
-        "arguments": [{ "name": "options", "type": "ForeignFetchOptions" }]
-      }]
     }, {
       "name": "IntersectionObserver",
       "constructors": [{
@@ -6902,6 +7081,7 @@
           { "name": "eventInitDict", "type": "KeyboardEventInit", "optional": true }
         ]
       }],
+      "exposed": ["Window"],
       "constants": [
         { "name": "DOM_KEY_LOCATION_LEFT", "type": "unsigned long", "value": "1" },
         { "name": "DOM_KEY_LOCATION_NUMPAD", "type": "unsigned long", "value": "3" },
@@ -6925,9 +7105,11 @@
       ]
     }, {
       "name": "LinkStyle", "noInterfaceObject": true,
+      "exposed": ["Window"],
       "attributes": [{ "name": "sheet", "type": "StyleSheet", "nullable": true, "readonly": true }]
     }, {
       "name": "Location",
+      "exposed": ["Window"],
       "operations": [
         {
           "name": "assign", "type": "void",
@@ -6954,6 +7136,7 @@
     }, {
       "name": "MediaDeviceInfo",
       "exposed": ["Window"],
+      "operations": [{ "name": "toJSON", "type": "object", "arguments": [] }],
       "attributes": [
         { "name": "deviceId", "type": "DOMString", "readonly": true },
         { "name": "groupId", "type": "DOMString", "readonly": true },
@@ -6974,12 +7157,14 @@
       "attributes": [{ "name": "ondevicechange", "type": "EventHandler" }]
     }, {
       "name": "MediaElementAudioSourceNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
           { "name": "options", "type": "MediaElementAudioSourceOptions" }
         ]
-      }]
+      }],
+      "attributes": [{ "name": "mediaElement", "type": "HTMLMediaElement", "readonly": true }]
     }, {
       "name": "MediaEncryptedEvent", "extends": "Event",
       "constructors": [{
@@ -6994,6 +7179,7 @@
       ]
     }, {
       "name": "MediaError",
+      "exposed": ["Window"],
       "constants": [
         { "name": "MEDIA_ERR_ABORTED", "type": "unsigned short", "value": "1" },
         { "name": "MEDIA_ERR_DECODE", "type": "unsigned short", "value": "3" },
@@ -7077,6 +7263,7 @@
       "attributes": [{ "name": "keySystem", "type": "DOMString", "readonly": true }]
     }, {
       "name": "MediaList",
+      "exposed": ["Window"],
       "operations": [{
         "name": "appendMedium", "type": "void",
         "arguments": [{ "name": "medium", "type": "CSSOMString" }]
@@ -7195,6 +7382,7 @@
       ]
     }, {
       "name": "MediaStreamAudioDestinationNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -7204,12 +7392,14 @@
       "attributes": [{ "name": "stream", "type": "MediaStream", "readonly": true }]
     }, {
       "name": "MediaStreamAudioSourceNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
           { "name": "options", "type": "MediaStreamAudioSourceOptions" }
         ]
-      }]
+      }],
+      "attributes": [{ "name": "mediaStream", "type": "MediaStream", "readonly": true }]
     }, {
       "name": "MediaStreamTrack", "extends": "EventTarget",
       "exposed": ["Window"],
@@ -7241,6 +7431,7 @@
       "events": [{ "name": "isolationchange", "type": "Event" }]
     }, {
       "name": "MediaStreamTrackAudioSourceNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "AudioContext" },
@@ -7273,7 +7464,7 @@
           { "name": "eventInitDict", "type": "MessageEventInit", "optional": true }
         ]
       }],
-      "exposed": ["Window", "Worker"],
+      "exposed": ["Window", "Worker", "AudioWorklet"],
       "operations": [{
         "name": "initMessageEvent", "type": "void",
         "arguments": [
@@ -7296,7 +7487,7 @@
       ]
     }, {
       "name": "MessagePort", "extends": "EventTarget",
-      "exposed": ["Window", "Worker"],
+      "exposed": ["Window", "Worker", "AudioWorklet"],
       "operations": [
         { "name": "close", "type": "void", "arguments": [] },
         {
@@ -7315,6 +7506,7 @@
       "events": [{ "name": "messageerror", "type": "MessageEvent" }]
     }, {
       "name": "MimeType",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "description", "type": "DOMString", "readonly": true },
         { "name": "enabledPlugin", "type": "Plugin", "readonly": true },
@@ -7323,6 +7515,7 @@
       ]
     }, {
       "name": "MimeTypeArray",
+      "exposed": ["Window"],
       "operations": [{
         "name": "item", "type": "MimeType", "nullable": true, "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -7339,6 +7532,7 @@
           { "name": "eventInitDict", "type": "MouseEventInit", "optional": true }
         ]
       }],
+      "exposed": ["Window"],
       "operations": [{
         "name": "getModifierState", "type": "boolean",
         "arguments": [{ "name": "keyArg", "type": "DOMString" }]
@@ -7367,6 +7561,7 @@
       "constructors": [{
         "arguments": [{ "name": "callback", "type": "MutationCallback" }]
       }],
+      "exposed": ["Window"],
       "operations": [
         { "name": "disconnect", "type": "void", "arguments": [] },
         {
@@ -7438,6 +7633,7 @@
       ]
     }, {
       "name": "Navigator",
+      "exposed": ["Window"],
       "implements": ["NavigatorID", "NavigatorLanguage", "NavigatorOnLine", "NavigatorContentUtils", "NavigatorCookies", "NavigatorPlugins", "NavigatorConcurrentHardware", "NavigatorUserMedia"],
       "operations": [
         { "name": "getGamepads", "type": "sequence<Gamepad?>", "arguments": [] },
@@ -7456,6 +7652,8 @@
         }
       ],
       "attributes": [
+        { "name": "clipboard", "type": "Clipboard", "readonly": true },
+        { "name": "clipboard", "type": "Clipboard", "readonly": true },
         { "name": "geolocation", "type": "Geolocation", "readonly": true },
         { "name": "maxTouchPoints", "type": "long", "readonly": true },
         { "name": "serviceWorker", "type": "ServiceWorkerContainer", "readonly": true }
@@ -7466,37 +7664,13 @@
       "attributes": [{ "name": "hardwareConcurrency", "type": "unsigned long long", "readonly": true }]
     }, {
       "name": "NavigatorContentUtils", "noInterfaceObject": true,
+      "exposed": ["Window"],
       "operations": [{
-        "name": "isContentHandlerRegistered", "type": "DOMString",
-        "arguments": [
-          { "name": "mimeType", "type": "DOMString" },
-          { "name": "url", "type": "USVString" }
-        ]
-      }, {
-        "name": "isProtocolHandlerRegistered", "type": "DOMString",
-        "arguments": [
-          { "name": "scheme", "type": "DOMString" },
-          { "name": "url", "type": "USVString" }
-        ]
-      }, {
-        "name": "registerContentHandler", "type": "void",
-        "arguments": [
-          { "name": "mimeType", "type": "DOMString" },
-          { "name": "url", "type": "USVString" },
-          { "name": "title", "type": "DOMString" }
-        ]
-      }, {
         "name": "registerProtocolHandler", "type": "void",
         "arguments": [
           { "name": "scheme", "type": "DOMString" },
           { "name": "url", "type": "USVString" },
           { "name": "title", "type": "DOMString" }
-        ]
-      }, {
-        "name": "unregisterContentHandler", "type": "void",
-        "arguments": [
-          { "name": "mimeType", "type": "DOMString" },
-          { "name": "url", "type": "USVString" }
         ]
       }, {
         "name": "unregisterProtocolHandler", "type": "void",
@@ -7507,6 +7681,7 @@
       }]
     }, {
       "name": "NavigatorCookies", "noInterfaceObject": true,
+      "exposed": ["Window"],
       "attributes": [{ "name": "cookieEnabled", "type": "boolean", "readonly": true }]
     }, {
       "name": "NavigatorID", "noInterfaceObject": true,
@@ -7551,6 +7726,7 @@
       "attributes": [{ "name": "onLine", "type": "boolean", "readonly": true }]
     }, {
       "name": "NavigatorPlugins", "noInterfaceObject": true,
+      "exposed": ["Window"],
       "operations": [{ "name": "javaEnabled", "type": "boolean", "arguments": [] }],
       "attributes": [
         { "name": "mimeTypes", "type": "MimeTypeArray", "readonly": true },
@@ -7684,6 +7860,9 @@
       }],
       "attributes": [{ "name": "length", "type": "unsigned long", "readonly": true }]
     }, {
+      "name": "NoncedElement", "noInterfaceObject": true,
+      "attributes": [{ "name": "nonce", "type": "DOMString" }]
+    }, {
       "name": "NonDocumentTypeChildNode", "noInterfaceObject": true,
       "exposed": ["Window"],
       "attributes": [
@@ -7764,6 +7943,7 @@
     { "name": "OES_texture_half_float_linear", "noInterfaceObject": true },
     {
       "name": "OfflineAudioCompletionEvent", "extends": "Event",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "type", "type": "DOMString" },
@@ -7773,7 +7953,10 @@
       "attributes": [{ "name": "renderedBuffer", "type": "AudioBuffer", "readonly": true }]
     }, {
       "name": "OfflineAudioContext", "extends": "BaseAudioContext",
+      "exposed": ["Window"],
       "constructors": [{
+        "arguments": [{ "name": "contextOptions", "type": "OfflineAudioContextOptions" }]
+      }, {
         "arguments": [
           { "name": "numberOfChannels", "type": "unsigned long" },
           { "name": "length", "type": "unsigned long" },
@@ -7825,6 +8008,7 @@
       "implements": ["CanvasState", "CanvasTransform", "CanvasCompositing", "CanvasImageSmoothing", "CanvasFillStrokeStyles", "CanvasShadowStyles", "CanvasFilters", "CanvasRect", "CanvasDrawPath", "CanvasDrawImage", "CanvasImageData", "CanvasPathDrawingStyles", "CanvasPath"]
     }, {
       "name": "OscillatorNode", "extends": "AudioScheduledSourceNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -7852,6 +8036,7 @@
       "attributes": [{ "name": "error", "type": "OverconstrainedError", "nullable": true, "readonly": true }]
     }, {
       "name": "PageTransitionEvent", "extends": "Event",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "type", "type": "DOMString" },
@@ -7861,6 +8046,7 @@
       "attributes": [{ "name": "persisted", "type": "boolean", "readonly": true }]
     }, {
       "name": "PannerNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -7940,12 +8126,14 @@
         "name": "addPath", "type": "void",
         "arguments": [
           { "name": "path", "type": "Path2D" },
-          { "name": "transform", "type": "DOMMatrixInit", "optional": true }
+          { "name": "transform", "type": "DOMMatrix2DInit", "optional": true }
         ]
       }],
       "implements": ["CanvasPath"]
     }, {
       "name": "PaymentAddress",
+      "exposed": ["Window"],
+      "operations": [{ "name": "toJSON", "type": "object", "arguments": [] }],
       "attributes": [
         { "name": "addressLine", "type": "FrozenArray<DOMString>", "readonly": true },
         { "name": "city", "type": "DOMString", "readonly": true },
@@ -7968,6 +8156,7 @@
           { "name": "options", "type": "PaymentOptions", "optional": true }
         ]
       }],
+      "exposed": ["Window"],
       "operations": [
         { "name": "abort", "type": "Promise<void>", "arguments": [] },
         { "name": "canMakePayment", "type": "Promise<boolean>", "arguments": [] },
@@ -7989,16 +8178,21 @@
           { "name": "eventInitDict", "type": "PaymentRequestUpdateEventInit", "optional": true }
         ]
       }],
+      "exposed": ["Window"],
       "operations": [{
         "name": "updateWith", "type": "void",
         "arguments": [{ "name": "detailsPromise", "type": "Promise<PaymentDetailsUpdate>" }]
       }]
     }, {
       "name": "PaymentResponse",
-      "operations": [{
-        "name": "complete", "type": "Promise<void>",
-        "arguments": [{ "name": "result", "type": "PaymentComplete", "optional": true, "default": "\"unknown\"" }]
-      }],
+      "exposed": ["Window"],
+      "operations": [
+        {
+          "name": "complete", "type": "Promise<void>",
+          "arguments": [{ "name": "result", "type": "PaymentComplete", "optional": true, "default": "\"unknown\"" }]
+        },
+        { "name": "toJSON", "type": "object", "arguments": [] }
+      ],
       "attributes": [
         { "name": "details", "type": "object", "readonly": true },
         { "name": "methodName", "type": "DOMString", "readonly": true },
@@ -8046,7 +8240,8 @@
         {
           "name": "setResourceTimingBufferSize", "type": "void",
           "arguments": [{ "name": "maxSize", "type": "unsigned long" }]
-        }
+        },
+        { "name": "toJSON", "type": "object", "arguments": [] }
       ],
       "attributes": [
         {
@@ -8054,6 +8249,7 @@
           "exposed": ["Window"]
         },
         { "name": "onresourcetimingbufferfull", "type": "EventHandler", "eventHandler": "resourcetimingbufferfull" },
+        { "name": "timeOrigin", "type": "DOMHighResTimeStamp", "readonly": true },
         {
           "name": "timing", "type": "PerformanceTiming", "readonly": true,
           "exposed": ["Window"]
@@ -8081,12 +8277,15 @@
         { "name": "TYPE_RELOAD", "type": "unsigned short", "value": "1" },
         { "name": "TYPE_RESERVED", "type": "unsigned short", "value": "255" }
       ],
+      "operations": [{ "name": "toJSON", "type": "object", "arguments": [] }],
       "attributes": [
         { "name": "redirectCount", "type": "unsigned short", "readonly": true },
         { "name": "type", "type": "unsigned short", "readonly": true }
       ]
     }, {
       "name": "PerformanceNavigationTiming", "extends": "PerformanceResourceTiming",
+      "exposed": ["Window"],
+      "operations": [{ "name": "toJSON", "type": "object", "arguments": [] }],
       "attributes": [
         { "name": "domComplete", "type": "DOMHighResTimeStamp", "readonly": true },
         { "name": "domContentLoadedEventEnd", "type": "DOMHighResTimeStamp", "readonly": true },
@@ -8148,6 +8347,7 @@
     }, {
       "name": "PerformanceTiming",
       "exposed": ["Window"],
+      "operations": [{ "name": "toJSON", "type": "object", "arguments": [] }],
       "attributes": [
         { "name": "connectEnd", "type": "unsigned long long", "readonly": true },
         { "name": "connectStart", "type": "unsigned long long", "readonly": true },
@@ -8173,6 +8373,7 @@
       ]
     }, {
       "name": "PeriodicWave",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -8181,6 +8382,7 @@
       }]
     }, {
       "name": "Plugin",
+      "exposed": ["Window"],
       "operations": [{
         "name": "item", "type": "MimeType", "nullable": true, "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -8196,6 +8398,7 @@
       ]
     }, {
       "name": "PluginArray",
+      "exposed": ["Window"],
       "operations": [{
         "name": "item", "type": "Plugin", "nullable": true, "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -8227,6 +8430,7 @@
       ]
     }, {
       "name": "PopStateEvent", "extends": "Event",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "type", "type": "DOMString" },
@@ -8324,6 +8528,7 @@
           "name": "getKey", "type": "ArrayBuffer", "nullable": true,
           "arguments": [{ "name": "name", "type": "PushEncryptionKeyName" }]
         },
+        { "name": "toJSON", "type": "PushSubscriptionJSON", "arguments": [] },
         { "name": "unsubscribe", "type": "Promise<boolean>", "arguments": [] }
       ],
       "attributes": [
@@ -8353,6 +8558,7 @@
       ]
     }, {
       "name": "RadioNodeList", "extends": "NodeList",
+      "exposed": ["Window"],
       "attributes": [{ "name": "value", "type": "DOMString" }]
     }, {
       "name": "Range",
@@ -8468,15 +8674,6 @@
       ],
       "attributes": [{ "name": "closed", "type": "boolean", "readonly": true }]
     }, {
-      "name": "RelatedEvent", "extends": "Event",
-      "constructors": [{
-        "arguments": [
-          { "name": "type", "type": "DOMString" },
-          { "name": "eventInitDict", "type": "RelatedEventInit", "optional": true }
-        ]
-      }],
-      "attributes": [{ "name": "relatedTarget", "type": "EventTarget", "nullable": true, "readonly": true }]
-    }, {
       "name": "Request",
       "constructors": [{
         "arguments": [
@@ -8498,7 +8695,7 @@
         { "name": "redirect", "type": "RequestRedirect", "readonly": true },
         { "name": "referrer", "type": "USVString", "readonly": true },
         { "name": "referrerPolicy", "type": "ReferrerPolicy", "readonly": true },
-        { "name": "type", "type": "RequestType", "readonly": true },
+        { "name": "signal", "type": "AbortSignal", "readonly": true },
         { "name": "url", "type": "USVString", "readonly": true }
       ],
       "implements": ["Body"]
@@ -8535,13 +8732,15 @@
       "implements": ["Body"]
     }, {
       "name": "RTCCertificate",
+      "exposed": ["Window"],
       "operations": [
-        { "name": "getAlgorithm", "type": "AlgorithmIdentifier", "arguments": [] },
-        { "name": "getFingerprints", "type": "sequence<RTCDtlsFingerprint>", "arguments": [] }
+        { "name": "getFingerprints", "type": "sequence<RTCDtlsFingerprint>", "arguments": [] },
+        { "name": "getSupportedAlgorithms", "type": "sequence<AlgorithmIdentifier>", "arguments": [], "static": true }
       ],
       "attributes": [{ "name": "expires", "type": "DOMTimeStamp", "readonly": true }]
     }, {
       "name": "RTCDataChannel", "extends": "EventTarget",
+      "exposed": ["Window"],
       "operations": [
         { "name": "close", "type": "void", "arguments": [] },
         {
@@ -8592,11 +8791,14 @@
           { "name": "eventInitDict", "type": "RTCDataChannelEventInit" }
         ]
       }],
+      "exposed": ["Window"],
       "attributes": [{ "name": "channel", "type": "RTCDataChannel", "readonly": true }]
     }, {
-      "name": "RTCDtlsTransport",
+      "name": "RTCDtlsTransport", "extends": "EventTarget",
+      "exposed": ["Window"],
       "operations": [{ "name": "getRemoteCertificates", "type": "sequence<ArrayBuffer>", "arguments": [] }],
       "attributes": [
+        { "name": "onerror", "type": "EventHandler" },
         { "name": "onstatechange", "type": "EventHandler", "eventHandler": "statechange" },
         { "name": "state", "type": "RTCDtlsTransportState", "readonly": true },
         { "name": "transport", "type": "RTCIceTransport", "readonly": true }
@@ -8604,6 +8806,7 @@
       "events": [{ "name": "statechange", "type": "Event" }]
     }, {
       "name": "RTCDTMFSender", "extends": "EventTarget",
+      "exposed": ["Window"],
       "operations": [{
         "name": "insertDTMF", "type": "void",
         "arguments": [
@@ -8613,6 +8816,7 @@
         ]
       }],
       "attributes": [
+        { "name": "canInsertDTMF", "type": "boolean", "readonly": true },
         { "name": "ontonechange", "type": "EventHandler", "eventHandler": "tonechange" },
         { "name": "toneBuffer", "type": "DOMString", "readonly": true }
       ],
@@ -8625,6 +8829,7 @@
           { "name": "eventInitDict", "type": "RTCDTMFToneChangeEventInit" }
         ]
       }],
+      "exposed": ["Window"],
       "attributes": [{ "name": "tone", "type": "DOMString", "readonly": true }]
     }, {
       "name": "RTCErrorEvent", "extends": "Event",
@@ -8639,10 +8844,13 @@
     }, {
       "name": "RTCIceCandidate",
       "constructors": [{
-        "arguments": [{ "name": "candidateInitDict", "type": "RTCIceCandidateInit" }]
+        "arguments": [{ "name": "candidateInitDict", "type": "RTCIceCandidateInit", "optional": true }]
       }],
+      "exposed": ["Window"],
+      "operations": [{ "name": "toJSON", "type": "RTCIceCandidateInit", "arguments": [] }],
       "attributes": [
         { "name": "candidate", "type": "DOMString", "readonly": true },
+        { "name": "component", "type": "RTCIceComponent", "nullable": true, "readonly": true },
         { "name": "foundation", "type": "DOMString", "nullable": true, "readonly": true },
         { "name": "ip", "type": "DOMString", "nullable": true, "readonly": true },
         { "name": "port", "type": "unsigned short", "nullable": true, "readonly": true },
@@ -8654,10 +8862,11 @@
         { "name": "sdpMLineIndex", "type": "unsigned short", "nullable": true, "readonly": true },
         { "name": "tcpType", "type": "RTCIceTcpCandidateType", "nullable": true, "readonly": true },
         { "name": "type", "type": "RTCIceCandidateType", "nullable": true, "readonly": true },
-        { "name": "ufrag", "type": "DOMString", "nullable": true, "readonly": true }
+        { "name": "usernameFragment", "type": "DOMString", "nullable": true, "readonly": true }
       ]
     }, {
-      "name": "RTCIceTransport",
+      "name": "RTCIceTransport", "extends": "EventTarget",
+      "exposed": ["Window"],
       "operations": [
         { "name": "getLocalCandidates", "type": "sequence<RTCIceCandidate>", "arguments": [] },
         { "name": "getLocalParameters", "type": "RTCIceParameters", "nullable": true, "arguments": [] },
@@ -8687,6 +8896,7 @@
           { "name": "name", "type": "DOMString" }
         ]
       }],
+      "exposed": ["Window"],
       "attributes": [
         { "name": "idp", "type": "DOMString" },
         { "name": "name", "type": "DOMString" }
@@ -8707,6 +8917,7 @@
       "constructors": [{
         "arguments": [{ "name": "configuration", "type": "RTCConfiguration", "optional": true }]
       }],
+      "exposed": ["Window"],
       "operations": [
         {
           "name": "addIceCandidate", "type": "Promise<void>",
@@ -8817,7 +9028,6 @@
         { "name": "localDescription", "type": "RTCSessionDescription", "nullable": true, "readonly": true },
         { "name": "onconnectionstatechange", "type": "EventHandler", "eventHandler": "connectionstatechange" },
         { "name": "ondatachannel", "type": "EventHandler", "eventHandler": "datachannel" },
-        { "name": "onfingerprintfailure", "type": "EventHandler", "eventHandler": "fingerprintfailure" },
         { "name": "onicecandidate", "type": "EventHandler", "eventHandler": "icecandidate" },
         { "name": "onicecandidateerror", "type": "EventHandler", "eventHandler": "icecandidateerror" },
         { "name": "oniceconnectionstatechange", "type": "EventHandler", "eventHandler": "iceconnectionstatechange" },
@@ -8840,7 +9050,6 @@
         { "name": "iceconnectionstatechange", "type": "Event" },
         { "name": "icegatheringstatechange", "type": "Event" },
         { "name": "connectionstatechange", "type": "Event" },
-        { "name": "fingerprintfailure", "type": "Event" },
         { "name": "track", "type": "RTCTrackEvent" },
         { "name": "datachannel", "type": "RTCDataChannelEvent" }
       ]
@@ -8852,6 +9061,7 @@
           { "name": "eventInitDict", "type": "RTCPeerConnectionIceErrorEventInit" }
         ]
       }],
+      "exposed": ["Window"],
       "attributes": [
         { "name": "errorCode", "type": "unsigned short", "readonly": true },
         { "name": "errorText", "type": "USVString", "readonly": true },
@@ -8866,12 +9076,14 @@
           { "name": "eventInitDict", "type": "RTCPeerConnectionIceEventInit", "optional": true }
         ]
       }],
+      "exposed": ["Window"],
       "attributes": [
         { "name": "candidate", "type": "RTCIceCandidate", "nullable": true, "readonly": true },
         { "name": "url", "type": "DOMString", "nullable": true, "readonly": true }
       ]
     }, {
       "name": "RTCRtpContributingSource",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "audioLevel", "type": "byte", "nullable": true, "readonly": true },
         { "name": "source", "type": "unsigned long", "readonly": true },
@@ -8879,6 +9091,7 @@
       ]
     }, {
       "name": "RTCRtpReceiver",
+      "exposed": ["Window"],
       "operations": [
         {
           "name": "getCapabilities", "type": "RTCRtpCapabilities", "static": true,
@@ -8896,6 +9109,7 @@
       ]
     }, {
       "name": "RTCRtpSender",
+      "exposed": ["Window"],
       "operations": [
         {
           "name": "getCapabilities", "type": "RTCRtpCapabilities", "static": true,
@@ -8905,7 +9119,7 @@
         { "name": "getStats", "type": "Promise<RTCStatsReport>", "arguments": [] },
         {
           "name": "replaceTrack", "type": "Promise<void>",
-          "arguments": [{ "name": "withTrack", "type": "MediaStreamTrack" }]
+          "arguments": [{ "name": "withTrack", "type": "MediaStreamTrack", "nullable": true }]
         }, {
           "name": "setParameters", "type": "Promise<void>",
           "arguments": [{ "name": "parameters", "type": "RTCRtpParameters", "optional": true }]
@@ -8919,6 +9133,7 @@
       ]
     }, {
       "name": "RTCRtpSynchronizationSource",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "audioLevel", "type": "byte", "readonly": true },
         { "name": "source", "type": "unsigned long", "readonly": true },
@@ -8927,6 +9142,7 @@
       ]
     }, {
       "name": "RTCRtpTransceiver",
+      "exposed": ["Window"],
       "operations": [
         {
           "name": "setCodecPreferences", "type": "void",
@@ -8947,8 +9163,11 @@
       ]
     }, {
       "name": "RTCSctpTransport",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "maxMessageSize", "type": "unsigned long", "readonly": true },
+        { "name": "onstatechange", "type": "EventHandler" },
+        { "name": "state", "type": "RTCSctpTransportState", "readonly": true },
         { "name": "transport", "type": "RTCDtlsTransport", "readonly": true }
       ]
     }, {
@@ -8956,13 +9175,16 @@
       "constructors": [{
         "arguments": [{ "name": "descriptionInitDict", "type": "RTCSessionDescriptionInit" }]
       }],
+      "exposed": ["Window"],
+      "operations": [{ "name": "toJSON", "type": "object", "arguments": [] }],
       "attributes": [
         { "name": "sdp", "type": "DOMString", "readonly": true },
         { "name": "type", "type": "RTCSdpType", "readonly": true }
       ]
-    },
-    { "name": "RTCStatsReport" },
-    {
+    }, {
+      "name": "RTCStatsReport",
+      "exposed": ["Window"]
+    }, {
       "name": "RTCTrackEvent", "extends": "Event",
       "constructors": [{
         "arguments": [
@@ -8970,6 +9192,7 @@
           { "name": "eventInitDict", "type": "RTCTrackEventInit" }
         ]
       }],
+      "exposed": ["Window"],
       "attributes": [
         { "name": "receiver", "type": "RTCRtpReceiver", "readonly": true },
         { "name": "streams", "type": "FrozenArray<MediaStream>", "readonly": true },
@@ -8988,6 +9211,7 @@
       ]
     }, {
       "name": "ScriptProcessorNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "bufferSize", "type": "long", "readonly": true },
         { "name": "onaudioprocess", "type": "EventHandler" }
@@ -9097,6 +9321,7 @@
         { "name": "controller", "type": "ServiceWorker", "nullable": true, "readonly": true },
         { "name": "oncontrollerchange", "type": "EventHandler" },
         { "name": "onmessage", "type": "EventHandler" },
+        { "name": "onmessageerror", "type": "EventHandler" },
         { "name": "ready", "type": "Promise<ServiceWorkerRegistration>", "readonly": true }
       ]
     }, {
@@ -9107,17 +9332,17 @@
         { "name": "clients", "type": "Clients", "readonly": true },
         { "name": "onactivate", "type": "EventHandler", "eventHandler": "activate" },
         { "name": "onfetch", "type": "EventHandler", "eventHandler": "fetch" },
-        { "name": "onforeignfetch", "type": "EventHandler", "eventHandler": "foreignfetch" },
         { "name": "oninstall", "type": "EventHandler", "eventHandler": "install" },
         { "name": "onmessage", "type": "EventHandler", "eventHandler": "message" },
+        { "name": "onmessageerror", "type": "EventHandler" },
         { "name": "onnotificationclick", "type": "EventHandler", "eventHandler": "notificationclick" },
         { "name": "onnotificationclose", "type": "EventHandler", "eventHandler": "notificationclose" },
         {
           "name": "onpush", "type": "EventHandler", "eventHandler": "push",
-          "exposed": ["Window", "Worker"]
+          "exposed": ["ServiceWorker"]
         }, {
           "name": "onpushsubscriptionchange", "type": "EventHandler", "eventHandler": "pushsubscriptionchange",
-          "exposed": ["Window", "Worker"]
+          "exposed": ["ServiceWorker"]
         },
         { "name": "onsync", "type": "EventHandler", "eventHandler": "sync" },
         { "name": "registration", "type": "ServiceWorkerRegistration", "readonly": true }
@@ -9126,16 +9351,15 @@
         { "name": "install", "type": "InstallEvent" },
         { "name": "activate", "type": "ExtendableEvent" },
         { "name": "fetch", "type": "FetchEvent" },
-        { "name": "foreignfetch", "type": "FetchEvent" },
         { "name": "message", "type": "ExtendableMessageEvent" },
         { "name": "notificationclick", "type": "NotificationEvent" },
         { "name": "notificationclose", "type": "NotificationEvent" },
         {
           "name": "push", "type": "PushEvent",
-          "exposed": ["Window", "Worker"]
+          "exposed": ["ServiceWorker"]
         }, {
           "name": "pushsubscriptionchange", "type": "PushSubscriptionChangeEvent",
-          "exposed": ["Window", "Worker"]
+          "exposed": ["ServiceWorker"]
         },
         { "name": "sync", "type": "SyncEvent" }
       ]
@@ -9164,7 +9388,7 @@
         { "name": "pushManager", "type": "PushManager", "readonly": true },
         { "name": "scope", "type": "USVString", "readonly": true },
         { "name": "sync", "type": "SyncManager", "readonly": true },
-        { "name": "useCache", "type": "boolean", "readonly": true },
+        { "name": "updateViaCache", "type": "ServiceWorkerUpdateViaCache", "readonly": true },
         { "name": "waiting", "type": "ServiceWorker", "nullable": true, "readonly": true }
       ]
     }, {
@@ -9431,6 +9655,7 @@
       ]
     }, {
       "name": "StereoPannerNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -9440,6 +9665,7 @@
       "attributes": [{ "name": "pan", "type": "AudioParam", "readonly": true }]
     }, {
       "name": "Storage",
+      "exposed": ["Window"],
       "operations": [
         { "name": "clear", "type": "void", "arguments": [] },
         {
@@ -9462,6 +9688,7 @@
       "attributes": [{ "name": "length", "type": "unsigned long", "readonly": true }]
     }, {
       "name": "StorageEvent", "extends": "Event",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "type", "type": "DOMString" },
@@ -9477,6 +9704,7 @@
       ]
     }, {
       "name": "StyleSheet",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "disabled", "type": "boolean" },
         { "name": "href", "type": "USVString", "nullable": true, "readonly": true },
@@ -9488,6 +9716,7 @@
       ]
     }, {
       "name": "StyleSheetList",
+      "exposed": ["Window"],
       "operations": [{
         "name": "item", "type": "StyleSheet", "nullable": true, "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -10250,6 +10479,48 @@
     { "name": "SVGMeshrowElement", "extends": "SVGElement" },
     { "name": "SVGMetadataElement", "extends": "SVGElement" },
     {
+      "name": "SVGNameList",
+      "anonymousOperations": [{
+        "type": "void", "setter": true,
+        "arguments": [
+          { "name": "index", "type": "unsigned long" },
+          { "name": "newItem", "type": "Type" }
+        ]
+      }],
+      "operations": [
+        {
+          "name": "appendItem", "type": "Type",
+          "arguments": [{ "name": "newItem", "type": "Type" }]
+        },
+        { "name": "clear", "type": "void", "arguments": [] },
+        {
+          "name": "getItem", "type": "Type", "getter": true,
+          "arguments": [{ "name": "index", "type": "unsigned long" }]
+        }, {
+          "name": "initialize", "type": "Type",
+          "arguments": [{ "name": "newItem", "type": "Type" }]
+        }, {
+          "name": "insertItemBefore", "type": "Type",
+          "arguments": [
+            { "name": "newItem", "type": "Type" },
+            { "name": "index", "type": "unsigned long" }
+          ]
+        }, {
+          "name": "removeItem", "type": "Type",
+          "arguments": [{ "name": "index", "type": "unsigned long" }]
+        }, {
+          "name": "replaceItem", "type": "Type",
+          "arguments": [
+            { "name": "newItem", "type": "Type" },
+            { "name": "index", "type": "unsigned long" }
+          ]
+        }
+      ],
+      "attributes": [
+        { "name": "length", "type": "unsigned long", "readonly": true },
+        { "name": "numberOfItems", "type": "unsigned long", "readonly": true }
+      ]
+    }, {
       "name": "SVGNumber",
       "attributes": [{ "name": "value", "type": "float" }]
     }, {
@@ -10803,6 +11074,7 @@
       "attributes": [{ "name": "encoding", "type": "DOMString", "readonly": true }]
     }, {
       "name": "TextMetrics",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "actualBoundingBoxAscent", "type": "double", "readonly": true },
         { "name": "actualBoundingBoxDescent", "type": "double", "readonly": true },
@@ -10819,6 +11091,7 @@
       ]
     }, {
       "name": "TextTrack", "extends": "EventTarget",
+      "exposed": ["Window"],
       "operations": [{
         "name": "addCue", "type": "void",
         "arguments": [{ "name": "cue", "type": "TextTrackCue" }]
@@ -10840,6 +11113,7 @@
       ]
     }, {
       "name": "TextTrackCue", "extends": "EventTarget",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "endTime", "type": "double" },
         { "name": "id", "type": "DOMString" },
@@ -10851,6 +11125,7 @@
       ]
     }, {
       "name": "TextTrackCueList",
+      "exposed": ["Window"],
       "anonymousOperations": [{
         "type": "TextTrackCue", "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -10862,6 +11137,7 @@
       "attributes": [{ "name": "length", "type": "unsigned long", "readonly": true }]
     }, {
       "name": "TextTrackList", "extends": "EventTarget",
+      "exposed": ["Window"],
       "anonymousOperations": [{
         "type": "TextTrack", "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -10883,6 +11159,7 @@
       ]
     }, {
       "name": "TimeRanges",
+      "exposed": ["Window"],
       "operations": [{
         "name": "end", "type": "double",
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -10896,6 +11173,7 @@
       "constructors": [{
         "arguments": [{ "name": "touchInitDict", "type": "TouchInit" }]
       }],
+      "exposed": ["Window"],
       "attributes": [
         { "name": "altitudeAngle", "type": "float", "readonly": true },
         { "name": "azimuthAngle", "type": "float", "readonly": true },
@@ -10921,6 +11199,7 @@
           { "name": "eventInitDict", "type": "TouchEventInit", "optional": true }
         ]
       }],
+      "exposed": ["Window"],
       "attributes": [
         { "name": "altKey", "type": "boolean", "readonly": true },
         { "name": "changedTouches", "type": "TouchList", "readonly": true },
@@ -10939,6 +11218,7 @@
       "attributes": [{ "name": "length", "type": "unsigned long", "readonly": true }]
     }, {
       "name": "TrackEvent", "extends": "Event",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "type", "type": "DOMString" },
@@ -10985,6 +11265,7 @@
           { "name": "eventInitDict", "type": "UIEventInit", "optional": true }
         ]
       }],
+      "exposed": ["Window"],
       "attributes": [
         { "name": "detail", "type": "long", "readonly": true },
         { "name": "view", "type": "Window", "nullable": true, "readonly": true }
@@ -11066,6 +11347,7 @@
       ]
     }, {
       "name": "ValidityState",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "badInput", "type": "boolean", "readonly": true },
         { "name": "customError", "type": "boolean", "readonly": true },
@@ -11089,6 +11371,7 @@
       ]
     }, {
       "name": "VideoTrack",
+      "exposed": ["Window"],
       "attributes": [
         { "name": "id", "type": "DOMString", "readonly": true },
         { "name": "kind", "type": "DOMString", "readonly": true },
@@ -11099,6 +11382,7 @@
       ]
     }, {
       "name": "VideoTrackList", "extends": "EventTarget",
+      "exposed": ["Window"],
       "anonymousOperations": [{
         "type": "VideoTrack", "getter": true,
         "arguments": [{ "name": "index", "type": "unsigned long" }]
@@ -11116,6 +11400,7 @@
       ]
     }, {
       "name": "WaveShaperNode", "extends": "AudioNode",
+      "exposed": ["Window"],
       "constructors": [{
         "arguments": [
           { "name": "context", "type": "BaseAudioContext" },
@@ -12316,6 +12601,7 @@
           { "name": "eventInitDict", "type": "WheelEventInit", "optional": true }
         ]
       }],
+      "exposed": ["Window"],
       "constants": [
         { "name": "DOM_DELTA_LINE", "type": "unsigned long", "value": "1" },
         { "name": "DOM_DELTA_PAGE", "type": "unsigned long", "value": "2" },
@@ -12445,7 +12731,6 @@
       ],
       "attributes": [
         { "name": "applicationCache", "type": "ApplicationCache", "readonly": true },
-        { "name": "audioWorklet", "type": "Worklet", "readonly": true },
         { "name": "closed", "type": "boolean", "readonly": true },
         { "name": "customElements", "type": "CustomElementRegistry", "readonly": true },
         { "name": "devicePixelRatio", "type": "double", "readonly": true },
@@ -12484,7 +12769,7 @@
         { "name": "top", "type": "WindowProxy", "nullable": true, "readonly": true },
         { "name": "window", "type": "WindowProxy", "readonly": true }
       ],
-      "implements": ["GlobalEventHandlers", "WindowEventHandlers", "WindowOrWorkerGlobalScope", "WindowSessionStorage", "WindowLocalStorage", "GlobalPerformance", "GlobalCrypto", "SpeechSynthesisGetter"]
+      "implements": ["GlobalEventHandlers", "WindowEventHandlers", "WindowOrWorkerGlobalScope", "WindowSessionStorage", "WindowLocalStorage", "GlobalCrypto", "SpeechSynthesisGetter"]
     }, {
       "name": "WindowClient", "extends": "Client",
       "exposed": ["ServiceWorker"],
@@ -12502,6 +12787,7 @@
       ]
     }, {
       "name": "WindowEventHandlers", "noInterfaceObject": true,
+      "exposed": ["Window"],
       "attributes": [
         { "name": "onafterprint", "type": "EventHandler", "eventHandler": "afterprint" },
         { "name": "onbeforeprint", "type": "EventHandler", "eventHandler": "beforeprint" },
@@ -12540,12 +12826,13 @@
       ]
     }, {
       "name": "WindowLocalStorage", "noInterfaceObject": true,
+      "exposed": ["Window"],
       "attributes": [{ "name": "localStorage", "type": "Storage", "readonly": true }]
     }, {
       "name": "WindowOrWorkerGlobalScope", "noInterfaceObject": true,
       "exposed": ["Window", "Worker"],
       "operations": [{
-        "name": "atob", "type": "DOMString",
+        "name": "atob", "type": "ByteString",
         "arguments": [{ "name": "data", "type": "DOMString" }]
       }, {
         "name": "btoa", "type": "DOMString",
@@ -12596,10 +12883,12 @@
       "attributes": [
         { "name": "caches", "type": "CacheStorage", "readonly": true },
         { "name": "indexedDB", "type": "IDBFactory", "readonly": true },
-        { "name": "origin", "type": "USVString", "readonly": true }
+        { "name": "origin", "type": "USVString", "readonly": true },
+        { "name": "performance", "type": "Performance", "readonly": true }
       ]
     }, {
       "name": "WindowSessionStorage", "noInterfaceObject": true,
+      "exposed": ["Window"],
       "attributes": [{ "name": "sessionStorage", "type": "Storage", "readonly": true }]
     }, {
       "name": "Worker", "extends": "EventTarget",
@@ -12644,7 +12933,7 @@
         { "name": "onunhandledrejection", "type": "EventHandler", "eventHandler": "unhandledrejection" },
         { "name": "self", "type": "WorkerGlobalScope", "readonly": true }
       ],
-      "implements": ["WindowOrWorkerGlobalScope", "GlobalPerformance", "GlobalCrypto"],
+      "implements": ["WindowOrWorkerGlobalScope", "GlobalCrypto"],
       "events": [
         { "name": "error", "type": "ErrorEvent" },
         { "name": "languagechange", "type": "Event" },
