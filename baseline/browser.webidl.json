@@ -62,12 +62,6 @@
         { "name": "error", "type": "any", "optional": true }
       ]
     }, {
-      "name": "PerformanceObserverCallback", "type": "void",
-      "arguments": [
-        { "name": "entries", "type": "PerformanceObserverEntryList" },
-        { "name": "observer", "type": "PerformanceObserver" }
-      ]
-    }, {
       "name": "PositionCallback", "type": "void",
       "arguments": [{ "name": "position", "type": "Position" }]
     }, {
@@ -101,19 +95,19 @@
       { "name": "FILTER_ACCEPT", "type": "unsigned short", "value": "1" },
       { "name": "FILTER_REJECT", "type": "unsigned short", "value": "2" },
       { "name": "FILTER_SKIP", "type": "unsigned short", "value": "3" },
-      { "name": "SHOW_ALL", "type": "unsigned long", "value": "4294967295" },
-      { "name": "SHOW_ELEMENT", "type": "unsigned long", "value": "1" },
-      { "name": "SHOW_ATTRIBUTE", "type": "unsigned long", "value": "2" },
-      { "name": "SHOW_TEXT", "type": "unsigned long", "value": "4" },
-      { "name": "SHOW_CDATA_SECTION", "type": "unsigned long", "value": "8" },
-      { "name": "SHOW_ENTITY_REFERENCE", "type": "unsigned long", "value": "16" },
-      { "name": "SHOW_ENTITY", "type": "unsigned long", "value": "32" },
-      { "name": "SHOW_PROCESSING_INSTRUCTION", "type": "unsigned long", "value": "64" },
-      { "name": "SHOW_COMMENT", "type": "unsigned long", "value": "128" },
-      { "name": "SHOW_DOCUMENT", "type": "unsigned long", "value": "256" },
-      { "name": "SHOW_DOCUMENT_TYPE", "type": "unsigned long", "value": "512" },
-      { "name": "SHOW_DOCUMENT_FRAGMENT", "type": "unsigned long", "value": "1024" },
-      { "name": "SHOW_NOTATION", "type": "unsigned long", "value": "2048" }
+      { "name": "SHOW_ALL", "type": "unsigned long", "value": "0xFFFFFFFF" },
+      { "name": "SHOW_ELEMENT", "type": "unsigned long", "value": "0x1" },
+      { "name": "SHOW_ATTRIBUTE", "type": "unsigned long", "value": "0x2" },
+      { "name": "SHOW_TEXT", "type": "unsigned long", "value": "0x4" },
+      { "name": "SHOW_CDATA_SECTION", "type": "unsigned long", "value": "0x8" },
+      { "name": "SHOW_ENTITY_REFERENCE", "type": "unsigned long", "value": "0x10" },
+      { "name": "SHOW_ENTITY", "type": "unsigned long", "value": "0x20" },
+      { "name": "SHOW_PROCESSING_INSTRUCTION", "type": "unsigned long", "value": "0x40" },
+      { "name": "SHOW_COMMENT", "type": "unsigned long", "value": "0x80" },
+      { "name": "SHOW_DOCUMENT", "type": "unsigned long", "value": "0x100" },
+      { "name": "SHOW_DOCUMENT_TYPE", "type": "unsigned long", "value": "0x200" },
+      { "name": "SHOW_DOCUMENT_FRAGMENT", "type": "unsigned long", "value": "0x400" },
+      { "name": "SHOW_NOTATION", "type": "unsigned long", "value": "0x800" }
     ],
     "operations": [{
       "name": "acceptNode", "type": "unsigned short",
@@ -167,7 +161,7 @@
       "name": "AnimationEventInit", "extends": "EventInit",
       "members": [
         { "name": "animationName", "type": "CSSOMString", "default": "\"\"" },
-        { "name": "elapsedTime", "type": "float", "default": "0" },
+        { "name": "elapsedTime", "type": "float", "default": "0.0" },
         { "name": "pseudoElement", "type": "CSSOMString", "default": "\"\"" }
       ]
     }, {
@@ -207,8 +201,8 @@
       "name": "AudioParamDescriptor",
       "members": [
         { "name": "defaultValue", "type": "float", "default": "0" },
-        { "name": "maxValue", "type": "float", "default": "3.4028235e+38" },
-        { "name": "minValue", "type": "float", "default": "-3.4028235e+38" },
+        { "name": "maxValue", "type": "float", "default": "3.4028235e38" },
+        { "name": "minValue", "type": "float", "default": "-3.4028235e38" },
         { "name": "name", "type": "DOMString", "required": true }
       ]
     }, {
@@ -279,9 +273,6 @@
         { "name": "includeUncontrolled", "type": "boolean", "default": "false" },
         { "name": "type", "type": "ClientType", "default": "\"window\"" }
       ]
-    }, {
-      "name": "ClipboardEventInit", "extends": "EventInit",
-      "members": [{ "name": "clipboardData", "type": "DataTransfer", "nullable": true, "default": "null" }]
     }, {
       "name": "ClipboardEventInit", "extends": "EventInit",
       "members": [{ "name": "clipboardData", "type": "DataTransfer", "nullable": true, "default": "null" }]
@@ -549,7 +540,7 @@
       "members": [{ "name": "preventScroll", "type": "boolean", "default": "false" }]
     }, {
       "name": "GainOptions", "extends": "AudioNodeOptions",
-      "members": [{ "name": "gain", "type": "float", "default": "1" }]
+      "members": [{ "name": "gain", "type": "float", "default": "1.0" }]
     }, {
       "name": "GamepadEventInit", "extends": "EventInit",
       "members": [{ "name": "gamepad", "type": "Gamepad", "required": true }]
@@ -630,7 +621,7 @@
     }, {
       "name": "ImageEncodeOptions",
       "members": [
-        { "name": "quality", "type": "unrestricted double", "default": "1" },
+        { "name": "quality", "type": "unrestricted double", "default": "1.0" },
         { "name": "type", "type": "DOMString", "default": "\"image/png\"" }
       ]
     }, {
@@ -1015,9 +1006,6 @@
         { "name": "salt", "type": "BufferSource", "required": true }
       ]
     }, {
-      "name": "PerformanceObserverInit",
-      "members": [{ "name": "entryTypes", "type": "sequence<DOMString>", "required": true }]
-    }, {
       "name": "PeriodicWaveConstraints",
       "members": [{ "name": "disableNormalization", "type": "boolean", "default": "false" }]
     }, {
@@ -1046,7 +1034,7 @@
       "members": [
         { "name": "enableHighAccuracy", "type": "boolean", "default": "false" },
         { "name": "maximumAge", "type": "unsigned long", "default": "0" },
-        { "name": "timeout", "type": "unsigned long", "default": "4294967295" }
+        { "name": "timeout", "type": "unsigned long", "default": "0xFFFFFFFF" }
       ]
     }, {
       "name": "ProgressEventInit", "extends": "EventInit",
@@ -1624,7 +1612,7 @@
     }, {
       "name": "TransitionEventInit", "extends": "EventInit",
       "members": [
-        { "name": "elapsedTime", "type": "float", "default": "0" },
+        { "name": "elapsedTime", "type": "float", "default": "0.0" },
         { "name": "propertyName", "type": "CSSOMString", "default": "\"\"" },
         { "name": "pseudoElement", "type": "CSSOMString", "default": "\"\"" }
       ]
@@ -1659,9 +1647,9 @@
       "name": "WheelEventInit", "extends": "MouseEventInit",
       "members": [
         { "name": "deltaMode", "type": "unsigned long", "default": "0" },
-        { "name": "deltaX", "type": "double", "default": "0" },
-        { "name": "deltaY", "type": "double", "default": "0" },
-        { "name": "deltaZ", "type": "double", "default": "0" }
+        { "name": "deltaX", "type": "double", "default": "0.0" },
+        { "name": "deltaY", "type": "double", "default": "0.0" },
+        { "name": "deltaZ", "type": "double", "default": "0.0" }
       ]
     }, {
       "name": "WorkerOptions",
@@ -2028,7 +2016,7 @@
       ]
     }, {
       "name": "ANGLE_instanced_arrays", "noInterfaceObject": true,
-      "constants": [{ "name": "VERTEX_ATTRIB_ARRAY_DIVISOR_ANGLE", "type": "GLenum", "value": "35070" }],
+      "constants": [{ "name": "VERTEX_ATTRIB_ARRAY_DIVISOR_ANGLE", "type": "GLenum", "value": "0x88FE" }],
       "operations": [{
         "name": "drawArraysInstancedANGLE", "type": "void",
         "arguments": [
@@ -2458,7 +2446,7 @@
         { "name": "createConvolver", "type": "ConvolverNode", "arguments": [] },
         {
           "name": "createDelay", "type": "DelayNode",
-          "arguments": [{ "name": "maxDelayTime", "type": "double", "optional": true, "default": "1" }]
+          "arguments": [{ "name": "maxDelayTime", "type": "double", "optional": true, "default": "1.0" }]
         },
         { "name": "createDynamicsCompressor", "type": "DynamicsCompressorNode", "arguments": [] },
         { "name": "createGain", "type": "GainNode", "arguments": [] },
@@ -3235,30 +3223,6 @@
         }
       ]
     }, {
-      "name": "Clipboard", "extends": "EventTarget",
-      "exposed": ["Window"],
-      "operations": [
-        { "name": "read", "type": "Promise<DataTransfer>", "arguments": [] },
-        { "name": "readText", "type": "Promise<DOMString>", "arguments": [] },
-        {
-          "name": "write", "type": "Promise<void>",
-          "arguments": [{ "name": "data", "type": "DataTransfer" }]
-        }, {
-          "name": "writeText", "type": "Promise<void>",
-          "arguments": [{ "name": "data", "type": "DOMString" }]
-        }
-      ]
-    }, {
-      "name": "ClipboardEvent", "extends": "Event",
-      "constructors": [{
-        "arguments": [
-          { "name": "type", "type": "DOMString" },
-          { "name": "eventInitDict", "type": "ClipboardEventInit", "optional": true }
-        ]
-      }],
-      "exposed": ["Window"],
-      "attributes": [{ "name": "clipboardData", "type": "DataTransfer", "nullable": true, "readonly": true }]
-    }, {
       "name": "ClipboardEvent", "extends": "Event",
       "constructors": [{
         "arguments": [
@@ -3827,7 +3791,7 @@
           "name": "createNodeIterator", "type": "NodeIterator",
           "arguments": [
             { "name": "root", "type": "Node" },
-            { "name": "whatToShow", "type": "unsigned long", "optional": true, "default": "4294967295" },
+            { "name": "whatToShow", "type": "unsigned long", "optional": true, "default": "0xFFFFFFFF" },
             { "name": "filter", "type": "NodeFilter", "nullable": true, "optional": true, "default": "null" }
           ]
         }, {
@@ -3859,7 +3823,7 @@
           "name": "createTreeWalker", "type": "TreeWalker",
           "arguments": [
             { "name": "root", "type": "Node" },
-            { "name": "whatToShow", "type": "unsigned long", "optional": true, "default": "4294967295" },
+            { "name": "whatToShow", "type": "unsigned long", "optional": true, "default": "0xFFFFFFFF" },
             { "name": "filter", "type": "NodeFilter", "nullable": true, "optional": true, "default": "null" }
           ]
         }, {
@@ -4283,6 +4247,7 @@
         },
         { "name": "toFloat32Array", "type": "Float32Array", "arguments": [] },
         { "name": "toFloat64Array", "type": "Float64Array", "arguments": [] },
+        { "name": "toJSON", "type": "object", "arguments": [] },
         {
           "name": "transformPoint", "type": "DOMPoint",
           "arguments": [{ "name": "point", "type": "DOMPointInit", "optional": true }]
@@ -4363,13 +4328,16 @@
         ]
       }],
       "exposed": ["Window", "Worker"],
-      "operations": [{
-        "name": "fromPoint", "type": "DOMPointReadOnly", "static": true,
-        "arguments": [{ "name": "other", "type": "DOMPointInit", "optional": true }]
-      }, {
-        "name": "matrixTransform", "type": "DOMPoint",
-        "arguments": [{ "name": "matrix", "type": "DOMMatrixInit", "optional": true }]
-      }],
+      "operations": [
+        {
+          "name": "fromPoint", "type": "DOMPointReadOnly", "static": true,
+          "arguments": [{ "name": "other", "type": "DOMPointInit", "optional": true }]
+        }, {
+          "name": "matrixTransform", "type": "DOMPoint",
+          "arguments": [{ "name": "matrix", "type": "DOMMatrixInit", "optional": true }]
+        },
+        { "name": "toJSON", "type": "object", "arguments": [] }
+      ],
       "attributes": [
         { "name": "w", "type": "unrestricted double", "readonly": true },
         { "name": "x", "type": "unrestricted double", "readonly": true },
@@ -4395,7 +4363,8 @@
           "name": "fromRect", "type": "DOMQuad", "static": true,
           "arguments": [{ "name": "other", "type": "DOMRectInit", "optional": true }]
         },
-        { "name": "getBounds", "type": "DOMRect", "arguments": [] }
+        { "name": "getBounds", "type": "DOMRect", "arguments": [] },
+        { "name": "toJSON", "type": "object", "arguments": [] }
       ],
       "attributes": [
         { "name": "p1", "type": "DOMPoint", "readonly": true },
@@ -4442,10 +4411,13 @@
         ]
       }],
       "exposed": ["Window", "Worker"],
-      "operations": [{
-        "name": "fromRect", "type": "DOMRectReadOnly", "static": true,
-        "arguments": [{ "name": "other", "type": "DOMRectInit", "optional": true }]
-      }],
+      "operations": [
+        {
+          "name": "fromRect", "type": "DOMRectReadOnly", "static": true,
+          "arguments": [{ "name": "other", "type": "DOMRectInit", "optional": true }]
+        },
+        { "name": "toJSON", "type": "object", "arguments": [] }
+      ],
       "attributes": [
         { "name": "bottom", "type": "unrestricted double", "readonly": true },
         { "name": "height", "type": "unrestricted double", "readonly": true },
@@ -4850,8 +4822,8 @@
     {
       "name": "EXT_texture_filter_anisotropic", "noInterfaceObject": true,
       "constants": [
-        { "name": "MAX_TEXTURE_MAX_ANISOTROPY_EXT", "type": "GLenum", "value": "34047" },
-        { "name": "TEXTURE_MAX_ANISOTROPY_EXT", "type": "GLenum", "value": "34046" }
+        { "name": "MAX_TEXTURE_MAX_ANISOTROPY_EXT", "type": "GLenum", "value": "0x84FF" },
+        { "name": "TEXTURE_MAX_ANISOTROPY_EXT", "type": "GLenum", "value": "0x84FE" }
       ]
     }, {
       "name": "ExtendableEvent", "extends": "Event",
@@ -7083,10 +7055,10 @@
       }],
       "exposed": ["Window"],
       "constants": [
-        { "name": "DOM_KEY_LOCATION_LEFT", "type": "unsigned long", "value": "1" },
-        { "name": "DOM_KEY_LOCATION_NUMPAD", "type": "unsigned long", "value": "3" },
-        { "name": "DOM_KEY_LOCATION_RIGHT", "type": "unsigned long", "value": "2" },
-        { "name": "DOM_KEY_LOCATION_STANDARD", "type": "unsigned long", "value": "0" }
+        { "name": "DOM_KEY_LOCATION_LEFT", "type": "unsigned long", "value": "0x01" },
+        { "name": "DOM_KEY_LOCATION_NUMPAD", "type": "unsigned long", "value": "0x03" },
+        { "name": "DOM_KEY_LOCATION_RIGHT", "type": "unsigned long", "value": "0x02" },
+        { "name": "DOM_KEY_LOCATION_STANDARD", "type": "unsigned long", "value": "0x00" }
       ],
       "operations": [{
         "name": "getModifierState", "type": "boolean",
@@ -7653,7 +7625,6 @@
       ],
       "attributes": [
         { "name": "clipboard", "type": "Clipboard", "readonly": true },
-        { "name": "clipboard", "type": "Clipboard", "readonly": true },
         { "name": "geolocation", "type": "Geolocation", "readonly": true },
         { "name": "maxTouchPoints", "type": "long", "readonly": true },
         { "name": "serviceWorker", "type": "ServiceWorkerContainer", "readonly": true }
@@ -7753,12 +7724,12 @@
         { "name": "COMMENT_NODE", "type": "unsigned short", "value": "8" },
         { "name": "DOCUMENT_FRAGMENT_NODE", "type": "unsigned short", "value": "11" },
         { "name": "DOCUMENT_NODE", "type": "unsigned short", "value": "9" },
-        { "name": "DOCUMENT_POSITION_CONTAINED_BY", "type": "unsigned short", "value": "16" },
-        { "name": "DOCUMENT_POSITION_CONTAINS", "type": "unsigned short", "value": "8" },
-        { "name": "DOCUMENT_POSITION_DISCONNECTED", "type": "unsigned short", "value": "1" },
-        { "name": "DOCUMENT_POSITION_FOLLOWING", "type": "unsigned short", "value": "4" },
-        { "name": "DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC", "type": "unsigned short", "value": "32" },
-        { "name": "DOCUMENT_POSITION_PRECEDING", "type": "unsigned short", "value": "2" },
+        { "name": "DOCUMENT_POSITION_CONTAINED_BY", "type": "unsigned short", "value": "0x10" },
+        { "name": "DOCUMENT_POSITION_CONTAINS", "type": "unsigned short", "value": "0x08" },
+        { "name": "DOCUMENT_POSITION_DISCONNECTED", "type": "unsigned short", "value": "0x01" },
+        { "name": "DOCUMENT_POSITION_FOLLOWING", "type": "unsigned short", "value": "0x04" },
+        { "name": "DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC", "type": "unsigned short", "value": "0x20" },
+        { "name": "DOCUMENT_POSITION_PRECEDING", "type": "unsigned short", "value": "0x02" },
         { "name": "DOCUMENT_TYPE_NODE", "type": "unsigned short", "value": "10" },
         { "name": "ELEMENT_NODE", "type": "unsigned short", "value": "1" },
         { "name": "ENTITY_NODE", "type": "unsigned short", "value": "6" },
@@ -7932,13 +7903,13 @@
     { "name": "OES_element_index_uint", "noInterfaceObject": true },
     {
       "name": "OES_standard_derivatives", "noInterfaceObject": true,
-      "constants": [{ "name": "FRAGMENT_SHADER_DERIVATIVE_HINT_OES", "type": "GLenum", "value": "35723" }]
+      "constants": [{ "name": "FRAGMENT_SHADER_DERIVATIVE_HINT_OES", "type": "GLenum", "value": "0x8B8B" }]
     },
     { "name": "OES_texture_float", "noInterfaceObject": true },
     { "name": "OES_texture_float_linear", "noInterfaceObject": true },
     {
       "name": "OES_texture_half_float", "noInterfaceObject": true,
-      "constants": [{ "name": "HALF_FLOAT_OES", "type": "GLenum", "value": "36193" }]
+      "constants": [{ "name": "HALF_FLOAT_OES", "type": "GLenum", "value": "0x8D61" }]
     },
     { "name": "OES_texture_half_float_linear", "noInterfaceObject": true },
     {
@@ -8215,17 +8186,7 @@
           "arguments": [{ "name": "measureName", "type": "DOMString", "optional": true }]
         },
         { "name": "clearResourceTimings", "type": "void", "arguments": [] },
-        { "name": "getEntries", "type": "PerformanceEntryList", "arguments": [] },
         {
-          "name": "getEntriesByName", "type": "PerformanceEntryList",
-          "arguments": [
-            { "name": "name", "type": "DOMString" },
-            { "name": "type", "type": "DOMString", "optional": true }
-          ]
-        }, {
-          "name": "getEntriesByType", "type": "PerformanceEntryList",
-          "arguments": [{ "name": "type", "type": "DOMString" }]
-        }, {
           "name": "mark", "type": "void",
           "arguments": [{ "name": "markName", "type": "DOMString" }]
         }, {
@@ -8256,15 +8217,6 @@
         }
       ],
       "events": [{ "name": "resourcetimingbufferfull", "type": "Event" }]
-    }, {
-      "name": "PerformanceEntry",
-      "exposed": ["Window", "Worker"],
-      "attributes": [
-        { "name": "duration", "type": "DOMHighResTimeStamp", "readonly": true },
-        { "name": "entryType", "type": "DOMString", "readonly": true },
-        { "name": "name", "type": "DOMString", "readonly": true },
-        { "name": "startTime", "type": "DOMHighResTimeStamp", "readonly": true }
-      ]
     },
     { "name": "PerformanceMark", "extends": "PerformanceEntry" },
     { "name": "PerformanceMeasure", "extends": "PerformanceEntry" },
@@ -8299,19 +8251,6 @@
         { "name": "unloadEventStart", "type": "DOMHighResTimeStamp", "readonly": true }
       ]
     }, {
-      "name": "PerformanceObserver",
-      "constructors": [{
-        "arguments": [{ "name": "callback", "type": "PerformanceObserverCallback" }]
-      }],
-      "exposed": ["Window", "Worker"],
-      "operations": [
-        { "name": "disconnect", "type": "void", "arguments": [] },
-        {
-          "name": "observe", "type": "void",
-          "arguments": [{ "name": "options", "type": "PerformanceObserverInit" }]
-        }
-      ]
-    }, {
       "name": "PerformanceObserverEntryList",
       "exposed": ["Window", "Worker"],
       "operations": [
@@ -8329,20 +8268,26 @@
       ]
     }, {
       "name": "PerformanceResourceTiming", "extends": "PerformanceEntry",
-      "exposed": ["Window"],
+      "exposed": ["Window", "Worker"],
+      "operations": [{ "name": "toJSON", "type": "object", "arguments": [] }],
       "attributes": [
         { "name": "connectEnd", "type": "DOMHighResTimeStamp", "readonly": true },
         { "name": "connectStart", "type": "DOMHighResTimeStamp", "readonly": true },
+        { "name": "decodedBodySize", "type": "unsigned long long", "readonly": true },
         { "name": "domainLookupEnd", "type": "DOMHighResTimeStamp", "readonly": true },
         { "name": "domainLookupStart", "type": "DOMHighResTimeStamp", "readonly": true },
+        { "name": "encodedBodySize", "type": "unsigned long long", "readonly": true },
         { "name": "fetchStart", "type": "DOMHighResTimeStamp", "readonly": true },
         { "name": "initiatorType", "type": "DOMString", "readonly": true },
+        { "name": "nextHopProtocol", "type": "DOMString", "readonly": true },
         { "name": "redirectEnd", "type": "DOMHighResTimeStamp", "readonly": true },
         { "name": "redirectStart", "type": "DOMHighResTimeStamp", "readonly": true },
         { "name": "requestStart", "type": "DOMHighResTimeStamp", "readonly": true },
         { "name": "responseEnd", "type": "DOMHighResTimeStamp", "readonly": true },
         { "name": "responseStart", "type": "DOMHighResTimeStamp", "readonly": true },
-        { "name": "secureConnectionStart", "type": "DOMHighResTimeStamp", "readonly": true }
+        { "name": "secureConnectionStart", "type": "DOMHighResTimeStamp", "readonly": true },
+        { "name": "transferSize", "type": "unsigned long long", "readonly": true },
+        { "name": "workerStart", "type": "DOMHighResTimeStamp", "readonly": true }
       ]
     }, {
       "name": "PerformanceTiming",
@@ -11414,20 +11359,20 @@
     }, {
       "name": "WEBGL_compressed_texture_s3tc", "noInterfaceObject": true,
       "constants": [
-        { "name": "COMPRESSED_RGB_S3TC_DXT1_EXT", "type": "GLenum", "value": "33776" },
-        { "name": "COMPRESSED_RGBA_S3TC_DXT1_EXT", "type": "GLenum", "value": "33777" },
-        { "name": "COMPRESSED_RGBA_S3TC_DXT3_EXT", "type": "GLenum", "value": "33778" },
-        { "name": "COMPRESSED_RGBA_S3TC_DXT5_EXT", "type": "GLenum", "value": "33779" }
+        { "name": "COMPRESSED_RGB_S3TC_DXT1_EXT", "type": "GLenum", "value": "0x83F0" },
+        { "name": "COMPRESSED_RGBA_S3TC_DXT1_EXT", "type": "GLenum", "value": "0x83F1" },
+        { "name": "COMPRESSED_RGBA_S3TC_DXT3_EXT", "type": "GLenum", "value": "0x83F2" },
+        { "name": "COMPRESSED_RGBA_S3TC_DXT5_EXT", "type": "GLenum", "value": "0x83F3" }
       ]
     }, {
       "name": "WEBGL_debug_renderer_info", "noInterfaceObject": true,
       "constants": [
-        { "name": "UNMASKED_RENDERER_WEBGL", "type": "GLenum", "value": "37446" },
-        { "name": "UNMASKED_VENDOR_WEBGL", "type": "GLenum", "value": "37445" }
+        { "name": "UNMASKED_RENDERER_WEBGL", "type": "GLenum", "value": "0x9246" },
+        { "name": "UNMASKED_VENDOR_WEBGL", "type": "GLenum", "value": "0x9245" }
       ]
     }, {
       "name": "WEBGL_depth_texture", "noInterfaceObject": true,
-      "constants": [{ "name": "UNSIGNED_INT_24_8_WEBGL", "type": "GLenum", "value": "34042" }]
+      "constants": [{ "name": "UNSIGNED_INT_24_8_WEBGL", "type": "GLenum", "value": "0x84FA" }]
     }, {
       "name": "WebGLActiveInfo",
       "attributes": [
@@ -11457,301 +11402,301 @@
     }, {
       "name": "WebGLRenderingContextBase", "noInterfaceObject": true,
       "constants": [
-        { "name": "ACTIVE_ATTRIBUTES", "type": "GLenum", "value": "35721" },
-        { "name": "ACTIVE_TEXTURE", "type": "GLenum", "value": "34016" },
-        { "name": "ACTIVE_UNIFORMS", "type": "GLenum", "value": "35718" },
-        { "name": "ALIASED_LINE_WIDTH_RANGE", "type": "GLenum", "value": "33902" },
-        { "name": "ALIASED_POINT_SIZE_RANGE", "type": "GLenum", "value": "33901" },
-        { "name": "ALPHA", "type": "GLenum", "value": "6406" },
-        { "name": "ALPHA_BITS", "type": "GLenum", "value": "3413" },
-        { "name": "ALWAYS", "type": "GLenum", "value": "519" },
-        { "name": "ARRAY_BUFFER", "type": "GLenum", "value": "34962" },
-        { "name": "ARRAY_BUFFER_BINDING", "type": "GLenum", "value": "34964" },
-        { "name": "ATTACHED_SHADERS", "type": "GLenum", "value": "35717" },
-        { "name": "BACK", "type": "GLenum", "value": "1029" },
-        { "name": "BLEND", "type": "GLenum", "value": "3042" },
-        { "name": "BLEND_COLOR", "type": "GLenum", "value": "32773" },
-        { "name": "BLEND_DST_ALPHA", "type": "GLenum", "value": "32970" },
-        { "name": "BLEND_DST_RGB", "type": "GLenum", "value": "32968" },
-        { "name": "BLEND_EQUATION", "type": "GLenum", "value": "32777" },
-        { "name": "BLEND_EQUATION_ALPHA", "type": "GLenum", "value": "34877" },
-        { "name": "BLEND_EQUATION_RGB", "type": "GLenum", "value": "32777" },
-        { "name": "BLEND_SRC_ALPHA", "type": "GLenum", "value": "32971" },
-        { "name": "BLEND_SRC_RGB", "type": "GLenum", "value": "32969" },
-        { "name": "BLUE_BITS", "type": "GLenum", "value": "3412" },
-        { "name": "BOOL", "type": "GLenum", "value": "35670" },
-        { "name": "BOOL_VEC2", "type": "GLenum", "value": "35671" },
-        { "name": "BOOL_VEC3", "type": "GLenum", "value": "35672" },
-        { "name": "BOOL_VEC4", "type": "GLenum", "value": "35673" },
-        { "name": "BROWSER_DEFAULT_WEBGL", "type": "GLenum", "value": "37444" },
-        { "name": "BUFFER_SIZE", "type": "GLenum", "value": "34660" },
-        { "name": "BUFFER_USAGE", "type": "GLenum", "value": "34661" },
-        { "name": "BYTE", "type": "GLenum", "value": "5120" },
-        { "name": "CCW", "type": "GLenum", "value": "2305" },
-        { "name": "CLAMP_TO_EDGE", "type": "GLenum", "value": "33071" },
-        { "name": "COLOR_ATTACHMENT0", "type": "GLenum", "value": "36064" },
-        { "name": "COLOR_BUFFER_BIT", "type": "GLenum", "value": "16384" },
-        { "name": "COLOR_CLEAR_VALUE", "type": "GLenum", "value": "3106" },
-        { "name": "COLOR_WRITEMASK", "type": "GLenum", "value": "3107" },
-        { "name": "COMPILE_STATUS", "type": "GLenum", "value": "35713" },
-        { "name": "COMPRESSED_TEXTURE_FORMATS", "type": "GLenum", "value": "34467" },
-        { "name": "CONSTANT_ALPHA", "type": "GLenum", "value": "32771" },
-        { "name": "CONSTANT_COLOR", "type": "GLenum", "value": "32769" },
-        { "name": "CONTEXT_LOST_WEBGL", "type": "GLenum", "value": "37442" },
-        { "name": "CULL_FACE", "type": "GLenum", "value": "2884" },
-        { "name": "CULL_FACE_MODE", "type": "GLenum", "value": "2885" },
-        { "name": "CURRENT_PROGRAM", "type": "GLenum", "value": "35725" },
-        { "name": "CURRENT_VERTEX_ATTRIB", "type": "GLenum", "value": "34342" },
-        { "name": "CW", "type": "GLenum", "value": "2304" },
-        { "name": "DECR", "type": "GLenum", "value": "7683" },
-        { "name": "DECR_WRAP", "type": "GLenum", "value": "34056" },
-        { "name": "DELETE_STATUS", "type": "GLenum", "value": "35712" },
-        { "name": "DEPTH_ATTACHMENT", "type": "GLenum", "value": "36096" },
-        { "name": "DEPTH_BITS", "type": "GLenum", "value": "3414" },
-        { "name": "DEPTH_BUFFER_BIT", "type": "GLenum", "value": "256" },
-        { "name": "DEPTH_CLEAR_VALUE", "type": "GLenum", "value": "2931" },
-        { "name": "DEPTH_COMPONENT", "type": "GLenum", "value": "6402" },
-        { "name": "DEPTH_COMPONENT16", "type": "GLenum", "value": "33189" },
-        { "name": "DEPTH_FUNC", "type": "GLenum", "value": "2932" },
-        { "name": "DEPTH_RANGE", "type": "GLenum", "value": "2928" },
-        { "name": "DEPTH_STENCIL", "type": "GLenum", "value": "34041" },
-        { "name": "DEPTH_STENCIL_ATTACHMENT", "type": "GLenum", "value": "33306" },
-        { "name": "DEPTH_TEST", "type": "GLenum", "value": "2929" },
-        { "name": "DEPTH_WRITEMASK", "type": "GLenum", "value": "2930" },
-        { "name": "DITHER", "type": "GLenum", "value": "3024" },
-        { "name": "DONT_CARE", "type": "GLenum", "value": "4352" },
-        { "name": "DST_ALPHA", "type": "GLenum", "value": "772" },
-        { "name": "DST_COLOR", "type": "GLenum", "value": "774" },
-        { "name": "DYNAMIC_DRAW", "type": "GLenum", "value": "35048" },
-        { "name": "ELEMENT_ARRAY_BUFFER", "type": "GLenum", "value": "34963" },
-        { "name": "ELEMENT_ARRAY_BUFFER_BINDING", "type": "GLenum", "value": "34965" },
-        { "name": "EQUAL", "type": "GLenum", "value": "514" },
-        { "name": "FASTEST", "type": "GLenum", "value": "4353" },
-        { "name": "FLOAT", "type": "GLenum", "value": "5126" },
-        { "name": "FLOAT_MAT2", "type": "GLenum", "value": "35674" },
-        { "name": "FLOAT_MAT3", "type": "GLenum", "value": "35675" },
-        { "name": "FLOAT_MAT4", "type": "GLenum", "value": "35676" },
-        { "name": "FLOAT_VEC2", "type": "GLenum", "value": "35664" },
-        { "name": "FLOAT_VEC3", "type": "GLenum", "value": "35665" },
-        { "name": "FLOAT_VEC4", "type": "GLenum", "value": "35666" },
-        { "name": "FRAGMENT_SHADER", "type": "GLenum", "value": "35632" },
-        { "name": "FRAMEBUFFER", "type": "GLenum", "value": "36160" },
-        { "name": "FRAMEBUFFER_ATTACHMENT_OBJECT_NAME", "type": "GLenum", "value": "36049" },
-        { "name": "FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE", "type": "GLenum", "value": "36048" },
-        { "name": "FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE", "type": "GLenum", "value": "36051" },
-        { "name": "FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL", "type": "GLenum", "value": "36050" },
-        { "name": "FRAMEBUFFER_BINDING", "type": "GLenum", "value": "36006" },
-        { "name": "FRAMEBUFFER_COMPLETE", "type": "GLenum", "value": "36053" },
-        { "name": "FRAMEBUFFER_INCOMPLETE_ATTACHMENT", "type": "GLenum", "value": "36054" },
-        { "name": "FRAMEBUFFER_INCOMPLETE_DIMENSIONS", "type": "GLenum", "value": "36057" },
-        { "name": "FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT", "type": "GLenum", "value": "36055" },
-        { "name": "FRAMEBUFFER_UNSUPPORTED", "type": "GLenum", "value": "36061" },
-        { "name": "FRONT", "type": "GLenum", "value": "1028" },
-        { "name": "FRONT_AND_BACK", "type": "GLenum", "value": "1032" },
-        { "name": "FRONT_FACE", "type": "GLenum", "value": "2886" },
-        { "name": "FUNC_ADD", "type": "GLenum", "value": "32774" },
-        { "name": "FUNC_REVERSE_SUBTRACT", "type": "GLenum", "value": "32779" },
-        { "name": "FUNC_SUBTRACT", "type": "GLenum", "value": "32778" },
-        { "name": "GENERATE_MIPMAP_HINT", "type": "GLenum", "value": "33170" },
-        { "name": "GEQUAL", "type": "GLenum", "value": "518" },
-        { "name": "GREATER", "type": "GLenum", "value": "516" },
-        { "name": "GREEN_BITS", "type": "GLenum", "value": "3411" },
-        { "name": "HIGH_FLOAT", "type": "GLenum", "value": "36338" },
-        { "name": "HIGH_INT", "type": "GLenum", "value": "36341" },
-        { "name": "IMPLEMENTATION_COLOR_READ_FORMAT", "type": "GLenum", "value": "35739" },
-        { "name": "IMPLEMENTATION_COLOR_READ_TYPE", "type": "GLenum", "value": "35738" },
-        { "name": "INCR", "type": "GLenum", "value": "7682" },
-        { "name": "INCR_WRAP", "type": "GLenum", "value": "34055" },
-        { "name": "INT", "type": "GLenum", "value": "5124" },
-        { "name": "INT_VEC2", "type": "GLenum", "value": "35667" },
-        { "name": "INT_VEC3", "type": "GLenum", "value": "35668" },
-        { "name": "INT_VEC4", "type": "GLenum", "value": "35669" },
-        { "name": "INVALID_ENUM", "type": "GLenum", "value": "1280" },
-        { "name": "INVALID_FRAMEBUFFER_OPERATION", "type": "GLenum", "value": "1286" },
-        { "name": "INVALID_OPERATION", "type": "GLenum", "value": "1282" },
-        { "name": "INVALID_VALUE", "type": "GLenum", "value": "1281" },
-        { "name": "INVERT", "type": "GLenum", "value": "5386" },
-        { "name": "KEEP", "type": "GLenum", "value": "7680" },
-        { "name": "LEQUAL", "type": "GLenum", "value": "515" },
-        { "name": "LESS", "type": "GLenum", "value": "513" },
-        { "name": "LINE_LOOP", "type": "GLenum", "value": "2" },
-        { "name": "LINE_STRIP", "type": "GLenum", "value": "3" },
-        { "name": "LINE_WIDTH", "type": "GLenum", "value": "2849" },
-        { "name": "LINEAR", "type": "GLenum", "value": "9729" },
-        { "name": "LINEAR_MIPMAP_LINEAR", "type": "GLenum", "value": "9987" },
-        { "name": "LINEAR_MIPMAP_NEAREST", "type": "GLenum", "value": "9985" },
-        { "name": "LINES", "type": "GLenum", "value": "1" },
-        { "name": "LINK_STATUS", "type": "GLenum", "value": "35714" },
-        { "name": "LOW_FLOAT", "type": "GLenum", "value": "36336" },
-        { "name": "LOW_INT", "type": "GLenum", "value": "36339" },
-        { "name": "LUMINANCE", "type": "GLenum", "value": "6409" },
-        { "name": "LUMINANCE_ALPHA", "type": "GLenum", "value": "6410" },
-        { "name": "MAX_COMBINED_TEXTURE_IMAGE_UNITS", "type": "GLenum", "value": "35661" },
-        { "name": "MAX_CUBE_MAP_TEXTURE_SIZE", "type": "GLenum", "value": "34076" },
-        { "name": "MAX_FRAGMENT_UNIFORM_VECTORS", "type": "GLenum", "value": "36349" },
-        { "name": "MAX_RENDERBUFFER_SIZE", "type": "GLenum", "value": "34024" },
-        { "name": "MAX_TEXTURE_IMAGE_UNITS", "type": "GLenum", "value": "34930" },
-        { "name": "MAX_TEXTURE_SIZE", "type": "GLenum", "value": "3379" },
-        { "name": "MAX_VARYING_VECTORS", "type": "GLenum", "value": "36348" },
-        { "name": "MAX_VERTEX_ATTRIBS", "type": "GLenum", "value": "34921" },
-        { "name": "MAX_VERTEX_TEXTURE_IMAGE_UNITS", "type": "GLenum", "value": "35660" },
-        { "name": "MAX_VERTEX_UNIFORM_VECTORS", "type": "GLenum", "value": "36347" },
-        { "name": "MAX_VIEWPORT_DIMS", "type": "GLenum", "value": "3386" },
-        { "name": "MEDIUM_FLOAT", "type": "GLenum", "value": "36337" },
-        { "name": "MEDIUM_INT", "type": "GLenum", "value": "36340" },
-        { "name": "MIRRORED_REPEAT", "type": "GLenum", "value": "33648" },
-        { "name": "NEAREST", "type": "GLenum", "value": "9728" },
-        { "name": "NEAREST_MIPMAP_LINEAR", "type": "GLenum", "value": "9986" },
-        { "name": "NEAREST_MIPMAP_NEAREST", "type": "GLenum", "value": "9984" },
-        { "name": "NEVER", "type": "GLenum", "value": "512" },
-        { "name": "NICEST", "type": "GLenum", "value": "4354" },
+        { "name": "ACTIVE_ATTRIBUTES", "type": "GLenum", "value": "0x8B89" },
+        { "name": "ACTIVE_TEXTURE", "type": "GLenum", "value": "0x84E0" },
+        { "name": "ACTIVE_UNIFORMS", "type": "GLenum", "value": "0x8B86" },
+        { "name": "ALIASED_LINE_WIDTH_RANGE", "type": "GLenum", "value": "0x846E" },
+        { "name": "ALIASED_POINT_SIZE_RANGE", "type": "GLenum", "value": "0x846D" },
+        { "name": "ALPHA", "type": "GLenum", "value": "0x1906" },
+        { "name": "ALPHA_BITS", "type": "GLenum", "value": "0x0D55" },
+        { "name": "ALWAYS", "type": "GLenum", "value": "0x0207" },
+        { "name": "ARRAY_BUFFER", "type": "GLenum", "value": "0x8892" },
+        { "name": "ARRAY_BUFFER_BINDING", "type": "GLenum", "value": "0x8894" },
+        { "name": "ATTACHED_SHADERS", "type": "GLenum", "value": "0x8B85" },
+        { "name": "BACK", "type": "GLenum", "value": "0x0405" },
+        { "name": "BLEND", "type": "GLenum", "value": "0x0BE2" },
+        { "name": "BLEND_COLOR", "type": "GLenum", "value": "0x8005" },
+        { "name": "BLEND_DST_ALPHA", "type": "GLenum", "value": "0x80CA" },
+        { "name": "BLEND_DST_RGB", "type": "GLenum", "value": "0x80C8" },
+        { "name": "BLEND_EQUATION", "type": "GLenum", "value": "0x8009" },
+        { "name": "BLEND_EQUATION_ALPHA", "type": "GLenum", "value": "0x883D" },
+        { "name": "BLEND_EQUATION_RGB", "type": "GLenum", "value": "0x8009" },
+        { "name": "BLEND_SRC_ALPHA", "type": "GLenum", "value": "0x80CB" },
+        { "name": "BLEND_SRC_RGB", "type": "GLenum", "value": "0x80C9" },
+        { "name": "BLUE_BITS", "type": "GLenum", "value": "0x0D54" },
+        { "name": "BOOL", "type": "GLenum", "value": "0x8B56" },
+        { "name": "BOOL_VEC2", "type": "GLenum", "value": "0x8B57" },
+        { "name": "BOOL_VEC3", "type": "GLenum", "value": "0x8B58" },
+        { "name": "BOOL_VEC4", "type": "GLenum", "value": "0x8B59" },
+        { "name": "BROWSER_DEFAULT_WEBGL", "type": "GLenum", "value": "0x9244" },
+        { "name": "BUFFER_SIZE", "type": "GLenum", "value": "0x8764" },
+        { "name": "BUFFER_USAGE", "type": "GLenum", "value": "0x8765" },
+        { "name": "BYTE", "type": "GLenum", "value": "0x1400" },
+        { "name": "CCW", "type": "GLenum", "value": "0x0901" },
+        { "name": "CLAMP_TO_EDGE", "type": "GLenum", "value": "0x812F" },
+        { "name": "COLOR_ATTACHMENT0", "type": "GLenum", "value": "0x8CE0" },
+        { "name": "COLOR_BUFFER_BIT", "type": "GLenum", "value": "0x00004000" },
+        { "name": "COLOR_CLEAR_VALUE", "type": "GLenum", "value": "0x0C22" },
+        { "name": "COLOR_WRITEMASK", "type": "GLenum", "value": "0x0C23" },
+        { "name": "COMPILE_STATUS", "type": "GLenum", "value": "0x8B81" },
+        { "name": "COMPRESSED_TEXTURE_FORMATS", "type": "GLenum", "value": "0x86A3" },
+        { "name": "CONSTANT_ALPHA", "type": "GLenum", "value": "0x8003" },
+        { "name": "CONSTANT_COLOR", "type": "GLenum", "value": "0x8001" },
+        { "name": "CONTEXT_LOST_WEBGL", "type": "GLenum", "value": "0x9242" },
+        { "name": "CULL_FACE", "type": "GLenum", "value": "0x0B44" },
+        { "name": "CULL_FACE_MODE", "type": "GLenum", "value": "0x0B45" },
+        { "name": "CURRENT_PROGRAM", "type": "GLenum", "value": "0x8B8D" },
+        { "name": "CURRENT_VERTEX_ATTRIB", "type": "GLenum", "value": "0x8626" },
+        { "name": "CW", "type": "GLenum", "value": "0x0900" },
+        { "name": "DECR", "type": "GLenum", "value": "0x1E03" },
+        { "name": "DECR_WRAP", "type": "GLenum", "value": "0x8508" },
+        { "name": "DELETE_STATUS", "type": "GLenum", "value": "0x8B80" },
+        { "name": "DEPTH_ATTACHMENT", "type": "GLenum", "value": "0x8D00" },
+        { "name": "DEPTH_BITS", "type": "GLenum", "value": "0x0D56" },
+        { "name": "DEPTH_BUFFER_BIT", "type": "GLenum", "value": "0x00000100" },
+        { "name": "DEPTH_CLEAR_VALUE", "type": "GLenum", "value": "0x0B73" },
+        { "name": "DEPTH_COMPONENT", "type": "GLenum", "value": "0x1902" },
+        { "name": "DEPTH_COMPONENT16", "type": "GLenum", "value": "0x81A5" },
+        { "name": "DEPTH_FUNC", "type": "GLenum", "value": "0x0B74" },
+        { "name": "DEPTH_RANGE", "type": "GLenum", "value": "0x0B70" },
+        { "name": "DEPTH_STENCIL", "type": "GLenum", "value": "0x84F9" },
+        { "name": "DEPTH_STENCIL_ATTACHMENT", "type": "GLenum", "value": "0x821A" },
+        { "name": "DEPTH_TEST", "type": "GLenum", "value": "0x0B71" },
+        { "name": "DEPTH_WRITEMASK", "type": "GLenum", "value": "0x0B72" },
+        { "name": "DITHER", "type": "GLenum", "value": "0x0BD0" },
+        { "name": "DONT_CARE", "type": "GLenum", "value": "0x1100" },
+        { "name": "DST_ALPHA", "type": "GLenum", "value": "0x0304" },
+        { "name": "DST_COLOR", "type": "GLenum", "value": "0x0306" },
+        { "name": "DYNAMIC_DRAW", "type": "GLenum", "value": "0x88E8" },
+        { "name": "ELEMENT_ARRAY_BUFFER", "type": "GLenum", "value": "0x8893" },
+        { "name": "ELEMENT_ARRAY_BUFFER_BINDING", "type": "GLenum", "value": "0x8895" },
+        { "name": "EQUAL", "type": "GLenum", "value": "0x0202" },
+        { "name": "FASTEST", "type": "GLenum", "value": "0x1101" },
+        { "name": "FLOAT", "type": "GLenum", "value": "0x1406" },
+        { "name": "FLOAT_MAT2", "type": "GLenum", "value": "0x8B5A" },
+        { "name": "FLOAT_MAT3", "type": "GLenum", "value": "0x8B5B" },
+        { "name": "FLOAT_MAT4", "type": "GLenum", "value": "0x8B5C" },
+        { "name": "FLOAT_VEC2", "type": "GLenum", "value": "0x8B50" },
+        { "name": "FLOAT_VEC3", "type": "GLenum", "value": "0x8B51" },
+        { "name": "FLOAT_VEC4", "type": "GLenum", "value": "0x8B52" },
+        { "name": "FRAGMENT_SHADER", "type": "GLenum", "value": "0x8B30" },
+        { "name": "FRAMEBUFFER", "type": "GLenum", "value": "0x8D40" },
+        { "name": "FRAMEBUFFER_ATTACHMENT_OBJECT_NAME", "type": "GLenum", "value": "0x8CD1" },
+        { "name": "FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE", "type": "GLenum", "value": "0x8CD0" },
+        { "name": "FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE", "type": "GLenum", "value": "0x8CD3" },
+        { "name": "FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL", "type": "GLenum", "value": "0x8CD2" },
+        { "name": "FRAMEBUFFER_BINDING", "type": "GLenum", "value": "0x8CA6" },
+        { "name": "FRAMEBUFFER_COMPLETE", "type": "GLenum", "value": "0x8CD5" },
+        { "name": "FRAMEBUFFER_INCOMPLETE_ATTACHMENT", "type": "GLenum", "value": "0x8CD6" },
+        { "name": "FRAMEBUFFER_INCOMPLETE_DIMENSIONS", "type": "GLenum", "value": "0x8CD9" },
+        { "name": "FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT", "type": "GLenum", "value": "0x8CD7" },
+        { "name": "FRAMEBUFFER_UNSUPPORTED", "type": "GLenum", "value": "0x8CDD" },
+        { "name": "FRONT", "type": "GLenum", "value": "0x0404" },
+        { "name": "FRONT_AND_BACK", "type": "GLenum", "value": "0x0408" },
+        { "name": "FRONT_FACE", "type": "GLenum", "value": "0x0B46" },
+        { "name": "FUNC_ADD", "type": "GLenum", "value": "0x8006" },
+        { "name": "FUNC_REVERSE_SUBTRACT", "type": "GLenum", "value": "0x800B" },
+        { "name": "FUNC_SUBTRACT", "type": "GLenum", "value": "0x800A" },
+        { "name": "GENERATE_MIPMAP_HINT", "type": "GLenum", "value": "0x8192" },
+        { "name": "GEQUAL", "type": "GLenum", "value": "0x0206" },
+        { "name": "GREATER", "type": "GLenum", "value": "0x0204" },
+        { "name": "GREEN_BITS", "type": "GLenum", "value": "0x0D53" },
+        { "name": "HIGH_FLOAT", "type": "GLenum", "value": "0x8DF2" },
+        { "name": "HIGH_INT", "type": "GLenum", "value": "0x8DF5" },
+        { "name": "IMPLEMENTATION_COLOR_READ_FORMAT", "type": "GLenum", "value": "0x8B9B" },
+        { "name": "IMPLEMENTATION_COLOR_READ_TYPE", "type": "GLenum", "value": "0x8B9A" },
+        { "name": "INCR", "type": "GLenum", "value": "0x1E02" },
+        { "name": "INCR_WRAP", "type": "GLenum", "value": "0x8507" },
+        { "name": "INT", "type": "GLenum", "value": "0x1404" },
+        { "name": "INT_VEC2", "type": "GLenum", "value": "0x8B53" },
+        { "name": "INT_VEC3", "type": "GLenum", "value": "0x8B54" },
+        { "name": "INT_VEC4", "type": "GLenum", "value": "0x8B55" },
+        { "name": "INVALID_ENUM", "type": "GLenum", "value": "0x0500" },
+        { "name": "INVALID_FRAMEBUFFER_OPERATION", "type": "GLenum", "value": "0x0506" },
+        { "name": "INVALID_OPERATION", "type": "GLenum", "value": "0x0502" },
+        { "name": "INVALID_VALUE", "type": "GLenum", "value": "0x0501" },
+        { "name": "INVERT", "type": "GLenum", "value": "0x150A" },
+        { "name": "KEEP", "type": "GLenum", "value": "0x1E00" },
+        { "name": "LEQUAL", "type": "GLenum", "value": "0x0203" },
+        { "name": "LESS", "type": "GLenum", "value": "0x0201" },
+        { "name": "LINE_LOOP", "type": "GLenum", "value": "0x0002" },
+        { "name": "LINE_STRIP", "type": "GLenum", "value": "0x0003" },
+        { "name": "LINE_WIDTH", "type": "GLenum", "value": "0x0B21" },
+        { "name": "LINEAR", "type": "GLenum", "value": "0x2601" },
+        { "name": "LINEAR_MIPMAP_LINEAR", "type": "GLenum", "value": "0x2703" },
+        { "name": "LINEAR_MIPMAP_NEAREST", "type": "GLenum", "value": "0x2701" },
+        { "name": "LINES", "type": "GLenum", "value": "0x0001" },
+        { "name": "LINK_STATUS", "type": "GLenum", "value": "0x8B82" },
+        { "name": "LOW_FLOAT", "type": "GLenum", "value": "0x8DF0" },
+        { "name": "LOW_INT", "type": "GLenum", "value": "0x8DF3" },
+        { "name": "LUMINANCE", "type": "GLenum", "value": "0x1909" },
+        { "name": "LUMINANCE_ALPHA", "type": "GLenum", "value": "0x190A" },
+        { "name": "MAX_COMBINED_TEXTURE_IMAGE_UNITS", "type": "GLenum", "value": "0x8B4D" },
+        { "name": "MAX_CUBE_MAP_TEXTURE_SIZE", "type": "GLenum", "value": "0x851C" },
+        { "name": "MAX_FRAGMENT_UNIFORM_VECTORS", "type": "GLenum", "value": "0x8DFD" },
+        { "name": "MAX_RENDERBUFFER_SIZE", "type": "GLenum", "value": "0x84E8" },
+        { "name": "MAX_TEXTURE_IMAGE_UNITS", "type": "GLenum", "value": "0x8872" },
+        { "name": "MAX_TEXTURE_SIZE", "type": "GLenum", "value": "0x0D33" },
+        { "name": "MAX_VARYING_VECTORS", "type": "GLenum", "value": "0x8DFC" },
+        { "name": "MAX_VERTEX_ATTRIBS", "type": "GLenum", "value": "0x8869" },
+        { "name": "MAX_VERTEX_TEXTURE_IMAGE_UNITS", "type": "GLenum", "value": "0x8B4C" },
+        { "name": "MAX_VERTEX_UNIFORM_VECTORS", "type": "GLenum", "value": "0x8DFB" },
+        { "name": "MAX_VIEWPORT_DIMS", "type": "GLenum", "value": "0x0D3A" },
+        { "name": "MEDIUM_FLOAT", "type": "GLenum", "value": "0x8DF1" },
+        { "name": "MEDIUM_INT", "type": "GLenum", "value": "0x8DF4" },
+        { "name": "MIRRORED_REPEAT", "type": "GLenum", "value": "0x8370" },
+        { "name": "NEAREST", "type": "GLenum", "value": "0x2600" },
+        { "name": "NEAREST_MIPMAP_LINEAR", "type": "GLenum", "value": "0x2702" },
+        { "name": "NEAREST_MIPMAP_NEAREST", "type": "GLenum", "value": "0x2700" },
+        { "name": "NEVER", "type": "GLenum", "value": "0x0200" },
+        { "name": "NICEST", "type": "GLenum", "value": "0x1102" },
         { "name": "NO_ERROR", "type": "GLenum", "value": "0" },
         { "name": "NONE", "type": "GLenum", "value": "0" },
-        { "name": "NOTEQUAL", "type": "GLenum", "value": "517" },
+        { "name": "NOTEQUAL", "type": "GLenum", "value": "0x0205" },
         { "name": "ONE", "type": "GLenum", "value": "1" },
-        { "name": "ONE_MINUS_CONSTANT_ALPHA", "type": "GLenum", "value": "32772" },
-        { "name": "ONE_MINUS_CONSTANT_COLOR", "type": "GLenum", "value": "32770" },
-        { "name": "ONE_MINUS_DST_ALPHA", "type": "GLenum", "value": "773" },
-        { "name": "ONE_MINUS_DST_COLOR", "type": "GLenum", "value": "775" },
-        { "name": "ONE_MINUS_SRC_ALPHA", "type": "GLenum", "value": "771" },
-        { "name": "ONE_MINUS_SRC_COLOR", "type": "GLenum", "value": "769" },
-        { "name": "OUT_OF_MEMORY", "type": "GLenum", "value": "1285" },
-        { "name": "PACK_ALIGNMENT", "type": "GLenum", "value": "3333" },
-        { "name": "POINTS", "type": "GLenum", "value": "0" },
-        { "name": "POLYGON_OFFSET_FACTOR", "type": "GLenum", "value": "32824" },
-        { "name": "POLYGON_OFFSET_FILL", "type": "GLenum", "value": "32823" },
-        { "name": "POLYGON_OFFSET_UNITS", "type": "GLenum", "value": "10752" },
-        { "name": "RED_BITS", "type": "GLenum", "value": "3410" },
-        { "name": "RENDERBUFFER", "type": "GLenum", "value": "36161" },
-        { "name": "RENDERBUFFER_ALPHA_SIZE", "type": "GLenum", "value": "36179" },
-        { "name": "RENDERBUFFER_BINDING", "type": "GLenum", "value": "36007" },
-        { "name": "RENDERBUFFER_BLUE_SIZE", "type": "GLenum", "value": "36178" },
-        { "name": "RENDERBUFFER_DEPTH_SIZE", "type": "GLenum", "value": "36180" },
-        { "name": "RENDERBUFFER_GREEN_SIZE", "type": "GLenum", "value": "36177" },
-        { "name": "RENDERBUFFER_HEIGHT", "type": "GLenum", "value": "36163" },
-        { "name": "RENDERBUFFER_INTERNAL_FORMAT", "type": "GLenum", "value": "36164" },
-        { "name": "RENDERBUFFER_RED_SIZE", "type": "GLenum", "value": "36176" },
-        { "name": "RENDERBUFFER_STENCIL_SIZE", "type": "GLenum", "value": "36181" },
-        { "name": "RENDERBUFFER_WIDTH", "type": "GLenum", "value": "36162" },
-        { "name": "RENDERER", "type": "GLenum", "value": "7937" },
-        { "name": "REPEAT", "type": "GLenum", "value": "10497" },
-        { "name": "REPLACE", "type": "GLenum", "value": "7681" },
-        { "name": "RGB", "type": "GLenum", "value": "6407" },
-        { "name": "RGB5_A1", "type": "GLenum", "value": "32855" },
-        { "name": "RGB565", "type": "GLenum", "value": "36194" },
-        { "name": "RGBA", "type": "GLenum", "value": "6408" },
-        { "name": "RGBA4", "type": "GLenum", "value": "32854" },
-        { "name": "SAMPLE_ALPHA_TO_COVERAGE", "type": "GLenum", "value": "32926" },
-        { "name": "SAMPLE_BUFFERS", "type": "GLenum", "value": "32936" },
-        { "name": "SAMPLE_COVERAGE", "type": "GLenum", "value": "32928" },
-        { "name": "SAMPLE_COVERAGE_INVERT", "type": "GLenum", "value": "32939" },
-        { "name": "SAMPLE_COVERAGE_VALUE", "type": "GLenum", "value": "32938" },
-        { "name": "SAMPLER_2D", "type": "GLenum", "value": "35678" },
-        { "name": "SAMPLER_CUBE", "type": "GLenum", "value": "35680" },
-        { "name": "SAMPLES", "type": "GLenum", "value": "32937" },
-        { "name": "SCISSOR_BOX", "type": "GLenum", "value": "3088" },
-        { "name": "SCISSOR_TEST", "type": "GLenum", "value": "3089" },
-        { "name": "SHADER_TYPE", "type": "GLenum", "value": "35663" },
-        { "name": "SHADING_LANGUAGE_VERSION", "type": "GLenum", "value": "35724" },
-        { "name": "SHORT", "type": "GLenum", "value": "5122" },
-        { "name": "SRC_ALPHA", "type": "GLenum", "value": "770" },
-        { "name": "SRC_ALPHA_SATURATE", "type": "GLenum", "value": "776" },
-        { "name": "SRC_COLOR", "type": "GLenum", "value": "768" },
-        { "name": "STATIC_DRAW", "type": "GLenum", "value": "35044" },
-        { "name": "STENCIL_ATTACHMENT", "type": "GLenum", "value": "36128" },
-        { "name": "STENCIL_BACK_FAIL", "type": "GLenum", "value": "34817" },
-        { "name": "STENCIL_BACK_FUNC", "type": "GLenum", "value": "34816" },
-        { "name": "STENCIL_BACK_PASS_DEPTH_FAIL", "type": "GLenum", "value": "34818" },
-        { "name": "STENCIL_BACK_PASS_DEPTH_PASS", "type": "GLenum", "value": "34819" },
-        { "name": "STENCIL_BACK_REF", "type": "GLenum", "value": "36003" },
-        { "name": "STENCIL_BACK_VALUE_MASK", "type": "GLenum", "value": "36004" },
-        { "name": "STENCIL_BACK_WRITEMASK", "type": "GLenum", "value": "36005" },
-        { "name": "STENCIL_BITS", "type": "GLenum", "value": "3415" },
-        { "name": "STENCIL_BUFFER_BIT", "type": "GLenum", "value": "1024" },
-        { "name": "STENCIL_CLEAR_VALUE", "type": "GLenum", "value": "2961" },
-        { "name": "STENCIL_FAIL", "type": "GLenum", "value": "2964" },
-        { "name": "STENCIL_FUNC", "type": "GLenum", "value": "2962" },
-        { "name": "STENCIL_INDEX8", "type": "GLenum", "value": "36168" },
-        { "name": "STENCIL_PASS_DEPTH_FAIL", "type": "GLenum", "value": "2965" },
-        { "name": "STENCIL_PASS_DEPTH_PASS", "type": "GLenum", "value": "2966" },
-        { "name": "STENCIL_REF", "type": "GLenum", "value": "2967" },
-        { "name": "STENCIL_TEST", "type": "GLenum", "value": "2960" },
-        { "name": "STENCIL_VALUE_MASK", "type": "GLenum", "value": "2963" },
-        { "name": "STENCIL_WRITEMASK", "type": "GLenum", "value": "2968" },
-        { "name": "STREAM_DRAW", "type": "GLenum", "value": "35040" },
-        { "name": "SUBPIXEL_BITS", "type": "GLenum", "value": "3408" },
-        { "name": "TEXTURE", "type": "GLenum", "value": "5890" },
-        { "name": "TEXTURE_2D", "type": "GLenum", "value": "3553" },
-        { "name": "TEXTURE_BINDING_2D", "type": "GLenum", "value": "32873" },
-        { "name": "TEXTURE_BINDING_CUBE_MAP", "type": "GLenum", "value": "34068" },
-        { "name": "TEXTURE_CUBE_MAP", "type": "GLenum", "value": "34067" },
-        { "name": "TEXTURE_CUBE_MAP_NEGATIVE_X", "type": "GLenum", "value": "34070" },
-        { "name": "TEXTURE_CUBE_MAP_NEGATIVE_Y", "type": "GLenum", "value": "34072" },
-        { "name": "TEXTURE_CUBE_MAP_NEGATIVE_Z", "type": "GLenum", "value": "34074" },
-        { "name": "TEXTURE_CUBE_MAP_POSITIVE_X", "type": "GLenum", "value": "34069" },
-        { "name": "TEXTURE_CUBE_MAP_POSITIVE_Y", "type": "GLenum", "value": "34071" },
-        { "name": "TEXTURE_CUBE_MAP_POSITIVE_Z", "type": "GLenum", "value": "34073" },
-        { "name": "TEXTURE_MAG_FILTER", "type": "GLenum", "value": "10240" },
-        { "name": "TEXTURE_MIN_FILTER", "type": "GLenum", "value": "10241" },
-        { "name": "TEXTURE_WRAP_S", "type": "GLenum", "value": "10242" },
-        { "name": "TEXTURE_WRAP_T", "type": "GLenum", "value": "10243" },
-        { "name": "TEXTURE0", "type": "GLenum", "value": "33984" },
-        { "name": "TEXTURE1", "type": "GLenum", "value": "33985" },
-        { "name": "TEXTURE10", "type": "GLenum", "value": "33994" },
-        { "name": "TEXTURE11", "type": "GLenum", "value": "33995" },
-        { "name": "TEXTURE12", "type": "GLenum", "value": "33996" },
-        { "name": "TEXTURE13", "type": "GLenum", "value": "33997" },
-        { "name": "TEXTURE14", "type": "GLenum", "value": "33998" },
-        { "name": "TEXTURE15", "type": "GLenum", "value": "33999" },
-        { "name": "TEXTURE16", "type": "GLenum", "value": "34000" },
-        { "name": "TEXTURE17", "type": "GLenum", "value": "34001" },
-        { "name": "TEXTURE18", "type": "GLenum", "value": "34002" },
-        { "name": "TEXTURE19", "type": "GLenum", "value": "34003" },
-        { "name": "TEXTURE2", "type": "GLenum", "value": "33986" },
-        { "name": "TEXTURE20", "type": "GLenum", "value": "34004" },
-        { "name": "TEXTURE21", "type": "GLenum", "value": "34005" },
-        { "name": "TEXTURE22", "type": "GLenum", "value": "34006" },
-        { "name": "TEXTURE23", "type": "GLenum", "value": "34007" },
-        { "name": "TEXTURE24", "type": "GLenum", "value": "34008" },
-        { "name": "TEXTURE25", "type": "GLenum", "value": "34009" },
-        { "name": "TEXTURE26", "type": "GLenum", "value": "34010" },
-        { "name": "TEXTURE27", "type": "GLenum", "value": "34011" },
-        { "name": "TEXTURE28", "type": "GLenum", "value": "34012" },
-        { "name": "TEXTURE29", "type": "GLenum", "value": "34013" },
-        { "name": "TEXTURE3", "type": "GLenum", "value": "33987" },
-        { "name": "TEXTURE30", "type": "GLenum", "value": "34014" },
-        { "name": "TEXTURE31", "type": "GLenum", "value": "34015" },
-        { "name": "TEXTURE4", "type": "GLenum", "value": "33988" },
-        { "name": "TEXTURE5", "type": "GLenum", "value": "33989" },
-        { "name": "TEXTURE6", "type": "GLenum", "value": "33990" },
-        { "name": "TEXTURE7", "type": "GLenum", "value": "33991" },
-        { "name": "TEXTURE8", "type": "GLenum", "value": "33992" },
-        { "name": "TEXTURE9", "type": "GLenum", "value": "33993" },
-        { "name": "TRIANGLE_FAN", "type": "GLenum", "value": "6" },
-        { "name": "TRIANGLE_STRIP", "type": "GLenum", "value": "5" },
-        { "name": "TRIANGLES", "type": "GLenum", "value": "4" },
-        { "name": "UNPACK_ALIGNMENT", "type": "GLenum", "value": "3317" },
-        { "name": "UNPACK_COLORSPACE_CONVERSION_WEBGL", "type": "GLenum", "value": "37443" },
-        { "name": "UNPACK_FLIP_Y_WEBGL", "type": "GLenum", "value": "37440" },
-        { "name": "UNPACK_PREMULTIPLY_ALPHA_WEBGL", "type": "GLenum", "value": "37441" },
-        { "name": "UNSIGNED_BYTE", "type": "GLenum", "value": "5121" },
-        { "name": "UNSIGNED_INT", "type": "GLenum", "value": "5125" },
-        { "name": "UNSIGNED_SHORT", "type": "GLenum", "value": "5123" },
-        { "name": "UNSIGNED_SHORT_4_4_4_4", "type": "GLenum", "value": "32819" },
-        { "name": "UNSIGNED_SHORT_5_5_5_1", "type": "GLenum", "value": "32820" },
-        { "name": "UNSIGNED_SHORT_5_6_5", "type": "GLenum", "value": "33635" },
-        { "name": "VALIDATE_STATUS", "type": "GLenum", "value": "35715" },
-        { "name": "VENDOR", "type": "GLenum", "value": "7936" },
-        { "name": "VERSION", "type": "GLenum", "value": "7938" },
-        { "name": "VERTEX_ATTRIB_ARRAY_BUFFER_BINDING", "type": "GLenum", "value": "34975" },
-        { "name": "VERTEX_ATTRIB_ARRAY_ENABLED", "type": "GLenum", "value": "34338" },
-        { "name": "VERTEX_ATTRIB_ARRAY_NORMALIZED", "type": "GLenum", "value": "34922" },
-        { "name": "VERTEX_ATTRIB_ARRAY_POINTER", "type": "GLenum", "value": "34373" },
-        { "name": "VERTEX_ATTRIB_ARRAY_SIZE", "type": "GLenum", "value": "34339" },
-        { "name": "VERTEX_ATTRIB_ARRAY_STRIDE", "type": "GLenum", "value": "34340" },
-        { "name": "VERTEX_ATTRIB_ARRAY_TYPE", "type": "GLenum", "value": "34341" },
-        { "name": "VERTEX_SHADER", "type": "GLenum", "value": "35633" },
-        { "name": "VIEWPORT", "type": "GLenum", "value": "2978" },
+        { "name": "ONE_MINUS_CONSTANT_ALPHA", "type": "GLenum", "value": "0x8004" },
+        { "name": "ONE_MINUS_CONSTANT_COLOR", "type": "GLenum", "value": "0x8002" },
+        { "name": "ONE_MINUS_DST_ALPHA", "type": "GLenum", "value": "0x0305" },
+        { "name": "ONE_MINUS_DST_COLOR", "type": "GLenum", "value": "0x0307" },
+        { "name": "ONE_MINUS_SRC_ALPHA", "type": "GLenum", "value": "0x0303" },
+        { "name": "ONE_MINUS_SRC_COLOR", "type": "GLenum", "value": "0x0301" },
+        { "name": "OUT_OF_MEMORY", "type": "GLenum", "value": "0x0505" },
+        { "name": "PACK_ALIGNMENT", "type": "GLenum", "value": "0x0D05" },
+        { "name": "POINTS", "type": "GLenum", "value": "0x0000" },
+        { "name": "POLYGON_OFFSET_FACTOR", "type": "GLenum", "value": "0x8038" },
+        { "name": "POLYGON_OFFSET_FILL", "type": "GLenum", "value": "0x8037" },
+        { "name": "POLYGON_OFFSET_UNITS", "type": "GLenum", "value": "0x2A00" },
+        { "name": "RED_BITS", "type": "GLenum", "value": "0x0D52" },
+        { "name": "RENDERBUFFER", "type": "GLenum", "value": "0x8D41" },
+        { "name": "RENDERBUFFER_ALPHA_SIZE", "type": "GLenum", "value": "0x8D53" },
+        { "name": "RENDERBUFFER_BINDING", "type": "GLenum", "value": "0x8CA7" },
+        { "name": "RENDERBUFFER_BLUE_SIZE", "type": "GLenum", "value": "0x8D52" },
+        { "name": "RENDERBUFFER_DEPTH_SIZE", "type": "GLenum", "value": "0x8D54" },
+        { "name": "RENDERBUFFER_GREEN_SIZE", "type": "GLenum", "value": "0x8D51" },
+        { "name": "RENDERBUFFER_HEIGHT", "type": "GLenum", "value": "0x8D43" },
+        { "name": "RENDERBUFFER_INTERNAL_FORMAT", "type": "GLenum", "value": "0x8D44" },
+        { "name": "RENDERBUFFER_RED_SIZE", "type": "GLenum", "value": "0x8D50" },
+        { "name": "RENDERBUFFER_STENCIL_SIZE", "type": "GLenum", "value": "0x8D55" },
+        { "name": "RENDERBUFFER_WIDTH", "type": "GLenum", "value": "0x8D42" },
+        { "name": "RENDERER", "type": "GLenum", "value": "0x1F01" },
+        { "name": "REPEAT", "type": "GLenum", "value": "0x2901" },
+        { "name": "REPLACE", "type": "GLenum", "value": "0x1E01" },
+        { "name": "RGB", "type": "GLenum", "value": "0x1907" },
+        { "name": "RGB5_A1", "type": "GLenum", "value": "0x8057" },
+        { "name": "RGB565", "type": "GLenum", "value": "0x8D62" },
+        { "name": "RGBA", "type": "GLenum", "value": "0x1908" },
+        { "name": "RGBA4", "type": "GLenum", "value": "0x8056" },
+        { "name": "SAMPLE_ALPHA_TO_COVERAGE", "type": "GLenum", "value": "0x809E" },
+        { "name": "SAMPLE_BUFFERS", "type": "GLenum", "value": "0x80A8" },
+        { "name": "SAMPLE_COVERAGE", "type": "GLenum", "value": "0x80A0" },
+        { "name": "SAMPLE_COVERAGE_INVERT", "type": "GLenum", "value": "0x80AB" },
+        { "name": "SAMPLE_COVERAGE_VALUE", "type": "GLenum", "value": "0x80AA" },
+        { "name": "SAMPLER_2D", "type": "GLenum", "value": "0x8B5E" },
+        { "name": "SAMPLER_CUBE", "type": "GLenum", "value": "0x8B60" },
+        { "name": "SAMPLES", "type": "GLenum", "value": "0x80A9" },
+        { "name": "SCISSOR_BOX", "type": "GLenum", "value": "0x0C10" },
+        { "name": "SCISSOR_TEST", "type": "GLenum", "value": "0x0C11" },
+        { "name": "SHADER_TYPE", "type": "GLenum", "value": "0x8B4F" },
+        { "name": "SHADING_LANGUAGE_VERSION", "type": "GLenum", "value": "0x8B8C" },
+        { "name": "SHORT", "type": "GLenum", "value": "0x1402" },
+        { "name": "SRC_ALPHA", "type": "GLenum", "value": "0x0302" },
+        { "name": "SRC_ALPHA_SATURATE", "type": "GLenum", "value": "0x0308" },
+        { "name": "SRC_COLOR", "type": "GLenum", "value": "0x0300" },
+        { "name": "STATIC_DRAW", "type": "GLenum", "value": "0x88E4" },
+        { "name": "STENCIL_ATTACHMENT", "type": "GLenum", "value": "0x8D20" },
+        { "name": "STENCIL_BACK_FAIL", "type": "GLenum", "value": "0x8801" },
+        { "name": "STENCIL_BACK_FUNC", "type": "GLenum", "value": "0x8800" },
+        { "name": "STENCIL_BACK_PASS_DEPTH_FAIL", "type": "GLenum", "value": "0x8802" },
+        { "name": "STENCIL_BACK_PASS_DEPTH_PASS", "type": "GLenum", "value": "0x8803" },
+        { "name": "STENCIL_BACK_REF", "type": "GLenum", "value": "0x8CA3" },
+        { "name": "STENCIL_BACK_VALUE_MASK", "type": "GLenum", "value": "0x8CA4" },
+        { "name": "STENCIL_BACK_WRITEMASK", "type": "GLenum", "value": "0x8CA5" },
+        { "name": "STENCIL_BITS", "type": "GLenum", "value": "0x0D57" },
+        { "name": "STENCIL_BUFFER_BIT", "type": "GLenum", "value": "0x00000400" },
+        { "name": "STENCIL_CLEAR_VALUE", "type": "GLenum", "value": "0x0B91" },
+        { "name": "STENCIL_FAIL", "type": "GLenum", "value": "0x0B94" },
+        { "name": "STENCIL_FUNC", "type": "GLenum", "value": "0x0B92" },
+        { "name": "STENCIL_INDEX8", "type": "GLenum", "value": "0x8D48" },
+        { "name": "STENCIL_PASS_DEPTH_FAIL", "type": "GLenum", "value": "0x0B95" },
+        { "name": "STENCIL_PASS_DEPTH_PASS", "type": "GLenum", "value": "0x0B96" },
+        { "name": "STENCIL_REF", "type": "GLenum", "value": "0x0B97" },
+        { "name": "STENCIL_TEST", "type": "GLenum", "value": "0x0B90" },
+        { "name": "STENCIL_VALUE_MASK", "type": "GLenum", "value": "0x0B93" },
+        { "name": "STENCIL_WRITEMASK", "type": "GLenum", "value": "0x0B98" },
+        { "name": "STREAM_DRAW", "type": "GLenum", "value": "0x88E0" },
+        { "name": "SUBPIXEL_BITS", "type": "GLenum", "value": "0x0D50" },
+        { "name": "TEXTURE", "type": "GLenum", "value": "0x1702" },
+        { "name": "TEXTURE_2D", "type": "GLenum", "value": "0x0DE1" },
+        { "name": "TEXTURE_BINDING_2D", "type": "GLenum", "value": "0x8069" },
+        { "name": "TEXTURE_BINDING_CUBE_MAP", "type": "GLenum", "value": "0x8514" },
+        { "name": "TEXTURE_CUBE_MAP", "type": "GLenum", "value": "0x8513" },
+        { "name": "TEXTURE_CUBE_MAP_NEGATIVE_X", "type": "GLenum", "value": "0x8516" },
+        { "name": "TEXTURE_CUBE_MAP_NEGATIVE_Y", "type": "GLenum", "value": "0x8518" },
+        { "name": "TEXTURE_CUBE_MAP_NEGATIVE_Z", "type": "GLenum", "value": "0x851A" },
+        { "name": "TEXTURE_CUBE_MAP_POSITIVE_X", "type": "GLenum", "value": "0x8515" },
+        { "name": "TEXTURE_CUBE_MAP_POSITIVE_Y", "type": "GLenum", "value": "0x8517" },
+        { "name": "TEXTURE_CUBE_MAP_POSITIVE_Z", "type": "GLenum", "value": "0x8519" },
+        { "name": "TEXTURE_MAG_FILTER", "type": "GLenum", "value": "0x2800" },
+        { "name": "TEXTURE_MIN_FILTER", "type": "GLenum", "value": "0x2801" },
+        { "name": "TEXTURE_WRAP_S", "type": "GLenum", "value": "0x2802" },
+        { "name": "TEXTURE_WRAP_T", "type": "GLenum", "value": "0x2803" },
+        { "name": "TEXTURE0", "type": "GLenum", "value": "0x84C0" },
+        { "name": "TEXTURE1", "type": "GLenum", "value": "0x84C1" },
+        { "name": "TEXTURE10", "type": "GLenum", "value": "0x84CA" },
+        { "name": "TEXTURE11", "type": "GLenum", "value": "0x84CB" },
+        { "name": "TEXTURE12", "type": "GLenum", "value": "0x84CC" },
+        { "name": "TEXTURE13", "type": "GLenum", "value": "0x84CD" },
+        { "name": "TEXTURE14", "type": "GLenum", "value": "0x84CE" },
+        { "name": "TEXTURE15", "type": "GLenum", "value": "0x84CF" },
+        { "name": "TEXTURE16", "type": "GLenum", "value": "0x84D0" },
+        { "name": "TEXTURE17", "type": "GLenum", "value": "0x84D1" },
+        { "name": "TEXTURE18", "type": "GLenum", "value": "0x84D2" },
+        { "name": "TEXTURE19", "type": "GLenum", "value": "0x84D3" },
+        { "name": "TEXTURE2", "type": "GLenum", "value": "0x84C2" },
+        { "name": "TEXTURE20", "type": "GLenum", "value": "0x84D4" },
+        { "name": "TEXTURE21", "type": "GLenum", "value": "0x84D5" },
+        { "name": "TEXTURE22", "type": "GLenum", "value": "0x84D6" },
+        { "name": "TEXTURE23", "type": "GLenum", "value": "0x84D7" },
+        { "name": "TEXTURE24", "type": "GLenum", "value": "0x84D8" },
+        { "name": "TEXTURE25", "type": "GLenum", "value": "0x84D9" },
+        { "name": "TEXTURE26", "type": "GLenum", "value": "0x84DA" },
+        { "name": "TEXTURE27", "type": "GLenum", "value": "0x84DB" },
+        { "name": "TEXTURE28", "type": "GLenum", "value": "0x84DC" },
+        { "name": "TEXTURE29", "type": "GLenum", "value": "0x84DD" },
+        { "name": "TEXTURE3", "type": "GLenum", "value": "0x84C3" },
+        { "name": "TEXTURE30", "type": "GLenum", "value": "0x84DE" },
+        { "name": "TEXTURE31", "type": "GLenum", "value": "0x84DF" },
+        { "name": "TEXTURE4", "type": "GLenum", "value": "0x84C4" },
+        { "name": "TEXTURE5", "type": "GLenum", "value": "0x84C5" },
+        { "name": "TEXTURE6", "type": "GLenum", "value": "0x84C6" },
+        { "name": "TEXTURE7", "type": "GLenum", "value": "0x84C7" },
+        { "name": "TEXTURE8", "type": "GLenum", "value": "0x84C8" },
+        { "name": "TEXTURE9", "type": "GLenum", "value": "0x84C9" },
+        { "name": "TRIANGLE_FAN", "type": "GLenum", "value": "0x0006" },
+        { "name": "TRIANGLE_STRIP", "type": "GLenum", "value": "0x0005" },
+        { "name": "TRIANGLES", "type": "GLenum", "value": "0x0004" },
+        { "name": "UNPACK_ALIGNMENT", "type": "GLenum", "value": "0x0CF5" },
+        { "name": "UNPACK_COLORSPACE_CONVERSION_WEBGL", "type": "GLenum", "value": "0x9243" },
+        { "name": "UNPACK_FLIP_Y_WEBGL", "type": "GLenum", "value": "0x9240" },
+        { "name": "UNPACK_PREMULTIPLY_ALPHA_WEBGL", "type": "GLenum", "value": "0x9241" },
+        { "name": "UNSIGNED_BYTE", "type": "GLenum", "value": "0x1401" },
+        { "name": "UNSIGNED_INT", "type": "GLenum", "value": "0x1405" },
+        { "name": "UNSIGNED_SHORT", "type": "GLenum", "value": "0x1403" },
+        { "name": "UNSIGNED_SHORT_4_4_4_4", "type": "GLenum", "value": "0x8033" },
+        { "name": "UNSIGNED_SHORT_5_5_5_1", "type": "GLenum", "value": "0x8034" },
+        { "name": "UNSIGNED_SHORT_5_6_5", "type": "GLenum", "value": "0x8363" },
+        { "name": "VALIDATE_STATUS", "type": "GLenum", "value": "0x8B83" },
+        { "name": "VENDOR", "type": "GLenum", "value": "0x1F00" },
+        { "name": "VERSION", "type": "GLenum", "value": "0x1F02" },
+        { "name": "VERTEX_ATTRIB_ARRAY_BUFFER_BINDING", "type": "GLenum", "value": "0x889F" },
+        { "name": "VERTEX_ATTRIB_ARRAY_ENABLED", "type": "GLenum", "value": "0x8622" },
+        { "name": "VERTEX_ATTRIB_ARRAY_NORMALIZED", "type": "GLenum", "value": "0x886A" },
+        { "name": "VERTEX_ATTRIB_ARRAY_POINTER", "type": "GLenum", "value": "0x8645" },
+        { "name": "VERTEX_ATTRIB_ARRAY_SIZE", "type": "GLenum", "value": "0x8623" },
+        { "name": "VERTEX_ATTRIB_ARRAY_STRIDE", "type": "GLenum", "value": "0x8624" },
+        { "name": "VERTEX_ATTRIB_ARRAY_TYPE", "type": "GLenum", "value": "0x8625" },
+        { "name": "VERTEX_SHADER", "type": "GLenum", "value": "0x8B31" },
+        { "name": "VIEWPORT", "type": "GLenum", "value": "0x0BA2" },
         { "name": "ZERO", "type": "GLenum", "value": "0" }
       ],
       "operations": [
@@ -12603,9 +12548,9 @@
       }],
       "exposed": ["Window"],
       "constants": [
-        { "name": "DOM_DELTA_LINE", "type": "unsigned long", "value": "1" },
-        { "name": "DOM_DELTA_PAGE", "type": "unsigned long", "value": "2" },
-        { "name": "DOM_DELTA_PIXEL", "type": "unsigned long", "value": "0" }
+        { "name": "DOM_DELTA_LINE", "type": "unsigned long", "value": "0x01" },
+        { "name": "DOM_DELTA_PAGE", "type": "unsigned long", "value": "0x02" },
+        { "name": "DOM_DELTA_PIXEL", "type": "unsigned long", "value": "0x00" }
       ],
       "attributes": [
         { "name": "deltaMode", "type": "unsigned long", "readonly": true },
@@ -13109,7 +13054,6 @@
     { "name": "OffscreenRenderingContext", "type": "(OffscreenCanvasRenderingContext2D or WebGLRenderingContext)" },
     { "name": "OnBeforeUnloadEventHandler", "type": "OnBeforeUnloadEventHandlerNonNull", "nullable": true },
     { "name": "OnErrorEventHandler", "type": "OnErrorEventHandlerNonNull", "nullable": true },
-    { "name": "PerformanceEntryList", "type": "sequence<PerformanceEntry>" },
     { "name": "PushMessageDataInit", "type": "(BufferSource or USVString)" },
     { "name": "RenderingContext", "type": "(CanvasRenderingContext2D or WebGLRenderingContext)" },
     { "name": "RequestInfo", "type": "(Request or USVString)" },
